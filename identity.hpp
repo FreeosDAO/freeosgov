@@ -1,28 +1,55 @@
-#pragma once
-#include "freeosgov.hpp"
+//#pragma once
+#include <eosio/eosio.hpp>
 #include <eosio/system.hpp>
-
-//namespace freedao {
+#include "freeosgov.hpp"
+#include "constants.hpp"
 
 using namespace eosio;
+using namespace freedao;
 
-// ACTION
-void freeosgov::reguser(name user) {
-  std::string version_message = "version = identity 0.2";
 
-  check(false, version_message);
+void freeosgov::reguser(name user) {  // TODO: detect if the user has an existing record from the airclaim
+
+  require_auth(user);
+
+  // is the user already registered?
+  // find the account in the user table
+  users_index users_table(get_self(), user.value);
+  auto user_iterator = users_table.begin();
+
+  check(user_iterator == users_table.end(), "user is already registered");
+
+  // determine account type
+  string account_type = "e";  // TODO
+
+  // update the user count in the 'system' record
+  uint32_t number_of_users;
+
+  system_index system_table(get_self(), get_self().value);
+  auto system_iterator = system_table.begin();
+  if (system_iterator == system_table.end()) {
+    // emplace
+    system_table.emplace(
+        get_self(), [&](auto &sys) { sys.usercount = number_of_users = 1; });
+  } else {
+    // modify
+    system_table.modify(system_iterator, _self, [&](auto &sys) {
+      sys.usercount = number_of_users = sys.usercount + 1;
+    });
+  }
+
+  // get the current iteration
+  uint16_t iteration = current_iteration();
+
+  // TODO: staking code
+
+  // register the user
+  users_table.emplace(get_self(), [&](auto &user) {
+    user.stake = asset(0, STAKE_CURRENCY_SYMBOL);
+    user.account_type = account_type;
+    user.registered_iteration = iteration;
+    user.staked_iteration = iteration; // TODO
+    user.total_issuance_amount = asset(0, POINT_CURRENCY_SYMBOL);
+  });
+
 }
-
-// the registered user table
-struct[[ eosio::table("users"), eosio::contract("freeosgov") ]] user {
-  asset stake;                    // how many XPR tokens staked
-  char account_type;              // user's verification level
-  uint32_t registered_iteration;  // when the user was registered
-  uint32_t staked_iteration;      // the iteration in which the user staked their tokens
-  uint32_t votes;                 // how many votes the user has made
-  uint32_t issuances;             // total number of times the user has been issued with OPTIONs
-  uint32_t last_issuance;         // the last iteration in which the user was issued with OPTIONs
-
-  uint64_t primary_key() const { return stake.symbol.code().raw(); }
-};
-using users_index = eosio::multi_index<"users"_n, user>;

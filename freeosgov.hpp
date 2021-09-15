@@ -6,6 +6,7 @@
 
 namespace freedao {
 using namespace eosio;
+using namespace std;
 
 class[[eosio::contract("freeosgov")]] freeosgov : public contract {
 
@@ -19,7 +20,10 @@ public:
    */
   [[eosio::action]] void version();
   [[eosio::action]] void init(time_point iterations_start);
-  //[[eosio::action]] void reguser(name user);
+  [[eosio::action]] void maintain(string action, name user);
+
+  // identity actions
+  [[eosio::action]] void reguser(name user);
 
   // config actions
   [[eosio::action]] void paramupsert(name paramname, std::string value);
@@ -27,6 +31,8 @@ public:
 
   // functions
   bool is_survey_period();
+  uint16_t current_iteration();
+  bool is_registered(name user);
 };
 
 } // end of namespace freedao

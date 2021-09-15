@@ -14,6 +14,20 @@
             ]
         },
         {
+            "name": "maintain",
+            "base": "",
+            "fields": [
+                {
+                    "name": "action",
+                    "type": "string"
+                },
+                {
+                    "name": "user",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "paramerase",
             "base": "",
             "fields": [
@@ -52,6 +66,16 @@
             ]
         },
         {
+            "name": "reguser",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "system",
             "base": "",
             "fields": [
@@ -78,6 +102,44 @@
             ]
         },
         {
+            "name": "user",
+            "base": "",
+            "fields": [
+                {
+                    "name": "stake",
+                    "type": "asset"
+                },
+                {
+                    "name": "account_type",
+                    "type": "string"
+                },
+                {
+                    "name": "registered_iteration",
+                    "type": "uint32"
+                },
+                {
+                    "name": "staked_iteration",
+                    "type": "uint32"
+                },
+                {
+                    "name": "votes",
+                    "type": "uint32"
+                },
+                {
+                    "name": "issuances",
+                    "type": "uint32"
+                },
+                {
+                    "name": "last_issuance",
+                    "type": "uint32"
+                },
+                {
+                    "name": "total_issuance_amount",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
             "name": "version",
             "base": "",
             "fields": []
@@ -90,6 +152,11 @@
             "ricardian_contract": ""
         },
         {
+            "name": "maintain",
+            "type": "maintain",
+            "ricardian_contract": ""
+        },
+        {
             "name": "paramerase",
             "type": "paramerase",
             "ricardian_contract": ""
@@ -97,6 +164,11 @@
         {
             "name": "paramupsert",
             "type": "paramupsert",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "reguser",
+            "type": "reguser",
             "ricardian_contract": ""
         },
         {
@@ -116,6 +188,13 @@
         {
             "name": "system",
             "type": "system",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "users",
+            "type": "user",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
