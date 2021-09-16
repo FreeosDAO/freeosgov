@@ -7,3 +7,6 @@ const symbol STAKE_CURRENCY_SYMBOL = symbol(STAKE_CURRENCY_CODE, STAKE_CURRENCY_
 const string POINT_CURRENCY_CODE = "POINT";
 const uint8_t POINT_CURRENCY_PRECISION = 4;
 const symbol POINT_CURRENCY_SYMBOL = symbol(POINT_CURRENCY_CODE, POINT_CURRENCY_PRECISION);
+
+const name AIRCLAIM_CONTRACT = name("freeosd"); // TODO: ifdef for test/production
+const name VERIFICATION_CONTRACT = name("eosio.proton"); // TODO: ifdef for test/production
