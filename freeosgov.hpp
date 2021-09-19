@@ -29,10 +29,20 @@ public:
   [[eosio::action]] void paramupsert(name paramname, std::string value);
   [[eosio::action]] void paramerase(name paramname);
 
+  // survey actions
+  [[eosio::action]] void surveyflow(name user, uint8_t q1response, uint8_t q2response, uint8_t q3response, uint8_t q4response, string q5response);
+
+  // vote actions
+  [[eosio::action]] void voteflow(name user, string response);
+
+  // ratify actions
+  [[eosio::action]] void ratifyflow(name user, bool ratify);
+
   // functions
-  bool is_survey_period();
+  bool is_action_period(string action);
   uint16_t current_iteration();
   bool is_registered(name user);
+  void initialise_survey();
 };
 
 } // end of namespace freedao

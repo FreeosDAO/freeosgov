@@ -47,7 +47,9 @@ string get_account_type(name user) {
 
 void freeosgov::reguser(name user) {  // TODO: detect if the user has an existing record from the airclaim
 
-  //require_auth(user); //TODO - uncomment this line
+  require_auth(user);
+
+  check(current_iteration() != 0, "The freeos system is not yet available");
 
   // is the user already registered?
   // find the account in the user table
@@ -56,7 +58,7 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
 
   check(user_iterator == users_table.end(), "user is already registered");
 
-  // check to see if they are already registered with the AirClaim
+  // check to see if they are already registered with the AirClaim // TODO: this is not required
   airclaim_users_index airclaim_users_table(AIRCLAIM_CONTRACT, user.value);
   auto airclaim_user_iterator = airclaim_users_table.begin();
 

@@ -66,12 +66,188 @@
             ]
         },
         {
+            "name": "ratifyflow",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "ratify",
+                    "type": "bool"
+                }
+            ]
+        },
+        {
             "name": "reguser",
             "base": "",
             "fields": [
                 {
                     "name": "user",
                     "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "survey",
+            "base": "",
+            "fields": [
+                {
+                    "name": "iteration",
+                    "type": "uint32"
+                },
+                {
+                    "name": "participants",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q1choice1",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q1choice2",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q1choice3",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q2average",
+                    "type": "float64"
+                },
+                {
+                    "name": "q3choice1",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q3choice2",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q3choice3",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q4average",
+                    "type": "float64"
+                },
+                {
+                    "name": "q5choice1",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice2",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice3",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice4",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice5",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice6",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice7",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice8",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
+            "name": "surveyflow",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "q1response",
+                    "type": "uint8"
+                },
+                {
+                    "name": "q2response",
+                    "type": "uint8"
+                },
+                {
+                    "name": "q3response",
+                    "type": "uint8"
+                },
+                {
+                    "name": "q4response",
+                    "type": "uint8"
+                },
+                {
+                    "name": "q5response",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "svr",
+            "base": "",
+            "fields": [
+                {
+                    "name": "survey1",
+                    "type": "uint32"
+                },
+                {
+                    "name": "survey2",
+                    "type": "uint32"
+                },
+                {
+                    "name": "survey3",
+                    "type": "uint32"
+                },
+                {
+                    "name": "survey4",
+                    "type": "uint32"
+                },
+                {
+                    "name": "vote1",
+                    "type": "uint32"
+                },
+                {
+                    "name": "vote2",
+                    "type": "uint32"
+                },
+                {
+                    "name": "vote3",
+                    "type": "uint32"
+                },
+                {
+                    "name": "vote4",
+                    "type": "uint32"
+                },
+                {
+                    "name": "ratify1",
+                    "type": "uint32"
+                },
+                {
+                    "name": "ratify2",
+                    "type": "uint32"
+                },
+                {
+                    "name": "ratify3",
+                    "type": "uint32"
+                },
+                {
+                    "name": "ratify4",
+                    "type": "uint32"
                 }
             ]
         },
@@ -143,6 +319,20 @@
             "name": "version",
             "base": "",
             "fields": []
+        },
+        {
+            "name": "voteflow",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "response",
+                    "type": "string"
+                }
+            ]
         }
     ],
     "actions": [
@@ -167,13 +357,28 @@
             "ricardian_contract": ""
         },
         {
+            "name": "ratifyflow",
+            "type": "ratifyflow",
+            "ricardian_contract": ""
+        },
+        {
             "name": "reguser",
             "type": "reguser",
             "ricardian_contract": ""
         },
         {
+            "name": "surveyflow",
+            "type": "surveyflow",
+            "ricardian_contract": ""
+        },
+        {
             "name": "version",
             "type": "version",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "voteflow",
+            "type": "voteflow",
             "ricardian_contract": ""
         }
     ],
@@ -181,6 +386,20 @@
         {
             "name": "parameters",
             "type": "parameter",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "survey",
+            "type": "survey",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "svrs",
+            "type": "svr",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

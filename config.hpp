@@ -6,8 +6,6 @@
 using namespace eosio;
 using namespace freedao;
 
-
-
 // ACTION
 void freeosgov::paramupsert(name paramname, std::string value) {
 

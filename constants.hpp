@@ -10,3 +10,5 @@ const symbol POINT_CURRENCY_SYMBOL = symbol(POINT_CURRENCY_CODE, POINT_CURRENCY_
 
 const name AIRCLAIM_CONTRACT = name("freeosd"); // TODO: ifdef for test/production
 const name VERIFICATION_CONTRACT = name("eosio.proton"); // TODO: ifdef for test/production
+
+const uint32_t ITERATION_LENGTH_SECONDS = 604800; // 86400 = day, 604800 = week
