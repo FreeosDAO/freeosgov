@@ -21,6 +21,52 @@ uint64_t primary_key() const { return 0; } // return a constant to ensure a sing
 };
 using system_index = eosio::multi_index<"system"_n, system>;
 
+// POINTS ACCOUNTS
+struct[[ eosio::table("accounts"), eosio::contract("freeosgov") ]] account {
+  asset balance;
+
+  uint64_t primary_key() const { return balance.symbol.code().raw(); }
+};
+typedef eosio::multi_index<"accounts"_n, account> accounts;
+
+
+// currency stats
+struct[[ eosio::table("stat"), eosio::contract("freeosgov") ]] currency_stats {
+  asset supply;
+  asset max_supply;
+  asset conditional_supply;
+  name issuer;
+
+  uint64_t primary_key() const { return supply.symbol.code().raw(); }
+};
+typedef eosio::multi_index<"stat"_n, currency_stats> stats;
+
+
+// transferers table - a whitelist of who can call the transfer function
+struct[[ eosio::table("transferers"), eosio::contract("freeosgov") ]] transfer_whitelist {
+  name account;
+
+  uint64_t primary_key() const { return account.value; }
+};
+using transferers_index = eosio::multi_index<"transferers"_n, transfer_whitelist>;
+
+// minters table - a whitelist of who can call the issue function
+struct[[ eosio::table("minters"), eosio::contract("freeosgov") ]] minter_whitelist {
+  name account;
+
+  uint64_t primary_key() const { return account.value; }
+};
+using minters_index = eosio::multi_index<"minters"_n, minter_whitelist>;
+
+// burners table - a whitelist of who can call the retire function
+struct[[ eosio::table("burners"), eosio::contract("freeosgov") ]] burner_whitelist {
+  name account;
+
+  uint64_t primary_key() const { return account.value; }
+};
+using burners_index = eosio::multi_index<"burners"_n, burner_whitelist>;
+
+
 
 // PARAMETERS
 // parameters table
@@ -113,30 +159,5 @@ struct[[ eosio::table("svrs"), eosio::contract("freeosgov") ]] svr {
 };
 using svr_index = eosio::multi_index<"svrs"_n, svr>;
 
-
-// Running processing of survey results
-struct[[ eosio::table("survey"), eosio::contract("freeosgov") ]] survey {
-    uint32_t iteration;
-    uint32_t participants;
-    uint32_t q1choice1;
-    uint32_t q1choice2;
-    uint32_t q1choice3;
-    double q2average;
-    uint32_t q3choice1;
-    uint32_t q3choice2;
-    uint32_t q3choice3;
-    double q4average;
-    uint32_t q5choice1;
-    uint32_t q5choice2;
-    uint32_t q5choice3;
-    uint32_t q5choice4;
-    uint32_t q5choice5;
-    uint32_t q5choice6;
-    uint32_t q5choice7;
-    uint32_t q5choice8;
-
-    uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
-};
-using survey_index = eosio::multi_index<"survey"_n, survey>;
 
 } // end of namespace freedao

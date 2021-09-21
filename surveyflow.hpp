@@ -37,7 +37,7 @@ void freeosgov::initialise_survey() {
 }
 
 // ACTION
-void freeosgov::surveyflow(name user, uint8_t q1response, uint8_t q2response, uint8_t q3response, uint8_t q4response, string q5response) {
+void freeosgov::surveyflow(name user, uint8_t q1response, uint8_t q2response, uint8_t q3response, uint8_t q4response, uint8_t q5choice1, uint8_t q5choice2, uint8_t q5choice3) {
     
     require_auth(user);
 
@@ -72,18 +72,12 @@ void freeosgov::surveyflow(name user, uint8_t q1response, uint8_t q2response, ui
     check(q2response >= 1 && q2response <= 48,  "Response 2 must be a number between 1 and 48");
     check(q3response >= 1 && q3response <= 3,   "Response 3 must be a number between 1 and 3");
     check(q4response >= 1 && q4response <= 48,  "Response 4 must be a number between 1 and 48");
+    check(q5choice1 >= 1 && q5choice1 <= 6,     "Response 5 choice 1 must be a number between 1 and 6");
+    check(q5choice2 >= 1 && q5choice2 <= 6,     "Response 5 choice 2 must be a number between 1 and 6");
+    check(q5choice3 >= 1 && q5choice3 <= 6,     "Response 5 choice 3 must be a number between 1 and 6");
 
-    // response 5 - priority list must be in "n,n,n" format
-    string err_string = "Response 5 is in the wrong format. Correct format is a list of priority numbers between 1 and 8 (e.g.) \"2,3,8\" with no spaces";
-    check(q5response.length() == 5, err_string);
-    // parse the choice numbers
-    uint8_t q5choice1 = q5response.at(0) - '0';
-    uint8_t q5choice2 = q5response.at(2) - '0';
-    uint8_t q5choice3 = q5response.at(4) - '0';
-    check(  (q5choice1 >= 1 && q5choice1 <= 8) &&
-            (q5choice2 >= 1 && q5choice2 <= 8) &&
-            (q5choice3 >= 1 && q5choice3 <= 8),
-            err_string);
+    // response 5 - the 3 choices must not contain duplicates
+    check((q5choice1 != q5choice2) && (q5choice2 != q5choice3) && (q5choice3 != q5choice1), "Response 5 has duplicate values");
 
     // store the responses
     survey_index survey_table(get_self(), get_self().value);
@@ -163,12 +157,6 @@ void freeosgov::surveyflow(name user, uint8_t q1response, uint8_t q2response, ui
                     break;
                 case 6:
                     survey.q5choice6++;
-                    break;
-                case 7:
-                    survey.q5choice7++;
-                    break;
-                case 8:
-                    survey.q5choice8++;
                     break;
             }
         }        

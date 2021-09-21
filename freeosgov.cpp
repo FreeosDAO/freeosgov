@@ -4,10 +4,10 @@
 #include "tables.hpp"
 #include "config.hpp"
 #include "identity.hpp"
-#include "surveyflow.hpp"
 #include "survey.hpp"
 #include "voteflow.hpp"
 #include "ratifyflow.hpp"
+#include "points.hpp"
 
 namespace freedao {
 
@@ -104,10 +104,6 @@ void freeosgov::maintain(string action, name user) {
     } else {
       check(false, "Outside of ratify period");
     }
-  }
-  
-  if (action == "initialise survey") {
-    initialise_survey();
   }
 
   if (action == "clear svr") {

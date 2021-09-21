@@ -4,6 +4,122 @@
     "types": [],
     "structs": [
         {
+            "name": "account",
+            "base": "",
+            "fields": [
+                {
+                    "name": "balance",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "allocate",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "to",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "burn",
+            "base": "",
+            "fields": [
+                {
+                    "name": "burner",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "burner_whitelist",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "burneradd",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "burnererase",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "create",
+            "base": "",
+            "fields": [
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "maximum_supply",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "currency_stats",
+            "base": "",
+            "fields": [
+                {
+                    "name": "supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "max_supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "conditional_supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "issuer",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "init",
             "base": "",
             "fields": [
@@ -23,6 +139,58 @@
                 },
                 {
                     "name": "user",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "mint",
+            "base": "",
+            "fields": [
+                {
+                    "name": "minter",
+                    "type": "name"
+                },
+                {
+                    "name": "to",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "minter_whitelist",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "minteradd",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "mintererase",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
                     "type": "name"
                 }
             ]
@@ -94,106 +262,8 @@
             "base": "",
             "fields": [
                 {
-                    "name": "iteration",
-                    "type": "uint32"
-                },
-                {
-                    "name": "participants",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q1choice1",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q1choice2",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q1choice3",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q2average",
-                    "type": "float64"
-                },
-                {
-                    "name": "q3choice1",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q3choice2",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q3choice3",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q4average",
-                    "type": "float64"
-                },
-                {
-                    "name": "q5choice1",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q5choice2",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q5choice3",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q5choice4",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q5choice5",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q5choice6",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q5choice7",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q5choice8",
-                    "type": "uint32"
-                }
-            ]
-        },
-        {
-            "name": "surveyflow",
-            "base": "",
-            "fields": [
-                {
                     "name": "user",
                     "type": "name"
-                },
-                {
-                    "name": "q1response",
-                    "type": "uint8"
-                },
-                {
-                    "name": "q2response",
-                    "type": "uint8"
-                },
-                {
-                    "name": "q3response",
-                    "type": "uint8"
-                },
-                {
-                    "name": "q4response",
-                    "type": "uint8"
-                },
-                {
-                    "name": "q5response",
-                    "type": "string"
                 }
             ]
         },
@@ -278,6 +348,36 @@
             ]
         },
         {
+            "name": "transfadd",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "transfer_whitelist",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "transferase",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "user",
             "base": "",
             "fields": [
@@ -337,6 +437,31 @@
     ],
     "actions": [
         {
+            "name": "allocate",
+            "type": "allocate",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "burn",
+            "type": "burn",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "burneradd",
+            "type": "burneradd",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "burnererase",
+            "type": "burnererase",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "create",
+            "type": "create",
+            "ricardian_contract": ""
+        },
+        {
             "name": "init",
             "type": "init",
             "ricardian_contract": ""
@@ -344,6 +469,21 @@
         {
             "name": "maintain",
             "type": "maintain",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "mint",
+            "type": "mint",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "minteradd",
+            "type": "minteradd",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "mintererase",
+            "type": "mintererase",
             "ricardian_contract": ""
         },
         {
@@ -367,8 +507,18 @@
             "ricardian_contract": ""
         },
         {
-            "name": "surveyflow",
-            "type": "surveyflow",
+            "name": "survey",
+            "type": "survey",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "transfadd",
+            "type": "transfadd",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "transferase",
+            "type": "transferase",
             "ricardian_contract": ""
         },
         {
@@ -384,6 +534,27 @@
     ],
     "tables": [
         {
+            "name": "accounts",
+            "type": "account",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "burners",
+            "type": "burner_whitelist",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "minters",
+            "type": "minter_whitelist",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
             "name": "parameters",
             "type": "parameter",
             "index_type": "i64",
@@ -391,8 +562,8 @@
             "key_types": []
         },
         {
-            "name": "survey",
-            "type": "survey",
+            "name": "stat",
+            "type": "currency_stats",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
@@ -407,6 +578,13 @@
         {
             "name": "system",
             "type": "system",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "transferers",
+            "type": "transfer_whitelist",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
