@@ -47,7 +47,7 @@ void freeosgov::survey(name user) {
 
     // store responses and compute running averages
 
-
+    // Andrew's code changes
 
 
     // record that the user has responded to this iteration's survey
