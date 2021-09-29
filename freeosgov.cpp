@@ -8,13 +8,14 @@
 #include "voteflow.hpp"
 #include "ratifyflow.hpp"
 #include "points.hpp"
+#include "claim.hpp"
 
 namespace freedao {
 
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.0.20";
+const std::string VERSION = "0.0.21";
 
 // ACTION
 void freeosgov::version() {
@@ -124,6 +125,34 @@ void freeosgov::maintain(string action, name user) {
           svr.vote2 = 0;
           svr.vote3 = 0;
           svr.vote4 = 0;
+          svr.ratify1 = 0;
+          svr.ratify2 = 0;
+          svr.ratify3 = 0;
+          svr.ratify4 = 0;
+        });
+    }
+    
+  }
+
+
+  if (action == "set svr") {
+    svr_index svrs_table(get_self(), user.value);
+    auto svr_iterator = svrs_table.begin();
+
+    if (svr_iterator == svrs_table.end()) {
+        // emplace
+        svrs_table.emplace(get_self(), [&](auto &svr) { ; });
+        svr_iterator = svrs_table.begin();
+    } else {
+        svrs_table.modify(svr_iterator, _self, [&](auto &svr) {
+          svr.survey1 = 1;
+          svr.survey2 = 1;
+          svr.survey3 = 1;
+          svr.survey4 = 1;
+          svr.vote1 = 1;
+          svr.vote2 = 1;
+          svr.vote3 = 1;
+          svr.vote4 = 1;
           svr.ratify1 = 0;
           svr.ratify2 = 0;
           svr.ratify3 = 0;

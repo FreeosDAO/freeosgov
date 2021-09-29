@@ -42,6 +42,9 @@ public:
   // ratify actions
   [[eosio::action]] void ratifyflow(name user, bool ratify);
 
+  // claim actions
+  [[eosio::action]] void claim(name user);
+
   // points actions and functions
   [[eosio::action]] void create(const name &issuer, const asset &maximum_supply);
   void issue(const name &to, const asset &quantity, const string &memo);

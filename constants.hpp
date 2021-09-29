@@ -1,3 +1,5 @@
+#pragma once
+
 using namespace std;
 
 const string STAKE_CURRENCY_CODE = "FOOBAR";

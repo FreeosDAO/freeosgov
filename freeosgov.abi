@@ -84,6 +84,16 @@
             ]
         },
         {
+            "name": "claim",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "create",
             "base": "",
             "fields": [
@@ -454,6 +464,11 @@
         {
             "name": "burnererase",
             "type": "burnererase",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "claim",
+            "type": "claim",
             "ricardian_contract": ""
         },
         {
