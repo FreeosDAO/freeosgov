@@ -8,6 +8,16 @@ using namespace std;
 namespace freedao {
 
 // Andrew's code changes
+//
+// Survey global results table. For interpretations of particular rows search "survey.hpp".
+
+struct[[ eosio::table("globalres"), eosio::contract("freeosgov") ]] globalres_struct {
+    uint64_t p_key;
+    double gresult;
+    uint64_t primary_key() const { return p_key; }
+};
+using globalres_index = eosio::multi_index<"globalres"_n, globalres_struct>;
+//===============
 
 // SYSTEM
 // system table
@@ -159,6 +169,10 @@ struct[[ eosio::table("svrs"), eosio::contract("freeosgov") ]] svr {
     uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
 };
 using svr_index = eosio::multi_index<"svrs"_n, svr>;
+
+
+
+
 
 
 } // end of namespace freedao
