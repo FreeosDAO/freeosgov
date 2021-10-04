@@ -33,8 +33,14 @@ public:
   [[eosio::action]] void burneradd(name account);
   [[eosio::action]] void burnererase(name account);
 
-  // survey actions
-  [[eosio::action]] void survey(name user);
+  // survey actions (In survey.hpp)
+  [[eosio::action]] void survey( name user, bool r0,  bool r1,  bool r2,  // Question 1
+                                uint8_t r3,                    // Question 2 - slider
+                                bool r4,  bool r5,  bool r6,   // Question 3  
+                                uint8_t r7,                    // Question 4 - slider
+                                bool r8,  bool r9,  bool r10,  // Question 5
+                                bool r11, bool r12, bool r13, 
+                                bool r14, bool r15, bool r16); // Question 6 
 
   // vote actions
   [[eosio::action]] void voteflow(name user, string response);
@@ -55,6 +61,7 @@ public:
   void transfer(const name &from, const name &to, const asset &quantity, const string &memo);
   void sub_balance(const name &owner, const asset &value);
   void add_balance(const name &owner, const asset &value, const name &ram_payer);
+  void surveyinit(); // In survey.hpp
 
   // functions
   bool is_action_period(string action);
