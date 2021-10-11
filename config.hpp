@@ -1,10 +1,22 @@
-//#pragma once
+#pragma once
 #include <eosio/eosio.hpp>
 #include <eosio/system.hpp>
 #include "freeosgov.hpp"
 
 using namespace eosio;
 using namespace freedao;
+
+// get parameter value
+string freeosgov::get_parameter(name paramname) {
+  parameters_index parameters_table(get_self(), get_self().value);
+  auto parameter_iterator = parameters_table.find(paramname.value);
+
+  if (parameter_iterator != parameters_table.end()) {
+    return parameter_iterator->value;
+  } else {
+    return "";
+  }
+}
 
 // ACTION
 void freeosgov::paramupsert(name paramname, std::string value) {

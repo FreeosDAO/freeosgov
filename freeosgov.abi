@@ -513,7 +513,7 @@
             "fields": []
         },
         {
-            "name": "voteflow",
+            "name": "vote",
             "base": "",
             "fields": [
                 {
@@ -521,8 +521,36 @@
                     "type": "name"
                 },
                 {
-                    "name": "response",
+                    "name": "q1response",
+                    "type": "uint8"
+                },
+                {
+                    "name": "q2response",
+                    "type": "uint8"
+                },
+                {
+                    "name": "q3response",
+                    "type": "float64"
+                },
+                {
+                    "name": "q4response",
                     "type": "string"
+                },
+                {
+                    "name": "q5response",
+                    "type": "uint8"
+                },
+                {
+                    "name": "q6choice1",
+                    "type": "uint8"
+                },
+                {
+                    "name": "q6choice2",
+                    "type": "uint8"
+                },
+                {
+                    "name": "q6choice3",
+                    "type": "uint8"
                 }
             ]
         }
@@ -624,8 +652,8 @@
             "ricardian_contract": ""
         },
         {
-            "name": "voteflow",
-            "type": "voteflow",
+            "name": "vote",
+            "type": "vote",
             "ricardian_contract": ""
         }
     ],
@@ -696,6 +724,13 @@
         {
             "name": "users",
             "type": "user",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "vote",
+            "type": "vote",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

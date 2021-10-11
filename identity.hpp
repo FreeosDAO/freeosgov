@@ -3,10 +3,36 @@
 #include <eosio/system.hpp>
 #include "freeosgov.hpp"
 #include "constants.hpp"
+#include "config.hpp"
+#include "tables.hpp"
 
 using namespace eosio;
 using namespace freedao;
 
+
+// is the user within the allotted 'lifespan' ?
+bool freeosgov::is_user_active(name user) {
+
+  // default return value
+  bool user_valid = true;
+
+  // find the user lifespan parameter
+  string slifespan = get_parameter(name("userlifespan"));
+  uint32_t ilifespan = stoi(slifespan);
+
+  // get the user record
+  users_index users_table(get_self(), user.value);
+  auto user_iterator = users_table.begin();
+
+  check(user_iterator != users_table.end(), "user record is not defined");
+
+  // if current_iteration > user's registered_iteration + lifespan then user has exceeeded lifespan
+  if (current_iteration() > (user_iterator->registered_iteration + ilifespan)) {
+    user_valid = false;
+  }
+
+  return user_valid;
+}
 
 // determine the user account type from the Proton verification table
 string get_account_type(name user) {

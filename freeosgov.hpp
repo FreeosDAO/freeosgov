@@ -43,7 +43,7 @@ public:
                                 bool r14, bool r15, bool r16); // Question 6 
 
   // vote actions
-  [[eosio::action]] void voteflow(name user, string response);
+  [[eosio::action]] void vote(name user, uint8_t q1response, uint8_t q2response, double q3response, string q4response, uint8_t q5response, uint8_t q6choice1, uint8_t q6choice2, uint8_t q6choice3);
 
   // ratify actions
   [[eosio::action]] void ratifyflow(name user, bool ratify);
@@ -62,11 +62,14 @@ public:
   void sub_balance(const name &owner, const asset &value);
   void add_balance(const name &owner, const asset &value, const name &ram_payer);
   void surveyinit(); // In survey.hpp
+  void initialise_vote();
 
   // functions
   bool is_action_period(string action);
   uint16_t current_iteration();
   bool is_registered(name user);
+  bool is_user_active(name user);
+  string get_parameter(name parameter);
 };
 
 } // end of namespace freedao
