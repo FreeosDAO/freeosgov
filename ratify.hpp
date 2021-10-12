@@ -8,8 +8,22 @@ using namespace eosio;
 using namespace freedao;
 using namespace std;
 
+
+void freeosgov::initialise_ratify() {
+    ratify_index ratify_table(get_self(), get_self().value);
+    auto ratify_iterator = ratify_table.begin();
+
+    check(ratify_iterator != ratify_table.end(), "ratify table is undefined");
+
+    ratify_table.modify(ratify_iterator, _self, [&](auto &ratify) {
+      ratify.iteration = current_iteration();
+      ratify.participants = 0;
+      ratify.ratified = 0;
+    });
+}
+
 // ACTION
-void freeosgov::ratifyflow(name user, bool ratify) {
+void freeosgov::ratify(name user, bool ratify_vote) {
     
     require_auth(user);
 
@@ -37,6 +51,40 @@ void freeosgov::ratifyflow(name user, bool ratify) {
             svr_iterator->ratify4 != this_iteration,
             "user has already ratified");
     }
+
+    // store the responses
+    ratify_index ratify_table(get_self(), get_self().value);
+    auto ratify_iterator = ratify_table.begin();
+
+    // when run for the very first time, add the ratify record if not already present
+    if (ratify_iterator == ratify_table.end()) {
+        ratify_table.emplace(get_self(), [&](auto &ratify) { ratify.iteration = this_iteration; });
+        ratify_iterator = ratify_table.begin();
+    }
+
+    check(ratify_iterator != ratify_table.end(), "ratify record is not defined");
+
+    // check if we are on a new iteration. If yes, then re-initialise the running values in the ratify table
+    if (ratify_iterator->iteration != this_iteration) {
+        initialise_ratify();
+    }
+
+    // process the responses from the user
+    ratify_table.modify(ratify_iterator, _self, [&](auto &ratify) {
+
+        // set iteration
+        ratify.iteration = this_iteration;
+
+        // ratified?
+        if (ratify_vote == true) {
+            ratify.ratified++;
+        }        
+
+        // update the number of participants
+        ratify.participants++;
+
+    }); // end of modify
+
 
     
     // record that the user has ratified

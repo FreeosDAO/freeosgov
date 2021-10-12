@@ -6,7 +6,7 @@
 #include "identity.hpp"
 #include "survey.hpp"
 #include "vote.hpp"
-#include "ratifyflow.hpp"
+#include "ratify.hpp"
 #include "points.hpp"
 #include "claim.hpp"
 
@@ -15,7 +15,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.1.1";
+const std::string VERSION = "0.2.0";
 
 // ACTION
 void freeosgov::version() {

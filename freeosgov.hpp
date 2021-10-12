@@ -46,7 +46,7 @@ public:
   [[eosio::action]] void vote(name user, uint8_t q1response, uint8_t q2response, double q3response, string q4response, uint8_t q5response, uint8_t q6choice1, uint8_t q6choice2, uint8_t q6choice3);
 
   // ratify actions
-  [[eosio::action]] void ratifyflow(name user, bool ratify);
+  [[eosio::action]] void ratify(name user, bool ratify_vote);
 
   // claim actions
   [[eosio::action]] void claim(name user);
@@ -63,6 +63,7 @@ public:
   void add_balance(const name &owner, const asset &value, const name &ram_payer);
   void surveyinit(); // In survey.hpp
   void initialise_vote();
+  void initialise_ratify();
 
   // functions
   bool is_action_period(string action);

@@ -192,6 +192,15 @@ struct[[ eosio::table("vote"), eosio::contract("freeosgov") ]] vote {
 using vote_index = eosio::multi_index<"vote"_n, vote>;
 
 
+// RATIFY
+// Running processing of ratify responses
+struct[[ eosio::table("ratify"), eosio::contract("freeosgov") ]] ratify {
+    uint32_t iteration;
+    uint32_t participants;
+    uint32_t ratified;
+    uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
+};
+using ratify_index = eosio::multi_index<"ratify"_n, ratify>;
 
 
 } // end of namespace freedao

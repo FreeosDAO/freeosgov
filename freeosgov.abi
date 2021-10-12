@@ -258,7 +258,7 @@
             ]
         },
         {
-            "name": "ratifyflow",
+            "name": "ratify",
             "base": "",
             "fields": [
                 {
@@ -266,7 +266,7 @@
                     "type": "name"
                 },
                 {
-                    "name": "ratify",
+                    "name": "ratify_vote",
                     "type": "bool"
                 }
             ]
@@ -622,8 +622,8 @@
             "ricardian_contract": ""
         },
         {
-            "name": "ratifyflow",
-            "type": "ratifyflow",
+            "name": "ratify",
+            "type": "ratify",
             "ricardian_contract": ""
         },
         {
@@ -689,6 +689,13 @@
         {
             "name": "parameters",
             "type": "parameter",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "ratify",
+            "type": "ratify",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
