@@ -15,8 +15,7 @@ void freeosgov::survey( name user, bool r0,  bool r1,  bool r2,  // Question 1
                                 bool r4,  bool r5,  bool r6,   // Question 3  
                                 uint8_t r7,                    // Question 4 - slider
                                 bool r8,  bool r9,  bool r10,  // Question 5
-                                bool r11, bool r12, bool r13, 
-                                bool r14, bool r15, bool r16)  // Question 6
+                                bool r11, bool r12, bool r13)
 {
     require_auth(user);
 
@@ -61,23 +60,25 @@ void freeosgov::survey( name user, bool r0,  bool r1,  bool r2,  // Question 1
     // 
     // parameter checking
     //
-    /**
+        /**
      * In the table "final_results": 
      *    p_key 0 -   2 Question One   (three options).
      *    p_key 3       Question Two   (slider) - there is up to date average result.
      *    p_key 4  -  6 Question Three (three options).
      *    p_key 7       Question Four  (slider) - there is up to date average result.
      *    p_key 8  - 13 Question Five  (six options).
-     *    p_key 14 - 16 Question Six   (three options).
+     *    p_key 14 - 16 Question Six   (three options). N.B OBSOLETE - NOT USED
      *    p_key 17      Number of users submitted surveys up to date.
      *    p_key 18      Sum of all slider values for row 3 to count average.
      *    p_key 19      Sum of all slider values for row 7 to count average.  
      *    p_key 20      Stored iteration number - that means survey was initialized
      *              ... during that iteration. If current iteration number is different
      *              ... that means the final_results table is outdated and must be initialized. 
-    */  
-    uint8_t q1=0;
-    if(r0){q1++;};
+    */
+        uint8_t q1 = 0;
+        if (r0)
+        {
+            q1++;};
     if(r1){q1++;};
     if(r2){q1++;};
     check( q1==1, "First question not answered correctly");
@@ -96,11 +97,11 @@ void freeosgov::survey( name user, bool r0,  bool r1,  bool r2,  // Question 1
     if(r12){q1++;};
     if(r13){q1++;};
     check( q1==3, "Fifth question not answered correctly");
-    q1=0;
-    if(r14){q1++;};
-    if(r15){q1++;};
-    if(r16){q1++;};
-    check( q1==1, "Sixth question not answered correctly");
+    // q1=0;
+    // if(r14){q1++;};
+    // if(r15){q1++;};
+    // if(r16){q1++;};
+    // check( q1==1, "Sixth question not answered correctly");
 
     //
     // store responses and compute running averages
@@ -137,10 +138,10 @@ void freeosgov::survey( name user, bool r0,  bool r1,  bool r2,  // Question 1
     if(r11){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
     if(r12){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
     if(r13){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
-    // Question 6: Select 1 of 3 
-    if(r14){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
-    if(r15){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
-    if(r16){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
+    // Question 6: Select 1 of 3 - OBSOLETE - NOT USED
+    // if(r14){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
+    // if(r15){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
+    // if(r16){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
     //end
 
     //

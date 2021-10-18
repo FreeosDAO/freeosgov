@@ -344,18 +344,6 @@
                 {
                     "name": "r13",
                     "type": "bool"
-                },
-                {
-                    "name": "r14",
-                    "type": "bool"
-                },
-                {
-                    "name": "r15",
-                    "type": "bool"
-                },
-                {
-                    "name": "r16",
-                    "type": "bool"
                 }
             ]
         },
