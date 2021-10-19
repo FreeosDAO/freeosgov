@@ -42,37 +42,40 @@ void freeosgov::claim(name user) {
     // keep a running count of points to pay
     asset user_payment = asset(0, POINT_CURRENCY_SYMBOL);
 
-    // payment for surveys    
-    if (svr_iterator->survey1 > last_issuance) {
+    // we only pay out for surveys within the Claim History Period (4 iterations)
+    uint32_t lapsed_claim_iteration = this_iteration - 4;
+
+    // payment for surveys
+    if (svr_iterator->survey1 > last_issuance && svr_iterator->survey1 > lapsed_claim_iteration) {
         user_payment += PAYMENT_SURVEY;
     }
 
-    if (svr_iterator->survey2 > last_issuance) {
+    if (svr_iterator->survey2 > last_issuance && svr_iterator->survey2 > lapsed_claim_iteration) {
         user_payment += PAYMENT_SURVEY;
     }
 
-    if (svr_iterator->survey3 > last_issuance) {
+    if (svr_iterator->survey3 > last_issuance && svr_iterator->survey3 > lapsed_claim_iteration) {
         user_payment += PAYMENT_SURVEY;
     }
 
-    if (svr_iterator->survey4 > last_issuance) {
+    if (svr_iterator->survey4 > last_issuance && svr_iterator->survey4 > lapsed_claim_iteration) {
         user_payment += PAYMENT_SURVEY;
     }
 
     // payments for votes
-    if (svr_iterator->vote1 > last_issuance) {
+    if (svr_iterator->vote1 > last_issuance && svr_iterator->vote1 > lapsed_claim_iteration) {
         user_payment += PAYMENT_VOTE;
     }
 
-    if (svr_iterator->vote2 > last_issuance) {
+    if (svr_iterator->vote2 > last_issuance && svr_iterator->vote2 > lapsed_claim_iteration) {
         user_payment += PAYMENT_VOTE;
     }
 
-    if (svr_iterator->vote3 > last_issuance) {
+    if (svr_iterator->vote3 > last_issuance && svr_iterator->vote3 > lapsed_claim_iteration) {
         user_payment += PAYMENT_VOTE;
     }
 
-    if (svr_iterator->vote4 > last_issuance) {
+    if (svr_iterator->vote4 > last_issuance && svr_iterator->vote4 > lapsed_claim_iteration) {
         user_payment += PAYMENT_VOTE;
     }
 
