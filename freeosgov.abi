@@ -333,27 +333,27 @@
                 },
                 {
                     "name": "r8",
-                    "type": "bool"
+                    "type": "uint8"
                 },
                 {
                     "name": "r9",
-                    "type": "bool"
+                    "type": "uint8"
                 },
                 {
                     "name": "r10",
-                    "type": "bool"
+                    "type": "uint8"
                 },
                 {
                     "name": "r11",
-                    "type": "bool"
+                    "type": "uint8"
                 },
                 {
                     "name": "r12",
-                    "type": "bool"
+                    "type": "uint8"
                 },
                 {
                     "name": "r13",
-                    "type": "bool"
+                    "type": "uint8"
                 }
             ]
         },

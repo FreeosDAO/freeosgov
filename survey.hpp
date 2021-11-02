@@ -10,12 +10,12 @@ using namespace std;
 
 
 [[eosio::action]]
-void freeosgov::survey( name user, bool r0,  bool r1,  bool r2,  // Question 1
-                                uint8_t r3,                    // Question 2 - slider
-                                bool r4,  bool r5,  bool r6,   // Question 3  
-                                uint8_t r7,                    // Question 4 - slider
-                                bool r8,  bool r9,  bool r10,  // Question 5
-                                bool r11, bool r12, bool r13)
+void freeosgov::survey( name user, bool r0,  bool r1,  bool r2, // Question 1
+                                uint8_t r3,                     // Question 2 - slider
+                                bool r4,  bool r5,  bool r6,    // Question 3  
+                                uint8_t r7,                     // Question 4 - slider
+                                uint8_t r8,  uint8_t r9,  uint8_t r10,  // Question 5
+                                uint8_t r11, uint8_t r12, uint8_t r13)
 {
     require_auth(user);
 
@@ -67,7 +67,7 @@ void freeosgov::survey( name user, bool r0,  bool r1,  bool r2,  // Question 1
      *    p_key 4  -  6 Question Three (three options).
      *    p_key 7       Question Four  (slider) - there is up to date average result.
      *    p_key 8  - 13 Question Five  (six options).
-     *    p_key 14 - 16 Question Six   (three options). N.B OBSOLETE - NOT USED
+     *    p_key 14 - 16 Question Six   (three options). No Q6 - These rows are NOT USED
      *    p_key 17      Number of users submitted surveys up to date.
      *    p_key 18      Sum of all slider values for row 3 to count average.
      *    p_key 19      Sum of all slider values for row 7 to count average.  
@@ -89,19 +89,8 @@ void freeosgov::survey( name user, bool r0,  bool r1,  bool r2,  // Question 1
     if(r6){q1++;};
     check( q1==1, "Third question not answered correctly");
     check( ((r7>0)&&(r7<=50)), "Fourth question out of range 1-50");
-    q1=0;
-    if(r8){q1++;};
-    if(r9){q1++;};
-    if(r10){q1++;};
-    if(r11){q1++;};
-    if(r12){q1++;};
-    if(r13){q1++;};
-    check( q1==3, "Fifth question not answered correctly");
-    // q1=0;
-    // if(r14){q1++;};
-    // if(r15){q1++;};
-    // if(r16){q1++;};
-    // check( q1==1, "Sixth question not answered correctly");
+    q1=r8+r9+r10+r11+r12+r13;
+    check( q1==6, "Fifth question not answered correctly");
 
     //
     // store responses and compute running averages
@@ -131,18 +120,13 @@ void freeosgov::survey( name user, bool r0,  bool r1,  bool r2,  // Question 1
     if(r6){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++; 
     // Question 4: result between 0-50   //using r7
     {final_results.modify(ite, get_self(),[&](auto &p){p.gresult = sum2/counter;});} ite++;
-    // Question 5: Select 3 of 6
-    if(r8 ){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
-    if(r9 ){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
-    if(r10){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
-    if(r11){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
-    if(r12){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
-    if(r13){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
-    // Question 6: Select 1 of 3 - OBSOLETE - NOT USED
-    // if(r14){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
-    // if(r15){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
-    // if(r16){final_results.modify(ite, get_self(),[&](auto &p){ p.gresult++; });} ite++;
-    //end
+    // Question 5: Select 3 of 6 Note: r8-r13 contains priority points from front-end
+    final_results.modify(ite, get_self(),[&](auto &p){ p.gresult = p.gresult + r8; }); ite++;
+    final_results.modify(ite, get_self(),[&](auto &p){ p.gresult = p.gresult + r9; }); ite++;
+    final_results.modify(ite, get_self(),[&](auto &p){ p.gresult = p.gresult + r10; }); ite++;
+    final_results.modify(ite, get_self(),[&](auto &p){ p.gresult = p.gresult + r11; }); ite++;
+    final_results.modify(ite, get_self(),[&](auto &p){ p.gresult = p.gresult + r12; }); ite++;
+    final_results.modify(ite, get_self(),[&](auto &p){ p.gresult = p.gresult + r13; }); ite++;
 
     //
     // record that the user has responded to this iteration's survey
