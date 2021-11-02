@@ -34,38 +34,7 @@ void freeosgov::initialise_vote() {
 }
 
 
-std::vector<std::string> parseTokens(string s, string delimiter) {
-
-    std::vector<std::string> tokenlist {};
-
-    size_t pos = 0;
-    std::string token;
-    while ((pos = s.find(delimiter)) != std::string::npos) {
-        token = s.substr(0, pos);
-        tokenlist.push_back (token);
-        s.erase(0, pos + delimiter.length());
-    }
-    tokenlist.push_back (token);
-
-    return tokenlist;
-}
-
-vector<string> split (string s, string delimiter) {
-    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
-    string token;
-    vector<string> res;
-
-    while ((pos_end = s.find (delimiter, pos_start)) != string::npos) {
-        token = s.substr (pos_start, pos_end - pos_start);
-        pos_start = pos_end + delim_len;
-        res.push_back (token);
-    }
-
-    res.push_back (s.substr (pos_start));
-    return res;
-}
-
-std::vector<int> parse_ranges(string voteranges) {
+std::vector<int> parse_vote_ranges(string voteranges) {
     
     // the voteranges string looks like this: q1:0-100,q2:6-30,q5:0-50
     std::vector<int> limits;
@@ -94,15 +63,15 @@ std::vector<int> parse_ranges(string voteranges) {
 void freeosgov::testranges() {
     // get and parse the vote slider ranges
     string voteranges = get_parameter(name("voteranges"));
-    std::vector<int> value_ranges = parse_ranges(voteranges);
+    std::vector<int> vote_range_values = parse_vote_ranges(voteranges);
 
     string limits =
-    to_string(value_ranges[0]) + " " +
-    to_string(value_ranges[1]) + " " +
-    to_string(value_ranges[2]) + " " +
-    to_string(value_ranges[3]) + " " +
-    to_string(value_ranges[4]) + " " +
-    to_string(value_ranges[5]);
+    to_string(vote_range_values[0]) + " " +
+    to_string(vote_range_values[1]) + " " +
+    to_string(vote_range_values[2]) + " " +
+    to_string(vote_range_values[3]) + " " +
+    to_string(vote_range_values[4]) + " " +
+    to_string(vote_range_values[5]);
 
     check(false, limits);
 }
@@ -145,7 +114,7 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
 
     // get and parse the vote slider ranges
     string voteranges = get_parameter(name("voteranges"));
-    std::vector<int> range_values = parse_ranges(voteranges);
+    std::vector<int> vote_range_values = parse_vote_ranges(voteranges);
 
     // get the current price of Freeos
     exchange_index rates_table(get_self(), get_self().value);
@@ -153,11 +122,11 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     check(rate_iterator != rates_table.end(), "current price of Freeos is undefined");
     double current_price = rate_iterator->currentprice;
     
-    check(q1response >= range_values[0] && q1response <= range_values[1],  "Response 1 is out of range");
-    check(q2response >= range_values[2] && q2response <= range_values[3],  "Response 2 is out of range");
+    check(q1response >= vote_range_values[0] && q1response <= vote_range_values[1],  "Response 1 is out of range");
+    check(q2response >= vote_range_values[2] && q2response <= vote_range_values[3],  "Response 2 is out of range");
     check(q3response >= 0.0167 && q3response <= current_price,   "Response 3 is out of range");
     check(q4response != "POOL" && q4response != "BURN",  "Response 4 must be 'POOL' or 'BURN");
-    check(q5response >= range_values[4] && q5response <= range_values[5],  "Response 5 is out of range");
+    check(q5response >= vote_range_values[4] && q5response <= vote_range_values[5],  "Response 5 is out of range");
     check(q6choice1 >= 1 && q6choice1 <= 6,     "Response 6 choice 1 must be a number between 1 and 6");
     check(q6choice2 >= 1 && q6choice2 <= 6,     "Response 6 choice 2 must be a number between 1 and 6");
     check(q6choice3 >= 1 && q6choice3 <= 6,     "Response 6 choice 3 must be a number between 1 and 6");

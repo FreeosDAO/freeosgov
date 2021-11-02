@@ -9,6 +9,43 @@ using namespace freedao;
 using namespace std;
 
 
+vector<string> split (string s, string delimiter) {
+    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+    string token;
+    vector<string> res;
+
+    while ((pos_end = s.find (delimiter, pos_start)) != string::npos) {
+        token = s.substr (pos_start, pos_end - pos_start);
+        pos_start = pos_end + delim_len;
+        res.push_back (token);
+    }
+
+    res.push_back (s.substr (pos_start));
+    return res;
+}
+
+std::vector<int> parse_survey_ranges(string surveyranges) {
+    
+    // the surveyranges string looks like this: q1.2:1-48,q2.2:1-48
+    std::vector<int> limits;
+
+    std::vector<std::string> tokenlist = split(surveyranges, ",");
+
+    std::vector q1_2_param = split(tokenlist[0], ":");
+    std::vector q2_2_param = split(tokenlist[1], ":");
+
+    std::vector q1_minmax = split(q1_2_param[1], "-");
+    std::vector q2_minmax = split(q2_2_param[1], "-");
+
+    limits.push_back (stoi(q1_minmax[0]));
+    limits.push_back (stoi(q1_minmax[1]));
+    limits.push_back (stoi(q2_minmax[0]));
+    limits.push_back (stoi(q2_minmax[1]));
+
+    return limits;
+}
+
+
 [[eosio::action]]
 void freeosgov::survey( name user, bool r0,  bool r1,  bool r2, // Question 1
                                 uint8_t r3,                     // Question 2 - slider
@@ -75,6 +112,11 @@ void freeosgov::survey( name user, bool r0,  bool r1,  bool r2, // Question 1
      *              ... during that iteration. If current iteration number is different
      *              ... that means the final_results table is outdated and must be initialized. 
     */
+
+    // get and parse the survey slider ranges
+    string surveyranges = get_parameter(name("surveyranges"));
+    std::vector<int> range_values = parse_survey_ranges(surveyranges);
+
         uint8_t q1 = 0;
         if (r0)
         {
@@ -82,13 +124,13 @@ void freeosgov::survey( name user, bool r0,  bool r1,  bool r2, // Question 1
     if(r1){q1++;};
     if(r2){q1++;};
     check( q1==1, "First question not answered correctly");
-    check( ((r3>0)&&(r3<=50)), "Second question out of range 1-50");
+    check( ((r3 >= range_values[0]) && (r3 <= range_values[1])), "Second question out of range");
     q1=0;
     if(r4){q1++;};
     if(r5){q1++;};
     if(r6){q1++;};
     check( q1==1, "Third question not answered correctly");
-    check( ((r7>0)&&(r7<=50)), "Fourth question out of range 1-50");
+    check( ((r7 >= range_values[2]) && (r7 <= range_values[3])), "Fourth question out of range");
     q1=r8+r9+r10+r11+r12+r13;
     check( q1==6, "Fifth question not answered correctly");
 
