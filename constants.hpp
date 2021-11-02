@@ -14,3 +14,5 @@ const name AIRCLAIM_CONTRACT = name("freeosd");     // TODO: ifdef for test/prod
 const name VERIFICATION_CONTRACT = name("eosio.proton"); // TODO: ifdef for test/production
 
 const uint32_t ITERATION_LENGTH_SECONDS = 604800;   // 86400 = day, 604800 = week
+
+const double HARD_EXCHANGE_RATE_FLOOR = 0.0167;

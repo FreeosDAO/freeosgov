@@ -3,6 +3,7 @@
 #include <eosio/system.hpp>
 #include "freeosgov.hpp"
 #include "tables.hpp"
+#include "config.hpp"
 
 using namespace eosio;
 using namespace freedao;
@@ -31,6 +32,81 @@ void freeosgov::initialise_vote() {
       vote.q6choice6 = 0;
     });
 }
+
+
+std::vector<std::string> parseTokens(string s, string delimiter) {
+
+    std::vector<std::string> tokenlist {};
+
+    size_t pos = 0;
+    std::string token;
+    while ((pos = s.find(delimiter)) != std::string::npos) {
+        token = s.substr(0, pos);
+        tokenlist.push_back (token);
+        s.erase(0, pos + delimiter.length());
+    }
+    tokenlist.push_back (token);
+
+    return tokenlist;
+}
+
+vector<string> split (string s, string delimiter) {
+    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+    string token;
+    vector<string> res;
+
+    while ((pos_end = s.find (delimiter, pos_start)) != string::npos) {
+        token = s.substr (pos_start, pos_end - pos_start);
+        pos_start = pos_end + delim_len;
+        res.push_back (token);
+    }
+
+    res.push_back (s.substr (pos_start));
+    return res;
+}
+
+std::vector<int> parse_ranges(string voteranges) {
+    
+    // the voteranges string looks like this: q1:0-100,q2:6-30,q5:0-50
+    std::vector<int> limits;
+
+    std::vector<std::string> tokenlist = split(voteranges, ",");
+
+    std::vector q1_param = split(tokenlist[0], ":");
+    std::vector q2_param = split(tokenlist[1], ":");
+    std::vector q5_param = split(tokenlist[2], ":");
+
+    std::vector q1_minmax = split(q1_param[1], "-");
+    std::vector q2_minmax = split(q2_param[1], "-");
+    std::vector q5_minmax = split(q5_param[1], "-");
+
+    limits.push_back (stoi(q1_minmax[0]));
+    limits.push_back (stoi(q1_minmax[1]));
+    limits.push_back (stoi(q2_minmax[0]));
+    limits.push_back (stoi(q2_minmax[1]));
+    limits.push_back (stoi(q5_minmax[0]));
+    limits.push_back (stoi(q5_minmax[1]));
+
+    return limits;
+}
+
+// ACTION
+void freeosgov::testranges() {
+    // get and parse the vote slider ranges
+    string voteranges = get_parameter(name("voteranges"));
+    std::vector<int> value_ranges = parse_ranges(voteranges);
+
+    string limits =
+    to_string(value_ranges[0]) + " " +
+    to_string(value_ranges[1]) + " " +
+    to_string(value_ranges[2]) + " " +
+    to_string(value_ranges[3]) + " " +
+    to_string(value_ranges[4]) + " " +
+    to_string(value_ranges[5]);
+
+    check(false, limits);
+}
+
 
 // ACTION
 void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q3response, string q4response, uint8_t q5response, uint8_t q6choice1, uint8_t q6choice2, uint8_t q6choice3) {
@@ -66,16 +142,27 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     }
 
     // parameter checking
-    check(q1response >= 0 && q1response <= 100,   "Response 1 must be a number between 0 and 100");
-    check(q2response >= 6 && q2response <= 30,  "Response 2 must be a number between 6 and 30");
-    check(q3response >= 0.0167 && q3response <= 1.0,   "Response 3 must be a number between 0.167 and 1.0");
+
+    // get and parse the vote slider ranges
+    string voteranges = get_parameter(name("voteranges"));
+    std::vector<int> range_values = parse_ranges(voteranges);
+
+    // get the current price of Freeos
+    exchange_index rates_table(get_self(), get_self().value);
+    auto rate_iterator = rates_table.begin();
+    check(rate_iterator != rates_table.end(), "current price of Freeos is undefined");
+    double current_price = rate_iterator->currentprice;
+    
+    check(q1response >= range_values[0] && q1response <= range_values[1],  "Response 1 is out of range");
+    check(q2response >= range_values[2] && q2response <= range_values[3],  "Response 2 is out of range");
+    check(q3response >= 0.0167 && q3response <= current_price,   "Response 3 is out of range");
     check(q4response != "POOL" && q4response != "BURN",  "Response 4 must be 'POOL' or 'BURN");
-    check(q5response >= 0 && q5response <= 50,   "Response 5 must be a number between 0 and 50");
+    check(q5response >= range_values[4] && q5response <= range_values[5],  "Response 5 is out of range");
     check(q6choice1 >= 1 && q6choice1 <= 6,     "Response 6 choice 1 must be a number between 1 and 6");
     check(q6choice2 >= 1 && q6choice2 <= 6,     "Response 6 choice 2 must be a number between 1 and 6");
     check(q6choice3 >= 1 && q6choice3 <= 6,     "Response 6 choice 3 must be a number between 1 and 6");
 
-    // response 5 - the 3 choices must not contain duplicates
+    // response 6 - the 3 choices must not contain duplicates
     check((q6choice1 != q6choice2) && (q6choice2 != q6choice3) && (q6choice3 != q6choice1), "Response 6 has duplicate values");
 
     // store the responses

@@ -203,4 +203,14 @@ struct[[ eosio::table("ratify"), eosio::contract("freeosgov") ]] ratify {
 using ratify_index = eosio::multi_index<"ratify"_n, ratify>;
 
 
+// EXCHANGERATE
+// exchangerate table
+struct[[ eosio::table("exchangerate"), eosio::contract("freeosconfig") ]] price {
+  double currentprice;
+  double targetprice;
+
+  uint64_t primary_key() const { return 0; } // return a constant (0 in this case) to ensure a single-row table
+};
+using exchange_index = eosio::multi_index<"exchangerate"_n, price>;
+
 } // end of namespace freedao

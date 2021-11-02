@@ -130,6 +130,16 @@
             ]
         },
         {
+            "name": "currentrate",
+            "base": "",
+            "fields": [
+                {
+                    "name": "price",
+                    "type": "float64"
+                }
+            ]
+        },
+        {
             "name": "globalres_struct",
             "base": "",
             "fields": [
@@ -428,6 +438,21 @@
             ]
         },
         {
+            "name": "targetrate",
+            "base": "",
+            "fields": [
+                {
+                    "name": "price",
+                    "type": "float64"
+                }
+            ]
+        },
+        {
+            "name": "testranges",
+            "base": "",
+            "fields": []
+        },
+        {
             "name": "transfadd",
             "base": "",
             "fields": [
@@ -575,6 +600,11 @@
             "ricardian_contract": ""
         },
         {
+            "name": "currentrate",
+            "type": "currentrate",
+            "ricardian_contract": ""
+        },
+        {
             "name": "init",
             "type": "init",
             "ricardian_contract": ""
@@ -622,6 +652,16 @@
         {
             "name": "survey",
             "type": "survey",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "targetrate",
+            "type": "targetrate",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "testranges",
+            "type": "testranges",
             "ricardian_contract": ""
         },
         {

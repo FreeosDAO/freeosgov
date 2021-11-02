@@ -2,6 +2,7 @@
 #include <eosio/eosio.hpp>
 #include <eosio/system.hpp>
 #include "freeosgov.hpp"
+#include "constants.hpp"
 
 using namespace eosio;
 using namespace freedao;
@@ -132,4 +133,65 @@ void freeosgov::burnererase(name account) {
   // the account is in the table, so delete
   burners_table.erase(burner_iterator);
 }
+
+// ACTION
+void freeosgov::currentrate(double price) {
+
+  // check if the exchange account is calling this action, or the contract itself
+  parameters_index parameters_table(get_self(), get_self().value);
+  auto parameter_iterator = parameters_table.find(name("exchangeacc").value);
+  if (parameter_iterator != parameters_table.end()) {
+    require_auth(name(parameter_iterator->value));
+  } else {
+    require_auth(_self);
+  }
+
+  check(price > 0.0, "current rate must be positive");
+
+  exchange_index rates_table(get_self(), get_self().value);
+  auto rate_iterator = rates_table.begin();
+
+  // check if the rate exists in the table
+  if (rate_iterator == rates_table.end()) {
+    // the rate is not in the table, so insert
+    rates_table.emplace(_self, [&](auto &rate) { rate.currentprice = price; });
+
+  } else {
+    // the rate is in the table, so update
+    rates_table.modify(rate_iterator, _self,
+                       [&](auto &rate) { rate.currentprice = price; });
+  }
+}
+
+// ACTION
+void freeosgov::targetrate(double exchangerate) {
+
+  require_auth(_self);
+
+  check(exchangerate > 0.0, "target rate must be positive");
+
+  double new_exchangerate = exchangerate;
+
+  // ensure it is not set below the hardcoded floor
+  if (new_exchangerate < HARD_EXCHANGE_RATE_FLOOR) {
+    new_exchangerate = HARD_EXCHANGE_RATE_FLOOR;
+  }
+
+  exchange_index rates_table(get_self(), get_self().value);
+  auto rate_iterator = rates_table.begin();
+
+  // check if the rate exists in the table
+  if (rate_iterator == rates_table.end()) {
+    // the rate is not in the table, so insert
+    rates_table.emplace(
+        _self, [&](auto &rate) { rate.targetprice = new_exchangerate; });
+
+  } else {
+    // the rate is in the table, so update
+    rates_table.modify(rate_iterator, _self, [&](auto &rate) {
+      rate.targetprice = new_exchangerate;
+    });
+  }
+}
+
 

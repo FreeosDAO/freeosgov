@@ -32,6 +32,8 @@ public:
   [[eosio::action]] void mintererase(name account);
   [[eosio::action]] void burneradd(name account);
   [[eosio::action]] void burnererase(name account);
+  [[eosio::action]] void currentrate(double price);
+  [[eosio::action]] void targetrate(double price);
 
   // survey actions (In survey.hpp)
   [[eosio::action]] void survey( name user, bool r0,  bool r1,  bool r2,  // Question 1
@@ -43,6 +45,7 @@ public:
 
   // vote actions
   [[eosio::action]] void vote(name user, uint8_t q1response, uint8_t q2response, double q3response, string q4response, uint8_t q5response, uint8_t q6choice1, uint8_t q6choice2, uint8_t q6choice3);
+  [[eosio::action]] void testranges();
 
   // ratify actions
   [[eosio::action]] void ratify(name user, bool ratify_vote);
