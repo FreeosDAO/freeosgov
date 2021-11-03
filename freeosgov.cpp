@@ -15,7 +15,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.2.3";
+const std::string VERSION = "0.2.4";
 
 // ACTION
 void freeosgov::version() {
