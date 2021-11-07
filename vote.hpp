@@ -122,7 +122,7 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     auto rate_iterator = rates_table.begin();
     check(rate_iterator != rates_table.end(), "current price of Freeos is undefined");
     double current_price = rate_iterator->currentprice;
-    double target_price = rate_iterator->targetprice;
+    // double target_price = rate_iterator->targetprice;
 
     // calculate the upper bound of locking threshold (q3)
     string str_lock_factor = get_parameter(name("lockfactor"));

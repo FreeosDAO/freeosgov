@@ -1,0 +1,1 @@
+eosio-cpp -o freeby.wasm freeby.cpp -DFREEOSGOV="\"freeosgov\"" --abigen

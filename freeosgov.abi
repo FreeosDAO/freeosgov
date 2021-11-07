@@ -230,6 +230,20 @@
             ]
         },
         {
+            "name": "mintfreeby",
+            "base": "",
+            "fields": [
+                {
+                    "name": "owner",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
             "name": "paramerase",
             "base": "",
             "fields": [
@@ -627,6 +641,11 @@
         {
             "name": "mintererase",
             "type": "mintererase",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "mintfreeby",
+            "type": "mintfreeby",
             "ricardian_contract": ""
         },
         {

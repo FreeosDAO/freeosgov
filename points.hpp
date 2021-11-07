@@ -164,3 +164,47 @@ void freeosgov::add_balance(const name &owner, const asset &value,
     to_acnts.modify(to, same_payer, [&](auto &a) { a.balance += value; });
   }
 }
+
+// convert non-exchangeable currency for exchangeable currency
+// ACTION
+void freeosgov::mintfreeby(const name &owner, const asset &quantity) {
+  require_auth(owner);
+
+  auto sym = quantity.symbol;
+  check(sym == POINT_CURRENCY_SYMBOL, "invalid symbol name");
+
+  stats statstable(get_self(), sym.code().raw());
+  auto existing = statstable.find(sym.code().raw());
+  check(existing != statstable.end(), "token with symbol does not exist");
+  const auto &st = *existing;
+
+  check(quantity.is_valid(), "invalid quantity");
+  check(quantity.amount > 0, "must convert positive quantity");
+
+  statstable.modify(st, same_payer, [&](auto &s) {
+    s.supply -= quantity;
+    s.conditional_supply -= quantity;
+  });
+
+  // decrease owner's balance of non-exchangeable tokens
+  sub_balance(owner, quantity);
+
+  // Issue exchangeable tokens
+  asset exchangeable_amount = asset(quantity.amount, FREEBY_CURRENCY_SYMBOL);
+  std::string memo = std::string("conversion");
+
+  // ask FREEBY contract to issue an equivalent amount of FREEBY tokens to the freeosgov account
+  action issue_action = action(
+      permission_level{get_self(), "active"_n}, name(freeby_acct),
+      "issue"_n, std::make_tuple(get_self(), exchangeable_amount, memo));
+
+  issue_action.send();
+
+  // transfer FREEBY tokens to the owner
+  action transfer_action = action(
+      permission_level{get_self(), "active"_n}, name(freeby_acct),
+      "transfer"_n,
+      std::make_tuple(get_self(), owner, exchangeable_amount, memo));
+
+  transfer_action.send();
+}

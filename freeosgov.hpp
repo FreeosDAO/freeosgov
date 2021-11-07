@@ -63,6 +63,9 @@ public:
   void transfer(const name &from, const name &to, const asset &quantity, const string &memo);
   void sub_balance(const name &owner, const asset &value);
   void add_balance(const name &owner, const asset &value, const name &ram_payer);
+  [[eosio::action]] void mintfreeby(const name &owner, const asset &quantity);
+
+
   void surveyinit(); // In survey.hpp
   void initialise_vote();
   void initialise_ratify();
