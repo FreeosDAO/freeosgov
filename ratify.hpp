@@ -27,6 +27,8 @@ void freeosgov::ratify(name user, bool ratify_vote) {
     
     require_auth(user);
 
+    tick();
+
     uint32_t this_iteration = current_iteration();
     
     // is the system operational?
@@ -34,6 +36,9 @@ void freeosgov::ratify(name user, bool ratify_vote) {
 
     // are we in the ratify period?
     check(is_action_period("ratify"), "It is outside of the ratification period");
+
+    // is the user verified?
+    check(is_user_verified(user), "ratification is not open to unverified users");
 
     // has the user already ratified?
     svr_index svrs_table(get_self(), user.value);

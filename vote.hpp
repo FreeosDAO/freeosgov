@@ -82,6 +82,8 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     
     require_auth(user);
 
+    tick();
+
     uint32_t this_iteration = current_iteration();
     
     // is the system operational?
@@ -92,6 +94,9 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
 
     // are we in the vote period?
     check(is_action_period("vote"), "It is outside of the vote period");
+
+    // is the user verified?
+    check(is_user_verified(user), "voting is not open to unverified users");
 
     // has the user already completed the vote?
     svr_index svrs_table(get_self(), user.value);

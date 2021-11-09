@@ -19,9 +19,13 @@ public:
   [[eosio::action]] void version();
   [[eosio::action]] void init(time_point iterations_start);
   [[eosio::action]] void maintain(string action, name user);
+  [[eosio::action]] void tick();
+  void trigger_new_iteration();
 
   // identity actions
   [[eosio::action]] void reguser(name user);
+  [[eosio::action]] void reregister(name user);
+  bool is_user_verified(name user);
 
   // config actions
   [[eosio::action]] void paramupsert(name paramname, std::string value);

@@ -15,7 +15,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.3.0";
+const std::string VERSION = "0.4.0";
 
 // ACTION
 void freeosgov::version() {
@@ -33,7 +33,10 @@ void freeosgov::init(time_point iterations_start) {
   auto system_iterator = system_table.begin();
   if (system_iterator == system_table.end()) {
     // insert system record
-    system_table.emplace(get_self(), [&](auto &sys) { sys.init = iterations_start; });
+    system_table.emplace(get_self(), [&](auto &sys) {
+      sys.init = iterations_start;
+      sys.cls = asset(0, POINT_CURRENCY_SYMBOL);
+      });
   } else {
     // modify system record
     system_table.modify(system_iterator, _self, [&](auto &sys) { sys.init = iterations_start; });
@@ -65,14 +68,50 @@ void freeosgov::maintain(string action, name user) {
 
   }
 
+  if (action == "set cls") {
+    system_index system_table(get_self(), get_self().value);
+    auto system_iterator = system_table.begin();
+    check(system_iterator != system_table.end(), "system record is undefined");
+
+    system_table.modify(system_iterator, _self, [&](auto &sys) {
+      sys.cls = asset(0, POINT_CURRENCY_SYMBOL);
+    });
+  }
+
+  if (action == "get user cls") {
+    asset amount = asset(0, POINT_CURRENCY_SYMBOL);
+    amount += UCLS; // add to the CLS for the verified user
+    amount += PARTNER_CLS_ADDITION; // add to CLS for the partners
+    check(false, amount.to_string());
+  }
+
   if (action == "set usercount") {
     system_index system_table(get_self(), get_self().value);
-      auto system_iterator = system_table.begin();
-      check(system_iterator != system_table.end(), "system record is undefined");
+    auto system_iterator = system_table.begin();
+    check(system_iterator != system_table.end(), "system record is undefined");
 
-      system_table.modify(system_iterator, _self, [&](auto &sys) {
-        sys.usercount = 1;
-      });
+    system_table.modify(system_iterator, _self, [&](auto &sys) {
+      sys.usercount = 1;
+    });
+  }
+
+  if (action == "system clear") {
+    system_index system_table(get_self(), get_self().value);
+    auto system_iterator = system_table.begin();
+    system_table.erase(system_iterator);
+  }
+
+  if (action == "system restore") {
+    system_index system_table(get_self(), get_self().value);
+    system_table.emplace(
+        get_self(), [&](auto &sys) {
+          sys.usercount = 6;
+          sys.cls = asset(0, POINT_CURRENCY_SYMBOL);
+          sys.claimevents = 0;
+          sys.votes = 0;
+          // sys.init = time_point("2021-09-15T00:00:00.000");
+          sys.iteration = 8;
+        });
   }
 
   if (action == "is registered") {
@@ -243,6 +282,32 @@ uint16_t freeosgov::current_iteration() {
   }
   
   return iteration;
+}
+
+// ACTION
+void freeosgov::tick() {
+
+  // are we on a new iteration?
+  system_index system_table(get_self(), get_self().value);
+  auto system_iterator = system_table.begin();
+  check(system_iterator != system_table.end(), "system record is undefined");
+
+  uint16_t recorded_iteration = system_iterator->iteration;
+  uint16_t actual_iteration = current_iteration();
+
+  if (recorded_iteration != actual_iteration) {
+    // update the recorded iteration
+    system_table.modify(system_iterator, _self, [&](auto &sys) {
+      sys.iteration = actual_iteration;
+    });
+
+    // run the new iteration service routine
+    trigger_new_iteration();
+  }
+}
+
+void freeosgov::trigger_new_iteration() {
+
 }
 
 } // end of namespace freedao

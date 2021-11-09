@@ -23,6 +23,7 @@ using globalres_index = eosio::multi_index<"globalres"_n, globalres_struct>;
 // system table
 struct[[ eosio::table("system"), eosio::contract("freeosgov") ]] system {
 time_point init;
+uint16_t iteration;
 uint32_t usercount;
 uint32_t claimevents;
 uint32_t votes;

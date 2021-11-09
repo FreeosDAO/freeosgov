@@ -1,4 +1,4 @@
-//#pragma once
+#pragma once
 #include <eosio/eosio.hpp>
 #include <eosio/system.hpp>
 #include "freeosgov.hpp"
@@ -70,7 +70,7 @@ string get_account_type(name user) {
   return user_account_type;
 }
 
-
+// ACTION
 void freeosgov::reguser(name user) {  // TODO: detect if the user has an existing record from the airclaim
 
   require_auth(user);
@@ -91,28 +91,12 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
   // determine account type
   string account_type = get_account_type(user);  // TODO
 
-  // update the user count in the 'system' record
-  uint32_t number_of_users;
-
-  system_index system_table(get_self(), get_self().value);
-  auto system_iterator = system_table.begin();
-  if (system_iterator == system_table.end()) {
-    // emplace
-    system_table.emplace(
-        get_self(), [&](auto &sys) { sys.usercount = number_of_users = 1; });
-  } else {
-    // modify
-    system_table.modify(system_iterator, _self, [&](auto &sys) {
-      sys.usercount = number_of_users = sys.usercount + 1;
-    });
-  }
-
   // get the current iteration
   uint16_t iteration = current_iteration();
 
   // TODO: staking code
 
-  // register the user
+  // add record to the users table
   users_table.emplace(get_self(), [&](auto &user) {
     user.stake = asset(0, STAKE_CURRENCY_SYMBOL);
     user.account_type = account_type;
@@ -121,4 +105,95 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
     user.total_issuance_amount = asset(0, POINT_CURRENCY_SYMBOL);
   });
 
+  // update the system record - number of users and CLS
+  system_index system_table(get_self(), get_self().value);
+  auto system_iterator = system_table.begin();
+  if (system_iterator == system_table.end()) {
+    // emplace
+    system_table.emplace(
+        get_self(), [&](auto &sys) {
+          sys.usercount = 1;
+
+          // update the CLS if a verified user
+          if (is_user_verified(user)) {
+            sys.cls = UCLS; // the CLS for the first verified user
+            sys.cls += PARTNER_CLS_ADDITION; // add to CLS for the partners
+          }
+          
+        });
+  } else {
+    // modify
+    system_table.modify(system_iterator, _self, [&](auto &sys) {
+      sys.usercount += 1;
+
+      // update the CLS if a verified user
+      if (is_user_verified(user)) {
+        sys.cls += UCLS; // add to the CLS for the verified user
+        sys.cls += PARTNER_CLS_ADDITION; // add to CLS for the partners
+      }
+    });
+  }
+
+
+}
+
+
+// ACTION
+void freeosgov::reregister(name user) {
+  require_auth(user);
+
+  // original verified user status
+  bool verified_before = is_user_verified(user);
+
+  // get the current iteration
+  check(current_iteration() != 0, "The freeos system is not yet available");
+
+  // set the account type
+  users_index users_table(get_self(), user.value);
+  auto user_iterator = users_table.begin();
+
+  // check if the user has a user registration record
+  check(user_iterator != users_table.end(), "user is not registered with freeos");
+
+  // get the account type
+  string account_type = get_account_type(user);
+
+  // set the user account type
+  users_table.modify(user_iterator, _self, [&](auto &u) {
+    u.account_type = account_type;
+  });
+
+  // new verified user status
+  bool verified_after = is_user_verified(user);
+
+  // update the CLS if a user has become verified
+  if (verified_before == false && verified_after == true) {
+    system_index system_table(get_self(), get_self().value);
+    auto system_iterator = system_table.begin();
+    check(system_iterator != system_table.end(), "system record is undefined");
+
+    // modify cls
+    system_table.modify(system_iterator, _self, [&](auto &sys) {
+        sys.cls += UCLS; // add to the CLS for the verified user
+        sys.cls += PARTNER_CLS_ADDITION; // add to CLS for the partners
+    });
+  }
+
+}
+
+
+bool freeosgov::is_user_verified(name user) {
+  bool verified = false;
+
+  // get the user record
+  users_index users_table(get_self(), user.value);
+  auto user_iterator = users_table.begin();
+  check(user_iterator != users_table.end(), "user is not registered");
+  string account_type = user_iterator->account_type;
+
+  if (account_type == "v" || account_type == "b" || account_type == "c") {
+    verified= true;
+  }
+
+  return verified;
 }

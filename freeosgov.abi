@@ -306,6 +306,16 @@
             ]
         },
         {
+            "name": "reregister",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "survey",
             "base": "",
             "fields": [
@@ -434,6 +444,10 @@
                     "type": "time_point"
                 },
                 {
+                    "name": "iteration",
+                    "type": "uint16"
+                },
+                {
                     "name": "usercount",
                     "type": "uint32"
                 },
@@ -463,6 +477,11 @@
         },
         {
             "name": "testranges",
+            "base": "",
+            "fields": []
+        },
+        {
+            "name": "tick",
             "base": "",
             "fields": []
         },
@@ -669,6 +688,11 @@
             "ricardian_contract": ""
         },
         {
+            "name": "reregister",
+            "type": "reregister",
+            "ricardian_contract": ""
+        },
+        {
             "name": "survey",
             "type": "survey",
             "ricardian_contract": ""
@@ -681,6 +705,11 @@
         {
             "name": "testranges",
             "type": "testranges",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "tick",
+            "type": "tick",
             "ricardian_contract": ""
         },
         {

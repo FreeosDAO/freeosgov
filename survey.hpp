@@ -3,6 +3,7 @@
 #include <eosio/system.hpp>
 #include "freeosgov.hpp"
 #include "tables.hpp"
+#include "identity.hpp"
 
 using namespace eosio;
 using namespace freedao;
@@ -56,6 +57,8 @@ void freeosgov::survey( name user, bool r0,  bool r1,  bool r2, // Question 1
 {
     require_auth(user);
 
+    tick();
+
     uint32_t this_iteration = current_iteration();
     
     // is the system operational?
@@ -63,6 +66,9 @@ void freeosgov::survey( name user, bool r0,  bool r1,  bool r2, // Question 1
 
     // are we in the survey period?
     check(is_action_period("survey"), "It is outside of the survey period");
+
+    // is the user verified?
+    check(is_user_verified(user), "survey is not open to unverified users");
 
     // has the user already completed the survey?
     svr_index svrs_table(get_self(), user.value);

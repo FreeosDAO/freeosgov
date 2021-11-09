@@ -18,6 +18,8 @@ void freeosgov::claim(name user) {
 
     require_auth(user);
 
+    tick();
+
     uint32_t this_iteration = current_iteration();
     
     // is the system operational?
