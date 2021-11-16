@@ -9,28 +9,33 @@ using namespace eosio;
 using namespace freedao;
 using namespace std;
 
-void freeosgov::initialise_vote() {
-    vote_index vote_table(get_self(), get_self().value);
+void freeosgov::vote_init() {
+    votescast_index vote_table(get_self(), get_self().value);
     auto vote_iterator = vote_table.begin();
 
-    check(vote_iterator != vote_table.end(), "vote table is undefined");
+    if (vote_iterator == vote_table.end()) {
+        // emplace
+        vote_table.emplace(get_self(), [&](auto &v) { ; });
+    } else {
+        // modify
+        vote_table.modify(vote_iterator, _self, [&](auto &vote) {
+        vote.iteration = current_iteration();
+        vote.participants = 0;
+        vote.q1average = 0.0;
+        vote.q2average = 0.0;
+        vote.q3average = 0.0;
+        vote.q4choice1 = 0;   // POOL
+        vote.q4choice2 = 0;   // BURN
+        vote.q5average = 0.0;
+        vote.q6choice1 = 0;
+        vote.q6choice2 = 0;
+        vote.q6choice3 = 0;
+        vote.q6choice4 = 0;
+        vote.q6choice5 = 0;
+        vote.q6choice6 = 0;
+        });
+    }
 
-    vote_table.modify(vote_iterator, _self, [&](auto &vote) {
-      vote.iteration = current_iteration();
-      vote.participants = 0;
-      vote.q1average = 0.0;
-      vote.q2average = 0.0;
-      vote.q3average = 0.0;
-      vote.q4choice1 = 0;   // POOL
-      vote.q4choice2 = 0;   // BURN
-      vote.q5average = 0.0;
-      vote.q6choice1 = 0;
-      vote.q6choice2 = 0;
-      vote.q6choice3 = 0;
-      vote.q6choice4 = 0;
-      vote.q6choice5 = 0;
-      vote.q6choice6 = 0;
-    });
 }
 
 
@@ -60,24 +65,6 @@ std::vector<int> parse_vote_ranges(string voteranges) {
 }
 
 // ACTION
-void freeosgov::testranges() {
-    // get and parse the vote slider ranges
-    string voteranges = get_parameter(name("voteranges"));
-    std::vector<int> vote_range_values = parse_vote_ranges(voteranges);
-
-    string limits =
-    to_string(vote_range_values[0]) + " " +
-    to_string(vote_range_values[1]) + " " +
-    to_string(vote_range_values[2]) + " " +
-    to_string(vote_range_values[3]) + " " +
-    to_string(vote_range_values[4]) + " " +
-    to_string(vote_range_values[5]);
-
-    check(false, limits);
-}
-
-
-// ACTION
 void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q3response, string q4response, uint8_t q5response, uint8_t q6choice1, uint8_t q6choice2, uint8_t q6choice3) {
     
     require_auth(user);
@@ -93,7 +80,7 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     check(is_user_active(user), "The user has exceeded the maximum number of iterations");
 
     // are we in the vote period?
-    check(is_action_period("vote"), "It is outside of the vote period");
+    // TODO: uncomment this    check(is_action_period("vote"), "It is outside of the vote period");
 
     // is the user verified?
     check(is_user_verified(user), "voting is not open to unverified users");
@@ -112,7 +99,7 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
             svr_iterator->vote2 != this_iteration &&
             svr_iterator->vote3 != this_iteration &&
             svr_iterator->vote4 != this_iteration,
-            "user has already completed the vote");
+            "user has already voted");
     }
 
     // parameter checking
@@ -145,7 +132,7 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     check(q1response >= vote_range_values[0] && q1response <= vote_range_values[1],  "Response 1 is out of range");
     check(q2response >= vote_range_values[2] && q2response <= vote_range_values[3],  "Response 2 is out of range");
     check(q3response >= HARD_EXCHANGE_RATE_FLOOR && q3response <= locking_threshold_upper_limit,   "Response 3 is out of range");
-    check(q4response != "POOL" && q4response != "BURN",  "Response 4 must be 'POOL' or 'BURN");
+    check(q4response == "POOL" || q4response == "BURN",  "Response 4 must be 'POOL' or 'BURN");
     check(q5response >= vote_range_values[4] && q5response <= vote_range_values[5],  "Response 5 is out of range");
     check(q6choice1 >= 1 && q6choice1 <= 6,     "Response 6 choice 1 must be a number between 1 and 6");
     check(q6choice2 >= 1 && q6choice2 <= 6,     "Response 6 choice 2 must be a number between 1 and 6");
@@ -155,7 +142,7 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     check((q6choice1 != q6choice2) && (q6choice2 != q6choice3) && (q6choice3 != q6choice1), "Response 6 has duplicate values");
 
     // store the responses
-    vote_index vote_table(get_self(), get_self().value);
+    votescast_index vote_table(get_self(), get_self().value);
     auto vote_iterator = vote_table.begin();
 
     // when run for the very first time, add the vote record if not already present
@@ -168,7 +155,7 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
 
     // check if we are on a new iteration. If yes, then re-initialise the running values in the vote table
     if (vote_iterator->iteration != this_iteration) {
-        initialise_vote();
+        vote_init();
     }
 
     // process the responses from the user
@@ -228,43 +215,29 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     }); // end of modify
 
     // record that the user has responded to this iteration's vote
-    // find the oldest iteration value in the user's svr record (or first 0) and overwrite it
-    uint32_t svr_iteration[4] = { svr_iterator->vote1,  svr_iterator->vote2, svr_iterator->vote3, svr_iterator->vote4 };
-    size_t   min_iteration_index = 0;
-    uint32_t min_iteration = svr_iteration[0];
-    for (size_t i = 0; i < 4; i++) {
-        // have we found a 0 in the list? if so, stop there.
-        if (svr_iteration[i] == 0) {
-            min_iteration_index = i;
-            break;
-        }
+    size_t field_selector = this_iteration % 4;
 
-        // find the smallest iteration value and record its position in the array
-        if (svr_iteration[i] < min_iteration) {
-            min_iteration = svr_iteration[i];
-            min_iteration_index = i;
-        }
-    }
-
-    // At this point min_iteration_index contains the position of the earliest iteration in the array
-    // write the current iteration into the appropriate field
+    // write the current iteration into the appropriate field, and get whether survey completed
+    uint32_t survey_completed = 0;
     svrs_table.modify(svr_iterator, _self, [&](auto &svr) {
-
-        switch (min_iteration_index) {
-            case 0:
-                svr.vote1 = this_iteration;
-                break;
-            case 1:
-                svr.vote2 = this_iteration;
-                break;
-            case 2:
-                svr.vote3 = this_iteration;
-                break;
-            case 3:
-                svr.vote4 = this_iteration;
-                break;
+        switch (field_selector) {
+            case 0: svr.vote1 = this_iteration; survey_completed = svr.survey1; break;
+            case 1: svr.vote2 = this_iteration; survey_completed = svr.survey2; break;
+            case 2: svr.vote3 = this_iteration; survey_completed = svr.survey3; break;
+            case 3: svr.vote4 = this_iteration; survey_completed = svr.survey4; break;
         }
-
     }); // end of modify
+
+    // increment the number of participants in this iteration...
+    // ... unless they have completed survey, in which case they have already been counted
+    if (survey_completed != this_iteration) {
+        // increment the number of participants in this iteration
+        system_index system_table(get_self(), get_self().value);
+        auto system_iterator = system_table.begin();
+        check(system_iterator != system_table.end(), "system record is undefined");
+        system_table.modify(system_iterator, get_self(), [&](auto &s) {
+            s.participants += 1;
+        });
+    }
 
 }

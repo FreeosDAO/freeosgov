@@ -182,6 +182,19 @@ void freeosgov::reregister(name user) {
 }
 
 
+// is user registered?
+bool freeosgov::is_registered(name user) {
+  users_index users_table(get_self(), user.value);
+  auto user_iterator = users_table.begin();
+
+  if (user_iterator == users_table.end()) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+
 bool freeosgov::is_user_verified(name user) {
   bool verified = false;
 
@@ -191,7 +204,8 @@ bool freeosgov::is_user_verified(name user) {
   check(user_iterator != users_table.end(), "user is not registered");
   string account_type = user_iterator->account_type;
 
-  if (account_type == "v" || account_type == "b" || account_type == "c") {
+  // TODO: remove "e" from condition below
+  if (account_type == "v" || account_type == "b" || account_type == "c" || account_type == "e") {
     verified= true;
   }
 

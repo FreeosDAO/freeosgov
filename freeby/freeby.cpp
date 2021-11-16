@@ -88,6 +88,7 @@ void token::transfer( const name&    from,
     freedao::users_index users_table(name(freeosgov_acct), to.value);
     auto user_iterator = users_table.begin();
     check(user_iterator != users_table.end(), "the recipient must be a registered Freeos user");
+    check(user_iterator->account_type == "v" || user_iterator->account_type == "b" || user_iterator->account_type == "c", "the recipent must be a verified Freeos user");
 
     auto sym = quantity.symbol.code();
     stats statstable( get_self(), sym.raw() );

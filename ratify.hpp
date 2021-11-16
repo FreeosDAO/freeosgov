@@ -9,17 +9,22 @@ using namespace freedao;
 using namespace std;
 
 
-void freeosgov::initialise_ratify() {
+void freeosgov::ratify_init() {
     ratify_index ratify_table(get_self(), get_self().value);
     auto ratify_iterator = ratify_table.begin();
 
-    check(ratify_iterator != ratify_table.end(), "ratify table is undefined");
+    if(ratify_iterator == ratify_table.end()) {
+        // emplace
+        ratify_table.emplace(get_self(), [&](auto &r) { ; });
+    } else {
+        // modify
+        ratify_table.modify(ratify_iterator, get_self(), [&](auto &ratify) {
+        ratify.iteration = current_iteration();
+        ratify.participants = 0;
+        ratify.ratified = 0;
+        });
+    }
 
-    ratify_table.modify(ratify_iterator, _self, [&](auto &ratify) {
-      ratify.iteration = current_iteration();
-      ratify.participants = 0;
-      ratify.ratified = 0;
-    });
 }
 
 // ACTION
@@ -40,22 +45,25 @@ void freeosgov::ratify(name user, bool ratify_vote) {
     // is the user verified?
     check(is_user_verified(user), "ratification is not open to unverified users");
 
-    // has the user already ratified?
+    // has the user met the requirement of voting then ratifying?
     svr_index svrs_table(get_self(), user.value);
     auto svr_iterator = svrs_table.begin();
+    check(svr_iterator != svrs_table.end(), "user must have voted in order to ratify");
 
-    // if there is no svr record for the user then create it - we will update it at the end of the action
-    if (svr_iterator == svrs_table.end()) {
-        // emplace
-        svrs_table.emplace(get_self(), [&](auto &svr) { ; });
-        svr_iterator = svrs_table.begin();
-    } else {
-        check(svr_iterator->ratify1 != this_iteration &&
-            svr_iterator->ratify2 != this_iteration &&
-            svr_iterator->ratify3 != this_iteration &&
-            svr_iterator->ratify4 != this_iteration,
-            "user has already ratified");
-    }
+    // check if the user has voted - a requirement for ratification
+    check(svr_iterator->vote1 == this_iteration ||
+        svr_iterator->vote2 == this_iteration ||
+        svr_iterator->vote3 == this_iteration ||
+        svr_iterator->vote4 == this_iteration,
+        "user must have voted in order to ratify");
+
+    // check if the user has already ratified
+    check(svr_iterator->ratify1 != this_iteration &&
+        svr_iterator->ratify2 != this_iteration &&
+        svr_iterator->ratify3 != this_iteration &&
+        svr_iterator->ratify4 != this_iteration,
+        "user has already ratified");
+
 
     // store the responses
     ratify_index ratify_table(get_self(), get_self().value);
@@ -71,7 +79,7 @@ void freeosgov::ratify(name user, bool ratify_vote) {
 
     // check if we are on a new iteration. If yes, then re-initialise the running values in the ratify table
     if (ratify_iterator->iteration != this_iteration) {
-        initialise_ratify();
+        ratify_init();
     }
 
     // process the responses from the user
@@ -93,43 +101,16 @@ void freeosgov::ratify(name user, bool ratify_vote) {
 
     
     // record that the user has ratified
-    // find the oldest iteration value in the user's svr record (or first 0) and overwrite it
-    uint32_t svr_iteration[4] = { svr_iterator->ratify1,  svr_iterator->ratify2, svr_iterator->ratify3, svr_iterator->ratify4 };
-    size_t   min_iteration_index = 0;
-    uint32_t min_iteration = svr_iteration[0];
-    for (size_t i = 0; i < 4; i++) {
-        // have we found a 0 in the list? if so, stop there.
-        if (svr_iteration[i] == 0) {
-            min_iteration_index = i;
-            break;
-        }
-
-        // find the smallest iteration value and record its position in the array
-        if (svr_iteration[i] < min_iteration) {
-            min_iteration = svr_iteration[i];
-            min_iteration_index = i;
-        }
-    }
-
-    // At this point min_iteration_index contains the position of the earliest iteration in the array
+    size_t field_selector = this_iteration % 4;
+    
     // write the current iteration into the appropriate field
     svrs_table.modify(svr_iterator, _self, [&](auto &svr) {
-
-        switch (min_iteration_index) {
-            case 0:
-                svr.ratify1 = this_iteration;
-                break;
-            case 1:
-                svr.ratify2 = this_iteration;
-                break;
-            case 2:
-                svr.ratify3 = this_iteration;
-                break;
-            case 3:
-                svr.ratify4 = this_iteration;
-                break;
+        switch (field_selector) {
+            case 0: svr.ratify1 = this_iteration; break;
+            case 1: svr.ratify2 = this_iteration; break;
+            case 2: svr.ratify3 = this_iteration; break;
+            case 3: svr.ratify4 = this_iteration; break;
         }
-
     }); // end of modify
 
 }

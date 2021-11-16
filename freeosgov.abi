@@ -316,6 +316,48 @@
             ]
         },
         {
+            "name": "reward",
+            "base": "",
+            "fields": [
+                {
+                    "name": "iteration",
+                    "type": "uint16"
+                },
+                {
+                    "name": "iteration_cls",
+                    "type": "asset"
+                },
+                {
+                    "name": "participants",
+                    "type": "uint32"
+                },
+                {
+                    "name": "issuance_rate",
+                    "type": "float64"
+                },
+                {
+                    "name": "mint_fee_percent",
+                    "type": "float64"
+                },
+                {
+                    "name": "locking_threshold",
+                    "type": "float64"
+                },
+                {
+                    "name": "pool",
+                    "type": "bool"
+                },
+                {
+                    "name": "burn",
+                    "type": "bool"
+                },
+                {
+                    "name": "ratified",
+                    "type": "bool"
+                }
+            ]
+        },
+        {
             "name": "survey",
             "base": "",
             "fields": [
@@ -456,7 +498,7 @@
                     "type": "uint32"
                 },
                 {
-                    "name": "votes",
+                    "name": "participants",
                     "type": "uint32"
                 },
                 {
@@ -474,11 +516,6 @@
                     "type": "float64"
                 }
             ]
-        },
-        {
-            "name": "testranges",
-            "base": "",
-            "fields": []
         },
         {
             "name": "tick",
@@ -599,6 +636,68 @@
                     "type": "uint8"
                 }
             ]
+        },
+        {
+            "name": "votecast",
+            "base": "",
+            "fields": [
+                {
+                    "name": "iteration",
+                    "type": "uint32"
+                },
+                {
+                    "name": "participants",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q1average",
+                    "type": "float64"
+                },
+                {
+                    "name": "q2average",
+                    "type": "float64"
+                },
+                {
+                    "name": "q3average",
+                    "type": "float64"
+                },
+                {
+                    "name": "q4choice1",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q4choice2",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5average",
+                    "type": "float64"
+                },
+                {
+                    "name": "q6choice1",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q6choice2",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q6choice3",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q6choice4",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q6choice5",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q6choice6",
+                    "type": "uint32"
+                }
+            ]
         }
     ],
     "actions": [
@@ -703,11 +802,6 @@
             "ricardian_contract": ""
         },
         {
-            "name": "testranges",
-            "type": "testranges",
-            "ricardian_contract": ""
-        },
-        {
             "name": "tick",
             "type": "tick",
             "ricardian_contract": ""
@@ -777,6 +871,13 @@
             "key_types": []
         },
         {
+            "name": "rewards",
+            "type": "reward",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
             "name": "stat",
             "type": "currency_stats",
             "index_type": "i64",
@@ -812,8 +913,8 @@
             "key_types": []
         },
         {
-            "name": "vote",
-            "type": "vote",
+            "name": "votescast",
+            "type": "votecast",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

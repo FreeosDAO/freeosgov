@@ -15,10 +15,11 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.4.0";
+const std::string VERSION = "0.6.0";
 
 // ACTION
 void freeosgov::version() {
+
   string version_message = "Version = " + VERSION + ", Iteration = " + to_string(current_iteration());
 
   check(false, version_message);
@@ -41,6 +42,17 @@ void freeosgov::init(time_point iterations_start) {
     // modify system record
     system_table.modify(system_iterator, _self, [&](auto &sys) { sys.init = iterations_start; });
   }
+
+  // create the survey, vote and ratify records if they don't already exist
+  // survey
+  survey_init();
+
+  // vote
+  vote_init();
+
+  // ratify
+  ratify_init();
+
 }
 
 // ACTION
@@ -68,13 +80,21 @@ void freeosgov::maintain(string action, name user) {
 
   }
 
+  if (action == "clear rewards") {
+    rewards_index rewards_table(get_self(), get_self().value);
+    auto rewards_iterator = rewards_table.begin();
+    while (rewards_iterator != rewards_table.end()) {
+      rewards_iterator = rewards_table.erase(rewards_iterator);
+    }
+  }
+
   if (action == "set cls") {
     system_index system_table(get_self(), get_self().value);
     auto system_iterator = system_table.begin();
     check(system_iterator != system_table.end(), "system record is undefined");
 
     system_table.modify(system_iterator, _self, [&](auto &sys) {
-      sys.cls = asset(0, POINT_CURRENCY_SYMBOL);
+      sys.cls = asset(231000000000, POINT_CURRENCY_SYMBOL);
     });
   }
 
@@ -106,11 +126,11 @@ void freeosgov::maintain(string action, name user) {
     system_table.emplace(
         get_self(), [&](auto &sys) {
           sys.usercount = 6;
-          sys.cls = asset(0, POINT_CURRENCY_SYMBOL);
+          sys.cls = asset(231000000000, POINT_CURRENCY_SYMBOL);
           sys.claimevents = 0;
-          sys.votes = 0;
+          sys.iteration = 9;
+          // sys.particpants = 0;
           // sys.init = time_point("2021-09-15T00:00:00.000");
-          sys.iteration = 8;
         });
   }
 
@@ -250,17 +270,6 @@ bool freeosgov::is_action_period(string action) {
   return result;
 }
 
-// is user registered?
-bool freeosgov::is_registered(name user) {
-  users_index users_table(get_self(), user.value);
-  auto user_iterator = users_table.begin();
-
-  if (user_iterator == users_table.end()) {
-    return false;
-  } else {
-    return true;
-  }
-}
 
 // which iteration are we in?
 uint16_t freeosgov::current_iteration() {
@@ -302,11 +311,76 @@ void freeosgov::tick() {
     });
 
     // run the new iteration service routine
-    trigger_new_iteration();
+    trigger_new_iteration(actual_iteration);
   }
 }
 
-void freeosgov::trigger_new_iteration() {
+void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
+
+  // if it is iteration 1 then nothing to, so return
+  if (new_iteration == 1) return;
+
+  // // record/update the old and new iterations - and take snapshot of the CLS at this point
+  system_index system_table(get_self(), get_self().value);
+  auto system_iterator = system_table.begin();
+  check(system_iterator != system_table.end(), "system record is undefined");
+
+  asset cls_snapshot = system_iterator->cls;
+
+  uint32_t old_iteration = system_iterator->iteration;
+  system_table.modify(system_iterator, _self, [&](auto &sys) {
+    sys.iteration = new_iteration;
+  });
+
+  // capture the data we need from the system, vote and ratify records
+  // 1. system record
+  uint32_t participants = system_iterator->participants;
+
+  // 2. vote record
+  votescast_index vote_table(get_self(), get_self().value);
+  auto vote_iterator = vote_table.begin();
+  check(vote_iterator != vote_table.end(), "vote record is undefined");
+  // issuance_rate
+  double issuance_rate = vote_iterator->q1average;
+  // mint fee percent
+  double mint_fee_percent = vote_iterator->q2average;
+  // locking threshold
+  double locking_threshold = vote_iterator->q3average;
+  // pool decision
+  bool pool = vote_iterator->q4choice1 >= vote_iterator->q4choice2;
+  // burn decision
+  bool burn = !pool;
+
+  // 3. ratify record
+  ratify_index ratify_table(get_self(), get_self().value);
+  auto ratify_iterator = ratify_table.begin();
+  check(ratify_iterator != ratify_table.end(), "ratify record is undefined");
+  // ratify decision
+  bool ratified = ratify_iterator->ratified >= (ratify_iterator->participants / 2);
+
+
+  // populate the rewards table - take a snapshot of the cls, vote results and ratify result
+  rewards_index rewards_table(get_self(), get_self().value);
+  rewards_table.emplace(_self, [&](auto &rwd) {
+      rwd.iteration = old_iteration;
+      rwd.participants = participants;
+      rwd.iteration_cls = cls_snapshot;
+      rwd.issuance_rate = issuance_rate;
+      rwd.mint_fee_percent = mint_fee_percent;
+      rwd.locking_threshold = locking_threshold;
+      rwd.pool = pool;
+      rwd.burn = burn;
+      rwd.ratified = ratified;
+    });
+
+  // delete old rewards records, if necessary
+  if (old_iteration > 4) {
+    auto rewards_iterator = rewards_table.begin();
+    while (rewards_iterator->iteration <= (old_iteration - 4)) {
+      rewards_iterator = rewards_table.erase(rewards_iterator);
+    }
+  }
+  
 
 }
 

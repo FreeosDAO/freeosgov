@@ -20,7 +20,7 @@ public:
   [[eosio::action]] void init(time_point iterations_start);
   [[eosio::action]] void maintain(string action, name user);
   [[eosio::action]] void tick();
-  void trigger_new_iteration();
+  void trigger_new_iteration(uint32_t new_iterationß);
 
   // identity actions
   [[eosio::action]] void reguser(name user);
@@ -46,15 +46,17 @@ public:
                                 uint8_t r7,                     // Question 4 - slider
                                 uint8_t r8,  uint8_t r9,  uint8_t r10,  // Question 5
                                 uint8_t r11, uint8_t r12, uint8_t r13);
+  void survey_init(); // In survey.hpp
 
-  // vote actions
+  // vote actions/functions
   [[eosio::action]] void vote(name user, uint8_t q1response, uint8_t q2response, double q3response, string q4response, uint8_t q5response, uint8_t q6choice1, uint8_t q6choice2, uint8_t q6choice3);
-  [[eosio::action]] void testranges();
+  void vote_init();
 
-  // ratify actions
+  // ratify actions/functions
   [[eosio::action]] void ratify(name user, bool ratify_vote);
+  void ratify_init();
 
-  // claim actions
+  // claim actions/functions
   [[eosio::action]] void claim(name user);
 
   // points actions and functions
@@ -70,9 +72,9 @@ public:
   [[eosio::action]] void mintfreeby(const name &owner, const asset &quantity);
 
 
-  void surveyinit(); // In survey.hpp
-  void initialise_vote();
-  void initialise_ratify();
+  
+  
+  
 
   // functions
   bool is_action_period(string action);

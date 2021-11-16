@@ -8,7 +8,6 @@ using namespace std;
 namespace freedao {
 
 // Andrew's code changes
-//
 // Survey global results table. For interpretations of particular rows search "survey.hpp".
 
 struct[[ eosio::table("globalres"), eosio::contract("freeosgov") ]] globalres_struct {
@@ -26,12 +25,31 @@ time_point init;
 uint16_t iteration;
 uint32_t usercount;
 uint32_t claimevents;
-uint32_t votes;
+uint32_t participants;
 asset cls;
 
 uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
 };
 using system_index = eosio::multi_index<"system"_n, system>;
+
+// REWARDS
+// rewards table
+struct[[ eosio::table("rewards"), eosio::contract("freeosgov") ]] reward {
+
+uint16_t  iteration;
+asset     iteration_cls;
+uint32_t  participants;
+double    issuance_rate;
+double    mint_fee_percent;
+double    locking_threshold;
+bool      pool;
+bool      burn;
+bool      ratified;
+
+uint64_t primary_key() const { return iteration; }
+};
+using rewards_index = eosio::multi_index<"rewards"_n, reward>;
+
 
 // POINTS ACCOUNTS
 struct[[ eosio::table("accounts"), eosio::contract("freeosgov") ]] account {
@@ -173,24 +191,25 @@ using svr_index = eosio::multi_index<"svrs"_n, svr>;
 
 // VOTE
 // Running processing of vote responses
-struct[[ eosio::table("vote"), eosio::contract("freeosgov") ]] vote {
+struct[[ eosio::table("votescast"), eosio::contract("freeosgov") ]] votecast {
     uint32_t iteration;
     uint32_t participants;
-    double q1average;
-    double q2average;
-    double q3average;
+    double q1average;   // issuance rate (0 - 100)
+    double q2average;   // mint fee percent (6 - 30)
+    double q3average;   // locking threshold - expressed as asset price
     uint32_t q4choice1; // POOL
     uint32_t q4choice2; // BURN
-    double q5average;
-    uint32_t q6choice1;
-    uint32_t q6choice2;
-    uint32_t q6choice3;
-    uint32_t q6choice4;
-    uint32_t q6choice5;
-    uint32_t q6choice6;
+    double q5average;   // Reserve pool % to be released
+    uint32_t q6choice1; // partner 1
+    uint32_t q6choice2; // partner 2
+    uint32_t q6choice3; // partner 3
+    uint32_t q6choice4; // partner 4
+    uint32_t q6choice5; // partner 5
+    uint32_t q6choice6; // partner 6
+
     uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
 };
-using vote_index = eosio::multi_index<"vote"_n, vote>;
+using votescast_index = eosio::multi_index<"votescast"_n, votecast>;
 
 
 // RATIFY

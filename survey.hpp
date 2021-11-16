@@ -97,7 +97,7 @@ void freeosgov::survey( name user, bool r0,  bool r1,  bool r2, // Question 1
         uint32_t stored_iteration;
         stored_iteration = iter->gresult;
         //(pseudocode: it was initialized for that iteration already? if not initialize)
-        if( stored_iteration != this_iteration ){ surveyinit();
+        if( stored_iteration != this_iteration ){ survey_init();
         } 
 
     // 
@@ -178,44 +178,26 @@ void freeosgov::survey( name user, bool r0,  bool r1,  bool r2, // Question 1
 
     //
     // record that the user has responded to this iteration's survey
-    // find the oldest iteration value in the user's svr record (or first 0) and overwrite it
-    uint32_t svr_iteration[4] = { svr_iterator->survey1,  svr_iterator->survey2, svr_iterator->survey3, svr_iterator->survey4 };
-    size_t   min_iteration_index = 0;
-    uint32_t min_iteration = svr_iteration[0];
-    for (size_t i = 0; i < 4; i++) {
-        // have we found a 0 in the list? if so, stop there.
-        if (svr_iteration[i] == 0) {
-            min_iteration_index = i;
-            break;
-        }
-
-        // find the smallest iteration value and record its position in the array
-        if (svr_iteration[i] < min_iteration) {
-            min_iteration = svr_iteration[i];
-            min_iteration_index = i;
-        }
-    }
-
-    // At this point min_iteration_index contains the position of the earliest iteration in the array
+    size_t field_selector = this_iteration % 4;
+    
     // write the current iteration into the appropriate field
-    svrs_table.modify(svr_iterator, _self, [&](auto &svr) {
-
-        switch (min_iteration_index) {
-            case 0:
-                svr.survey1 = this_iteration;
-                break;
-            case 1:
-                svr.survey2 = this_iteration;
-                break;
-            case 2:
-                svr.survey3 = this_iteration;
-                break;
-            case 3:
-                svr.survey4 = this_iteration;
-                break;
+    svrs_table.modify(svr_iterator, get_self(), [&](auto &svr) {
+        switch (field_selector) {
+            case 0: svr.survey1 = this_iteration; break;
+            case 1: svr.survey2 = this_iteration; break;
+            case 2: svr.survey3 = this_iteration; break;
+            case 3: svr.survey4 = this_iteration; break;
         }
-
     }); // end of modify
+
+    // increment the number of participants in this iteration
+    system_index system_table(get_self(), get_self().value);
+    auto system_iterator = system_table.begin();
+    check(system_iterator != system_table.end(), "system record is undefined");
+    system_table.modify(system_iterator, get_self(), [&](auto &s) {
+        s.participants += 1;
+    });
+
 } // end of survey
 
 //Manual init - first time //TODO Remove after TESTs
@@ -234,7 +216,7 @@ void freeosgov::survey( name user, bool r0,  bool r1,  bool r2, // Question 1
  * @details Function clean up the results table 
  * @pre  
  */
-void freeosgov::surveyinit(){
+void freeosgov::survey_init(){
         globalres_index final_results(get_self(), get_self().value);
         uint32_t this_iteration = current_iteration();
         // All rows must be initialized to zero for all types of questions. 
@@ -246,8 +228,8 @@ void freeosgov::surveyinit(){
             {
               final_results.emplace( get_self(), [&]( auto& row ){
                 row.p_key = final_results.available_primary_key(); 
-                if(i==18){ row.gresult = 1; } else row.gresult=0; //count users
-                if(i==21){ row.gresult = this_iteration; }}); //store this iter number         
+                // if(i==17){ row.gresult = 1; } else row.gresult=0; //count users -- TMcC: No need to set to 1 seeing as user count is incremented by survey action
+                if(i==20){ row.gresult = this_iteration; }}); //store this iter number         
             }
             else 
             { 
