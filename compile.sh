@@ -1,1 +1,1 @@
-eosio-cpp -o freeosgov.wasm freeosgov.cpp -DFREEBY="\"freeby\"" --abigen
+eosio-cpp -o freeosgov.wasm freeosgov.cpp -DFREEBY="\"freeby\"" -DFREEOS="\"freeostokens\"" --abigen

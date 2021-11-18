@@ -228,7 +228,7 @@ void freeosgov::survey_init(){
             {
               final_results.emplace( get_self(), [&]( auto& row ){
                 row.p_key = final_results.available_primary_key(); 
-                // if(i==17){ row.gresult = 1; } else row.gresult=0; //count users -- TMcC: No need to set to 1 seeing as user count is incremented by survey action
+                if(i==17){ row.gresult = 1; } else row.gresult=0; //count users
                 if(i==20){ row.gresult = this_iteration; }}); //store this iter number         
             }
             else 

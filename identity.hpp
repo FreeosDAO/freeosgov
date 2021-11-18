@@ -84,9 +84,19 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
 
   check(user_iterator == users_table.end(), "user is already registered");
 
-  // check to see if they are already registered with the AirClaim // TODO: this is not required
-  airclaim_users_index airclaim_users_table(AIRCLAIM_CONTRACT, user.value);
-  auto airclaim_user_iterator = airclaim_users_table.begin();
+  // capture their POINTs balance - as these POINTs will be mint-fee-free
+  accounts accounts_table(get_self(), user.value);
+  auto points_iterator = accounts_table.find(symbol_code(POINT_CURRENCY_CODE).raw());
+  if (points_iterator != accounts_table.end()) {    
+      // get and store the POINTs balance
+      asset points_balance = points_iterator->balance;
+
+      // store in the mint_fee_free table
+      mintfeefree_index mintfeefree_table(get_self(), user.value);
+      mintfeefree_table.emplace(get_self(), [&](auto &m) {
+        m.balance = points_balance;
+      });
+  }
 
   // determine account type
   string account_type = get_account_type(user);  // TODO
@@ -134,6 +144,8 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
     });
   }
 
+  // TODO: delete the record from the old users table if they are already registered with the AirClaim
+  // TODO: gov 'users' table to be renamed 'register'
 
 }
 

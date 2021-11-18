@@ -6,6 +6,7 @@ using namespace std;
 #define STRINGIZE(x) _STRINGIZE(x)
 
 std::string freeby_acct = STRINGIZE(FREEBY);
+std::string freeos_acct = STRINGIZE(FREEOS);
 
 // Currency constants
 const string STAKE_CURRENCY_CODE = "XPR";
@@ -25,7 +26,7 @@ const uint8_t FREEOS_CURRENCY_PRECISION = 4;
 const symbol FREEOS_CURRENCY_SYMBOL = symbol(FREEOS_CURRENCY_CODE, FREEOS_CURRENCY_PRECISION);
 
 
-const name AIRCLAIM_CONTRACT = name("freeosd");     // TODO: ifdef for test/production
+const name AIRCLAIM_CONTRACT = name("freeos5");     // TODO: we should not need for production as we are overwriting contract
 const name VERIFICATION_CONTRACT = name("eosio.proton"); // TODO: ifdef for test/production
 
 const uint32_t ITERATION_LENGTH_SECONDS = 3600; // 604800;   // 86400 = day, 604800 = week

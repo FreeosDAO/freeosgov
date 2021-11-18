@@ -244,6 +244,20 @@
             ]
         },
         {
+            "name": "mintfreeos",
+            "base": "",
+            "fields": [
+                {
+                    "name": "owner",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
             "name": "paramerase",
             "base": "",
             "fields": [
@@ -325,6 +339,14 @@
                 },
                 {
                     "name": "iteration_cls",
+                    "type": "asset"
+                },
+                {
+                    "name": "iteration_issuance",
+                    "type": "asset"
+                },
+                {
+                    "name": "participant_issuance",
                     "type": "asset"
                 },
                 {
@@ -767,6 +789,11 @@
             "ricardian_contract": ""
         },
         {
+            "name": "mintfreeos",
+            "type": "mintfreeos",
+            "ricardian_contract": ""
+        },
+        {
             "name": "paramerase",
             "type": "paramerase",
             "ricardian_contract": ""
@@ -852,6 +879,13 @@
         {
             "name": "minters",
             "type": "minter_whitelist",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "mintfeefree",
+            "type": "account",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

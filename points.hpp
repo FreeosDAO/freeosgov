@@ -194,7 +194,7 @@ void freeosgov::mintfreeby(const name &owner, const asset &quantity) {
 
   // Issue exchangeable tokens
   asset exchangeable_amount = asset(quantity.amount, FREEBY_CURRENCY_SYMBOL);
-  std::string memo = std::string("conversion");
+  std::string memo = std::string("minting");
 
   // ask FREEBY contract to issue an equivalent amount of FREEBY tokens to the freeosgov account
   action issue_action = action(
@@ -206,6 +206,61 @@ void freeosgov::mintfreeby(const name &owner, const asset &quantity) {
   // transfer FREEBY tokens to the owner
   action transfer_action = action(
       permission_level{get_self(), "active"_n}, name(freeby_acct),
+      "transfer"_n,
+      std::make_tuple(get_self(), owner, exchangeable_amount, memo));
+
+  transfer_action.send();
+}
+
+// convert non-exchangeable currency for exchangeable currency
+// ACTION
+void freeosgov::mintfreeos(const name &owner, const asset &quantity) {
+  require_auth(owner);
+
+  // is the 'owner' user verified?
+  check(is_user_verified(owner), "minting is restricted to verified users");
+
+  auto sym = quantity.symbol;
+  check(sym == POINT_CURRENCY_SYMBOL || sym == FREEBY_CURRENCY_SYMBOL, "invalid symbol name");
+
+  // TODO: split logic into 2? Or can we handle it by pointing at the right contract?
+  name token_contract;
+  if (sym == POINT_CURRENCY_SYMBOL) {
+    token_contract = name(get_self());
+  } else {
+    token_contract = name(freeos_acct);
+  }
+
+  stats statstable(token_contract, sym.code().raw());
+  auto existing = statstable.find(sym.code().raw());
+  check(existing != statstable.end(), "token with symbol does not exist");
+  const auto &st = *existing;
+
+  check(quantity.is_valid(), "invalid quantity");
+  check(quantity.amount > 0, "must convert positive quantity");
+
+  statstable.modify(st, same_payer, [&](auto &s) {
+    s.supply -= quantity;
+    s.conditional_supply -= quantity;
+  });
+
+  // decrease owner's balance of POINTs
+  sub_balance(owner, quantity);
+
+  // Issue FREEOS
+  asset exchangeable_amount = asset(quantity.amount, FREEOS_CURRENCY_SYMBOL);
+  std::string memo = std::string("minting");
+
+  // ask FREEOS contract to issue an equivalent amount of FREEOS tokens to the freeosgov account
+  action issue_action = action(
+      permission_level{get_self(), "active"_n}, name(freeos_acct),
+      "issue"_n, std::make_tuple(get_self(), exchangeable_amount, memo));
+
+  issue_action.send();
+
+  // transfer FREEOS tokens to the owner
+  action transfer_action = action(
+      permission_level{get_self(), "active"_n}, name(freeos_acct),
       "transfer"_n,
       std::make_tuple(get_self(), owner, exchangeable_amount, memo));
 

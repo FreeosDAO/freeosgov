@@ -38,6 +38,8 @@ struct[[ eosio::table("rewards"), eosio::contract("freeosgov") ]] reward {
 
 uint16_t  iteration;
 asset     iteration_cls;
+asset     iteration_issuance;
+asset     participant_issuance;
 uint32_t  participants;
 double    issuance_rate;
 double    mint_fee_percent;
@@ -58,6 +60,7 @@ struct[[ eosio::table("accounts"), eosio::contract("freeosgov") ]] account {
   uint64_t primary_key() const { return balance.symbol.code().raw(); }
 };
 typedef eosio::multi_index<"accounts"_n, account> accounts;
+typedef eosio::multi_index<"mintfeefree"_n, account> mintfeefree_index;
 
 
 // currency stats

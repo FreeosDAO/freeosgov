@@ -18,9 +18,11 @@ public:
    */
   [[eosio::action]] void version();
   [[eosio::action]] void init(time_point iterations_start);
-  [[eosio::action]] void maintain(string action, name user);
   [[eosio::action]] void tick();
   void trigger_new_iteration(uint32_t new_iterationß);
+
+  // maintain actions TODO: remove in production version
+  [[eosio::action]] void maintain(string action, name user);
 
   // identity actions
   [[eosio::action]] void reguser(name user);
@@ -70,11 +72,8 @@ public:
   void sub_balance(const name &owner, const asset &value);
   void add_balance(const name &owner, const asset &value, const name &ram_payer);
   [[eosio::action]] void mintfreeby(const name &owner, const asset &quantity);
+  [[eosio::action]] void mintfreeos(const name &owner, const asset &quantity);
 
-
-  
-  
-  
 
   // functions
   bool is_action_period(string action);

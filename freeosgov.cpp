@@ -9,13 +9,14 @@
 #include "ratify.hpp"
 #include "points.hpp"
 #include "claim.hpp"
+#include "maintain.hpp"
 
 namespace freedao {
 
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.6.0";
+const std::string VERSION = "0.7.0";
 
 // ACTION
 void freeosgov::version() {
@@ -54,175 +55,6 @@ void freeosgov::init(time_point iterations_start) {
   ratify_init();
 
 }
-
-// ACTION
-// maintenance actions - TODO: delete from production
-void freeosgov::maintain(string action, name user) {
-
-  require_auth(get_self());
-
-  if (action == "erase user") {
-    users_index users_table(get_self(), user.value);
-    auto user_iterator = users_table.begin();
-
-    if (user_iterator != users_table.end()) {
-      users_table.erase(user_iterator);
-
-      // decrement number of users
-      system_index system_table(get_self(), get_self().value);
-      auto system_iterator = system_table.begin();
-      check(system_iterator != system_table.end(), "system record is undefined");
-
-      system_table.modify(system_iterator, _self, [&](auto &sys) {
-        sys.usercount = sys.usercount - 1;
-      });
-    }
-
-  }
-
-  if (action == "clear rewards") {
-    rewards_index rewards_table(get_self(), get_self().value);
-    auto rewards_iterator = rewards_table.begin();
-    while (rewards_iterator != rewards_table.end()) {
-      rewards_iterator = rewards_table.erase(rewards_iterator);
-    }
-  }
-
-  if (action == "set cls") {
-    system_index system_table(get_self(), get_self().value);
-    auto system_iterator = system_table.begin();
-    check(system_iterator != system_table.end(), "system record is undefined");
-
-    system_table.modify(system_iterator, _self, [&](auto &sys) {
-      sys.cls = asset(231000000000, POINT_CURRENCY_SYMBOL);
-    });
-  }
-
-  if (action == "get user cls") {
-    asset amount = asset(0, POINT_CURRENCY_SYMBOL);
-    amount += UCLS; // add to the CLS for the verified user
-    amount += PARTNER_CLS_ADDITION; // add to CLS for the partners
-    check(false, amount.to_string());
-  }
-
-  if (action == "set usercount") {
-    system_index system_table(get_self(), get_self().value);
-    auto system_iterator = system_table.begin();
-    check(system_iterator != system_table.end(), "system record is undefined");
-
-    system_table.modify(system_iterator, _self, [&](auto &sys) {
-      sys.usercount = 1;
-    });
-  }
-
-  if (action == "system clear") {
-    system_index system_table(get_self(), get_self().value);
-    auto system_iterator = system_table.begin();
-    system_table.erase(system_iterator);
-  }
-
-  if (action == "system restore") {
-    system_index system_table(get_self(), get_self().value);
-    system_table.emplace(
-        get_self(), [&](auto &sys) {
-          sys.usercount = 6;
-          sys.cls = asset(231000000000, POINT_CURRENCY_SYMBOL);
-          sys.claimevents = 0;
-          sys.iteration = 9;
-          // sys.particpants = 0;
-          // sys.init = time_point("2021-09-15T00:00:00.000");
-        });
-  }
-
-  if (action == "is registered") {
-    if (is_registered(user)) {
-      check(false, "user is registered");
-    } else {
-      check(false, "user is not registered");
-    }
-  }
-
-  if (action == "survey period") {
-    if (is_action_period("survey") == true) {
-      check(false, "In survey period");
-    } else {
-      check(false, "Outside of survey period");
-    }
-  }
-
-  if (action == "vote period") {
-    if (is_action_period("vote") == true) {
-      check(false, "In vote period");
-    } else {
-      check(false, "Outside of vote period");
-    }
-  }
-  
-  if (action == "ratify period") {
-    if (is_action_period("ratify") == true) {
-      check(false, "In ratify period");
-    } else {
-      check(false, "Outside of ratify period");
-    }
-  }
-
-  if (action == "clear svr") {
-    svr_index svrs_table(get_self(), user.value);
-    auto svr_iterator = svrs_table.begin();
-
-    if (svr_iterator == svrs_table.end()) {
-        // emplace
-        svrs_table.emplace(get_self(), [&](auto &svr) { ; });
-        svr_iterator = svrs_table.begin();
-    } else {
-        svrs_table.modify(svr_iterator, _self, [&](auto &svr) {
-          svr.survey1 = 0;
-          svr.survey2 = 0;
-          svr.survey3 = 0;
-          svr.survey4 = 0;
-          svr.vote1 = 0;
-          svr.vote2 = 0;
-          svr.vote3 = 0;
-          svr.vote4 = 0;
-          svr.ratify1 = 0;
-          svr.ratify2 = 0;
-          svr.ratify3 = 0;
-          svr.ratify4 = 0;
-        });
-    }
-    
-  }
-
-
-  if (action == "set svr") {
-    svr_index svrs_table(get_self(), user.value);
-    auto svr_iterator = svrs_table.begin();
-
-    if (svr_iterator == svrs_table.end()) {
-        // emplace
-        svrs_table.emplace(get_self(), [&](auto &svr) { ; });
-        svr_iterator = svrs_table.begin();
-    } else {
-        svrs_table.modify(svr_iterator, _self, [&](auto &svr) {
-          svr.survey1 = 1;
-          svr.survey2 = 1;
-          svr.survey3 = 1;
-          svr.survey4 = 1;
-          svr.vote1 = 1;
-          svr.vote2 = 1;
-          svr.vote3 = 1;
-          svr.vote4 = 1;
-          svr.ratify1 = 0;
-          svr.ratify2 = 0;
-          svr.ratify3 = 0;
-          svr.ratify4 = 0;
-        });
-    }
-    
-  }
-
-}
-
 
 
 // helper functions
@@ -358,6 +190,14 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
   // ratify decision
   bool ratified = ratify_iterator->ratified >= (ratify_iterator->participants / 2);
 
+  // 4. Calculate the total issuance (shared between participants) and the per-participant issuance for the iteration
+  asset iteration_issuance = asset(0, POINT_CURRENCY_SYMBOL);
+  asset participant_issuance = asset(0, POINT_CURRENCY_SYMBOL);
+  if (ratified == true) {
+    asset iteration_issuance = cls_snapshot * ISSUANCE_PROPORTION_OF_CLS * issuance_rate;
+    asset participant_issuance = iteration_issuance / participants;
+  }
+  
 
   // populate the rewards table - take a snapshot of the cls, vote results and ratify result
   rewards_index rewards_table(get_self(), get_self().value);
@@ -365,6 +205,8 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
       rwd.iteration = old_iteration;
       rwd.participants = participants;
       rwd.iteration_cls = cls_snapshot;
+      rwd.iteration_issuance = iteration_issuance;
+      rwd.participant_issuance = participant_issuance;
       rwd.issuance_rate = issuance_rate;
       rwd.mint_fee_percent = mint_fee_percent;
       rwd.locking_threshold = locking_threshold;
@@ -381,6 +223,12 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
     }
   }
   
+  // if the vote was ratified, subtract the iteration_issuance from the CLS
+  if (ratified == true) {
+    system_table.modify(system_iterator, _self, [&](auto &sys) {
+      sys.cls -= iteration_issuance;
+    });
+  }
 
 }
 
