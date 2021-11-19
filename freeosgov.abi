@@ -384,64 +384,76 @@
             "base": "",
             "fields": [
                 {
-                    "name": "user",
-                    "type": "name"
+                    "name": "iteration",
+                    "type": "uint32"
                 },
                 {
-                    "name": "r0",
-                    "type": "bool"
+                    "name": "participants",
+                    "type": "uint32"
                 },
                 {
-                    "name": "r1",
-                    "type": "bool"
+                    "name": "q1choice1",
+                    "type": "uint32"
                 },
                 {
-                    "name": "r2",
-                    "type": "bool"
+                    "name": "q1choice2",
+                    "type": "uint32"
                 },
                 {
-                    "name": "r3",
-                    "type": "uint8"
+                    "name": "q1choice3",
+                    "type": "uint32"
                 },
                 {
-                    "name": "r4",
-                    "type": "bool"
+                    "name": "q2average",
+                    "type": "float64"
                 },
                 {
-                    "name": "r5",
-                    "type": "bool"
+                    "name": "q3choice1",
+                    "type": "uint32"
                 },
                 {
-                    "name": "r6",
-                    "type": "bool"
+                    "name": "q3choice2",
+                    "type": "uint32"
                 },
                 {
-                    "name": "r7",
-                    "type": "uint8"
+                    "name": "q3choice3",
+                    "type": "uint32"
                 },
                 {
-                    "name": "r8",
-                    "type": "uint8"
+                    "name": "q4average",
+                    "type": "float64"
                 },
                 {
-                    "name": "r9",
-                    "type": "uint8"
+                    "name": "q5choice1",
+                    "type": "uint32"
                 },
                 {
-                    "name": "r10",
-                    "type": "uint8"
+                    "name": "q5choice2",
+                    "type": "uint32"
                 },
                 {
-                    "name": "r11",
-                    "type": "uint8"
+                    "name": "q5choice3",
+                    "type": "uint32"
                 },
                 {
-                    "name": "r12",
-                    "type": "uint8"
+                    "name": "q5choice4",
+                    "type": "uint32"
                 },
                 {
-                    "name": "r13",
-                    "type": "uint8"
+                    "name": "q5choice5",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice6",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice7",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice8",
+                    "type": "uint32"
                 }
             ]
         },
@@ -819,11 +831,6 @@
             "ricardian_contract": ""
         },
         {
-            "name": "survey",
-            "type": "survey",
-            "ricardian_contract": ""
-        },
-        {
             "name": "targetrate",
             "type": "targetrate",
             "ricardian_contract": ""
@@ -914,6 +921,13 @@
         {
             "name": "stat",
             "type": "currency_stats",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "survey",
+            "type": "survey",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

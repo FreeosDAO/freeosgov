@@ -192,6 +192,30 @@ struct[[ eosio::table("svrs"), eosio::contract("freeosgov") ]] svr {
 };
 using svr_index = eosio::multi_index<"svrs"_n, svr>;
 
+// Running processing of survey results
+struct[[ eosio::table("survey"), eosio::contract("freeosgov") ]] survey {
+    uint32_t iteration;
+    uint32_t participants;
+    uint32_t q1choice1;
+    uint32_t q1choice2;
+    uint32_t q1choice3;
+    double q2average;
+    uint32_t q3choice1;
+    uint32_t q3choice2;
+    uint32_t q3choice3;
+    double q4average;
+    uint32_t q5choice1;
+    uint32_t q5choice2;
+    uint32_t q5choice3;
+    uint32_t q5choice4;
+    uint32_t q5choice5;
+    uint32_t q5choice6;
+    uint32_t q5choice7;
+    uint32_t q5choice8;
+    uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
+};
+using survey_index = eosio::multi_index<"survey"_n, survey>;
+
 // VOTE
 // Running processing of vote responses
 struct[[ eosio::table("votescast"), eosio::contract("freeosgov") ]] votecast {

@@ -215,12 +215,9 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     }); // end of modify
 
     // record that the user has responded to this iteration's vote
-    size_t field_selector = this_iteration % 4;
-
-    // write the current iteration into the appropriate field, and get whether survey completed
     uint32_t survey_completed = 0;
     svrs_table.modify(svr_iterator, _self, [&](auto &svr) {
-        switch (field_selector) {
+        switch (this_iteration % 4) {
             case 0: svr.vote1 = this_iteration; survey_completed = svr.survey1; break;
             case 1: svr.vote2 = this_iteration; survey_completed = svr.survey2; break;
             case 2: svr.vote3 = this_iteration; survey_completed = svr.survey3; break;

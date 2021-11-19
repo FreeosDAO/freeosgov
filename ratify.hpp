@@ -97,15 +97,10 @@ void freeosgov::ratify(name user, bool ratify_vote) {
         ratify.participants++;
 
     }); // end of modify
-
-
     
     // record that the user has ratified
-    size_t field_selector = this_iteration % 4;
-    
-    // write the current iteration into the appropriate field
     svrs_table.modify(svr_iterator, _self, [&](auto &svr) {
-        switch (field_selector) {
+        switch (this_iteration % 4) {
             case 0: svr.ratify1 = this_iteration; break;
             case 1: svr.ratify2 = this_iteration; break;
             case 2: svr.ratify3 = this_iteration; break;
