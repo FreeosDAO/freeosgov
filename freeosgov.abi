@@ -384,76 +384,36 @@
             "base": "",
             "fields": [
                 {
-                    "name": "iteration",
-                    "type": "uint32"
+                    "name": "user",
+                    "type": "name"
                 },
                 {
-                    "name": "participants",
-                    "type": "uint32"
+                    "name": "q1response",
+                    "type": "uint8"
                 },
                 {
-                    "name": "q1choice1",
-                    "type": "uint32"
+                    "name": "q2response",
+                    "type": "uint8"
                 },
                 {
-                    "name": "q1choice2",
-                    "type": "uint32"
+                    "name": "q3response",
+                    "type": "uint8"
                 },
                 {
-                    "name": "q1choice3",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q2average",
-                    "type": "float64"
-                },
-                {
-                    "name": "q3choice1",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q3choice2",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q3choice3",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q4average",
-                    "type": "float64"
+                    "name": "q4response",
+                    "type": "uint8"
                 },
                 {
                     "name": "q5choice1",
-                    "type": "uint32"
+                    "type": "uint8"
                 },
                 {
                     "name": "q5choice2",
-                    "type": "uint32"
+                    "type": "uint8"
                 },
                 {
                     "name": "q5choice3",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q5choice4",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q5choice5",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q5choice6",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q5choice7",
-                    "type": "uint32"
-                },
-                {
-                    "name": "q5choice8",
-                    "type": "uint32"
+                    "type": "uint8"
                 }
             ]
         },
@@ -828,6 +788,11 @@
         {
             "name": "reregister",
             "type": "reregister",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "survey",
+            "type": "survey",
             "ricardian_contract": ""
         },
         {

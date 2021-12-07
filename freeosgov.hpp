@@ -49,7 +49,7 @@ public:
                                 uint8_t r7,                     // Question 4 - slider
                                 uint8_t r8,  uint8_t r9,  uint8_t r10,  // Question 5
                                 uint8_t r11, uint8_t r12, uint8_t r13); */
-  void survey(name user, uint8_t q1response, uint8_t q2response, uint8_t q3response, uint8_t q4response, uint8_t q5choice1, uint8_t q5choice2, uint8_t q5choice3);
+  [[eosio::action]] void survey(name user, uint8_t q1response, uint8_t q2response, uint8_t q3response, uint8_t q4response, uint8_t q5choice1, uint8_t q5choice2, uint8_t q5choice3);
   void survey_init(); // In survey.hpp
 
   // vote actions/functions

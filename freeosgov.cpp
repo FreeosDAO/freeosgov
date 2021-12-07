@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.7.2";
+const std::string VERSION = "0.7.3";
 
 // ACTION
 void freeosgov::version() {
@@ -193,7 +193,7 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
   // 4. Calculate the total issuance (shared between participants) and the per-participant issuance for the iteration
   asset iteration_issuance = asset(0, POINT_CURRENCY_SYMBOL);
   asset participant_issuance = asset(0, POINT_CURRENCY_SYMBOL);
-  if (ratified == true) {
+  if (ratified == true && participants > 0) {
     asset iteration_issuance = cls_snapshot * ISSUANCE_PROPORTION_OF_CLS * issuance_rate;
     asset participant_issuance = iteration_issuance / participants;
   }
