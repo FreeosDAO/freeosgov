@@ -296,6 +296,20 @@
             ]
         },
         {
+            "name": "price",
+            "base": "",
+            "fields": [
+                {
+                    "name": "currentprice",
+                    "type": "float64"
+                },
+                {
+                    "name": "targetprice",
+                    "type": "float64"
+                }
+            ]
+        },
+        {
             "name": "ratify",
             "base": "",
             "fields": [
@@ -414,6 +428,84 @@
                 {
                     "name": "q5choice3",
                     "type": "uint8"
+                }
+            ]
+        },
+        {
+            "name": "survey_record",
+            "base": "",
+            "fields": [
+                {
+                    "name": "iteration",
+                    "type": "uint32"
+                },
+                {
+                    "name": "participants",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q1choice1",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q1choice2",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q1choice3",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q2average",
+                    "type": "float64"
+                },
+                {
+                    "name": "q3choice1",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q3choice2",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q3choice3",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q4average",
+                    "type": "float64"
+                },
+                {
+                    "name": "q5choice1",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice2",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice3",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice4",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice5",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice6",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice7",
+                    "type": "uint32"
+                },
+                {
+                    "name": "q5choice8",
+                    "type": "uint32"
                 }
             ]
         },
@@ -842,6 +934,13 @@
             "key_types": []
         },
         {
+            "name": "exchangerate",
+            "type": "price",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
             "name": "globalres",
             "type": "globalres_struct",
             "index_type": "i64",
@@ -892,7 +991,7 @@
         },
         {
             "name": "survey",
-            "type": "survey",
+            "type": "survey_record",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

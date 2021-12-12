@@ -279,4 +279,10 @@ void freeosgov::maintain(string action, name user) {
     
   }
 
+  if (action == "clear survey") {
+    survey_index survey_table(get_self(), get_self().value);
+    auto survey_iterator = survey_table.begin();
+    survey_table.erase(survey_iterator);
+  }
+
 }

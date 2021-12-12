@@ -193,7 +193,7 @@ struct[[ eosio::table("svrs"), eosio::contract("freeosgov") ]] svr {
 using svr_index = eosio::multi_index<"svrs"_n, svr>;
 
 // Running processing of survey results
-struct[[ eosio::table("survey"), eosio::contract("freeosgov") ]] survey {
+struct[[ eosio::table("survey"), eosio::contract("freeosgov") ]] survey_record {
     uint32_t iteration;
     uint32_t participants;
     uint32_t q1choice1;
@@ -214,7 +214,7 @@ struct[[ eosio::table("survey"), eosio::contract("freeosgov") ]] survey {
     uint32_t q5choice8;
     uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
 };
-using survey_index = eosio::multi_index<"survey"_n, survey>;
+using survey_index = eosio::multi_index<"survey"_n, survey_record>;
 
 // VOTE
 // Running processing of vote responses
@@ -252,7 +252,7 @@ using ratify_index = eosio::multi_index<"ratify"_n, ratify>;
 
 // EXCHANGERATE
 // exchangerate table
-struct[[ eosio::table("exchangerate"), eosio::contract("freeosconfig") ]] price {
+struct[[ eosio::table("exchangerate"), eosio::contract("freeosgov") ]] price {
   double currentprice;
   double targetprice;
 
