@@ -199,11 +199,7 @@ bool freeosgov::is_registered(name user) {
   users_index users_table(get_self(), user.value);
   auto user_iterator = users_table.begin();
 
-  if (user_iterator == users_table.end()) {
-    return false;
-  } else {
-    return true;
-  }
+  return (user_iterator != users_table.end()) ? true : false;
 }
 
 

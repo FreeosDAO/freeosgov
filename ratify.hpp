@@ -34,6 +34,8 @@ void freeosgov::ratify(name user, bool ratify_vote) {
 
     tick();
 
+    check(is_registered(user), "user is not registered");
+
     uint32_t this_iteration = current_iteration();
     
     // is the system operational?

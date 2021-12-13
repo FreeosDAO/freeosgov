@@ -79,6 +79,8 @@ void freeosgov::survey(name user, uint8_t q1response, uint8_t q2response, uint8_
 
     tick();
 
+    check(is_registered(user), "user is not registered");
+
     uint32_t this_iteration = current_iteration();
     
     // is the system operational?

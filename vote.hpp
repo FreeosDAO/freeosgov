@@ -71,6 +71,8 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
 
     tick();
 
+    check(is_registered(user), "user is not registered");
+
     uint32_t this_iteration = current_iteration();
     
     // is the system operational?
@@ -132,7 +134,7 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     check(q1response >= vote_range_values[0] && q1response <= vote_range_values[1],  "Response 1 is out of range");
     check(q2response >= vote_range_values[2] && q2response <= vote_range_values[3],  "Response 2 is out of range");
     check(q3response >= HARD_EXCHANGE_RATE_FLOOR && q3response <= locking_threshold_upper_limit,   "Response 3 is out of range");
-    check(q4response == "POOL" || q4response == "BURN",  "Response 4 must be 'POOL' or 'BURN");
+    check(q4response == "POOL" || q4response == "BURN",  "Response 4 must be 'POOL' or 'BURN'");
     check(q5response >= vote_range_values[4] && q5response <= vote_range_values[5],  "Response 5 is out of range");
     check(q6choice1 >= 1 && q6choice1 <= 6,     "Response 6 choice 1 must be a number between 1 and 6");
     check(q6choice2 >= 1 && q6choice2 <= 6,     "Response 6 choice 2 must be a number between 1 and 6");
