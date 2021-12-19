@@ -71,21 +71,21 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
 
     tick();
 
-    check(is_registered(user), "user is not registered");
-
-    uint32_t this_iteration = current_iteration();
+    // is the user registered?
+    check(is_registered(user), "voting is not open to unregistered users");
+    
+    // is the user registered and verified?
+    check(is_user_verified(user), "voting is not open to unverified users");
     
     // is the system operational?
+    uint32_t this_iteration = current_iteration();
     check(this_iteration != 0, "The freeos system is not available at this time");
 
     // is the user active
     check(is_user_active(user), "The user has exceeded the maximum number of iterations");
 
     // are we in the vote period?
-    // TODO: uncomment this    check(is_action_period("vote"), "It is outside of the vote period");
-
-    // is the user verified?
-    check(is_user_verified(user), "voting is not open to unverified users");
+    check(is_action_period("vote"), "It is outside of the vote period");
 
     // has the user already completed the vote?
     svr_index svrs_table(get_self(), user.value);

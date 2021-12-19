@@ -212,8 +212,7 @@ bool freeosgov::is_user_verified(name user) {
   check(user_iterator != users_table.end(), "user is not registered");
   string account_type = user_iterator->account_type;
 
-  // TODO: remove "e" from condition below
-  if (account_type == "v" || account_type == "b" || account_type == "c" || account_type == "e") {
+  if (account_type == "v" || account_type == "b" || account_type == "c") {
     verified= true;
   }
 

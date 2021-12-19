@@ -34,18 +34,21 @@ void freeosgov::ratify(name user, bool ratify_vote) {
 
     tick();
 
-    check(is_registered(user), "user is not registered");
-
-    uint32_t this_iteration = current_iteration();
+    // is the user registered?
+    check(is_registered(user), "ratify is not open to unregistered users");
+    
+    // is the user verified?
+    check(is_user_verified(user), "ratify is not open to unverified users");
     
     // is the system operational?
+    uint32_t this_iteration = current_iteration();
     check(this_iteration != 0, "The freeos system is not available at this time");
 
-    // are we in the ratify period?
-    check(is_action_period("ratify"), "It is outside of the ratification period");
+    // is the user active
+    check(is_user_active(user), "The user has exceeded the maximum number of iterations");
 
-    // is the user verified?
-    check(is_user_verified(user), "ratification is not open to unverified users");
+    // are we in the ratify period?
+    check(is_action_period("ratify"), "It is outside of the ratify period");
 
     // has the user met the requirement of voting then ratifying?
     svr_index svrs_table(get_self(), user.value);
