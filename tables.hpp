@@ -218,7 +218,7 @@ using survey_index = eosio::multi_index<"survey"_n, survey_record>;
 
 // VOTE
 // Running processing of vote responses
-struct[[ eosio::table("votescast"), eosio::contract("freeosgov") ]] votecast {
+struct[[ eosio::table("vote"), eosio::contract("freeosgov") ]] vote_record {
     uint32_t iteration;
     uint32_t participants;
     double q1average;   // issuance rate (0 - 100)
@@ -236,18 +236,18 @@ struct[[ eosio::table("votescast"), eosio::contract("freeosgov") ]] votecast {
 
     uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
 };
-using votescast_index = eosio::multi_index<"votescast"_n, votecast>;
+using vote_index = eosio::multi_index<"vote"_n, vote_record>;
 
 
 // RATIFY
 // Running processing of ratify responses
-struct[[ eosio::table("ratify"), eosio::contract("freeosgov") ]] ratify {
+struct[[ eosio::table("ratify"), eosio::contract("freeosgov") ]] ratify_record {
     uint32_t iteration;
     uint32_t participants;
     uint32_t ratified;
     uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
 };
-using ratify_index = eosio::multi_index<"ratify"_n, ratify>;
+using ratify_index = eosio::multi_index<"ratify"_n, ratify_record>;
 
 
 // EXCHANGERATE

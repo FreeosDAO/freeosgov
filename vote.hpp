@@ -10,7 +10,7 @@ using namespace freedao;
 using namespace std;
 
 void freeosgov::vote_init() {
-    votescast_index vote_table(get_self(), get_self().value);
+    vote_index vote_table(get_self(), get_self().value);
     auto vote_iterator = vote_table.begin();
 
     if (vote_iterator == vote_table.end()) {
@@ -144,7 +144,7 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     check((q6choice1 != q6choice2) && (q6choice2 != q6choice3) && (q6choice3 != q6choice1), "Response 6 has duplicate values");
 
     // store the responses
-    votescast_index vote_table(get_self(), get_self().value);
+    vote_index vote_table(get_self(), get_self().value);
     auto vote_iterator = vote_table.begin();
 
     // when run for the very first time, add the vote record if not already present

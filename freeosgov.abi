@@ -324,6 +324,24 @@
             ]
         },
         {
+            "name": "ratify_record",
+            "base": "",
+            "fields": [
+                {
+                    "name": "iteration",
+                    "type": "uint32"
+                },
+                {
+                    "name": "participants",
+                    "type": "uint32"
+                },
+                {
+                    "name": "ratified",
+                    "type": "uint32"
+                }
+            ]
+        },
+        {
             "name": "reguser",
             "base": "",
             "fields": [
@@ -724,7 +742,7 @@
             ]
         },
         {
-            "name": "votecast",
+            "name": "vote_record",
             "base": "",
             "fields": [
                 {
@@ -970,7 +988,7 @@
         },
         {
             "name": "ratify",
-            "type": "ratify",
+            "type": "ratify_record",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
@@ -1025,8 +1043,8 @@
             "key_types": []
         },
         {
-            "name": "votescast",
-            "type": "votecast",
+            "name": "vote",
+            "type": "vote_record",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

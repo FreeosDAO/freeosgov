@@ -15,6 +15,7 @@ void freeosgov::claim(name user) {
 
     const asset PAYMENT_SURVEY = asset(10000, POINT_CURRENCY_SYMBOL);   // 1.0000 POINT
     const asset PAYMENT_VOTE = asset(20000, POINT_CURRENCY_SYMBOL);     // 2.0000 POINT
+    const asset PAYMENT_RATIFY = asset(30000, POINT_CURRENCY_SYMBOL);   // 3.0000 POINT
 
     require_auth(user);
 
@@ -25,7 +26,7 @@ void freeosgov::claim(name user) {
     // is the system operational?
     check(this_iteration != 0, "The freeos system is not available at this time");
 
-    // give the user 1 point for each survey, 2 for each vote. TODO: needs algorithm for calculating claim amount
+    // give the user 1 point for each survey, 2 for each vote, 3 points for ratify. TODO: needs algorithm for calculating claim amount
 
     // find the user's last issuance
     users_index users_table(get_self(), user.value);
@@ -79,6 +80,23 @@ void freeosgov::claim(name user) {
 
     if (svr_iterator->vote4 > last_issuance && svr_iterator->vote4 > lapsed_claim_iteration) {
         user_payment += PAYMENT_VOTE;
+    }
+
+    // payments for ratifications
+    if (svr_iterator->ratify1 > last_issuance && svr_iterator->ratify1 > lapsed_claim_iteration) {
+        user_payment += PAYMENT_RATIFY;
+    }
+
+    if (svr_iterator->ratify2 > last_issuance && svr_iterator->ratify2 > lapsed_claim_iteration) {
+        user_payment += PAYMENT_RATIFY;
+    }
+
+    if (svr_iterator->ratify3 > last_issuance && svr_iterator->ratify3 > lapsed_claim_iteration) {
+        user_payment += PAYMENT_RATIFY;
+    }
+
+    if (svr_iterator->ratify4 > last_issuance && svr_iterator->ratify4 > lapsed_claim_iteration) {
+        user_payment += PAYMENT_RATIFY;
     }
 
     // mint and pay

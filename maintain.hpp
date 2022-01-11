@@ -1,3 +1,5 @@
+#include <ctime>
+
 // TODO: Remove this action in production version
 
 // ACTION
@@ -283,6 +285,27 @@ void freeosgov::maintain(string action, name user) {
     survey_index survey_table(get_self(), get_self().value);
     auto survey_iterator = survey_table.begin();
     survey_table.erase(survey_iterator);
+  }
+
+  if (action == "current iteration") {
+    uint16_t iteration = 0;
+
+    // get the start of freeos system time
+    system_index system_table(get_self(), get_self().value);
+    auto system_iterator = system_table.begin();
+    check(system_iterator != system_table.end(), "system record is undefined");
+    time_point init = system_iterator->init;
+
+    // how far are we into the current iteration?
+    uint64_t now_secs = current_time_point().sec_since_epoch();
+    uint64_t init_secs = init.sec_since_epoch();
+
+    if (now_secs >= init_secs) {
+      iteration = ((now_secs - init_secs) / ITERATION_LENGTH_SECONDS) + 1;
+    }
+
+    string debug_msg = "now_secs = " + to_string(now_secs) + ", init_secs = " + to_string(init_secs) + ", ITERATION_LENGTH_SECONDS = " + to_string(ITERATION_LENGTH_SECONDS) + ", calculated iteration = " + to_string(iteration);
+    check(false, debug_msg);
   }
 
 }

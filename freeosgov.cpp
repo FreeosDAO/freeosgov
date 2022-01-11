@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.7.9";
+const std::string VERSION = "0.8.0";
 
 // ACTION
 void freeosgov::version() {
@@ -140,6 +140,7 @@ void freeosgov::tick() {
     // update the recorded iteration
     system_table.modify(system_iterator, _self, [&](auto &sys) {
       sys.iteration = actual_iteration;
+      sys.participants = 0;
     });
 
     // run the new iteration service routine
@@ -169,7 +170,7 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
   uint32_t participants = system_iterator->participants;
 
   // 2. vote record
-  votescast_index vote_table(get_self(), get_self().value);
+  vote_index vote_table(get_self(), get_self().value);
   auto vote_iterator = vote_table.begin();
   check(vote_iterator != vote_table.end(), "vote record is undefined");
   // issuance_rate
