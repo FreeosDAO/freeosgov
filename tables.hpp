@@ -192,8 +192,9 @@ struct[[ eosio::table("svrs"), eosio::contract("freeosgov") ]] svr {
 };
 using svr_index = eosio::multi_index<"svrs"_n, svr>;
 
+// SURVEY
 // Running processing of survey results
-struct[[ eosio::table("survey"), eosio::contract("freeosgov") ]] survey_record {
+struct[[ eosio::table("surveyrecord"), eosio::contract("freeosgov") ]] survey_record {
     uint32_t iteration;
     uint32_t participants;
     uint32_t q1choice1;
@@ -214,11 +215,11 @@ struct[[ eosio::table("survey"), eosio::contract("freeosgov") ]] survey_record {
     uint32_t q5choice8;
     uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
 };
-using survey_index = eosio::multi_index<"survey"_n, survey_record>;
+using survey_index = eosio::multi_index<"surveyrecord"_n, survey_record>;
 
 // VOTE
 // Running processing of vote responses
-struct[[ eosio::table("vote"), eosio::contract("freeosgov") ]] vote_record {
+struct[[ eosio::table("voterecord"), eosio::contract("freeosgov") ]] vote_record {
     uint32_t iteration;
     uint32_t participants;
     double q1average;   // issuance rate (0 - 100)
@@ -236,18 +237,18 @@ struct[[ eosio::table("vote"), eosio::contract("freeosgov") ]] vote_record {
 
     uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
 };
-using vote_index = eosio::multi_index<"vote"_n, vote_record>;
+using vote_index = eosio::multi_index<"voterecord"_n, vote_record>;
 
 
 // RATIFY
 // Running processing of ratify responses
-struct[[ eosio::table("ratify"), eosio::contract("freeosgov") ]] ratify_record {
+struct[[ eosio::table("ratifyrecord"), eosio::contract("freeosgov") ]] ratify_record {
     uint32_t iteration;
     uint32_t participants;
     uint32_t ratified;
     uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
 };
-using ratify_index = eosio::multi_index<"ratify"_n, ratify_record>;
+using ratify_index = eosio::multi_index<"ratifyrecord"_n, ratify_record>;
 
 
 // EXCHANGERATE

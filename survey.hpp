@@ -48,28 +48,10 @@ void freeosgov::survey_init() {
     survey_index survey_table(get_self(), get_self().value);
     auto survey_iterator = survey_table.begin();
 
-    check(survey_iterator != survey_table.end(), "survey table is undefined");
-
-    survey_table.modify(survey_iterator, _self, [&](auto &survey) {
-      survey.iteration = current_iteration();
-      survey.participants = 0;
-      survey.q1choice1 = 0;
-      survey.q1choice2 = 0;
-      survey.q1choice3 = 0;
-      survey.q2average = 0.0;
-      survey.q3choice1 = 0;
-      survey.q3choice2 = 0;
-      survey.q3choice3 = 0;
-      survey.q4average = 0.0;
-      survey.q5choice1 = 0;
-      survey.q5choice2 = 0;
-      survey.q5choice3 = 0;
-      survey.q5choice4 = 0;
-      survey.q5choice5 = 0;
-      survey.q5choice6 = 0;
-      survey.q5choice7 = 0;
-      survey.q5choice8 = 0;
-    });
+    if (survey_iterator == survey_table.end()) {
+        // emplace
+        survey_table.emplace(get_self(), [&](auto &s) { s.iteration = current_iteration(); });
+    }    
 }
 
 // ACTION
@@ -132,27 +114,34 @@ void freeosgov::survey(name user, uint8_t q1response, uint8_t q2response, uint8_
     // store the responses
     survey_index survey_table(get_self(), get_self().value);
     auto survey_iterator = survey_table.begin();
-
-    // when run for the very first time, add the survey record if not already present
-    if (survey_iterator == survey_table.end()) {
-        survey_table.emplace(get_self(), [&](auto &survey) { survey.iteration = this_iteration; });
-        survey_iterator = survey_table.begin();
-    }
-
     check(survey_iterator != survey_table.end(), "survey record is not defined");
-
-    // check if we are on a new iteration. If yes, then re-initialise the running values in the survey table
-    if (survey_iterator->iteration != this_iteration) {
-        survey_init();
-    }
 
     // process the responses from the user
     // for multiple choice options, increment to add the user's selection
     // for running averages, compute new running average
-    survey_table.modify(survey_iterator, _self, [&](auto &survey) {
+    survey_table.modify(survey_iterator, get_self(), [&](auto &survey) {
 
-        // set iteration
-        survey.iteration = this_iteration;
+        // check if we are on a new iteration. If yes, then re-initialise the running values in the survey table
+        if (survey.iteration != this_iteration) {
+            survey.iteration = this_iteration;
+            survey.participants = 0;
+            survey.q1choice1 = 0;
+            survey.q1choice2 = 0;
+            survey.q1choice3 = 0;
+            survey.q2average = 0.0;
+            survey.q3choice1 = 0;
+            survey.q3choice2 = 0;
+            survey.q3choice3 = 0;
+            survey.q4average = 0.0;
+            survey.q5choice1 = 0;
+            survey.q5choice2 = 0;
+            survey.q5choice3 = 0;
+            survey.q5choice4 = 0;
+            survey.q5choice5 = 0;
+            survey.q5choice6 = 0;
+            survey.q5choice7 = 0;
+            survey.q5choice8 = 0;
+        }
 
         // question 1
         switch(q1response) {
@@ -212,7 +201,7 @@ void freeosgov::survey(name user, uint8_t q1response, uint8_t q2response, uint8_
         }        
 
         // update the number of participants
-        survey.participants++;
+        survey.participants += 1;
 
     }); // end of modify
 

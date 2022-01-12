@@ -15,27 +15,8 @@ void freeosgov::vote_init() {
 
     if (vote_iterator == vote_table.end()) {
         // emplace
-        vote_table.emplace(get_self(), [&](auto &v) { ; });
-    } else {
-        // modify
-        vote_table.modify(vote_iterator, _self, [&](auto &vote) {
-        vote.iteration = current_iteration();
-        vote.participants = 0;
-        vote.q1average = 0.0;
-        vote.q2average = 0.0;
-        vote.q3average = 0.0;
-        vote.q4choice1 = 0;   // POOL
-        vote.q4choice2 = 0;   // BURN
-        vote.q5average = 0.0;
-        vote.q6choice1 = 0;
-        vote.q6choice2 = 0;
-        vote.q6choice3 = 0;
-        vote.q6choice4 = 0;
-        vote.q6choice5 = 0;
-        vote.q6choice6 = 0;
-        });
+        vote_table.emplace(get_self(), [&](auto &v) { v.iteration = current_iteration(); });
     }
-
 }
 
 
@@ -146,27 +127,30 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     // store the responses
     vote_index vote_table(get_self(), get_self().value);
     auto vote_iterator = vote_table.begin();
-
-    // when run for the very first time, add the vote record if not already present
-    if (vote_iterator == vote_table.end()) {
-        vote_table.emplace(get_self(), [&](auto &vote) { vote.iteration = this_iteration; });
-        vote_iterator = vote_table.begin();
-    }
-
     check(vote_iterator != vote_table.end(), "vote record is not defined");
-
-    // check if we are on a new iteration. If yes, then re-initialise the running values in the vote table
-    if (vote_iterator->iteration != this_iteration) {
-        vote_init();
-    }
 
     // process the responses from the user
     // for multiple choice options, increment to add the user's selection
     // for running averages, compute new running average
-    vote_table.modify(vote_iterator, _self, [&](auto &vote) {
+    vote_table.modify(vote_iterator, get_self(), [&](auto &vote) {
 
-        // set iteration
-        vote.iteration = this_iteration;
+        // check if we are on a new iteration. If yes, then re-initialise the running values in the vote table
+        if (vote.iteration != this_iteration) {
+            vote.iteration = this_iteration;
+            vote.participants = 0;
+            vote.q1average = 0.0;
+            vote.q2average = 0.0;
+            vote.q3average = 0.0;
+            vote.q4choice1 = 0;   // POOL
+            vote.q4choice2 = 0;   // BURN
+            vote.q5average = 0.0;
+            vote.q6choice1 = 0;
+            vote.q6choice2 = 0;
+            vote.q6choice3 = 0;
+            vote.q6choice4 = 0;
+            vote.q6choice5 = 0;
+            vote.q6choice6 = 0;
+        }
 
         // question 1
         vote.q1average = ((vote.q1average * vote.participants) + q1response) / (vote.participants + 1);
@@ -212,7 +196,7 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
         }        
 
         // update the number of participants
-        vote.participants++;
+        vote.participants += 1;
 
     }); // end of modify
 

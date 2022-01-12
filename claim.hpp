@@ -118,4 +118,12 @@ void freeosgov::claim(name user) {
         });
     }
 
+    // update the number of claimevents in the system record
+    system_index system_table(get_self(), get_self().value);
+    auto system_iterator = system_table.begin();
+    check(system_iterator != system_table.end(), "system record is undefined");
+    system_table.modify(system_iterator, get_self(), [&](auto &s) {
+        s.claimevents += 1;
+    });
+
 }

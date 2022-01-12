@@ -987,7 +987,7 @@
             "key_types": []
         },
         {
-            "name": "ratify",
+            "name": "ratifyrecord",
             "type": "ratify_record",
             "index_type": "i64",
             "key_names": [],
@@ -1008,7 +1008,7 @@
             "key_types": []
         },
         {
-            "name": "survey",
+            "name": "surveyrecord",
             "type": "survey_record",
             "index_type": "i64",
             "key_names": [],
@@ -1043,7 +1043,7 @@
             "key_types": []
         },
         {
-            "name": "vote",
+            "name": "voterecord",
             "type": "vote_record",
             "index_type": "i64",
             "key_names": [],

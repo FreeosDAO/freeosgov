@@ -15,13 +15,13 @@ void freeosgov::ratify_init() {
 
     if(ratify_iterator == ratify_table.end()) {
         // emplace
-        ratify_table.emplace(get_self(), [&](auto &r) { ; });
+        ratify_table.emplace(get_self(), [&](auto &r) { r.iteration = current_iteration(); });
     } else {
         // modify
-        ratify_table.modify(ratify_iterator, get_self(), [&](auto &ratify) {
-        ratify.iteration = current_iteration();
-        ratify.participants = 0;
-        ratify.ratified = 0;
+        ratify_table.modify(ratify_iterator, get_self(), [&](auto &r) {
+            r.iteration = current_iteration();
+            r.participants = 0;
+            r.ratified = 0;
         });
     }
 
@@ -73,25 +73,18 @@ void freeosgov::ratify(name user, bool ratify_vote) {
     // store the responses
     ratify_index ratify_table(get_self(), get_self().value);
     auto ratify_iterator = ratify_table.begin();
-
-    // when run for the very first time, add the ratify record if not already present
-    if (ratify_iterator == ratify_table.end()) {
-        ratify_table.emplace(get_self(), [&](auto &ratify) { ratify.iteration = this_iteration; });
-        ratify_iterator = ratify_table.begin();
-    }
-
     check(ratify_iterator != ratify_table.end(), "ratify record is not defined");
 
-    // check if we are on a new iteration. If yes, then re-initialise the running values in the ratify table
-    if (ratify_iterator->iteration != this_iteration) {
-        ratify_init();
-    }
-
     // process the responses from the user
-    ratify_table.modify(ratify_iterator, _self, [&](auto &ratify) {
+    ratify_table.modify(ratify_iterator, get_self(), [&](auto &ratify) {
 
-        // set iteration
-        ratify.iteration = this_iteration;
+        // check if we are on a new iteration. If yes, then re-initialise the running values in the ratify table
+        if (ratify_iterator->iteration != this_iteration) {
+            ratify.iteration = this_iteration;
+            ratify.participants = 0;
+            ratify.ratified = 0;
+        }
+
 
         // ratified?
         if (ratify_vote == true) {
@@ -99,7 +92,7 @@ void freeosgov::ratify(name user, bool ratify_vote) {
         }        
 
         // update the number of participants
-        ratify.participants++;
+        ratify.participants += 1;
 
     }); // end of modify
     

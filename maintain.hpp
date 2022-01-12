@@ -140,12 +140,27 @@ void freeosgov::maintain(string action, name user) {
 
   }
 
+  if (action == "clear survey") {
+    survey_index survey_table(get_self(), get_self().value);
+    auto survey_itr = survey_table.begin();
+
+    survey_table.erase(survey_itr);
+  }
+
   if (action == "clear rewards") {
     rewards_index rewards_table(get_self(), get_self().value);
     auto rewards_iterator = rewards_table.begin();
     while (rewards_iterator != rewards_table.end()) {
       rewards_iterator = rewards_table.erase(rewards_iterator);
     }
+  }
+
+  if (action == "table inits") {
+    survey_init();
+
+    vote_init();
+
+    ratify_init();
   }
 
   if (action == "set cls") {
