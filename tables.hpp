@@ -8,7 +8,7 @@ using namespace std;
 namespace freedao {
 
 // Andrew's code changes
-// Survey global results table. For interpretations of particular rows search "survey.hpp".
+// Survey global results table. For interpretations of particular rows search "survey.hpp". TODO: remove table
 
 struct[[ eosio::table("globalres"), eosio::contract("freeosgov") ]] globalres_struct {
     uint64_t p_key;
@@ -67,7 +67,7 @@ typedef eosio::multi_index<"mintfeefree"_n, account> mintfeefree_index;
 struct[[ eosio::table("stat"), eosio::contract("freeosgov") ]] currency_stats {
   asset supply;
   asset max_supply;
-  asset conditional_supply;
+  asset conditional_supply; // not used. maintained for backwards compatibility with AirClaim POINTs token
   name issuer;
 
   uint64_t primary_key() const { return supply.symbol.code().raw(); }

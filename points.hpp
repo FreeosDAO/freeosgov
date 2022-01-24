@@ -23,7 +23,6 @@ void freeosgov::create(const name &issuer, const asset &maximum_supply) {
 
   statstable.emplace(get_self(), [&](auto &s) {
     s.supply.symbol = maximum_supply.symbol;
-    s.conditional_supply.symbol = maximum_supply.symbol;
     s.max_supply = maximum_supply;
     s.issuer = issuer;
   });
@@ -186,7 +185,6 @@ void freeosgov::mintfreeby(const name &owner, const asset &quantity) {
 
   statstable.modify(st, same_payer, [&](auto &s) {
     s.supply -= quantity;
-    s.conditional_supply -= quantity;
   });
 
   // decrease owner's balance of non-exchangeable tokens
@@ -218,7 +216,7 @@ void freeosgov::mintfreeos(const name &owner, const asset &quantity) {
   require_auth(owner);
 
   // is the 'owner' user verified?
-  check(is_user_verified(owner), "minting is restricted to verified users");
+  // check(is_user_verified(owner), "minting is restricted to verified users");
 
   auto sym = quantity.symbol;
   check(sym == POINT_CURRENCY_SYMBOL || sym == FREEBY_CURRENCY_SYMBOL, "invalid symbol name");
@@ -228,7 +226,7 @@ void freeosgov::mintfreeos(const name &owner, const asset &quantity) {
   if (sym == POINT_CURRENCY_SYMBOL) {
     token_contract = name(get_self());
   } else {
-    token_contract = name(freeos_acct);
+    token_contract = name(freeby_acct);
   }
 
   stats statstable(token_contract, sym.code().raw());
@@ -237,11 +235,10 @@ void freeosgov::mintfreeos(const name &owner, const asset &quantity) {
   const auto &st = *existing;
 
   check(quantity.is_valid(), "invalid quantity");
-  check(quantity.amount > 0, "must convert positive quantity");
+  check(quantity.amount > 0, "must mint positive quantity");
 
   statstable.modify(st, same_payer, [&](auto &s) {
     s.supply -= quantity;
-    s.conditional_supply -= quantity;
   });
 
   // decrease owner's balance of POINTs

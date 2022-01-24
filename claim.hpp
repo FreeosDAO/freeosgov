@@ -33,6 +33,9 @@ void freeosgov::claim(name user) {
     auto user_iterator = users_table.begin();
     check(user_iterator != users_table.end(), "user registration record is undefined");
 
+    // is the user verified?
+    check(is_user_verified(user), "claiming is restricted to verified users");
+
     // find the user's svr record
     svr_index svr_table(get_self(), user.value);
     auto svr_iterator = svr_table.begin();

@@ -167,6 +167,9 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
         } else {
             vote.q4choice2++;
         }
+
+        // question 5
+        vote.q5average = ((vote.q5average * vote.participants) + q5response) / (vote.participants + 1);
         
         // question 6 - need to iterate the list of choices
         uint8_t q6choices[3] = { q6choice1, q6choice2, q6choice3 };
