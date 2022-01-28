@@ -44,8 +44,8 @@ void freeosgov::ratify(name user, bool ratify_vote) {
     uint32_t this_iteration = current_iteration();
     check(this_iteration != 0, "The freeos system is not available at this time");
 
-    // is the user active
-    check(is_user_active(user), "The user has exceeded the maximum number of iterations");
+    // is the user alive?
+    check(is_user_alive(user), "user has exceeded the maximum number of iterations");
 
     // are we in the ratify period?
     check(is_action_period("ratify"), "It is outside of the ratify period");
@@ -97,7 +97,7 @@ void freeosgov::ratify(name user, bool ratify_vote) {
     }); // end of modify
     
     // record that the user has ratified
-    svrs_table.modify(svr_iterator, _self, [&](auto &svr) {
+    svrs_table.modify(svr_iterator, get_self(), [&](auto &svr) {
         switch (this_iteration % 4) {
             case 0: svr.ratify1 = this_iteration; break;
             case 1: svr.ratify2 = this_iteration; break;

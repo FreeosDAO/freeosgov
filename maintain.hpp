@@ -20,7 +20,7 @@ void freeosgov::maintain(string action, name user) {
       auto system_iterator = system_table.begin();
       check(system_iterator != system_table.end(), "system record is undefined");
 
-      system_table.modify(system_iterator, _self, [&](auto &sys) {
+      system_table.modify(system_iterator, get_self(), [&](auto &sys) {
         sys.usercount = sys.usercount - 1;
       });
     }
@@ -173,19 +173,12 @@ void freeosgov::maintain(string action, name user) {
     });
   }
 
-  if (action == "get user cls") {
-    asset amount = asset(0, POINT_CURRENCY_SYMBOL);
-    amount += UCLS; // add to the CLS for the verified user
-    amount += PARTNER_CLS_ADDITION; // add to CLS for the partners
-    check(false, amount.to_string());
-  }
-
   if (action == "set usercount") {
     system_index system_table(get_self(), get_self().value);
     auto system_iterator = system_table.begin();
     check(system_iterator != system_table.end(), "system record is undefined");
 
-    system_table.modify(system_iterator, _self, [&](auto &sys) {
+    system_table.modify(system_iterator, get_self(), [&](auto &sys) {
       sys.usercount = 1;
     });
   }
@@ -200,13 +193,18 @@ void freeosgov::maintain(string action, name user) {
     system_index system_table(get_self(), get_self().value);
     system_table.emplace(
         get_self(), [&](auto &sys) {
-          sys.usercount = 6;
-          sys.cls = asset(231000000000, POINT_CURRENCY_SYMBOL);
-          sys.claimevents = 0;
-          sys.iteration = 9;
-          // sys.particpants = 0;
-          // sys.init = time_point("2021-09-15T00:00:00.000");
+          sys.usercount = 20;
+          sys.cls = asset(577500000000, POINT_CURRENCY_SYMBOL);
+          sys.claimevents = 2;
+          sys.iteration = 3194;
+          sys.participants = 0;
+          //sys.init = time_point("2021-09-15T00:00:00.000");
         });
+  }
+
+  if (action == "ucls") {
+    asset ucls = calculate_user_cls_addition();
+    check(false, ucls.to_string());
   }
 
   if (action == "is registered") {
@@ -250,7 +248,7 @@ void freeosgov::maintain(string action, name user) {
         svrs_table.emplace(get_self(), [&](auto &svr) { ; });
         svr_iterator = svrs_table.begin();
     } else {
-        svrs_table.modify(svr_iterator, _self, [&](auto &svr) {
+        svrs_table.modify(svr_iterator, get_self(), [&](auto &svr) {
           svr.survey1 = 0;
           svr.survey2 = 0;
           svr.survey3 = 0;
@@ -278,7 +276,7 @@ void freeosgov::maintain(string action, name user) {
         svrs_table.emplace(get_self(), [&](auto &svr) { ; });
         svr_iterator = svrs_table.begin();
     } else {
-        svrs_table.modify(svr_iterator, _self, [&](auto &svr) {
+        svrs_table.modify(svr_iterator, get_self(), [&](auto &svr) {
           svr.survey1 = 1;
           svr.survey2 = 1;
           svr.survey3 = 1;

@@ -6,32 +6,32 @@
 #include "config.hpp"
 #include "tables.hpp"
 
+#include <stdlib.h>
+
 using namespace eosio;
 using namespace freedao;
 
-
-// is the user within the allotted 'lifespan' ?
-bool freeosgov::is_user_active(name user) {
-
-  // default return value
-  bool user_valid = true;
-
-  // find the user lifespan parameter
+// user's last active iteration
+uint32_t freeosgov::user_last_active_iteration(name user) {
+  // fetch the user lifespan parameter
   string slifespan = get_parameter(name("userlifespan"));
-  uint32_t ilifespan = stoi(slifespan);
+  check(slifespan != "", "user lifespan parameter is not defined");
+  uint32_t ilifespan = abs(stoi(slifespan));
 
   // get the user record
   users_index users_table(get_self(), user.value);
   auto user_iterator = users_table.begin();
+  check(user_iterator != users_table.end(), "user registration record is not defined");
 
-  check(user_iterator != users_table.end(), "user record is not defined");
+  return user_iterator->registered_iteration + ilifespan - 1;
+}
 
-  // if current_iteration > user's registered_iteration + lifespan then user has exceeeded lifespan
-  if (current_iteration() > (user_iterator->registered_iteration + ilifespan)) {
-    user_valid = false;
-  }
+// is the user within the allotted 'lifespan' ?
+bool freeosgov::is_user_alive(name user) {
+  uint32_t user_last_iteration = user_last_active_iteration(user);
 
-  return user_valid;
+  // is user alive? if current_iteration > (user's registered_iteration + lifespan - 1) then user has exceeeded lifespan
+  return current_iteration() <= user_last_iteration ? true : false;
 }
 
 // determine the user account type from the Proton verification table
@@ -70,6 +70,48 @@ string get_account_type(name user) {
   return user_account_type;
 }
 
+// add user CLS contribution
+asset freeosgov::calculate_user_cls_addition() {
+  // get parameters
+  parameters_index parameters_table(get_self(), get_self().value);
+
+  // user cls contribution
+  int64_t uclsamount;
+  auto uclsamount_iterator = parameters_table.find(name("uclsamount").value);
+  if (uclsamount_iterator != parameters_table.end()) {
+    uclsamount = stoi(uclsamount_iterator->value);
+  } else {
+    uclsamount = UCLSAMOUNT;  // hard floor constant
+  }
+
+  // get double parameters
+  dparameters_index dparameters_table(get_self(), get_self().value);
+
+  // daoshare
+  double daoshare;
+  auto daoshare_iterator = dparameters_table.find(name("daoshare").value);
+  if (daoshare_iterator != dparameters_table.end()) {
+    daoshare = daoshare_iterator->value;
+  } else {
+    daoshare = DAOSHARE;  // hard floor constant
+  }
+
+  // partnershare
+  double partnershare;
+  auto partnershare_iterator = dparameters_table.find(name("partnershare").value);
+  if (partnershare_iterator != dparameters_table.end()) {
+    partnershare = partnershare_iterator->value;
+  } else {
+    partnershare = PARTNERSHARE;  // hard floor constant
+  }
+
+  // calculate the total asset for user CLS
+  int64_t user_cls_amount = uclsamount * (1.0 + daoshare + partnershare);
+  asset ucls = asset(user_cls_amount * 10000, POINT_CURRENCY_SYMBOL);
+
+  return ucls;
+}
+
 // ACTION
 void freeosgov::reguser(name user) {  // TODO: detect if the user has an existing record from the airclaim
 
@@ -86,16 +128,47 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
 
   // capture their POINTs balance - as these POINTs will be mint-fee-free
   accounts accounts_table(get_self(), user.value);
+  mintfeefree_index mintfeefree_table(get_self(), user.value);
+
   auto points_iterator = accounts_table.find(symbol_code(POINT_CURRENCY_CODE).raw());
   if (points_iterator != accounts_table.end()) {    
       // get and store the POINTs balance
       asset points_balance = points_iterator->balance;
 
       // store in the mint_fee_free table
-      mintfeefree_index mintfeefree_table(get_self(), user.value);
+      auto mintfeefree_iterator = mintfeefree_table.begin();
+
+      if (mintfeefree_iterator == mintfeefree_table.end()) {
+        // emplace
+        mintfeefree_table.emplace(get_self(), [&](auto &m) {
+          m.balance = points_balance;
+        });
+      } else {
+        // modify - should not be necessary to modify, but include this code in the event of migrations, etc
+        mintfeefree_table.modify(mintfeefree_iterator, get_self(), [&](auto &m) {
+          m.balance = points_balance;
+        });
+      } 
+  }
+
+  // check if the user has an AIRKEY - in which case they get a mint-fee-free waiver of mint-fee on their POINTs  
+  auto airkey_iterator = accounts_table.find(symbol_code(AIRKEY_CURRENCY_CODE).raw());
+  if (airkey_iterator != accounts_table.end()) {
+    // store mint-fee-free allowance in the mint_fee_free table
+    asset airkey_allowance = asset(AIRKEY_MINT_FEE_FREE_ALLOWANCE * 10000, POINT_CURRENCY_SYMBOL);
+
+    auto mintfeefree_iterator = mintfeefree_table.begin();
+
+    if (mintfeefree_iterator == mintfeefree_table.end()) {
+      // emplace
       mintfeefree_table.emplace(get_self(), [&](auto &m) {
-        m.balance = points_balance;
+        m.balance = airkey_allowance;
       });
+    } else {
+      mintfeefree_table.modify(mintfeefree_iterator, get_self(), [&](auto &m) {
+        m.balance += airkey_allowance;
+      });
+    } 
   }
 
   // determine account type
@@ -116,6 +189,8 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
   });
 
   // update the system record - number of users and CLS
+  asset ucls = calculate_user_cls_addition();
+
   system_index system_table(get_self(), get_self().value);
   auto system_iterator = system_table.begin();
   if (system_iterator == system_table.end()) {
@@ -126,20 +201,18 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
 
           // update the CLS if a verified user
           if (is_user_verified(user)) {
-            sys.cls = UCLS; // the CLS for the first verified user
-            sys.cls += PARTNER_CLS_ADDITION; // add to CLS for the partners
+            sys.cls = ucls;
           }
           
         });
   } else {
     // modify
-    system_table.modify(system_iterator, _self, [&](auto &sys) {
+    system_table.modify(system_iterator, get_self(), [&](auto &sys) {
       sys.usercount += 1;
 
       // update the CLS if a verified user
       if (is_user_verified(user)) {
-        sys.cls += UCLS; // add to the CLS for the verified user
-        sys.cls += PARTNER_CLS_ADDITION; // add to CLS for the partners
+        sys.cls += ucls;
       }
     });
   }
@@ -171,7 +244,7 @@ void freeosgov::reregister(name user) {
   string account_type = get_account_type(user);
 
   // set the user account type
-  users_table.modify(user_iterator, _self, [&](auto &u) {
+  users_table.modify(user_iterator, get_self(), [&](auto &u) {
     u.account_type = account_type;
   });
 
@@ -185,9 +258,10 @@ void freeosgov::reregister(name user) {
     check(system_iterator != system_table.end(), "system record is undefined");
 
     // modify cls
-    system_table.modify(system_iterator, _self, [&](auto &sys) {
-        sys.cls += UCLS; // add to the CLS for the verified user
-        sys.cls += PARTNER_CLS_ADDITION; // add to CLS for the partners
+    asset ucls = calculate_user_cls_addition();
+
+    system_table.modify(system_iterator, get_self(), [&](auto &sys) {
+        sys.cls += ucls;
     });
   }
 

@@ -215,9 +215,6 @@ void freeosgov::mintfreeby(const name &owner, const asset &quantity) {
 void freeosgov::mintfreeos(const name &owner, const asset &quantity) {
   require_auth(owner);
 
-  // is the 'owner' user verified?
-  // check(is_user_verified(owner), "minting is restricted to verified users");
-
   auto sym = quantity.symbol;
   check(sym == POINT_CURRENCY_SYMBOL || sym == FREEBY_CURRENCY_SYMBOL, "invalid symbol name");
 

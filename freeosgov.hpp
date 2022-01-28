@@ -32,6 +32,8 @@ public:
   // config actions
   [[eosio::action]] void paramupsert(name paramname, std::string value);
   [[eosio::action]] void paramerase(name paramname);
+  [[eosio::action]] void dparamupsert(name paramname, double value);
+  [[eosio::action]] void dparamerase(name paramname);
   [[eosio::action]] void transfadd(name account);
   [[eosio::action]] void transferase(name account);
   [[eosio::action]] void minteradd(name account);
@@ -81,8 +83,10 @@ public:
   bool is_action_period(string action);
   uint16_t current_iteration();
   bool is_registered(name user);
-  bool is_user_active(name user);
+  uint32_t user_last_active_iteration(name user);
+  bool is_user_alive(name user);
   string get_parameter(name parameter);
+  asset calculate_user_cls_addition();
 };
 
 } // end of namespace freedao

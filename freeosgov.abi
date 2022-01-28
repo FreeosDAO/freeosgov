@@ -140,6 +140,44 @@
             ]
         },
         {
+            "name": "dparamerase",
+            "base": "",
+            "fields": [
+                {
+                    "name": "paramname",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "dparameter",
+            "base": "",
+            "fields": [
+                {
+                    "name": "paramname",
+                    "type": "name"
+                },
+                {
+                    "name": "value",
+                    "type": "float64"
+                }
+            ]
+        },
+        {
+            "name": "dparamupsert",
+            "base": "",
+            "fields": [
+                {
+                    "name": "paramname",
+                    "type": "name"
+                },
+                {
+                    "name": "value",
+                    "type": "float64"
+                }
+            ]
+        },
+        {
             "name": "globalres_struct",
             "base": "",
             "fields": [
@@ -599,7 +637,7 @@
                 },
                 {
                     "name": "claimevents",
-                    "type": "uint32"
+                    "type": "uint64"
                 },
                 {
                     "name": "participants",
@@ -841,6 +879,16 @@
             "ricardian_contract": ""
         },
         {
+            "name": "dparamerase",
+            "type": "dparamerase",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "dparamupsert",
+            "type": "dparamupsert",
+            "ricardian_contract": ""
+        },
+        {
             "name": "init",
             "type": "init",
             "ricardian_contract": ""
@@ -947,6 +995,13 @@
         {
             "name": "burners",
             "type": "burner_whitelist",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "dparameters",
+            "type": "dparameter",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

@@ -33,23 +33,32 @@ void freeosgov::claim(name user) {
     auto user_iterator = users_table.begin();
     check(user_iterator != users_table.end(), "user registration record is undefined");
 
-    // is the user verified?
-    check(is_user_verified(user), "claiming is restricted to verified users");
-
     // find the user's svr record
     svr_index svr_table(get_self(), user.value);
     auto svr_iterator = svr_table.begin();
     check(svr_iterator != svr_table.end(), "user has not completed any votes or surveys");
 
-
     // get the last issuance
     uint32_t last_issuance = user_iterator->last_issuance;
 
-    // keep a running count of points to pay
+    // check if user has already claimed in this iteration
+    check(this_iteration != last_issuance, "you cannot claim more than once in an iteration");
+
+    // check that we are not in iteration 1 - payments can only be made retrospectively
+    check(this_iteration > 1, "claims are for previous iterations only");
+
+    // determine which range of iterations we are paying for
+    uint32_t earliest_payment_iteration = this_iteration > 4 ? this_iteration - 4 : 1;
+    uint32_t latest_payment_iteration = this_iteration - 1;
+    
+    // initialise a running total of points to pay
     asset user_payment = asset(0, POINT_CURRENCY_SYMBOL);
 
-    // we only pay out for surveys within the Claim History Period (4 iterations)
-    uint32_t lapsed_claim_iteration = this_iteration - 4;
+
+    // get the previous 4 rewards records
+
+    uint32_t lapsed_claim_iteration = 0;    // TODO: remove!!!
+
 
     // payment for surveys
     if (svr_iterator->survey1 > last_issuance && svr_iterator->survey1 > lapsed_claim_iteration) {

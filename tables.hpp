@@ -24,7 +24,7 @@ struct[[ eosio::table("system"), eosio::contract("freeosgov") ]] system {
 time_point init;
 uint16_t iteration;
 uint32_t usercount;
-uint32_t claimevents;
+uint64_t claimevents;
 uint32_t participants;
 asset cls;
 
@@ -110,6 +110,16 @@ string value;
 uint64_t primary_key() const { return paramname.value; }
 };
 using parameters_index = eosio::multi_index<"parameters"_n, parameter>;
+
+// DPARAMETERS
+// double parameters table
+struct[[ eosio::table("dparameters"), eosio::contract("freeosgov") ]] dparameter {
+name paramname;
+double value;
+
+uint64_t primary_key() const { return paramname.value; }
+};
+using dparameters_index = eosio::multi_index<"dparameters"_n, dparameter>;
 
 
 // USERS

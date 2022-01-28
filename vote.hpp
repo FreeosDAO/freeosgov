@@ -62,8 +62,8 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     uint32_t this_iteration = current_iteration();
     check(this_iteration != 0, "The freeos system is not available at this time");
 
-    // is the user active
-    check(is_user_active(user), "The user has exceeded the maximum number of iterations");
+    // is the user alive?
+    check(is_user_alive(user), "user has exceeded the maximum number of iterations");
 
     // are we in the vote period?
     check(is_action_period("vote"), "It is outside of the vote period");
@@ -205,7 +205,7 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
 
     // record that the user has responded to this iteration's vote
     uint32_t survey_completed = 0;
-    svrs_table.modify(svr_iterator, _self, [&](auto &svr) {
+    svrs_table.modify(svr_iterator, get_self(), [&](auto &svr) {
         switch (this_iteration % 4) {
             case 0: svr.vote1 = this_iteration; survey_completed = svr.survey1; break;
             case 1: svr.vote2 = this_iteration; survey_completed = svr.survey2; break;

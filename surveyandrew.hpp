@@ -166,7 +166,7 @@ void freeosgov::surveyandrew( name user, bool r0,  bool r1,  bool r2, // Questio
 //Manual init - first time //TODO Remove after TESTs
 // [[eosio::action]]
 // void freeosgov::init(){
-//   require_auth(_self)
+//   require_auth(get_self())
 //   surveyinit();
 // } //the end of TEST
 

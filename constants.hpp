@@ -17,6 +17,10 @@ const string POINT_CURRENCY_CODE = "POINT";
 const uint8_t POINT_CURRENCY_PRECISION = 4;
 const symbol POINT_CURRENCY_SYMBOL = symbol(POINT_CURRENCY_CODE, POINT_CURRENCY_PRECISION);
 
+const string AIRKEY_CURRENCY_CODE = "AIRKEY";
+const uint8_t AIRKEY_CURRENCY_PRECISION = 0;
+const symbol AIRKEY_CURRENCY_SYMBOL = symbol(AIRKEY_CURRENCY_CODE, AIRKEY_CURRENCY_PRECISION);
+
 const string FREEBY_CURRENCY_CODE = "FREEBY";
 const uint8_t FREEBY_CURRENCY_PRECISION = 4;
 const symbol FREEBY_CURRENCY_SYMBOL = symbol(FREEBY_CURRENCY_CODE, FREEBY_CURRENCY_PRECISION);
@@ -38,11 +42,17 @@ const uint32_t ITERATION_LENGTH_SECONDS = 3600; // 604800;   // 86400 = day, 604
 
 const double HARD_EXCHANGE_RATE_FLOOR = 0.0167;
 
-// User contribution to Conditionally Limited Supply
-const asset UCLS = asset(35000000000, POINT_CURRENCY_SYMBOL);
+// user CLS amount hard floor (in the absence of uclsamount parameter)
+const int64_t UCLSAMOUNT = 3500000;
 
-// Partner addition factor - ie. proportion of user CLS for partners
-const asset PARTNER_CLS_ADDITION = asset(3500000000, POINT_CURRENCY_SYMBOL);
+// Partner share hard floor (in the absence of the partnershare parameter)
+const double PARTNERSHARE = 0.03;
+
+// DAO share hard floor (in the absence of the daoshare parameter)
+const double DAOSHARE = 0.07;
 
 // Issuance percentage (expressed as floating point) of CLS
 const double ISSUANCE_PROPORTION_OF_CLS = 0.000286;
+
+// mint-fee-free allowance for AIRKEY holders
+const int AIRKEY_MINT_FEE_FREE_ALLOWANCE = 5000;

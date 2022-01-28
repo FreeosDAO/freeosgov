@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.8.5";
+const std::string VERSION = "0.9.0";
 
 // ACTION
 void freeosgov::version() {
@@ -41,7 +41,7 @@ void freeosgov::init(time_point iterations_start) {
       });
   } else {
     // modify system record
-    system_table.modify(system_iterator, _self, [&](auto &sys) { sys.init = iterations_start; });
+    system_table.modify(system_iterator, get_self(), [&](auto &sys) { sys.init = iterations_start; });
   }
 
   // create the survey, vote and ratify records if they don't already exist
@@ -138,7 +138,7 @@ void freeosgov::tick() {
 
   if (recorded_iteration != actual_iteration) {
     // update the recorded iteration
-    system_table.modify(system_iterator, _self, [&](auto &sys) {
+    system_table.modify(system_iterator, get_self(), [&](auto &sys) {
       sys.iteration = actual_iteration;
       sys.participants = 0;
     });
@@ -202,7 +202,7 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
 
   // populate the rewards table - take a snapshot of the cls, vote results and ratify result
   rewards_index rewards_table(get_self(), get_self().value);
-  rewards_table.emplace(_self, [&](auto &rwd) {
+  rewards_table.emplace(get_self(), [&](auto &rwd) {
       rwd.iteration = old_iteration;
       rwd.participants = participants;
       rwd.iteration_cls = cls_snapshot;
@@ -226,7 +226,7 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
   
   // if the vote was ratified, subtract the iteration_issuance from the CLS
   if (ratified == true) {
-    system_table.modify(system_iterator, _self, [&](auto &sys) {
+    system_table.modify(system_iterator, get_self(), [&](auto &sys) {
       sys.cls -= iteration_issuance;
     });
   }
