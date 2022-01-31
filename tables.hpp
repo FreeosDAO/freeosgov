@@ -22,7 +22,7 @@ using globalres_index = eosio::multi_index<"globalres"_n, globalres_struct>;
 // system table
 struct[[ eosio::table("system"), eosio::contract("freeosgov") ]] system {
 time_point init;
-uint16_t iteration;
+uint32_t iteration;
 uint32_t usercount;
 uint64_t claimevents;
 uint32_t participants;
@@ -36,7 +36,7 @@ using system_index = eosio::multi_index<"system"_n, system>;
 // rewards table
 struct[[ eosio::table("rewards"), eosio::contract("freeosgov") ]] reward {
 
-uint16_t  iteration;
+uint32_t  iteration;
 asset     iteration_cls;
 asset     iteration_issuance;
 asset     participant_issuance;

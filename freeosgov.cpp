@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.0";
+const std::string VERSION = "0.9.1";
 
 // ACTION
 void freeosgov::version() {
@@ -134,17 +134,17 @@ void freeosgov::tick() {
   check(system_iterator != system_table.end(), "system record is undefined");
 
   uint16_t recorded_iteration = system_iterator->iteration;
-  uint16_t actual_iteration = current_iteration();
+  uint16_t this_iteration = current_iteration();
 
-  if (recorded_iteration != actual_iteration) {
+  if (this_iteration != recorded_iteration) {
     // update the recorded iteration
     system_table.modify(system_iterator, get_self(), [&](auto &sys) {
-      sys.iteration = actual_iteration;
+      sys.iteration = this_iteration;
       sys.participants = 0;
     });
 
-    // run the new iteration service routine
-    trigger_new_iteration(actual_iteration);
+    // run the new iteration service routine // SHOULD BE CALLING THIS BEFORE RECORDING THE NEW ITERATION - ALSO, THINK ABOUT WHAT HAPPENS IF NO ACTIVITY IN PREVIOUS ITERATION
+    trigger_new_iteration(this_iteration);
   }
 }
 

@@ -405,7 +405,7 @@
             "fields": [
                 {
                     "name": "iteration",
-                    "type": "uint16"
+                    "type": "uint32"
                 },
                 {
                     "name": "iteration_cls",
@@ -629,7 +629,7 @@
                 },
                 {
                     "name": "iteration",
-                    "type": "uint16"
+                    "type": "uint32"
                 },
                 {
                     "name": "usercount",

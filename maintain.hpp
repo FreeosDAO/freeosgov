@@ -193,11 +193,24 @@ void freeosgov::maintain(string action, name user) {
     system_index system_table(get_self(), get_self().value);
     system_table.emplace(
         get_self(), [&](auto &sys) {
-          sys.usercount = 20;
-          sys.cls = asset(577500000000, POINT_CURRENCY_SYMBOL);
-          sys.claimevents = 2;
-          sys.iteration = 3194;
-          sys.participants = 0;
+          sys.usercount = 22;
+          sys.cls = asset(654500000000, POINT_CURRENCY_SYMBOL);
+          sys.claimevents = 3;
+          sys.iteration = 3286;
+          sys.participants = 1;
+          //sys.init = time_point("2021-09-15T00:00:00.000");
+        });
+  }
+
+  if (action == "system restore2") {
+    system_index system_table(get_self(), get_self().value);
+    system_table.emplace(
+        get_self(), [&](auto &sys) {
+          sys.usercount = 4;
+          sys.cls = asset(0, POINT_CURRENCY_SYMBOL);
+          sys.claimevents = 0;
+          sys.iteration = 0;
+          sys.participants = 2;
           //sys.init = time_point("2021-09-15T00:00:00.000");
         });
   }
@@ -205,6 +218,15 @@ void freeosgov::maintain(string action, name user) {
   if (action == "ucls") {
     asset ucls = calculate_user_cls_addition();
     check(false, ucls.to_string());
+  }
+
+  if (action == "participate") {
+    system_index system_table(get_self(), get_self().value);
+      auto system_iterator = system_table.begin();
+      check(system_iterator != system_table.end(), "system record is undefined");
+      system_table.modify(system_iterator, get_self(), [&](auto &s) {
+          s.participants += 1;
+      });
   }
 
   if (action == "is registered") {

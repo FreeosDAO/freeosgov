@@ -19,6 +19,8 @@ string freeosgov::get_parameter(name paramname) {
   }
 }
 
+//void freeosgov::svrsplit(uint)
+
 // ACTION
 void freeosgov::paramupsert(name paramname, std::string value) {
 
