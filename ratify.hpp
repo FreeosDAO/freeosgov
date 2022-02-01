@@ -56,14 +56,16 @@ void freeosgov::ratify(name user, bool ratify_vote) {
     check(svr_iterator != svrs_table.end(), "user must have voted in order to ratify");
 
     // check if the user has voted - a requirement for ratification
-    check(svr_iterator->vote1 == this_iteration ||
+    check(svr_iterator->vote0 == this_iteration ||
+        svr_iterator->vote1 == this_iteration ||
         svr_iterator->vote2 == this_iteration ||
         svr_iterator->vote3 == this_iteration ||
         svr_iterator->vote4 == this_iteration,
         "user must have voted in order to ratify");
 
     // check if the user has already ratified
-    check(svr_iterator->ratify1 != this_iteration &&
+    check(svr_iterator->ratify0 != this_iteration &&
+        svr_iterator->ratify1 != this_iteration &&
         svr_iterator->ratify2 != this_iteration &&
         svr_iterator->ratify3 != this_iteration &&
         svr_iterator->ratify4 != this_iteration,
@@ -98,11 +100,12 @@ void freeosgov::ratify(name user, bool ratify_vote) {
     
     // record that the user has ratified
     svrs_table.modify(svr_iterator, get_self(), [&](auto &svr) {
-        switch (this_iteration % 4) {
-            case 0: svr.ratify1 = this_iteration; break;
-            case 1: svr.ratify2 = this_iteration; break;
-            case 2: svr.ratify3 = this_iteration; break;
-            case 3: svr.ratify4 = this_iteration; break;
+        switch (this_iteration % 5) {
+            case 0: svr.ratify0 = this_iteration; break;
+            case 1: svr.ratify1 = this_iteration; break;
+            case 2: svr.ratify2 = this_iteration; break;
+            case 3: svr.ratify3 = this_iteration; break;
+            case 4: svr.ratify4 = this_iteration; break;
         }
     }); // end of modify
 

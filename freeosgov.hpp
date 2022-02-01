@@ -44,13 +44,6 @@ public:
   [[eosio::action]] void targetrate(double price);
 
   // survey actions (In survey.hpp)
-  /*
-  [[eosio::action]] void surveyandrew( name user, bool r0,  bool r1,  bool r2, // Question 1
-                                uint8_t r3,                     // Question 2 - slider
-                                bool r4,  bool r5,  bool r6,    // Question 3  
-                                uint8_t r7,                     // Question 4 - slider
-                                uint8_t r8,  uint8_t r9,  uint8_t r10,  // Question 5
-                                uint8_t r11, uint8_t r12, uint8_t r13); */
   [[eosio::action]] void survey(name user, uint8_t q1response, uint8_t q2response, uint8_t q3response, uint8_t q4response, uint8_t q5choice1, uint8_t q5choice2, uint8_t q5choice3);
   void survey_init(); // In survey.hpp
 

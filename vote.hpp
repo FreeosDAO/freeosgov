@@ -78,7 +78,8 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
         svrs_table.emplace(get_self(), [&](auto &svr) { ; });
         svr_iterator = svrs_table.begin();
     } else {
-        check(svr_iterator->vote1 != this_iteration &&
+        check(svr_iterator->vote0 != this_iteration &&
+            svr_iterator->vote1 != this_iteration &&
             svr_iterator->vote2 != this_iteration &&
             svr_iterator->vote3 != this_iteration &&
             svr_iterator->vote4 != this_iteration,
@@ -206,11 +207,12 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     // record that the user has responded to this iteration's vote
     uint32_t survey_completed = 0;
     svrs_table.modify(svr_iterator, get_self(), [&](auto &svr) {
-        switch (this_iteration % 4) {
-            case 0: svr.vote1 = this_iteration; survey_completed = svr.survey1; break;
-            case 1: svr.vote2 = this_iteration; survey_completed = svr.survey2; break;
-            case 2: svr.vote3 = this_iteration; survey_completed = svr.survey3; break;
-            case 3: svr.vote4 = this_iteration; survey_completed = svr.survey4; break;
+        switch (this_iteration % 5) {
+            case 0: svr.vote0 = this_iteration; survey_completed = svr.survey0; break;
+            case 1: svr.vote1 = this_iteration; survey_completed = svr.survey1; break;
+            case 2: svr.vote2 = this_iteration; survey_completed = svr.survey2; break;
+            case 3: svr.vote3 = this_iteration; survey_completed = svr.survey3; break;
+            case 4: svr.vote4 = this_iteration; survey_completed = svr.survey4; break;
         }
     }); // end of modify
 

@@ -7,17 +7,6 @@ using namespace std;
 
 namespace freedao {
 
-// Andrew's code changes
-// Survey global results table. For interpretations of particular rows search "survey.hpp". TODO: remove table
-
-struct[[ eosio::table("globalres"), eosio::contract("freeosgov") ]] globalres_struct {
-    uint64_t p_key;
-    double gresult;
-    uint64_t primary_key() const { return p_key; }
-};
-using globalres_index = eosio::multi_index<"globalres"_n, globalres_struct>;
-//===============
-
 // SYSTEM
 // system table
 struct[[ eosio::table("system"), eosio::contract("freeosgov") ]] system {
@@ -185,14 +174,17 @@ typedef eosio::multi_index<"usersinfo"_n, userinfo> usersinfo;
 // PARTICIPATION
 // survey, vote and ratification participation table
 struct[[ eosio::table("svrs"), eosio::contract("freeosgov") ]] svr {
+    uint32_t survey0;
     uint32_t survey1;
     uint32_t survey2;
     uint32_t survey3;
     uint32_t survey4;
+    uint32_t vote0;
     uint32_t vote1;
     uint32_t vote2;
     uint32_t vote3;
     uint32_t vote4;
+    uint32_t ratify0;
     uint32_t ratify1;
     uint32_t ratify2;
     uint32_t ratify3;

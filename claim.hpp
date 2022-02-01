@@ -56,58 +56,98 @@ void freeosgov::claim(name user) {
 
 
     // get the previous 4 rewards records
-
-    uint32_t lapsed_claim_iteration = 0;    // TODO: remove!!!
-
+    // TODO
 
     // payment for surveys
-    if (svr_iterator->survey1 > last_issuance && svr_iterator->survey1 > lapsed_claim_iteration) {
+    if (svr_iterator->survey0 > last_issuance &&
+        svr_iterator->survey0 >= earliest_payment_iteration &&
+        svr_iterator->survey0 <= latest_payment_iteration) {
         user_payment += PAYMENT_SURVEY;
     }
 
-    if (svr_iterator->survey2 > last_issuance && svr_iterator->survey2 > lapsed_claim_iteration) {
+    if (svr_iterator->survey1 > last_issuance &&
+        svr_iterator->survey1 >= earliest_payment_iteration &&
+        svr_iterator->survey1 <= latest_payment_iteration) {
         user_payment += PAYMENT_SURVEY;
     }
 
-    if (svr_iterator->survey3 > last_issuance && svr_iterator->survey3 > lapsed_claim_iteration) {
+    if (svr_iterator->survey2 > last_issuance &&
+        svr_iterator->survey2 >= earliest_payment_iteration &&
+        svr_iterator->survey2 <= latest_payment_iteration) {
         user_payment += PAYMENT_SURVEY;
     }
 
-    if (svr_iterator->survey4 > last_issuance && svr_iterator->survey4 > lapsed_claim_iteration) {
+    if (svr_iterator->survey3 > last_issuance &&
+        svr_iterator->survey3 >= earliest_payment_iteration &&
+        svr_iterator->survey3 <= latest_payment_iteration) {
+        user_payment += PAYMENT_SURVEY;
+    }
+
+    if (svr_iterator->survey4 > last_issuance &&
+        svr_iterator->survey4 >= earliest_payment_iteration &&
+        svr_iterator->survey4 <= latest_payment_iteration) {
         user_payment += PAYMENT_SURVEY;
     }
 
     // payments for votes
-    if (svr_iterator->vote1 > last_issuance && svr_iterator->vote1 > lapsed_claim_iteration) {
+    if (svr_iterator->vote0 > last_issuance &&
+        svr_iterator->vote0 >= earliest_payment_iteration &&
+        svr_iterator->vote0 <= latest_payment_iteration) {
         user_payment += PAYMENT_VOTE;
     }
 
-    if (svr_iterator->vote2 > last_issuance && svr_iterator->vote2 > lapsed_claim_iteration) {
+    if (svr_iterator->vote1 > last_issuance &&
+        svr_iterator->vote1 >= earliest_payment_iteration &&
+        svr_iterator->vote1 <= latest_payment_iteration) {
         user_payment += PAYMENT_VOTE;
     }
 
-    if (svr_iterator->vote3 > last_issuance && svr_iterator->vote3 > lapsed_claim_iteration) {
+    if (svr_iterator->vote2 > last_issuance &&
+        svr_iterator->vote2 >= earliest_payment_iteration &&
+        svr_iterator->vote2 <= latest_payment_iteration) {
         user_payment += PAYMENT_VOTE;
     }
 
-    if (svr_iterator->vote4 > last_issuance && svr_iterator->vote4 > lapsed_claim_iteration) {
+    if (svr_iterator->vote3 > last_issuance &&
+        svr_iterator->vote3 >= earliest_payment_iteration &&
+        svr_iterator->vote3 <= latest_payment_iteration) {
+        user_payment += PAYMENT_VOTE;
+    }
+
+    if (svr_iterator->vote4 > last_issuance &&
+        svr_iterator->vote4 >= earliest_payment_iteration &&
+        svr_iterator->vote4 <= latest_payment_iteration) {
         user_payment += PAYMENT_VOTE;
     }
 
     // payments for ratifications
-    if (svr_iterator->ratify1 > last_issuance && svr_iterator->ratify1 > lapsed_claim_iteration) {
+    if (svr_iterator->ratify0 > last_issuance &&
+        svr_iterator->ratify0 >= earliest_payment_iteration &&
+        svr_iterator->ratify0 <= latest_payment_iteration) {
         user_payment += PAYMENT_RATIFY;
     }
 
-    if (svr_iterator->ratify2 > last_issuance && svr_iterator->ratify2 > lapsed_claim_iteration) {
+    if (svr_iterator->ratify1 > last_issuance &&
+        svr_iterator->ratify1 >= earliest_payment_iteration &&
+        svr_iterator->ratify1 <= latest_payment_iteration) {
         user_payment += PAYMENT_RATIFY;
     }
 
-    if (svr_iterator->ratify3 > last_issuance && svr_iterator->ratify3 > lapsed_claim_iteration) {
+    if (svr_iterator->ratify2 > last_issuance &&
+        svr_iterator->ratify2 >= earliest_payment_iteration &&
+        svr_iterator->ratify2 <= latest_payment_iteration) {
         user_payment += PAYMENT_RATIFY;
     }
 
-    if (svr_iterator->ratify4 > last_issuance && svr_iterator->ratify4 > lapsed_claim_iteration) {
+    if (svr_iterator->ratify3 > last_issuance &&
+        svr_iterator->ratify3 >= earliest_payment_iteration &&
+        svr_iterator->ratify3 <= latest_payment_iteration) {
+        user_payment += PAYMENT_RATIFY;
+    }
+
+    if (svr_iterator->ratify4 > last_issuance &&
+        svr_iterator->ratify4 >= earliest_payment_iteration &&
+        svr_iterator->ratify4 <= latest_payment_iteration) {
         user_payment += PAYMENT_RATIFY;
     }
 
@@ -123,7 +163,7 @@ void freeosgov::claim(name user) {
         transfer(get_self(), user, user_payment, memo);
 
         // update the user record issuance values
-        users_table.modify(user_iterator, _self, [&](auto &user_record) {
+        users_table.modify(user_iterator, get_self(), [&](auto &user_record) {
             user_record.last_issuance = this_iteration;
             user_record.total_issuance_amount += user_payment;
             user_record.issuances++;

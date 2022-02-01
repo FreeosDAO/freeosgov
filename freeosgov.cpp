@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.1";
+const std::string VERSION = "0.9.2";
 
 // ACTION
 void freeosgov::version() {
@@ -136,6 +136,10 @@ void freeosgov::tick() {
   uint16_t recorded_iteration = system_iterator->iteration;
   uint16_t this_iteration = current_iteration();
 
+  // run the new iteration change service routine
+  trigger_new_iteration(this_iteration);
+
+  // set the new iteration in the system record
   if (this_iteration != recorded_iteration) {
     // update the recorded iteration
     system_table.modify(system_iterator, get_self(), [&](auto &sys) {
@@ -143,14 +147,13 @@ void freeosgov::tick() {
       sys.participants = 0;
     });
 
-    // run the new iteration service routine // SHOULD BE CALLING THIS BEFORE RECORDING THE NEW ITERATION - ALSO, THINK ABOUT WHAT HAPPENS IF NO ACTIVITY IN PREVIOUS ITERATION
-    trigger_new_iteration(this_iteration);
   }
 }
 
+// tidy up at the end of an iteration - save SVR data in the reward record
 void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
 
-  // if it is iteration 1 then nothing to, so return
+  // if the transition is from iteration 0 to 1 there is nothing to do, so return
   if (new_iteration == 1) return;
 
   // // record/update the old and new iterations - and take snapshot of the CLS at this point
@@ -158,16 +161,13 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
   auto system_iterator = system_table.begin();
   check(system_iterator != system_table.end(), "system record is undefined");
 
-  asset cls_snapshot = system_iterator->cls;
-
-  uint32_t old_iteration = system_iterator->iteration;
-  system_table.modify(system_iterator, _self, [&](auto &sys) {
-    sys.iteration = new_iteration;
-  });
-
   // capture the data we need from the system, vote and ratify records
   // 1. system record
   uint32_t participants = system_iterator->participants;
+  asset cls_snapshot = system_iterator->cls;
+  uint32_t old_iteration = system_iterator->iteration;
+
+  // THINK ABOUT THIS - THERE MIGHT NOT HAVE BEEN ACTIVITY IN THE LAST ITERATION
 
   // 2. vote record
   vote_index vote_table(get_self(), get_self().value);

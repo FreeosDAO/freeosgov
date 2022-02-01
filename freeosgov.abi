@@ -178,20 +178,6 @@
             ]
         },
         {
-            "name": "globalres_struct",
-            "base": "",
-            "fields": [
-                {
-                    "name": "p_key",
-                    "type": "uint64"
-                },
-                {
-                    "name": "gresult",
-                    "type": "float64"
-                }
-            ]
-        },
-        {
             "name": "init",
             "base": "",
             "fields": [
@@ -570,6 +556,10 @@
             "base": "",
             "fields": [
                 {
+                    "name": "survey0",
+                    "type": "uint32"
+                },
+                {
                     "name": "survey1",
                     "type": "uint32"
                 },
@@ -586,6 +576,10 @@
                     "type": "uint32"
                 },
                 {
+                    "name": "vote0",
+                    "type": "uint32"
+                },
+                {
                     "name": "vote1",
                     "type": "uint32"
                 },
@@ -599,6 +593,10 @@
                 },
                 {
                     "name": "vote4",
+                    "type": "uint32"
+                },
+                {
+                    "name": "ratify0",
                     "type": "uint32"
                 },
                 {
@@ -1009,13 +1007,6 @@
         {
             "name": "exchangerate",
             "type": "price",
-            "index_type": "i64",
-            "key_names": [],
-            "key_types": []
-        },
-        {
-            "name": "globalres",
-            "type": "globalres_struct",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
