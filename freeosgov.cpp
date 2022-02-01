@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.2";
+const std::string VERSION = "0.9.3";
 
 // ACTION
 void freeosgov::version() {
@@ -230,6 +230,11 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
       sys.cls -= iteration_issuance;
     });
   }
+
+  // reset the survey, vote and ratify records, ready for the new iteration
+  survey_reset();
+  vote_reset();
+  ratify_reset();
 
 }
 

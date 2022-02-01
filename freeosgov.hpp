@@ -45,15 +45,18 @@ public:
 
   // survey actions (In survey.hpp)
   [[eosio::action]] void survey(name user, uint8_t q1response, uint8_t q2response, uint8_t q3response, uint8_t q4response, uint8_t q5choice1, uint8_t q5choice2, uint8_t q5choice3);
-  void survey_init(); // In survey.hpp
+  void survey_init();
+  void survey_reset();
 
   // vote actions/functions
   [[eosio::action]] void vote(name user, uint8_t q1response, uint8_t q2response, double q3response, string q4response, uint8_t q5response, uint8_t q6choice1, uint8_t q6choice2, uint8_t q6choice3);
   void vote_init();
+  void vote_reset();
 
   // ratify actions/functions
   [[eosio::action]] void ratify(name user, bool ratify_vote);
   void ratify_init();
+  void ratify_reset();
 
   // claim actions/functions
   [[eosio::action]] void claim(name user);

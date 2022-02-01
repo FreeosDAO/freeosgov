@@ -16,15 +16,21 @@ void freeosgov::ratify_init() {
     if(ratify_iterator == ratify_table.end()) {
         // emplace
         ratify_table.emplace(get_self(), [&](auto &r) { r.iteration = current_iteration(); });
-    } else {
-        // modify
-        ratify_table.modify(ratify_iterator, get_self(), [&](auto &r) {
-            r.iteration = current_iteration();
-            r.participants = 0;
-            r.ratified = 0;
+    }
+}
+
+// reset the ratify record, ready for the new iteration
+void freeosgov::ratify_reset() {
+    ratify_index ratify_table(get_self(), get_self().value);
+    auto ratify_iterator = ratify_table.begin();
+
+    if (ratify_iterator != ratify_table.end()) {
+        ratify_table.modify(ratify_iterator, get_self(), [&](auto &ratify) {
+            ratify.iteration = current_iteration();
+            ratify.participants = 0;
+            ratify.ratified = 0;
         });
     }
-
 }
 
 // ACTION
@@ -79,14 +85,6 @@ void freeosgov::ratify(name user, bool ratify_vote) {
 
     // process the responses from the user
     ratify_table.modify(ratify_iterator, get_self(), [&](auto &ratify) {
-
-        // check if we are on a new iteration. If yes, then re-initialise the running values in the ratify table
-        if (ratify_iterator->iteration != this_iteration) {
-            ratify.iteration = this_iteration;
-            ratify.participants = 0;
-            ratify.ratified = 0;
-        }
-
 
         // ratified?
         if (ratify_vote == true) {

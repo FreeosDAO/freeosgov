@@ -19,6 +19,32 @@ void freeosgov::vote_init() {
     }
 }
 
+// rest the vote record, ready for the new iteration
+void freeosgov::vote_reset() {
+    vote_index vote_table(get_self(), get_self().value);
+    auto vote_iterator = vote_table.begin();
+
+    if (vote_iterator != vote_table.end()) {
+        vote_table.modify(vote_iterator, get_self(), [&](auto &vote) {
+            vote.iteration = current_iteration();
+            vote.participants = 0;
+            vote.q1average = 0.0;
+            vote.q2average = 0.0;
+            vote.q3average = 0.0;
+            vote.q4choice1 = 0;   // POOL
+            vote.q4choice2 = 0;   // BURN
+            vote.q5average = 0.0;
+            vote.q6choice1 = 0;
+            vote.q6choice2 = 0;
+            vote.q6choice3 = 0;
+            vote.q6choice4 = 0;
+            vote.q6choice5 = 0;
+            vote.q6choice6 = 0;
+        });
+    }
+
+}
+
 
 std::vector<int> parse_vote_ranges(string voteranges) {
     
@@ -134,24 +160,6 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     // for multiple choice options, increment to add the user's selection
     // for running averages, compute new running average
     vote_table.modify(vote_iterator, get_self(), [&](auto &vote) {
-
-        // check if we are on a new iteration. If yes, then re-initialise the running values in the vote table
-        if (vote.iteration != this_iteration) {
-            vote.iteration = this_iteration;
-            vote.participants = 0;
-            vote.q1average = 0.0;
-            vote.q2average = 0.0;
-            vote.q3average = 0.0;
-            vote.q4choice1 = 0;   // POOL
-            vote.q4choice2 = 0;   // BURN
-            vote.q5average = 0.0;
-            vote.q6choice1 = 0;
-            vote.q6choice2 = 0;
-            vote.q6choice3 = 0;
-            vote.q6choice4 = 0;
-            vote.q6choice5 = 0;
-            vote.q6choice6 = 0;
-        }
 
         // question 1
         vote.q1average = ((vote.q1average * vote.participants) + q1response) / (vote.participants + 1);

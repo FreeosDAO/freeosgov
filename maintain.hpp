@@ -155,7 +155,7 @@ void freeosgov::maintain(string action, name user) {
     }
   }
 
-  if (action == "table inits") {
+  if (action == "svr inits") {
     survey_init();
 
     vote_init();

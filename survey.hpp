@@ -54,6 +54,35 @@ void freeosgov::survey_init() {
     }    
 }
 
+// reset the survey record, ready for the new iteration
+void freeosgov::survey_reset() {
+    survey_index survey_table(get_self(), get_self().value);
+    auto survey_iterator = survey_table.begin();
+
+    if (survey_iterator != survey_table.end()) {
+        survey_table.modify(survey_iterator, get_self(), [&](auto &survey) {
+            survey.iteration = current_iteration();
+            survey.participants = 0;
+            survey.q1choice1 = 0;
+            survey.q1choice2 = 0;
+            survey.q1choice3 = 0;
+            survey.q2average = 0.0;
+            survey.q3choice1 = 0;
+            survey.q3choice2 = 0;
+            survey.q3choice3 = 0;
+            survey.q4average = 0.0;
+            survey.q5choice1 = 0;
+            survey.q5choice2 = 0;
+            survey.q5choice3 = 0;
+            survey.q5choice4 = 0;
+            survey.q5choice5 = 0;
+            survey.q5choice6 = 0;
+            survey.q5choice7 = 0;
+            survey.q5choice8 = 0;
+        });
+    }
+}
+
 // ACTION
 void freeosgov::survey(name user, uint8_t q1response, uint8_t q2response, uint8_t q3response, uint8_t q4response, uint8_t q5choice1, uint8_t q5choice2, uint8_t q5choice3) {
     
@@ -121,28 +150,6 @@ void freeosgov::survey(name user, uint8_t q1response, uint8_t q2response, uint8_
     // for multiple choice options, increment to add the user's selection
     // for running averages, compute new running average
     survey_table.modify(survey_iterator, get_self(), [&](auto &survey) {
-
-        // check if we are on a new iteration. If yes, then re-initialise the running values in the survey table
-        if (survey.iteration != this_iteration) {
-            survey.iteration = this_iteration;
-            survey.participants = 0;
-            survey.q1choice1 = 0;
-            survey.q1choice2 = 0;
-            survey.q1choice3 = 0;
-            survey.q2average = 0.0;
-            survey.q3choice1 = 0;
-            survey.q3choice2 = 0;
-            survey.q3choice3 = 0;
-            survey.q4average = 0.0;
-            survey.q5choice1 = 0;
-            survey.q5choice2 = 0;
-            survey.q5choice3 = 0;
-            survey.q5choice4 = 0;
-            survey.q5choice5 = 0;
-            survey.q5choice6 = 0;
-            survey.q5choice7 = 0;
-            survey.q5choice8 = 0;
-        }
 
         // question 1
         switch(q1response) {
