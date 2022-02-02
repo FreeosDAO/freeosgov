@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.3";
+const std::string VERSION = "0.9.4";
 
 // ACTION
 void freeosgov::version() {
@@ -136,11 +136,11 @@ void freeosgov::tick() {
   uint16_t recorded_iteration = system_iterator->iteration;
   uint16_t this_iteration = current_iteration();
 
-  // run the new iteration change service routine
-  trigger_new_iteration(this_iteration);
-
   // set the new iteration in the system record
   if (this_iteration != recorded_iteration) {
+    // run the new iteration change service routine
+    trigger_new_iteration(this_iteration);
+
     // update the recorded iteration
     system_table.modify(system_iterator, get_self(), [&](auto &sys) {
       sys.iteration = this_iteration;

@@ -163,6 +163,16 @@ void freeosgov::maintain(string action, name user) {
     ratify_init();
   }
 
+  if (action == "victorvector survey") {
+    svr_index svrs_table(get_self(), user.value);
+    auto svr_iterator = svrs_table.begin();
+    if (svr_iterator == svrs_table.end()) {
+        // emplace
+        svrs_table.emplace(get_self(), [&](auto &svr) { ; });
+        svr_iterator = svrs_table.begin();
+    }
+  }
+
   if (action == "set cls") {
     system_index system_table(get_self(), get_self().value);
     auto system_iterator = system_table.begin();
