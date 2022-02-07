@@ -155,6 +155,10 @@ void freeosgov::maintain(string action, name user) {
     }
   }
 
+  if (action == "assetmax") {
+    check(false, to_string(asset::max_amount));
+  }
+
   if (action == "svr inits") {
     survey_init();
 

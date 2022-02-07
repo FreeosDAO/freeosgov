@@ -168,14 +168,14 @@ void freeosgov::claim(name user) {
             user_record.total_issuance_amount += user_payment;
             user_record.issuances++;
         });
-    }
 
-    // update the number of claimevents in the system record
-    system_index system_table(get_self(), get_self().value);
-    auto system_iterator = system_table.begin();
-    check(system_iterator != system_table.end(), "system record is undefined");
-    system_table.modify(system_iterator, get_self(), [&](auto &s) {
-        s.claimevents += 1;
-    });
+        // update the number of claimevents in the system record
+        system_index system_table(get_self(), get_self().value);
+        auto system_iterator = system_table.begin();
+        check(system_iterator != system_table.end(), "system record is undefined");
+        system_table.modify(system_iterator, get_self(), [&](auto &s) {
+            s.claimevents += 1;
+        });
+    }
 
 }
