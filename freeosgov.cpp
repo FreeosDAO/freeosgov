@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.5";
+const std::string VERSION = "0.9.6";
 
 // ACTION
 void freeosgov::version() {
@@ -189,7 +189,7 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
   auto ratify_iterator = ratify_table.begin();
   check(ratify_iterator != ratify_table.end(), "ratify record is undefined");
   // ratify decision
-  bool ratified = ratify_iterator->ratified >= (ratify_iterator->participants / 2);
+  bool ratified = (ratify_iterator->ratified > 0 && ratify_iterator->ratified >= ((ratify_iterator->participants + 1) / 2));
 
   // 4. Calculate the total issuance (shared between participants) and the per-participant issuance for the iteration
   asset iteration_issuance = asset(0, POINT_CURRENCY_SYMBOL);
