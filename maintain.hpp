@@ -4,7 +4,7 @@
 
 // ACTION
 // maintenance actions - TODO: delete from production
-void freeosgov::maintain(string action, name user) {
+void freeosgov::maintain(string action, name user, vector<name> removees) {
 
   require_auth(get_self());
 
@@ -138,6 +138,10 @@ void freeosgov::maintain(string action, name user) {
         s.total_issuance_amount = asset(0, POINT_CURRENCY_SYMBOL);
       });
 
+  }
+
+  if (action == "size user") {
+    check(false, sizeof(airclaim_user));
   }
 
   if (action == "clear survey") {

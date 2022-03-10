@@ -22,7 +22,7 @@ public:
   void trigger_new_iteration(uint32_t new_iterationß);
 
   // maintain actions TODO: remove in production version
-  [[eosio::action]] void maintain(string action, name user);
+  [[eosio::action]] void maintain(string action, name user, vector<name> removees);
 
   // identity actions
   [[eosio::action]] void reguser(name user);
