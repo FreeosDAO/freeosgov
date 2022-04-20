@@ -127,9 +127,7 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
     // double target_price = rate_iterator->targetprice;
 
     // calculate the upper bound of locking threshold (q3)
-    string str_lock_factor = get_parameter(name("lockfactor"));
-    check(str_lock_factor != "", "lock factor parameter is undefined");
-    int lock_factor = stoi(str_lock_factor);
+    double lock_factor = get_dparameter(name("lockfactor"));
 
     double locking_threshold_upper_limit = 0.0;
     if (current_price < HARD_EXCHANGE_RATE_FLOOR) {

@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.6";
+const std::string VERSION = "0.9.7";
 
 // ACTION
 void freeosgov::version() {
@@ -104,9 +104,9 @@ bool freeosgov::is_action_period(string action) {
 
 
 // which iteration are we in?
-uint16_t freeosgov::current_iteration() {
+uint32_t freeosgov::current_iteration() {
 
-  uint16_t iteration = 0;
+  uint32_t iteration = 0;
 
   // get the start of freeos system time
   system_index system_table(get_self(), get_self().value);
@@ -133,8 +133,8 @@ void freeosgov::tick() {
   auto system_iterator = system_table.begin();
   check(system_iterator != system_table.end(), "system record is undefined");
 
-  uint16_t recorded_iteration = system_iterator->iteration;
-  uint16_t this_iteration = current_iteration();
+  uint32_t recorded_iteration = system_iterator->iteration;
+  uint32_t this_iteration = current_iteration();
 
   // set the new iteration in the system record
   if (this_iteration != recorded_iteration) {

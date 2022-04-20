@@ -198,6 +198,10 @@
                 {
                     "name": "user",
                     "type": "name"
+                },
+                {
+                    "name": "removees",
+                    "type": "name[]"
                 }
             ]
         },

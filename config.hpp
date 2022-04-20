@@ -7,16 +7,26 @@
 using namespace eosio;
 using namespace freedao;
 
-// get parameter value
+// get string parameter value
 string freeosgov::get_parameter(name paramname) {
   parameters_index parameters_table(get_self(), get_self().value);
   auto parameter_iterator = parameters_table.find(paramname.value);
 
-  if (parameter_iterator != parameters_table.end()) {
-    return parameter_iterator->value;
-  } else {
-    return "";
-  }
+  std::string assert_msg = paramname.to_string() + " is not defined in the parameters table";
+  check(parameter_iterator != parameters_table.end(), assert_msg);
+
+  return parameter_iterator->value;
+}
+
+// get double parameter value
+double freeosgov::get_dparameter(name paramname) {
+  dparameters_index dparameters_table(get_self(), get_self().value);
+  auto dparameter_iterator = dparameters_table.find(paramname.value);
+
+  std::string assert_msg = paramname.to_string() + " is not defined in the dparameters table";
+  check(dparameter_iterator != dparameters_table.end(), assert_msg);
+
+  return dparameter_iterator->value;
 }
 
 //void freeosgov::svrsplit(uint)

@@ -77,11 +77,12 @@ public:
 
   // functions
   bool is_action_period(string action);
-  uint16_t current_iteration();
+  uint32_t current_iteration();
   bool is_registered(name user);
   uint32_t user_last_active_iteration(name user);
   bool is_user_alive(name user);
   string get_parameter(name parameter);
+  double get_dparameter(name parameter);
   asset calculate_user_cls_addition();
 };
 
