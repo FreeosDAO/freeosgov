@@ -52,7 +52,7 @@ const double PARTNERSHARE = 0.03;
 const double DAOSHARE = 0.07;
 
 // Issuance percentage (expressed as floating point) of CLS
-const double ISSUANCE_PROPORTION_OF_CLS = 0.000286;
+// const double ISSUANCE_PROPORTION_OF_CLS = 0.000286;  // now implemented as parameter 'issuepropcls'
 
 // mint-fee-free allowance for AIRKEY holders
 const int AIRKEY_MINT_FEE_FREE_ALLOWANCE = 5000;

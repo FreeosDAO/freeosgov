@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.7";
+const std::string VERSION = "0.9.10";
 
 // ACTION
 void freeosgov::version() {
@@ -167,14 +167,12 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
   asset cls_snapshot = system_iterator->cls;
   uint32_t old_iteration = system_iterator->iteration;
 
-  // THINK ABOUT THIS - THERE MIGHT NOT HAVE BEEN ACTIVITY IN THE LAST ITERATION
-
   // 2. vote record
   vote_index vote_table(get_self(), get_self().value);
   auto vote_iterator = vote_table.begin();
   check(vote_iterator != vote_table.end(), "vote record is undefined");
   // issuance_rate
-  double issuance_rate = vote_iterator->q1average;
+  double issuance_rate = vote_iterator->q1average / 100.0;
   // mint fee percent
   double mint_fee_percent = vote_iterator->q2average;
   // locking threshold
@@ -189,14 +187,19 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
   auto ratify_iterator = ratify_table.begin();
   check(ratify_iterator != ratify_table.end(), "ratify record is undefined");
   // ratify decision
-  bool ratified = (ratify_iterator->ratified > 0 && ratify_iterator->ratified >= ((ratify_iterator->participants + 1) / 2));
+  bool ratified = (ratify_iterator->ratified > 0 && (ratify_iterator->ratified >= ((ratify_iterator->participants + 1) / 2)));
 
   // 4. Calculate the total issuance (shared between participants) and the per-participant issuance for the iteration
+  double ISSUANCE_PROPORTION_OF_CLS = get_dparameter(name("issuepropcls"));
+
   asset iteration_issuance = asset(0, POINT_CURRENCY_SYMBOL);
   asset participant_issuance = asset(0, POINT_CURRENCY_SYMBOL);
   if (ratified == true && participants > 0) {
-    asset iteration_issuance = cls_snapshot * ISSUANCE_PROPORTION_OF_CLS * issuance_rate;
-    asset participant_issuance = iteration_issuance / participants;
+    uint64_t iteration_issuance_amount = cls_snapshot.amount * ISSUANCE_PROPORTION_OF_CLS * issuance_rate;
+    uint64_t participant_issuance_amount = iteration_issuance_amount / participants;
+
+    iteration_issuance = asset(iteration_issuance_amount, POINT_CURRENCY_SYMBOL);
+    participant_issuance = asset(participant_issuance_amount, POINT_CURRENCY_SYMBOL);
   }
   
 

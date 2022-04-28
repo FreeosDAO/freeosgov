@@ -2,11 +2,66 @@
 
 // TODO: Remove this action in production version
 
+void freeosgov::eraseuser(string username) {
+
+    name user = name(username);
+
+    users_index users_table(get_self(), user.value);
+    auto user_iterator = users_table.begin();
+
+    if (user_iterator != users_table.end()) {
+      users_table.erase(user_iterator);
+    }
+    
+}
+
+void freeosgov::createuser(string username, uint32_t stake, string account_type, uint32_t registered, uint32_t staked,
+                          uint32_t votes, uint32_t issues, uint32_t last, uint32_t total) {
+
+  name user = name(username);
+
+  users_index users_table(get_self(), user.value);
+
+  users_table.emplace(get_self(), [&](auto &s) {
+    s.stake = asset(stake * 10000, STAKE_CURRENCY_SYMBOL);
+    s.account_type = account_type;
+    s.registered_iteration = registered;
+    s.staked_iteration = staked;
+    s.votes = votes;
+    s.issuances = issues;
+    s.last_claim = last;
+    s.total_issuance_amount = asset(total * 10000, POINT_CURRENCY_SYMBOL);
+  });
+}
+
 // ACTION
 // maintenance actions - TODO: delete from production
-void freeosgov::maintain(string action, name user, vector<name> removees) {
+void freeosgov::maintain(string action, name user) {
 
   require_auth(get_self());
+
+  if (action == "fiddle reward") {
+    rewards_index rewards_table(get_self(), get_self().value);
+    auto reward_iterator = rewards_table.find(5339);
+
+    if (reward_iterator != rewards_table.end()) {
+      rewards_table.modify(reward_iterator, get_self(), [&](auto &r) {
+        r.iteration_issuance = asset(1000000000, POINT_CURRENCY_SYMBOL);
+        r.participant_issuance = asset(10000000, POINT_CURRENCY_SYMBOL);
+      });
+    }
+  }
+
+  if (action == "unclaim") {
+    users_index users_table(get_self(), user.value);
+    auto user_iterator = users_table.begin();
+
+    if (user_iterator != users_table.end()) {
+      users_table.modify(user_iterator, get_self(), [&](auto &u) {
+        u.last_claim = u.last_claim - 1;
+      });
+    }
+  }
 
   if (action == "erase user") {
     users_index users_table(get_self(), user.value);
@@ -28,115 +83,24 @@ void freeosgov::maintain(string action, name user, vector<name> removees) {
   }
 
   if (action == "clear users") {
-      users_index users_table_a(get_self(), name("analappleton").value);
-      auto iterator_a = users_table_a.begin();
-      users_table_a.erase(iterator_a);
 
-      users_index users_table_b(get_self(), name("billbeaumont").value);
-      auto iterator_b = users_table_b.begin();
-      users_table_b.erase(iterator_b);
+      eraseuser("alanappleton");
+      eraseuser("billbeaumont");
+      eraseuser("celiacollins");
+      eraseuser("dennisedolan");
+      eraseuser("verovera");
+      eraseuser("vivvestin");
 
-      users_index users_table_c(get_self(), name("celiacollins").value);
-      auto iterator_c = users_table_c.begin();
-      users_table_c.erase(iterator_c);
-
-      users_index users_table_d(get_self(), name("dennisedolan").value);
-      auto iterator_d = users_table_d.begin();
-      users_table_d.erase(iterator_d);
-
-      users_index users_table_e(get_self(), name("ethanedwards").value);
-      auto iterator_e = users_table_e.begin();
-      users_table_e.erase(iterator_e);
-
-      users_index users_table_f(get_self(), name("frankyfellon").value);
-      auto iterator_f = users_table_f.begin();
-      users_table_f.erase(iterator_f);
   }
 
   if (action == "restore users") {
-      // alanappleton
-      users_index users_table_a(get_self(), name("analappleton").value);
-      users_table_a.emplace(get_self(), [&](auto &s) {
-        s.stake = asset(0, STAKE_CURRENCY_SYMBOL);
-        //s.feefree_airclaim_points = asset(0, POINT_CURRENCY_SYMBOL);
-        s.account_type = "e";
-        s.registered_iteration = 1;
-        s.staked_iteration = 1;
-        s.votes = 0;
-        s.issuances = 0;
-        s.last_issuance = 2;
-        s.total_issuance_amount = asset(120000, POINT_CURRENCY_SYMBOL);
-      });
 
-      // billbeaumont
-      users_index users_table_b(get_self(), name("billbeaumont").value);
-      users_table_b.emplace(get_self(), [&](auto &s) {
-        s.stake = asset(0, STAKE_CURRENCY_SYMBOL);
-        //s.feefree_airclaim_points = asset(0, POINT_CURRENCY_SYMBOL);
-        s.account_type = "e";
-        s.registered_iteration = 8;
-        s.staked_iteration = 8;
-        s.votes = 0;
-        s.issuances = 0;
-        s.last_issuance = 0;
-        s.total_issuance_amount = asset(0, POINT_CURRENCY_SYMBOL);
-      });
-
-      // celiacollins
-      users_index users_table_c(get_self(), name("celiacollins").value);
-      users_table_c.emplace(get_self(), [&](auto &s) {
-        s.stake = asset(0, STAKE_CURRENCY_SYMBOL);
-        //s.feefree_airclaim_points = asset(0, POINT_CURRENCY_SYMBOL);
-        s.account_type = "e";
-        s.registered_iteration = 8;
-        s.staked_iteration = 8;
-        s.votes = 0;
-        s.issuances = 0;
-        s.last_issuance = 0;
-        s.total_issuance_amount = asset(0, POINT_CURRENCY_SYMBOL);
-      });
-
-      // dennisedolan
-      users_index users_table_d(get_self(), name("dennisedolan").value);
-      users_table_c.emplace(get_self(), [&](auto &s) {
-        s.stake = asset(0, STAKE_CURRENCY_SYMBOL);
-        //s.feefree_airclaim_points = asset(0, POINT_CURRENCY_SYMBOL);
-        s.account_type = "e";
-        s.registered_iteration = 8;
-        s.staked_iteration = 8;
-        s.votes = 0;
-        s.issuances = 0;
-        s.last_issuance = 0;
-        s.total_issuance_amount = asset(0, POINT_CURRENCY_SYMBOL);
-      });
-
-      // ethanedwards
-      users_index users_table_e(get_self(), name("ethanedwards").value);
-      users_table_c.emplace(get_self(), [&](auto &s) {
-        s.stake = asset(0, STAKE_CURRENCY_SYMBOL);
-        //s.feefree_airclaim_points = asset(0, POINT_CURRENCY_SYMBOL);
-        s.account_type = "e";
-        s.registered_iteration = 8;
-        s.staked_iteration = 8;
-        s.votes = 0;
-        s.issuances = 0;
-        s.last_issuance = 0;
-        s.total_issuance_amount = asset(0, POINT_CURRENCY_SYMBOL);
-      });
-
-      // frankyfellon
-      users_index users_table_f(get_self(), name("frankyfellon").value);
-      users_table_c.emplace(get_self(), [&](auto &s) {
-        s.stake = asset(0, STAKE_CURRENCY_SYMBOL);
-        //s.mintfree_airclaim_points = asset(0, POINT_CURRENCY_SYMBOL);
-        s.account_type = "e";
-        s.registered_iteration = 8;
-        s.staked_iteration = 8;
-        s.votes = 0;
-        s.issuances = 0;
-        s.last_issuance = 0;
-        s.total_issuance_amount = asset(0, POINT_CURRENCY_SYMBOL);
-      });
+    createuser("alanappleton",0,"d",3216,3216,0,0,0,0);
+    createuser("billbeaumont",0,"e",3216,3216,0,0,0,0);
+    createuser("celiacollins",0,"e",3216,3216,0,0,0,0);
+    createuser("dennisedolan",0,"e",3216,3216,0,0,0,0);
+    createuser("verovera",0,"v",3673,3673,0,1,3675,6);
+    createuser("vivvestin",0,"v",3503,3503,0,4,3675,19);
 
   }
 

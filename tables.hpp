@@ -120,7 +120,7 @@ struct[[ eosio::table("users"), eosio::contract("freeosgov") ]] user {
   uint32_t staked_iteration;      // the iteration in which the user staked their tokens
   uint32_t votes;                 // how many votes the user has made
   uint32_t issuances;             // total number of times the user has been issued with OPTIONs
-  uint32_t last_issuance;         // the last iteration in which the user was issued with OPTIONs
+  uint32_t last_claim;         // the last iteration in which the user was issued with OPTIONs
   asset total_issuance_amount;    // accrued POINTs
 
   uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table

@@ -19,10 +19,13 @@ public:
   [[eosio::action]] void version();
   [[eosio::action]] void init(time_point iterations_start);
   [[eosio::action]] void tick();
-  void trigger_new_iteration(uint32_t new_iterationß);
+  void trigger_new_iteration(uint32_t new_iteration);
 
   // maintain actions TODO: remove in production version
-  [[eosio::action]] void maintain(string action, name user, vector<name> removees);
+  [[eosio::action]] void maintain(string action, name user);
+  void createuser(string username, uint32_t stake, string account_type, uint32_t registered, uint32_t staked,
+                          uint32_t votes, uint32_t issues, uint32_t last, uint32_t total);
+  void eraseuser(string username);
 
   // identity actions
   [[eosio::action]] void reguser(name user);
@@ -60,6 +63,7 @@ public:
 
   // claim actions/functions
   [[eosio::action]] void claim(name user);
+  void make_points_payment(name user, asset amount, uint32_t iteration, string memo);
 
   // points actions and functions
   [[eosio::action]] void create(const name &issuer, const asset &maximum_supply);
