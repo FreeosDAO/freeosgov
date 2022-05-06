@@ -9,9 +9,9 @@ std::string freeby_acct = STRINGIZE(FREEBY);
 std::string freeos_acct = STRINGIZE(FREEOS);
 
 // Currency constants
-const string STAKE_CURRENCY_CODE = "XPR";
-const uint8_t STAKE_CURRENCY_PRECISION = 4;
-const symbol STAKE_CURRENCY_SYMBOL = symbol(STAKE_CURRENCY_CODE, STAKE_CURRENCY_PRECISION);
+const string XPR_CURRENCY_CODE = "XPR";
+const uint8_t XPR_CURRENCY_PRECISION = 4;
+const symbol XPR_CURRENCY_SYMBOL = symbol(XPR_CURRENCY_CODE, XPR_CURRENCY_PRECISION);
 
 const string POINT_CURRENCY_CODE = "POINT";
 const uint8_t POINT_CURRENCY_PRECISION = 4;

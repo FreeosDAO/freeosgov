@@ -181,7 +181,7 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
 
   // add record to the users table
   users_table.emplace(get_self(), [&](auto &user) {
-    user.stake = asset(0, STAKE_CURRENCY_SYMBOL);
+    user.stake = asset(0, XPR_CURRENCY_SYMBOL);
     user.account_type = account_type;
     user.registered_iteration = iteration;
     user.staked_iteration = iteration; // TODO

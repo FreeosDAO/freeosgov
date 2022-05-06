@@ -76,7 +76,10 @@ public:
   void sub_balance(const name &owner, const asset &value);
   void add_balance(const name &owner, const asset &value, const name &ram_payer);
   [[eosio::action]] void mintfreeby(const name &owner, const asset &quantity);
-  [[eosio::action]] void mintfreeos(const name &owner, const asset &quantity);
+  [[eosio::action]] void mintfreeos(const name &user, const asset &input_quantity, symbol &mint_fee_currency);
+  void mintfee(name user, name to, asset quantity, std::string memo);
+  asset calculate_mint_fee(name &user, asset &mint_quantity);
+  void process_mint_fee(name user, asset mint_quantity, symbol mint_fee_currency);
 
 
   // functions

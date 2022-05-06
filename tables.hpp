@@ -134,13 +134,10 @@ struct[[ eosio::table("users"), eosio::contract("freeos") ]] airclaim_user {
   asset stake;                   // how many XPR tokens staked
   char account_type;             // user's verification level
   uint32_t registered_iteration; // when the user was registered
-  uint32_t
-      staked_iteration;   // the iteration in which the user staked their tokens
+  uint32_t staked_iteration;     // the iteration in which the user staked their tokens
   uint32_t votes;         // how many votes the user has made
-  uint32_t issuances;     // total number of times the user has been issued with
-                          // OPTIONs
-  uint32_t last_issuance; // the last iteration in which the user was issued
-                          // with OPTIONs
+  uint32_t issuances;     // total number of times the user has been issued with OPTIONs
+  uint32_t last_issuance; // the last iteration in which the user was issued with OPTIONs
 
   uint64_t primary_key() const { return stake.symbol.code().raw(); }
 };
@@ -262,5 +259,15 @@ struct[[ eosio::table("exchangerate"), eosio::contract("freeosgov") ]] price {
   uint64_t primary_key() const { return 0; } // return a constant (0 in this case) to ensure a single-row table
 };
 using exchange_index = eosio::multi_index<"exchangerate"_n, price>;
+
+
+// CREDIT
+// credit table
+struct[[ eosio::table("credits"), eosio::contract("freeosgov") ]] credit {
+  asset balance;
+
+  uint64_t primary_key() const { return 0; }  // return a constant (0 in this case) to ensure a single-row table
+};
+using credit_index = eosio::multi_index<"credits"_n, credit>;
 
 } // end of namespace freedao

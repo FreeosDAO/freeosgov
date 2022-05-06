@@ -23,7 +23,7 @@ void freeosgov::createuser(string username, uint32_t stake, string account_type,
   users_index users_table(get_self(), user.value);
 
   users_table.emplace(get_self(), [&](auto &s) {
-    s.stake = asset(stake * 10000, STAKE_CURRENCY_SYMBOL);
+    s.stake = asset(stake * 10000, XPR_CURRENCY_SYMBOL);
     s.account_type = account_type;
     s.registered_iteration = registered;
     s.staked_iteration = staked;

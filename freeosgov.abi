@@ -108,6 +108,16 @@
             ]
         },
         {
+            "name": "credit",
+            "base": "",
+            "fields": [
+                {
+                    "name": "balance",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
             "name": "currency_stats",
             "base": "",
             "fields": [
@@ -272,12 +282,16 @@
             "base": "",
             "fields": [
                 {
-                    "name": "owner",
+                    "name": "user",
                     "type": "name"
                 },
                 {
-                    "name": "quantity",
+                    "name": "input_quantity",
                     "type": "asset"
+                },
+                {
+                    "name": "mint_fee_currency",
+                    "type": "symbol"
                 }
             ]
         },
@@ -993,6 +1007,13 @@
         {
             "name": "burners",
             "type": "burner_whitelist",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "credits",
+            "type": "credit",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
