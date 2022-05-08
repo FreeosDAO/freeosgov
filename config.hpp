@@ -246,4 +246,37 @@ void freeosgov::targetrate(double exchangerate) {
   }
 }
 
+// ACTION
+// update/insert a currency record to the currencies table
+void freeosgov::currupsert(symbol symbol, name contract) {
+
+  currencies_index currencies_table(get_self(), get_self().value);
+  auto curr_iterator = currencies_table.find(symbol.raw());
+
+  if (curr_iterator == currencies_table.end()) {
+    // emplace
+    currencies_table.emplace(get_self(), [&](auto &curr) {
+      curr.symbol = symbol;
+      curr.contract = contract;
+    });
+  } else {
+    // modify
+    currencies_table.modify(curr_iterator, get_self(), [&](auto &curr) {
+      curr.contract = contract;
+    });
+  }
+}
+
+// ACTION
+// delete a currency record from the currencies table
+void freeosgov::currerase(symbol symbol) {
+
+  currencies_index currencies_table(get_self(), get_self().value);
+  auto curr_iterator = currencies_table.find(symbol.raw());
+
+  check(curr_iterator != currencies_table.end(), "currency not found");
+
+  currencies_table.erase(curr_iterator);
+}
+
 

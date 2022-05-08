@@ -270,4 +270,16 @@ struct[[ eosio::table("credits"), eosio::contract("freeosgov") ]] credit {
 };
 using credit_index = eosio::multi_index<"credits"_n, credit>;
 
+
+// CURRENCIES
+// currencies table
+struct[[ eosio::table("currencies"), eosio::contract("freeosgov") ]] currency {
+  symbol  symbol;
+  name    contract;
+  
+  uint64_t primary_key() const { return symbol.raw(); }
+};
+using currencies_index = eosio::multi_index<"currencies"_n, currency>;
+
+
 } // end of namespace freedao

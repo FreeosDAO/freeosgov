@@ -118,6 +118,20 @@
             ]
         },
         {
+            "name": "currency",
+            "base": "",
+            "fields": [
+                {
+                    "name": "symbol",
+                    "type": "symbol"
+                },
+                {
+                    "name": "contract",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "currency_stats",
             "base": "",
             "fields": [
@@ -146,6 +160,30 @@
                 {
                     "name": "price",
                     "type": "float64"
+                }
+            ]
+        },
+        {
+            "name": "currerase",
+            "base": "",
+            "fields": [
+                {
+                    "name": "symbol",
+                    "type": "symbol"
+                }
+            ]
+        },
+        {
+            "name": "currupsert",
+            "base": "",
+            "fields": [
+                {
+                    "name": "symbol",
+                    "type": "symbol"
+                },
+                {
+                    "name": "contract",
+                    "type": "name"
                 }
             ]
         },
@@ -891,6 +929,16 @@
             "ricardian_contract": ""
         },
         {
+            "name": "currerase",
+            "type": "currerase",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "currupsert",
+            "type": "currupsert",
+            "ricardian_contract": ""
+        },
+        {
             "name": "dparamerase",
             "type": "dparamerase",
             "ricardian_contract": ""
@@ -1014,6 +1062,13 @@
         {
             "name": "credits",
             "type": "credit",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "currencies",
+            "type": "currency",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

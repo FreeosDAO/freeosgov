@@ -45,6 +45,8 @@ public:
   [[eosio::action]] void burnererase(name account);
   [[eosio::action]] void currentrate(double price);
   [[eosio::action]] void targetrate(double price);
+  [[eosio::action]] void currupsert(symbol symbol, name contract);
+  [[eosio::action]] void currerase(symbol symbol);
 
   // survey actions (In survey.hpp)
   [[eosio::action]] void survey(name user, uint8_t q1response, uint8_t q2response, uint8_t q3response, uint8_t q4response, uint8_t q5choice1, uint8_t q5choice2, uint8_t q5choice3);
