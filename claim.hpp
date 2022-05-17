@@ -165,20 +165,26 @@ void freeosgov::claim(name user) {
                 std::make_tuple(get_self(), user, user_payment, transfer_memo));
             user_transfer_action.send();
 
-            // transfer POINTs to the freedao account
+            // memo for freedao and partners shares
             string shares_memo = string("share of claim by ") + user.to_string() + " for iteration " + to_string(iter);
-            action freedao_transfer_action = action(
-            permission_level{get_self(), "active"_n}, get_self(),
-                "allocate"_n,
-                std::make_tuple(get_self(), freedao_acct, freedao_payment, shares_memo));
-            freedao_transfer_action.send();
 
+            // transfer POINTs to the freedao account
+            if (freedao_payment_amount > 0) {
+                action freedao_transfer_action = action(
+                permission_level{get_self(), "active"_n}, get_self(),
+                    "allocate"_n,
+                    std::make_tuple(get_self(), freedao_acct, freedao_payment, shares_memo));
+                freedao_transfer_action.send();
+            }
+            
             // transfer POINTs to the partners account
-            action partners_transfer_action = action(
-            permission_level{get_self(), "active"_n}, get_self(),
-                "allocate"_n,
-                std::make_tuple(get_self(), partners_acct, partners_payment, shares_memo));
-            partners_transfer_action.send();
+            if (partners_payment_amount > 0) {
+                action partners_transfer_action = action(
+                permission_level{get_self(), "active"_n}, get_self(),
+                    "allocate"_n,
+                    std::make_tuple(get_self(), partners_acct, partners_payment, shares_memo));
+                partners_transfer_action.send();
+            }
         }
     }
 
