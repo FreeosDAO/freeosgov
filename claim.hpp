@@ -10,38 +10,6 @@ using namespace freedao;
 using namespace std;
 
 
-void freeosgov::make_points_payment(name user, asset quantity, uint32_t iteration, string transfer_memo) {
-
-    // only attempt to make payment if non-zero amount
-    if (quantity.amount == 0) return;
-
-    // mint and pay
-    // prepare the issue memo string
-    string issue_memo = string("claim by ") + user.to_string() + " for iteration " + to_string(iteration);
-
-    // issue the minted options
-    // issue(get_self(), quantity, issue_memo);
-
-    // transfer minted options to user
-    // transfer(get_self(), user, quantity, transfer_memo);
-
-    // issue POINTs
-    action issue_action = action(
-      permission_level{get_self(), "active"_n}, get_self(),
-      "mint"_n, std::make_tuple(get_self(), get_self(), quantity, issue_memo));
-
-    issue_action.send();
-
-    // transfer POINTs to the owner
-    action transfer_action = action(
-      permission_level{get_self(), "active"_n}, get_self(),
-      "allocate"_n,
-      std::make_tuple(get_self(), user, quantity, transfer_memo));
-
-    transfer_action.send();
-
-}
-
 // ACTION
 void freeosgov::claim(name user) {
 
@@ -53,6 +21,9 @@ void freeosgov::claim(name user) {
     
     // is the system operational?
     check(this_iteration != 0, "The freeos system is not available at this time");
+
+    // is the user alive?
+    check(is_user_alive(user), "user has exceeded the maximum number of iterations");
 
     // find the user's last claim
     users_index users_table(get_self(), user.value);
@@ -83,9 +54,16 @@ void freeosgov::claim(name user) {
     double vote_share = get_dparameter(name("voteshare"));
     double ratify_share = get_dparameter(name("ratifyshare"));
 
+    double freedaoshare = get_dparameter(name("freedaoshare"));
+    double partnershare = get_dparameter(name("partnershare"));
+
+    // get the freedao and partners accounts
+    name freedao_acct = name(get_parameter("freedaoacct"_n));
+    name partners_acct = name(get_parameter("partnersacct"_n));
+
     // keep some counters
     asset   total_user_payment = asset(0, POINT_CURRENCY_SYMBOL);
-    uint8_t  total_issuances = 0;
+    uint8_t total_issuances = 0;
 
 
     // determine each iteration's payments
@@ -157,13 +135,50 @@ void freeosgov::claim(name user) {
         
         // make the payment, if any
         if (user_payment_amount > 0) {
-            // calculate the total payment as asset
+            total_issuances++;
+
+            // get the partner and freedao shares
+            uint64_t freedao_payment_amount = user_payment_amount * freedaoshare;
+            uint64_t partners_payment_amount = user_payment_amount * partnershare;
+
+            // calculate the payments as asset
             asset user_payment = asset(user_payment_amount, POINT_CURRENCY_SYMBOL);
+            asset freedao_payment = asset(freedao_payment_amount, POINT_CURRENCY_SYMBOL);
+            asset partners_payment = asset(partners_payment_amount, POINT_CURRENCY_SYMBOL);
+
             total_user_payment += user_payment;
 
-            make_points_payment(user, user_payment, iter, transfer_memo);
+            // mint the total amount
+            asset all_payments = user_payment + freedao_payment + partners_payment;
+            string issue_memo = string("claim by ") + user.to_string() + " for iteration " + to_string(iter);
+            
+            // issue POINTs
+            action issue_action = action(
+                permission_level{get_self(), "active"_n}, get_self(),
+                "mint"_n, std::make_tuple(get_self(), get_self(), all_payments, issue_memo));
+            issue_action.send();
 
-            total_issuances++;
+            // transfer POINTs to the user account
+            action user_transfer_action = action(
+            permission_level{get_self(), "active"_n}, get_self(),
+                "allocate"_n,
+                std::make_tuple(get_self(), user, user_payment, transfer_memo));
+            user_transfer_action.send();
+
+            // transfer POINTs to the freedao account
+            string shares_memo = string("share of claim by ") + user.to_string() + " for iteration " + to_string(iter);
+            action freedao_transfer_action = action(
+            permission_level{get_self(), "active"_n}, get_self(),
+                "allocate"_n,
+                std::make_tuple(get_self(), freedao_acct, freedao_payment, shares_memo));
+            freedao_transfer_action.send();
+
+            // transfer POINTs to the partners account
+            action partners_transfer_action = action(
+            permission_level{get_self(), "active"_n}, get_self(),
+                "allocate"_n,
+                std::make_tuple(get_self(), partners_acct, partners_payment, shares_memo));
+            partners_transfer_action.send();
         }
     }
 

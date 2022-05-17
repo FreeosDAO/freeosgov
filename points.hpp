@@ -4,6 +4,8 @@
 #include "freeosgov.hpp"
 #include "tables.hpp"
 
+#include <cmath>
+
 using namespace eosio;
 using namespace freedao;
 using namespace std;
@@ -246,40 +248,71 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity) {
   
   // TODO: proper calculation - applied to points_subject_to_fee
 
-  // for now, return a dummy value
-  return asset(10000, XPR_CURRENCY_SYMBOL);
+  // for now, return a dummy value - read from parameter 'dummyfee'
+  string dummy_fee_str = get_parameter(name("dummyfee"));
+  int dummy_fee = stoi(dummy_fee_str);
+
+  return asset(dummy_fee * 10000, XPR_CURRENCY_SYMBOL);
 }
 
 
-// function to check if the correct mint fee has been paid
-void freeosgov::process_mint_fee(name user, asset mint_quantity, symbol mint_fee_currency) {
+void freeosgov::refund_mintfee(name user) {
+  credit_index credit_table(get_self(), user.value);
+  auto credit_iterator = credit_table.begin();
+
+  if (credit_iterator == credit_table.end()) return;  // no credit record, so nothing to refund
+  asset mintfee_paid = credit_iterator->balance;
+
+  symbol mintfee_symbol = mintfee_paid.symbol;
+
+  // look up the currencies table to get the contract name
+  currencies_index currencies_table(get_self(), get_self().value);
+  auto currency_iterator = currencies_table.find(mintfee_symbol.raw());
+
+  if (currency_iterator == currencies_table.end()) return;  // unknown currency
+  name currency_contract = currency_iterator->contract;
+
+  // transfer the fee back to the user
+  action transfer_action = action(
+      permission_level{get_self(), "active"_n}, currency_contract,
+      "transfer"_n,
+      std::make_tuple(get_self(), user, mintfee_paid, "refund of incorrect freeos mint fee"));
+
+  transfer_action.send();
+}
+
+// function to check if the correct mint fee has been paid - returns true if mint fee has processed correctly
+bool freeosgov::process_mint_fee(name user, asset mint_quantity, symbol mint_fee_currency) {
+
+  bool mintfee_status = false;  // default - will be set to true if correct mint fee has been paid
 
   // calculate the mint fee
   asset mintfee = calculate_mint_fee(user, mint_quantity);
-  if (mintfee.amount == 0) return;
-
-  // assume the user has no credit unless proven otherwise
-  asset user_credit = asset(0, mint_fee_currency);  // TODO: make configurable for payment currency
 
   // has the user paid the mint fee, i.e. got credit?
+  asset user_credit = asset(0, mint_fee_currency);  // default
   credit_index credit_table(get_self(), user.value);
   auto credit_iterator = credit_table.begin();
-  check(credit_iterator != credit_table.end(), "user has not paid the mint fee");
-  user_credit = credit_iterator->balance;
+
+  if (credit_iterator != credit_table.end()) {
+    user_credit = credit_iterator->balance;
+    // delete the credit record
+    credit_table.erase(credit_iterator);
+  }
 
   // Check if the mint-fee paid is the right amount
-  check(mintfee == user_credit, "the mint fee amount is incorrect");
+  if (mintfee == user_credit) {
+    mintfee_status = true;
+  } else {
+    refund_mintfee(user);
+  }
 
-  // delete the credit record
-  credit_table.erase(credit_iterator);
-
+  return mintfee_status;
 }
 
 // convert non-exchangeable currency for exchangeable currency
 // ACTION
 void freeosgov::mintfreeos(const name &user, const asset &input_quantity, symbol &mint_fee_currency) {
-
-  // TODO: do we need an argument that specifies the currency of the mint fee?
 
   require_auth(user);
 
@@ -303,7 +336,7 @@ void freeosgov::mintfreeos(const name &user, const asset &input_quantity, symbol
   check(input_quantity.amount > 0, "must mint a positive quantity");
 
   // check whether user has paid correct mint fee, whether they have a credit record, adjust their mintfeefree allowance
-  process_mint_fee(user, input_quantity, mint_fee_currency);
+  if (process_mint_fee(user, input_quantity, mint_fee_currency) == false) return;
 
   // all requirements met, so go ahead and do the transaction
 
@@ -333,16 +366,11 @@ void freeosgov::mintfreeos(const name &user, const asset &input_quantity, symbol
 
   transfer_action.send();
 
-  // erase the user's credit record
-  credit_index credit_table(get_self(), user.value);
-  auto credit_iterator = credit_table.begin();
-  if (credit_iterator != credit_table.end()) { credit_table.erase(credit_iterator); }
-
 }
 
 
 // mint fee confirmation
-[[eosio::on_notify("eosio.token::transfer")]]
+[[eosio::on_notify("*::transfer")]]    // was "eosio.token::transfer"
 void freeosgov::mintfee(name user, name to, asset quantity, std::string memo) {
   if (memo == "freeos mint fee") {
 

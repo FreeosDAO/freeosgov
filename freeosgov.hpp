@@ -65,8 +65,7 @@ public:
 
   // claim actions/functions
   [[eosio::action]] void claim(name user);
-  void make_points_payment(name user, asset amount, uint32_t iteration, string memo);
-
+  
   // points actions and functions
   [[eosio::action]] void create(const name &issuer, const asset &maximum_supply);
   void issue(const name &to, const asset &quantity, const string &memo);
@@ -81,8 +80,8 @@ public:
   [[eosio::action]] void mintfreeos(const name &user, const asset &input_quantity, symbol &mint_fee_currency);
   void mintfee(name user, name to, asset quantity, std::string memo);
   asset calculate_mint_fee(name &user, asset &mint_quantity);
-  void process_mint_fee(name user, asset mint_quantity, symbol mint_fee_currency);
-
+  bool process_mint_fee(name user, asset mint_quantity, symbol mint_fee_currency);
+  void refund_mintfee(name user);
 
   // functions
   bool is_action_period(string action);
