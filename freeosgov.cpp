@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.14";
+const std::string VERSION = "0.9.15";
 
 // ACTION
 void freeosgov::version() {
@@ -150,13 +150,142 @@ void freeosgov::tick() {
   }
 }
 
+
+float freeosgov::get_locked_proportion() {
+  // default rate if exchange rate record not found, or if current price >= target price (so no need to lock)
+  float proportion = 0.0f;
+
+  exchange_index exchangerate_table(get_self(), get_self().value);
+  auto exchangerate_iterator = exchangerate_table.begin();
+
+  // if the exchange rate exists in the table
+  if (exchangerate_iterator != exchangerate_table.end()) {
+    // get current and target rates
+    double currentprice = exchangerate_iterator->currentprice;
+    double targetprice = exchangerate_iterator->targetprice;
+
+    if (targetprice > 0 && currentprice < targetprice) {
+      proportion = 1.0f - (currentprice / targetprice);
+    }
+  } else {
+    // use the default proportion specified in the 'lockpercent' parameter
+    parameters_index parameters_table(get_self(), get_self().value);
+    auto parameter_iterator = parameters_table.find(name("lockpercent").value);
+
+    if (parameter_iterator != parameters_table.end()) {
+      uint8_t int_percent = stoi(parameter_iterator->value);
+      proportion = ((float)int_percent) / 100.0f;
+    }
+  }
+
+  // apply a cap of 0.9
+  if (proportion > 0.9f) {
+    proportion = 0.9f;
+  }
+
+  return proportion;
+}
+
+
+
+// this is only ever called by tick() when a switch to a new iteration is detected
+void freeosgov::update_unlock_percentage() {
+  uint32_t current_unlock_percentage = 0;
+  uint32_t new_unlock_percentage = 0;
+
+  // get the system record
+  system_index system_table(get_self(), get_self().value);
+  auto system_iterator = system_table.begin();
+  check(system_iterator != system_table.end(), "statistics record is not found");
+
+  // find the current locked proportion. If 0.0f it means that the exchange rate is favourable
+  float locked_proportion = get_locked_proportion();
+
+  // Decide whether we are above target or below target price
+  if (locked_proportion == 0.0f) {
+    // favourable exchange rate, so implement the 'good times' strategy -
+    // calculate the new unlock_percentage
+    current_unlock_percentage = system_iterator->unlockpercent;
+
+    // move the unlock_percentage on to next level if we have reached a new 'good times' iteration
+    switch (current_unlock_percentage) {
+    case 0:
+    case 15:
+      new_unlock_percentage = 1;
+      break;
+    case 1:
+      new_unlock_percentage = 2;
+      break;
+    case 2:
+      new_unlock_percentage = 3;
+      break;
+    case 3:
+      new_unlock_percentage = 5;
+      break;
+    case 5:
+      new_unlock_percentage = 8;
+      break;
+    case 8:
+      new_unlock_percentage = 13;
+      break;
+    case 13:
+      new_unlock_percentage = 21;
+      break;
+    case 21:
+      new_unlock_percentage = 21;
+      break;
+    default :
+      new_unlock_percentage = 0;
+      break;
+    }
+
+    // modify the system table with the new percentage. Also ensure the failsafe counter is set to 0.
+    system_table.modify(system_iterator, get_self(), [&](auto &sys) {
+      sys.unlockpercent = new_unlock_percentage;
+      sys.unlockpercentiteration = current_iteration();
+      sys.failsafecounter = 0;
+    });
+
+  } else {
+    // unfavourable exchange rate, so implement the 'bad times' strategy
+    // calculate failsafe unlock percentage - every Xth week of unfavourable
+    // rate, set unlock percentage to 15%
+
+    // get the unlock failsafe frequency - default is 24
+    uint8_t failsafe_frequency = 24;
+
+    // read the frequency from the freeosconfig 'parameters' table
+    parameters_index parameters_table(get_self(), get_self().value);
+    auto parameter_iterator = parameters_table.find(name("failsafefreq").value);
+
+    if (parameter_iterator != parameters_table.end()) {
+      failsafe_frequency = stoi(parameter_iterator->value);
+    }
+
+    // increment the failsafe_counter
+    uint32_t failsafe_counter = system_iterator->failsafecounter;
+    failsafe_counter++;
+
+    // store the new failsafecounter and unlockpercent
+    system_table.modify(system_iterator, get_self(), [&](auto &sys) {
+      sys.failsafecounter = failsafe_counter % failsafe_frequency;
+      sys.unlockpercent = (failsafe_counter == failsafe_frequency ? 15 : 0);
+      sys.unlockpercentiteration = current_iteration();
+    });
+  }
+}
+
+
 // tidy up at the end of an iteration - save SVR data in the reward record
 void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
 
   // if the transition is from iteration 0 to 1 there is nothing to do, so return
   if (new_iteration == 1) return;
 
-  // // record/update the old and new iterations - and take snapshot of the CLS at this point
+  // update the locking parameters
+  update_unlock_percentage();
+
+  // record/update the old and new iterations - and take snapshot of the CLS at this point
   system_index system_table(get_self(), get_self().value);
   auto system_iterator = system_table.begin();
   check(system_iterator != system_table.end(), "system record is undefined");

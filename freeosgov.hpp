@@ -20,6 +20,8 @@ public:
   [[eosio::action]] void init(time_point iterations_start);
   [[eosio::action]] void tick();
   void trigger_new_iteration(uint32_t new_iteration);
+  float get_locked_proportion();
+  void update_unlock_percentage();
 
   // maintain actions TODO: remove in production version
   [[eosio::action]] void maintain(string action, name user);

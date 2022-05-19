@@ -177,10 +177,10 @@ void freeosgov::maintain(string action, name user) {
         get_self(), [&](auto &sys) {
           sys.usercount = 22;
           sys.cls = asset(654500000000, POINT_CURRENCY_SYMBOL);
-          sys.claimevents = 3;
-          sys.iteration = 3286;
-          sys.participants = 1;
-          //sys.init = time_point("2021-09-15T00:00:00.000");
+          sys.claimevents = 13;
+          sys.iteration = 5910;
+          sys.participants = 0;
+          //sys.init = time_point(1631620800000000);
         });
   }
 
@@ -188,11 +188,11 @@ void freeosgov::maintain(string action, name user) {
     system_index system_table(get_self(), get_self().value);
     system_table.emplace(
         get_self(), [&](auto &sys) {
-          sys.usercount = 4;
-          sys.cls = asset(0, POINT_CURRENCY_SYMBOL);
-          sys.claimevents = 0;
-          sys.iteration = 0;
-          sys.participants = 2;
+          sys.usercount = 8;
+          sys.cls = asset(154000000000, POINT_CURRENCY_SYMBOL);
+          sys.claimevents = 17;
+          sys.iteration = 5910;
+          sys.participants = 0;
           //sys.init = time_point("2021-09-15T00:00:00.000");
         });
   }

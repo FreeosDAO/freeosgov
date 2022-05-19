@@ -694,6 +694,18 @@
                     "type": "uint32"
                 },
                 {
+                    "name": "unlockpercent",
+                    "type": "uint32"
+                },
+                {
+                    "name": "unlockpercentiteration",
+                    "type": "uint32"
+                },
+                {
+                    "name": "failsafecounter",
+                    "type": "uint32"
+                },
+                {
                     "name": "cls",
                     "type": "asset"
                 }
@@ -1160,6 +1172,13 @@
         {
             "name": "users",
             "type": "user",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "vestaccounts",
+            "type": "account",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

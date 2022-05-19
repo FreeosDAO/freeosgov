@@ -58,8 +58,8 @@ void freeosgov::claim(name user) {
     double partnershare = get_dparameter(name("partnershare"));
 
     // get the freedao and partners accounts
-    name freedao_acct = name(get_parameter("freedaoacct"_n));
-    name partners_acct = name(get_parameter("partnersacct"_n));
+    name freedao_acct = name(get_parameter(name("freedaoacct")));
+    name partners_acct = name(get_parameter(name("partnersacct")));
 
     // keep some counters
     asset   total_user_payment = asset(0, POINT_CURRENCY_SYMBOL);
@@ -150,7 +150,7 @@ void freeosgov::claim(name user) {
 
             // mint the total amount
             asset all_payments = user_payment + freedao_payment + partners_payment;
-            string issue_memo = string("claim by ") + user.to_string() + " for iteration " + to_string(iter);
+            string issue_memo = string("claim by ") + user.to_string() + " for week " + to_string(iter);
             
             // issue POINTs
             action issue_action = action(
@@ -166,7 +166,7 @@ void freeosgov::claim(name user) {
             user_transfer_action.send();
 
             // memo for freedao and partners shares
-            string shares_memo = string("share of claim by ") + user.to_string() + " for iteration " + to_string(iter);
+            string shares_memo = string("share of claim by ") + user.to_string() + " for week " + to_string(iter);
 
             // transfer POINTs to the freedao account
             if (freedao_payment_amount > 0) {

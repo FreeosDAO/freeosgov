@@ -15,6 +15,9 @@ uint32_t iteration;
 uint32_t usercount;
 uint64_t claimevents;
 uint32_t participants;
+uint32_t unlockpercent;
+uint32_t unlockpercentiteration;
+uint32_t failsafecounter;
 asset cls;
 
 uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
@@ -49,6 +52,7 @@ struct[[ eosio::table("accounts"), eosio::contract("freeosgov") ]] account {
   uint64_t primary_key() const { return balance.symbol.code().raw(); }
 };
 typedef eosio::multi_index<"accounts"_n, account> accounts;
+typedef eosio::multi_index<"vestaccounts"_n, account> vestaccounts;
 typedef eosio::multi_index<"mintfeefree"_n, account> mintfeefree_index;
 
 
