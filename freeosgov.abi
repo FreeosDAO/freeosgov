@@ -1100,6 +1100,13 @@
             "key_types": []
         },
         {
+            "name": "lockaccounts",
+            "type": "account",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
             "name": "minters",
             "type": "minter_whitelist",
             "index_type": "i64",
@@ -1172,13 +1179,6 @@
         {
             "name": "users",
             "type": "user",
-            "index_type": "i64",
-            "key_names": [],
-            "key_types": []
-        },
-        {
-            "name": "vestaccounts",
-            "type": "account",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

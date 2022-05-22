@@ -151,9 +151,9 @@ void freeosgov::tick() {
 }
 
 
-float freeosgov::get_locked_proportion() {
+double freeosgov::get_locked_proportion() {
   // default rate if exchange rate record not found, or if current price >= target price (so no need to lock)
-  float proportion = 0.0f;
+  double proportion = 0.0;
 
   exchange_index exchangerate_table(get_self(), get_self().value);
   auto exchangerate_iterator = exchangerate_table.begin();
@@ -165,7 +165,7 @@ float freeosgov::get_locked_proportion() {
     double targetprice = exchangerate_iterator->targetprice;
 
     if (targetprice > 0 && currentprice < targetprice) {
-      proportion = 1.0f - (currentprice / targetprice);
+      proportion = 1.0 - (currentprice / targetprice);
     }
   } else {
     // use the default proportion specified in the 'lockpercent' parameter
@@ -174,13 +174,13 @@ float freeosgov::get_locked_proportion() {
 
     if (parameter_iterator != parameters_table.end()) {
       uint8_t int_percent = stoi(parameter_iterator->value);
-      proportion = ((float)int_percent) / 100.0f;
+      proportion = ((double)int_percent) / 100.0;
     }
   }
 
   // apply a cap of 0.9
-  if (proportion > 0.9f) {
-    proportion = 0.9f;
+  if (proportion > 0.9) {
+    proportion = 0.9;
   }
 
   return proportion;

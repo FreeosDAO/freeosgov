@@ -42,6 +42,9 @@ void freeosgov::claim(name user) {
     // check that we are not in iteration 1 - payments can only be made retrospectively
     check(this_iteration > 1, "claims are for previous iterations only");
 
+    // get the current proportion of locked POINTs
+    double locked_proportion = get_locked_proportion();
+
     // determine which range of iterations we are paying for
     uint32_t earliest_payment_iteration = this_iteration > 4 ? this_iteration - 4 : 1;
     uint32_t latest_payment_iteration = this_iteration - 1;
@@ -63,6 +66,7 @@ void freeosgov::claim(name user) {
 
     // keep some counters
     asset   total_user_payment = asset(0, POINT_CURRENCY_SYMBOL);
+    asset   grand_total_iterations_payments = asset(0, POINT_CURRENCY_SYMBOL);
     uint8_t total_issuances = 0;
 
 
@@ -80,7 +84,7 @@ void freeosgov::claim(name user) {
         // check if the vote was ratified, otherwise no payment to be made for that iteration
         if (reward_iterator->ratified == false) continue;
 
-        // initialise a running total of points to pay
+        // running total of user payments amounts
         uint64_t user_payment_amount = 0;
 
         // initialise the memo
@@ -137,33 +141,51 @@ void freeosgov::claim(name user) {
         if (user_payment_amount > 0) {
             total_issuances++;
 
+            uint64_t user_locked_amount = user_payment_amount * locked_proportion;
+            uint64_t user_liquid_amount = user_payment_amount - user_locked_amount;
+
             // get the partner and freedao shares
             uint64_t freedao_payment_amount = user_payment_amount * freedaoshare;
             uint64_t partners_payment_amount = user_payment_amount * partnershare;
 
-            // calculate the payments as asset
+            // calculate the payments as assets
             asset user_payment = asset(user_payment_amount, POINT_CURRENCY_SYMBOL);
+            asset user_liquid_payment = asset(user_liquid_amount, POINT_CURRENCY_SYMBOL);
+            asset user_locked_payment = asset(user_locked_amount, POINT_CURRENCY_SYMBOL);
             asset freedao_payment = asset(freedao_payment_amount, POINT_CURRENCY_SYMBOL);
             asset partners_payment = asset(partners_payment_amount, POINT_CURRENCY_SYMBOL);
 
             total_user_payment += user_payment;
 
             // mint the total amount
-            asset all_payments = user_payment + freedao_payment + partners_payment;
+            asset iteration_all_payments = user_payment + freedao_payment + partners_payment;
+            grand_total_iterations_payments += iteration_all_payments;
+
             string issue_memo = string("claim by ") + user.to_string() + " for week " + to_string(iter);
             
-            // issue POINTs
+            // issue all POINTs
             action issue_action = action(
                 permission_level{get_self(), "active"_n}, get_self(),
-                "mint"_n, std::make_tuple(get_self(), get_self(), all_payments, issue_memo));
+                "mint"_n, std::make_tuple(get_self(), get_self(), iteration_all_payments, issue_memo));
             issue_action.send();
 
-            // transfer POINTs to the user account
+            // transfer liquid POINTs to the user account
             action user_transfer_action = action(
             permission_level{get_self(), "active"_n}, get_self(),
                 "allocate"_n,
-                std::make_tuple(get_self(), user, user_payment, transfer_memo));
+                std::make_tuple(get_self(), user, user_liquid_payment, transfer_memo));
             user_transfer_action.send();
+
+            // increase the user's locked balance
+            if (user_locked_amount > 0) {
+                lockaccounts lock_accounts(get_self(), user.value);
+                auto acct_iterator = lock_accounts.find(user_locked_payment.symbol.code().raw());
+                if (acct_iterator == lock_accounts.end()) {
+                    lock_accounts.emplace(get_self(), [&](auto &a) { a.balance = user_locked_payment; });
+                } else {
+                    lock_accounts.modify(acct_iterator, get_self(), [&](auto &a) { a.balance += user_locked_payment; });
+                }
+            }
 
             // memo for freedao and partners shares
             string shares_memo = string("share of claim by ") + user.to_string() + " for week " + to_string(iter);
@@ -189,18 +211,25 @@ void freeosgov::claim(name user) {
     }
 
     // update the user record issuance values
-    users_table.modify(user_iterator, get_self(), [&](auto &user_record) {
+    if (total_user_payment.amount > 0) {
+        users_table.modify(user_iterator, get_self(), [&](auto &user_record) {
         user_record.last_claim = latest_payment_iteration;   // i.e. paid up to this iteration
         user_record.total_issuance_amount += total_user_payment;
         user_record.issuances += total_issuances;
     });
+    }
+    
 
-    // update the number of claimevents in the system record
-    system_index system_table(get_self(), get_self().value);
-    auto system_iterator = system_table.begin();
-    check(system_iterator != system_table.end(), "system record is undefined");
-    system_table.modify(system_iterator, get_self(), [&](auto &s) {
-        s.claimevents += total_issuances;
-    });
+    // update the number of claimevents in the system record and reduce CLS
+    if (total_issuances > 0) {
+        system_index system_table(get_self(), get_self().value);
+        auto system_iterator = system_table.begin();
+        check(system_iterator != system_table.end(), "system record is undefined");
+        system_table.modify(system_iterator, get_self(), [&](auto &s) {
+            s.claimevents += total_issuances;
+            s.cls -= grand_total_iterations_payments;   // reduce CLS by total number of points issued
+        });
+    }
+    
 
 }
