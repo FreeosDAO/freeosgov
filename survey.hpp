@@ -25,7 +25,7 @@ vector<string> split (string s, string delimiter) {
 
 std::vector<int> parse_survey_ranges(string surveyranges) {
     
-    // the surveyranges string looks like this: q1.2:1-48,q2.2:1-48
+    // the surveyranges string looks like this: q2:1-48,q4:1-48
     std::vector<int> limits;
 
     std::vector<std::string> tokenlist = split(surveyranges, ",");

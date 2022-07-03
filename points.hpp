@@ -10,6 +10,18 @@ using namespace eosio;
 using namespace freedao;
 using namespace std;
 
+
+// ACTION
+void freeosgov::testcredit(name user) {
+  credit_index credit_table(get_self(), user.value);
+  auto credit_iterator = credit_table.begin();
+
+  check(credit_iterator != credit_table.end(), "credit record not found");
+  asset credit = credit_iterator->balance;
+  string credit_msg = "credit for " + user.to_string() + " = " + credit.to_string();
+  check(false, credit_msg);
+}
+
 // ACTION
 void freeosgov::create(const name &issuer, const asset &maximum_supply) {
   require_auth(get_self());
@@ -168,7 +180,7 @@ void freeosgov::add_balance(const name &owner, const asset &value,
 
 // convert non-exchangeable currency for exchangeable currency
 // ACTION
-void freeosgov::mintfreeby(const name &owner, const asset &quantity) {
+void freeosgov::mintfreebi(const name &owner, const asset &quantity) {
   require_auth(owner);
 
   // is the 'owner' user verified?
@@ -193,19 +205,19 @@ void freeosgov::mintfreeby(const name &owner, const asset &quantity) {
   sub_balance(owner, quantity);
 
   // Issue exchangeable tokens
-  asset exchangeable_amount = asset(quantity.amount, FREEBY_CURRENCY_SYMBOL);
+  asset exchangeable_amount = asset(quantity.amount, FREEBI_CURRENCY_SYMBOL);
   std::string memo = std::string("minting");
 
   // ask FREEBY contract to issue an equivalent amount of FREEBY tokens to the freeosgov account
   action issue_action = action(
-      permission_level{get_self(), "active"_n}, name(freeby_acct),
+      permission_level{get_self(), "active"_n}, name(freebi_acct),
       "issue"_n, std::make_tuple(get_self(), exchangeable_amount, memo));
 
   issue_action.send();
 
   // transfer FREEBY tokens to the owner
   action transfer_action = action(
-      permission_level{get_self(), "active"_n}, name(freeby_acct),
+      permission_level{get_self(), "active"_n}, name(freebi_acct),
       "transfer"_n,
       std::make_tuple(get_self(), owner, exchangeable_amount, memo));
 
@@ -217,6 +229,7 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity) {
 
   asset points_subject_to_fee = asset(0, POINT_CURRENCY_SYMBOL);  // default value
   asset mintfeefree_allowance = asset(0, POINT_CURRENCY_SYMBOL);  // default value
+  asset mintfee = asset(0, XPR_CURRENCY_SYMBOL);                  // default value - TODO: set for different currencies
 
   // adjust the requested quantity as mint fee may be fully or partially covered by the mint-fee-free allowance
   mintfeefree_index mintfeefree_table(get_self(), user.value);
@@ -248,21 +261,28 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity) {
   
   // TODO: proper calculation - applied to points_subject_to_fee
 
-  // for now, return a dummy value - read from parameter 'dummyfee'
-  string dummy_fee_str = get_parameter(name("dummyfee"));
-  int dummy_fee = stoi(dummy_fee_str);
+  if (points_subject_to_fee.amount > 0) {
+    // for now, return a dummy value - read from parameter 'dummyfee'
+    string dummy_fee_str = get_parameter(name("dummyfee"));
+    int dummy_fee = stoi(dummy_fee_str);
 
-  return asset(dummy_fee * 10000, XPR_CURRENCY_SYMBOL);
+    mintfee = asset(dummy_fee * 10000, XPR_CURRENCY_SYMBOL);
+  } else {
+    mintfee = asset(0, XPR_CURRENCY_SYMBOL);
+  }
+
+  return mintfee;
 }
 
 
 void freeosgov::refund_mintfee(name user) {
+
   credit_index credit_table(get_self(), user.value);
   auto credit_iterator = credit_table.begin();
 
   if (credit_iterator == credit_table.end()) return;  // no credit record, so nothing to refund
-  asset mintfee_paid = credit_iterator->balance;
 
+  asset mintfee_paid = credit_iterator->balance;
   symbol mintfee_symbol = mintfee_paid.symbol;
 
   // look up the currencies table to get the contract name
@@ -276,15 +296,18 @@ void freeosgov::refund_mintfee(name user) {
   action transfer_action = action(
       permission_level{get_self(), "active"_n}, currency_contract,
       "transfer"_n,
-      std::make_tuple(get_self(), user, mintfee_paid, "refund of incorrect freeos mint fee"));
+      std::make_tuple(get_self(), user, mintfee_paid, string("refund of incorrect freeos mint fee")));
 
   transfer_action.send();
+
+  // delete the credit record
+  credit_table.erase(credit_iterator);
 }
 
 // function to check if the correct mint fee has been paid - returns true if mint fee has processed correctly
 bool freeosgov::process_mint_fee(name user, asset mint_quantity, symbol mint_fee_currency) {
 
-  bool mintfee_status = false;  // default - will be set to true if correct mint fee has been paid
+  bool mintfee_status;  // will be set to true if correct mint fee has been paid
 
   // calculate the mint fee
   asset mintfee = calculate_mint_fee(user, mint_quantity);
@@ -296,15 +319,21 @@ bool freeosgov::process_mint_fee(name user, asset mint_quantity, symbol mint_fee
 
   if (credit_iterator != credit_table.end()) {
     user_credit = credit_iterator->balance;
-    // delete the credit record
-    credit_table.erase(credit_iterator);
   }
 
   // Check if the mint-fee paid is the right amount
   if (mintfee == user_credit) {
+    // correct amount
+    // erase the credit record (if paid)
+    if (credit_iterator != credit_table.end()) {
+      credit_table.erase(credit_iterator);
+    }
+    
     mintfee_status = true;
   } else {
+    // incorrect amount - refund the incorrect mint fee
     refund_mintfee(user);
+    mintfee_status = false;
   }
 
   return mintfee_status;
@@ -312,19 +341,19 @@ bool freeosgov::process_mint_fee(name user, asset mint_quantity, symbol mint_fee
 
 // convert non-exchangeable currency for exchangeable currency
 // ACTION
-void freeosgov::mintfreeos(const name &user, const asset &input_quantity, symbol &mint_fee_currency) {
+void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_fee_currency) {
 
   require_auth(user);
 
   auto sym = input_quantity.symbol;
-  check(sym == POINT_CURRENCY_SYMBOL || sym == FREEBY_CURRENCY_SYMBOL, "invalid currency for quantity");
+  check(sym == POINT_CURRENCY_SYMBOL || sym == FREEBI_CURRENCY_SYMBOL, "invalid currency for quantity");
 
   // Point at the right contract
   name token_contract;
   if (sym == POINT_CURRENCY_SYMBOL) {
     token_contract = name(get_self());
   } else {
-    token_contract = name(freeby_acct);
+    token_contract = name(freebi_acct);
   }
 
   stats statstable(token_contract, sym.code().raw());
@@ -339,7 +368,6 @@ void freeosgov::mintfreeos(const name &user, const asset &input_quantity, symbol
   if (process_mint_fee(user, input_quantity, mint_fee_currency) == false) return;
 
   // all requirements met, so go ahead and do the transaction
-
   statstable.modify(st, same_payer, [&](auto &s) {
     s.supply -= input_quantity;
   });
@@ -379,6 +407,13 @@ void freeosgov::mintfee(name user, name to, asset quantity, std::string memo) {
     }
 
     check(to == get_self(), "recipient of mint fee is incorrect");
+
+    // check if the mint fee is in an acceptable currency
+    symbol payment_symbol = quantity.symbol;
+    currencies_index currencies_table(get_self(), get_self().value);
+    auto currency_iterator = currencies_table.find(payment_symbol.raw());
+
+    check(currency_iterator != currencies_table.end(), "payment is not in an accepted form of currency");
 
     // record amount of fee in the credit table
     credit_index credit_table(get_self(), user.value);

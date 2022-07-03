@@ -302,7 +302,7 @@
             ]
         },
         {
-            "name": "mintfreeby",
+            "name": "mintfreebi",
             "base": "",
             "fields": [
                 {
@@ -484,6 +484,20 @@
                 {
                     "name": "ratified",
                     "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "setmff",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "amount",
+                    "type": "asset"
                 }
             ]
         },
@@ -718,6 +732,16 @@
                 {
                     "name": "price",
                     "type": "float64"
+                }
+            ]
+        },
+        {
+            "name": "testcredit",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
                 }
             ]
         },
@@ -986,8 +1010,8 @@
             "ricardian_contract": ""
         },
         {
-            "name": "mintfreeby",
-            "type": "mintfreeby",
+            "name": "mintfreebi",
+            "type": "mintfreebi",
             "ricardian_contract": ""
         },
         {
@@ -1021,6 +1045,11 @@
             "ricardian_contract": ""
         },
         {
+            "name": "setmff",
+            "type": "setmff",
+            "ricardian_contract": ""
+        },
+        {
             "name": "survey",
             "type": "survey",
             "ricardian_contract": ""
@@ -1028,6 +1057,11 @@
         {
             "name": "targetrate",
             "type": "targetrate",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "testcredit",
+            "type": "testcredit",
             "ricardian_contract": ""
         },
         {

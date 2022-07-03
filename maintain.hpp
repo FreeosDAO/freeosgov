@@ -1,6 +1,35 @@
 #include <ctime>
 
+using namespace eosio;
+using namespace freedao;
+using namespace std;
+
 // TODO: Remove this action in production version
+
+// set mintfeefree amount
+void freeosgov::setmff(name user, asset amount) {
+  require_auth(get_self());
+
+  auto sym = amount.symbol;
+  check(sym == POINT_CURRENCY_SYMBOL, "invalid symbol name, please specify amount in POINTs");
+
+  mintfeefree_index mintfeefree_table(get_self(), user.value);
+  auto user_iterator = mintfeefree_table.begin();
+
+  if (user_iterator != mintfeefree_table.end()) {
+    // modify
+    mintfeefree_table.modify(user_iterator, get_self(), [&](auto &m) {
+      m.balance = amount;
+    });
+  } else {
+    // emplace
+    mintfeefree_table.emplace(get_self(), [&](auto &m) {
+      m.balance = amount;
+    });
+  }
+
+}
+
 
 void freeosgov::eraseuser(string username) {
 
@@ -32,6 +61,16 @@ void freeosgov::createuser(string username, uint32_t stake, string account_type,
     s.last_claim = last;
     s.total_issuance_amount = asset(total * 10000, POINT_CURRENCY_SYMBOL);
   });
+}
+
+void freeosgov::refund_function(name user) {
+  credit_index credit_table(get_self(), user.value);
+  auto credit_iterator = credit_table.begin();
+
+  check(credit_iterator != credit_table.end(), "credit record not found");
+  asset credit = credit_iterator->balance;
+  string credit_msg = "credit for " + user.to_string() + " = " + credit.to_string();
+  check(false, credit_msg);
 }
 
 // ACTION
@@ -80,6 +119,20 @@ void freeosgov::maintain(string action, name user) {
       });
     }
 
+  }
+
+  if (action == "user credit") {
+    credit_index credit_table(get_self(), user.value);
+    auto credit_iterator = credit_table.begin();
+
+    check(credit_iterator != credit_table.end(), "credit record not found");
+    asset credit = credit_iterator->balance;
+    string credit_msg = "credit for " + user.to_string() + " = " + credit.to_string();
+    check(false, credit_msg);
+  }
+
+  if (action == "user credit function") {
+    refund_function(user);
   }
 
   if (action == "clear users") {
@@ -380,11 +433,14 @@ void freeosgov::maintain(string action, name user) {
     uint64_t now_secs = current_time_point().sec_since_epoch();
     uint64_t init_secs = init.sec_since_epoch();
 
+    // read the iteration length in seconds
+    int iteration_length_secs = get_iparameter(name("iterationsec"));
+
     if (now_secs >= init_secs) {
-      iteration = ((now_secs - init_secs) / ITERATION_LENGTH_SECONDS) + 1;
+      iteration = ((now_secs - init_secs) / iteration_length_secs) + 1;
     }
 
-    string debug_msg = "now_secs = " + to_string(now_secs) + ", init_secs = " + to_string(init_secs) + ", ITERATION_LENGTH_SECONDS = " + to_string(ITERATION_LENGTH_SECONDS) + ", calculated iteration = " + to_string(iteration);
+    string debug_msg = "now_secs = " + to_string(now_secs) + ", init_secs = " + to_string(init_secs) + ", Iternation Length (seconds) = " + to_string(iteration_length_secs) + ", calculated iteration = " + to_string(iteration);
     check(false, debug_msg);
   }
 

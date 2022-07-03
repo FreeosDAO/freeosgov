@@ -25,9 +25,11 @@ public:
 
   // maintain actions TODO: remove in production version
   [[eosio::action]] void maintain(string action, name user);
+  [[eosio::action]] void setmff(name user, asset amount);
   void createuser(string username, uint32_t stake, string account_type, uint32_t registered, uint32_t staked,
                           uint32_t votes, uint32_t issues, uint32_t last, uint32_t total);
   void eraseuser(string username);
+  void refund_function(name user);
 
   // identity actions
   [[eosio::action]] void reguser(name user);
@@ -49,6 +51,9 @@ public:
   [[eosio::action]] void targetrate(double price);
   [[eosio::action]] void currupsert(symbol symbol, name contract);
   [[eosio::action]] void currerase(symbol symbol);
+  string get_parameter(name parameter);
+  double get_dparameter(name parameter);
+  int get_iparameter(name parameter);
 
   // survey actions (In survey.hpp)
   [[eosio::action]] void survey(name user, uint8_t q1response, uint8_t q2response, uint8_t q3response, uint8_t q4response, uint8_t q5choice1, uint8_t q5choice2, uint8_t q5choice3);
@@ -78,12 +83,13 @@ public:
   void transfer(const name &from, const name &to, const asset &quantity, const string &memo);
   void sub_balance(const name &owner, const asset &value);
   void add_balance(const name &owner, const asset &value, const name &ram_payer);
-  [[eosio::action]] void mintfreeby(const name &owner, const asset &quantity);
-  [[eosio::action]] void mintfreeos(const name &user, const asset &input_quantity, symbol &mint_fee_currency);
+  [[eosio::action]] void mintfreebi(const name &owner, const asset &quantity);
+  [[eosio::action]] void mintfreeos(name user, const asset &input_quantity, symbol &mint_fee_currency);
   void mintfee(name user, name to, asset quantity, std::string memo);
   asset calculate_mint_fee(name &user, asset &mint_quantity);
   bool process_mint_fee(name user, asset mint_quantity, symbol mint_fee_currency);
   void refund_mintfee(name user);
+  [[eosio::action]] void testcredit(name user);
 
   // functions
   bool is_action_period(string action);
@@ -91,8 +97,6 @@ public:
   bool is_registered(name user);
   uint32_t user_last_active_iteration(name user);
   bool is_user_alive(name user);
-  string get_parameter(name parameter);
-  double get_dparameter(name parameter);
   asset calculate_user_cls_addition();
 };
 

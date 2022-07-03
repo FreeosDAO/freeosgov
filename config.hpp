@@ -18,6 +18,17 @@ string freeosgov::get_parameter(name paramname) {
   return parameter_iterator->value;
 }
 
+// get integer parameter value
+int freeosgov::get_iparameter(name paramname) {
+  parameters_index parameters_table(get_self(), get_self().value);
+  auto parameter_iterator = parameters_table.find(paramname.value);
+
+  std::string assert_msg = paramname.to_string() + " is not defined in the parameters table";
+  check(parameter_iterator != parameters_table.end(), assert_msg);
+
+  return stoi(parameter_iterator->value);
+}
+
 // get double parameter value
 double freeosgov::get_dparameter(name paramname) {
   dparameters_index dparameters_table(get_self(), get_self().value);

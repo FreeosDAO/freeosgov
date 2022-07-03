@@ -16,12 +16,13 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.15";
+const std::string VERSION = "0.9.27";
 
 // ACTION
 void freeosgov::version() {
 
-  string version_message = "Version = " + VERSION + ", Iteration = " + to_string(current_iteration());
+  std::string version_message = "version: " + VERSION + ", freeos tokens account: " + freeos_acct + ", freebi tokens account: " + freebi_acct +
+                                ", iteration: " + std::to_string(current_iteration());
 
   check(false, version_message);
 }
@@ -75,10 +76,13 @@ bool freeosgov::is_action_period(string action) {
   check(system_iterator != system_table.end(), "system record is undefined");
   time_point init = system_iterator->init;
 
+  // read the iteration length in seconds
+  int iteration_length_secs = get_iparameter(name("iterationsec"));
+
   // how far are we into the current iteration?
   uint64_t now_secs = current_time_point().sec_since_epoch();
   uint64_t init_secs = init.sec_since_epoch();
-  uint32_t iteration_secs = (now_secs - init_secs) % ITERATION_LENGTH_SECONDS;
+  uint32_t iteration_secs = (now_secs - init_secs) % iteration_length_secs;
 
   // get the config parameters for surveystart and surveyend
   parameters_index parameters_table(get_self(), get_self().value);
@@ -118,8 +122,11 @@ uint32_t freeosgov::current_iteration() {
   uint64_t now_secs = current_time_point().sec_since_epoch();
   uint64_t init_secs = init.sec_since_epoch();
 
+  // read the iteration length in seconds
+  int iteration_secs = get_iparameter(name("iterationsec"));
+
   if (now_secs >= init_secs) {
-    iteration = ((now_secs - init_secs) / ITERATION_LENGTH_SECONDS) + 1;
+    iteration = ((now_secs - init_secs) / iteration_secs) + 1;
   }
   
   return iteration;

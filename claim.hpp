@@ -22,9 +22,6 @@ void freeosgov::claim(name user) {
     // is the system operational?
     check(this_iteration != 0, "The freeos system is not available at this time");
 
-    // is the user alive?
-    check(is_user_alive(user), "user has exceeded the maximum number of iterations");
-
     // find the user's last claim
     users_index users_table(get_self(), user.value);
     auto user_iterator = users_table.begin();
@@ -92,7 +89,7 @@ void freeosgov::claim(name user) {
 
         // determine the total user payout for the iteration
         uint64_t iteration_reward_amount = reward_iterator->participant_issuance.amount;
-
+        
         // split the total user payout according to whether S, V or R completed
         uint64_t payment_survey_amount = iteration_reward_amount * survey_share;
         uint64_t payment_vote_amount = iteration_reward_amount * vote_share;
@@ -211,13 +208,11 @@ void freeosgov::claim(name user) {
     }
 
     // update the user record issuance values
-    if (total_user_payment.amount > 0) {
-        users_table.modify(user_iterator, get_self(), [&](auto &user_record) {
+    users_table.modify(user_iterator, get_self(), [&](auto &user_record) {
         user_record.last_claim = latest_payment_iteration;   // i.e. paid up to this iteration
         user_record.total_issuance_amount += total_user_payment;
         user_record.issuances += total_issuances;
     });
-    }
     
 
     // update the number of claimevents in the system record and reduce CLS
