@@ -261,6 +261,8 @@ void freeosgov::targetrate(double exchangerate) {
 // update/insert a currency record to the currencies table
 void freeosgov::currupsert(symbol symbol, name contract) {
 
+  require_auth(get_self());
+
   currencies_index currencies_table(get_self(), get_self().value);
   auto curr_iterator = currencies_table.find(symbol.raw());
 
@@ -278,9 +280,35 @@ void freeosgov::currupsert(symbol symbol, name contract) {
   }
 }
 
+// update the usdrate for a currency record in the currencies table
+void freeosgov::currsetrate(symbol symbol, double usdrate) {
+
+  // check if the exchange account is calling this action, or the contract itself
+  parameters_index parameters_table(get_self(), get_self().value);
+  auto parameter_iterator = parameters_table.find(name("exchangeacc").value);
+  if (parameter_iterator != parameters_table.end()) {
+    require_auth(name(parameter_iterator->value));
+  } else {
+    require_auth(get_self());
+  }
+
+  currencies_index currencies_table(get_self(), get_self().value);
+  auto curr_iterator = currencies_table.find(symbol.raw());
+
+  check(curr_iterator != currencies_table.end(), "currency record not found");
+
+  // modify
+  currencies_table.modify(curr_iterator, get_self(), [&](auto &curr) {
+    curr.usdrate = usdrate;
+  });
+}
+
+
 // ACTION
 // delete a currency record from the currencies table
 void freeosgov::currerase(symbol symbol) {
+
+  require_auth(get_self());
 
   currencies_index currencies_table(get_self(), get_self().value);
   auto curr_iterator = currencies_table.find(symbol.raw());

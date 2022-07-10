@@ -12,17 +12,6 @@ using namespace std;
 
 
 // ACTION
-void freeosgov::testcredit(name user) {
-  credit_index credit_table(get_self(), user.value);
-  auto credit_iterator = credit_table.begin();
-
-  check(credit_iterator != credit_table.end(), "credit record not found");
-  asset credit = credit_iterator->balance;
-  string credit_msg = "credit for " + user.to_string() + " = " + credit.to_string();
-  check(false, credit_msg);
-}
-
-// ACTION
 void freeosgov::create(const name &issuer, const asset &maximum_supply) {
   require_auth(get_self());
 
@@ -230,6 +219,8 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity) {
   asset points_subject_to_fee = asset(0, POINT_CURRENCY_SYMBOL);  // default value
   asset mintfeefree_allowance = asset(0, POINT_CURRENCY_SYMBOL);  // default value
   asset mintfee = asset(0, XPR_CURRENCY_SYMBOL);                  // default value - TODO: set for different currencies
+  // express the mint quantity as an equivalent number of POINTs
+  asset mint_quantity_points = asset(mint_quantity.amount, POINT_CURRENCY_SYMBOL);
 
   // adjust the requested quantity as mint fee may be fully or partially covered by the mint-fee-free allowance
   mintfeefree_index mintfeefree_table(get_self(), user.value);
@@ -238,29 +229,27 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity) {
 
     mintfeefree_allowance = mintfeefree_iterator->balance;
 
-    if (mintfeefree_allowance > mint_quantity) {
+    if (mintfeefree_allowance.amount > mint_quantity.amount) {
       // user can cover the mint fee requirement with their allowance
 
       // decrease the minfeefree allowance accordingly
       mintfeefree_table.modify(mintfeefree_iterator, same_payer, [&](auto &m) {
-        m.balance -= mint_quantity;
+        m.balance -= mint_quantity_points;
       });
 
       points_subject_to_fee = asset(0, POINT_CURRENCY_SYMBOL);
     } else {
-      // user can cover some of their mint fee with the allowance
-      points_subject_to_fee = mint_quantity - mintfeefree_allowance;
+      // user can cover SOME of their mint fee with the allowance
+      points_subject_to_fee = mint_quantity_points - mintfeefree_allowance;
 
       // the mintfeefree allowance is used up, so delete the record to save RAM
       mintfeefree_table.erase(mintfeefree_iterator);
     }
   } else {
     // user has no mintfeefree allowance, the entire amount of points is subject to the mint fee
-    points_subject_to_fee = mint_quantity;
+    points_subject_to_fee = mint_quantity_points;
   }
   
-  // TODO: proper calculation - applied to points_subject_to_fee
-
   if (points_subject_to_fee.amount > 0) {
     // for now, return a dummy value - read from parameter 'dummyfee'
     string dummy_fee_str = get_parameter(name("dummyfee"));
@@ -275,10 +264,10 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity) {
 }
 
 
-void freeosgov::refund_mintfee(name user) {
+void freeosgov::refund_mintfee(name user, symbol mint_fee_currency) {
 
   credit_index credit_table(get_self(), user.value);
-  auto credit_iterator = credit_table.begin();
+  auto credit_iterator = credit_table.find(mint_fee_currency.code().raw());
 
   if (credit_iterator == credit_table.end()) return;  // no credit record, so nothing to refund
 
@@ -315,7 +304,7 @@ bool freeosgov::process_mint_fee(name user, asset mint_quantity, symbol mint_fee
   // has the user paid the mint fee, i.e. got credit?
   asset user_credit = asset(0, mint_fee_currency);  // default
   credit_index credit_table(get_self(), user.value);
-  auto credit_iterator = credit_table.begin();
+  auto credit_iterator = credit_table.find(mint_fee_currency.code().raw());
 
   if (credit_iterator != credit_table.end()) {
     user_credit = credit_iterator->balance;
@@ -332,48 +321,76 @@ bool freeosgov::process_mint_fee(name user, asset mint_quantity, symbol mint_fee
     mintfee_status = true;
   } else {
     // incorrect amount - refund the incorrect mint fee
-    refund_mintfee(user);
+    refund_mintfee(user, mint_fee_currency);
     mintfee_status = false;
   }
 
   return mintfee_status;
 }
 
+// adjust balances when minting from points
+void freeosgov::adjust_balances_from_points(const name user, const asset &input_quantity) {
+  
+  stats statstable(get_self(), input_quantity.symbol.code().raw());
+  auto existing = statstable.find(input_quantity.symbol.code().raw());
+  check(existing != statstable.end(), "token with symbol does not exist");
+  const auto &st = *existing;
+
+  // decrease user's balance of POINTs
+  sub_balance(user, input_quantity);
+
+  // burn the points
+  statstable.modify(st, same_payer, [&](auto &s) {
+      s.supply -= input_quantity;
+    });
+}
+
+// adjust balances when minting from freebi
+void freeosgov::adjust_balances_from_freebi(const name user, const asset &input_quantity) {
+  
+  // check that we have a credit for the input FREEBI
+  credit_index credits_table(get_self(), user.value);
+  auto credit_iterator = credits_table.find(input_quantity.symbol.code().raw());
+
+  // if there is not a credit record, proceed no further
+  check(credit_iterator != credits_table.end(), "the FREEBI amount has not been paid");
+
+  // check it is for the right amount
+  asset freebi_paid = credit_iterator->balance;
+  check(freebi_paid == input_quantity, "incorrect amount of freebi has been paid");
+
+  // delete the FREEBI credit record
+  credits_table.erase(credit_iterator);
+
+  // burn the FREEBI amount
+  action retire_freebi_action = action(
+    permission_level{get_self(), "active"_n}, name(freebi_acct),
+    "retire"_n, std::make_tuple(input_quantity, string("burning FREEBI to mint FREEOS")));
+
+  retire_freebi_action.send();
+}
+
 // convert non-exchangeable currency for exchangeable currency
-// ACTION
+// ACTION: MINTFREEOS MINTFREEOS MINTFREEOS MINTFREEOS MINTFREEOS MINTFREEOS MINTFREEOS 
 void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_fee_currency) {
 
   require_auth(user);
-
-  auto sym = input_quantity.symbol;
-  check(sym == POINT_CURRENCY_SYMBOL || sym == FREEBI_CURRENCY_SYMBOL, "invalid currency for quantity");
-
-  // Point at the right contract
-  name token_contract;
-  if (sym == POINT_CURRENCY_SYMBOL) {
-    token_contract = name(get_self());
-  } else {
-    token_contract = name(freebi_acct);
-  }
-
-  stats statstable(token_contract, sym.code().raw());
-  auto existing = statstable.find(sym.code().raw());
-  check(existing != statstable.end(), "token with symbol does not exist");
-  const auto &st = *existing;
 
   check(input_quantity.is_valid(), "invalid quantity");
   check(input_quantity.amount > 0, "must mint a positive quantity");
 
   // check whether user has paid correct mint fee, whether they have a credit record, adjust their mintfeefree allowance
-  if (process_mint_fee(user, input_quantity, mint_fee_currency) == false) return;
+  check(process_mint_fee(user, input_quantity, mint_fee_currency) == true, "incorrect mint fee has been paid");
 
-  // all requirements met, so go ahead and do the transaction
-  statstable.modify(st, same_payer, [&](auto &s) {
-    s.supply -= input_quantity;
-  });
-
-  // decrease user's balance of POINTs
-  sub_balance(user, input_quantity);
+  // different processing required for input_quantity currencies
+  symbol input_currency_symbol = input_quantity.symbol;
+  if (input_currency_symbol == POINT_CURRENCY_SYMBOL) {
+    adjust_balances_from_points(user, input_quantity);
+  } else if (input_currency_symbol == FREEBI_CURRENCY_SYMBOL) {
+    adjust_balances_from_freebi(user, input_quantity);
+  } else {
+    check(false, "invalid currency for input quantity");
+  }
 
   // Issue FREEOS
   asset exchangeable_amount = asset(input_quantity.amount, FREEOS_CURRENCY_SYMBOL);
@@ -393,6 +410,55 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
       std::make_tuple(get_self(), user, exchangeable_amount, memo));
 
   transfer_action.send();
+}
+
+// ACTION
+// withdraw credits
+void freeosgov::withdraw(const name user) {
+  action  transfer_action;
+  asset   credit_amount;
+  name    currency_contract;
+  string  memo;
+
+  require_auth(user);
+
+  // currencies table
+  currencies_index currencies_table(get_self(), get_self().value);
+
+  // credits table
+  credit_index credits_table(get_self(), user.value);
+  auto credit_iterator = credits_table.begin();
+
+  while (credit_iterator != credits_table.end()) {
+    // amount
+    credit_amount = credit_iterator->balance;
+
+    // get the currency contract
+    string credit_code = credit_amount.symbol.code().to_string();
+    if (credit_code == "FREEOS") {
+      currency_contract = name(freeos_acct);
+    } else if (credit_code == "FREEBI") {
+      currency_contract = name(freebi_acct);
+    } else {
+      // look in the currencies table
+      auto currency_iterator = currencies_table.find(credit_amount.symbol.raw());
+      check(currency_iterator != currencies_table.end(), "currency record not found");
+      currency_contract = currency_iterator->contract;
+    }
+
+
+    memo = string("withdrawal of credit: ") + credit_amount.to_string();
+
+    action transfer_action = action(
+      permission_level{get_self(), "active"_n}, name(currency_contract),
+      "transfer"_n,
+      std::make_tuple(get_self(), user, credit_amount, memo));
+
+    transfer_action.send();
+
+    // delete the credit record
+    credit_iterator = credits_table.erase(credit_iterator);
+  }
 
 }
 
@@ -415,9 +481,12 @@ void freeosgov::mintfee(name user, name to, asset quantity, std::string memo) {
 
     check(currency_iterator != currencies_table.end(), "payment is not in an accepted form of currency");
 
+    // check that the mint fee was transferred from the official contract (don't take any wooden nickels)
+    check(currency_iterator->contract == get_first_receiver(), "source of token is not valid");
+
     // record amount of fee in the credit table
     credit_index credit_table(get_self(), user.value);
-    auto credit_iterator = credit_table.begin();
+    auto credit_iterator = credit_table.find(quantity.symbol.code().raw());
 
     // if there is already a credit record, proceed no further
     check(credit_iterator == credit_table.end(), "there is already a mint transaction in progress");
@@ -427,5 +496,25 @@ void freeosgov::mintfee(name user, name to, asset quantity, std::string memo) {
       c.balance = quantity;
     });
 
+  }
+
+  if (memo == "mint freebi to freeos") {
+    if (user == get_self()) {
+      return;
+    }
+
+    check(to == get_self(), "recipient of mint fee is incorrect");
+
+    // record amount of freebi in the credit table
+    credit_index credit_table(get_self(), user.value);
+    auto credit_iterator = credit_table.find(quantity.symbol.code().raw());
+
+    // if there is already a credit record, proceed no further
+    check(credit_iterator == credit_table.end(), "there is already a freebi->freeos mint transaction in progress");
+
+    // add the credit record
+    credit_table.emplace(get_self(), [&](auto &c) {
+      c.balance = quantity;
+    });
   }
 }

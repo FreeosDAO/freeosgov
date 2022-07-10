@@ -128,6 +128,10 @@
                 {
                     "name": "contract",
                     "type": "name"
+                },
+                {
+                    "name": "usdrate",
+                    "type": "float64"
                 }
             ]
         },
@@ -141,10 +145,6 @@
                 },
                 {
                     "name": "max_supply",
-                    "type": "asset"
-                },
-                {
-                    "name": "conditional_supply",
                     "type": "asset"
                 },
                 {
@@ -170,6 +170,20 @@
                 {
                     "name": "symbol",
                     "type": "symbol"
+                }
+            ]
+        },
+        {
+            "name": "currsetrate",
+            "base": "",
+            "fields": [
+                {
+                    "name": "symbol",
+                    "type": "symbol"
+                },
+                {
+                    "name": "usdrate",
+                    "type": "float64"
                 }
             ]
         },
@@ -736,16 +750,6 @@
             ]
         },
         {
-            "name": "testcredit",
-            "base": "",
-            "fields": [
-                {
-                    "name": "user",
-                    "type": "name"
-                }
-            ]
-        },
-        {
             "name": "tick",
             "base": "",
             "fields": []
@@ -926,6 +930,16 @@
                     "type": "uint32"
                 }
             ]
+        },
+        {
+            "name": "withdraw",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                }
+            ]
         }
     ],
     "actions": [
@@ -967,6 +981,11 @@
         {
             "name": "currerase",
             "type": "currerase",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "currsetrate",
+            "type": "currsetrate",
             "ricardian_contract": ""
         },
         {
@@ -1060,11 +1079,6 @@
             "ricardian_contract": ""
         },
         {
-            "name": "testcredit",
-            "type": "testcredit",
-            "ricardian_contract": ""
-        },
-        {
             "name": "tick",
             "type": "tick",
             "ricardian_contract": ""
@@ -1087,6 +1101,11 @@
         {
             "name": "vote",
             "type": "vote",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "withdraw",
+            "type": "withdraw",
             "ricardian_contract": ""
         }
     ],

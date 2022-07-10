@@ -51,6 +51,7 @@ public:
   [[eosio::action]] void targetrate(double price);
   [[eosio::action]] void currupsert(symbol symbol, name contract);
   [[eosio::action]] void currerase(symbol symbol);
+  [[eosio::action]] void currsetrate(symbol symbol, double usdrate);
   string get_parameter(name parameter);
   double get_dparameter(name parameter);
   int get_iparameter(name parameter);
@@ -85,11 +86,13 @@ public:
   void add_balance(const name &owner, const asset &value, const name &ram_payer);
   [[eosio::action]] void mintfreebi(const name &owner, const asset &quantity);
   [[eosio::action]] void mintfreeos(name user, const asset &input_quantity, symbol &mint_fee_currency);
+  [[eosio::action]] void withdraw(const name user);
   void mintfee(name user, name to, asset quantity, std::string memo);
   asset calculate_mint_fee(name &user, asset &mint_quantity);
   bool process_mint_fee(name user, asset mint_quantity, symbol mint_fee_currency);
-  void refund_mintfee(name user);
-  [[eosio::action]] void testcredit(name user);
+  void refund_mintfee(name user, symbol mint_fee_currency);
+  void adjust_balances_from_points(const name user, const asset &input_quantity);
+  void adjust_balances_from_freebi(const name user, const asset &input_quantity);
 
   // functions
   bool is_action_period(string action);

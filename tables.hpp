@@ -60,7 +60,6 @@ typedef eosio::multi_index<"mintfeefree"_n, account> mintfeefree_index;
 struct[[ eosio::table("stat"), eosio::contract("freeosgov") ]] currency_stats {
   asset supply;
   asset max_supply;
-  asset conditional_supply; // not used. maintained for backwards compatibility with AirClaim POINTs token
   name issuer;
 
   uint64_t primary_key() const { return supply.symbol.code().raw(); }
@@ -270,7 +269,7 @@ using exchange_index = eosio::multi_index<"exchangerate"_n, price>;
 struct[[ eosio::table("credits"), eosio::contract("freeosgov") ]] credit {
   asset balance;
 
-  uint64_t primary_key() const { return 0; }  // return a constant (0 in this case) to ensure a single-row table
+  uint64_t primary_key() const { return balance.symbol.code().raw(); }
 };
 using credit_index = eosio::multi_index<"credits"_n, credit>;
 
@@ -280,6 +279,7 @@ using credit_index = eosio::multi_index<"credits"_n, credit>;
 struct[[ eosio::table("currencies"), eosio::contract("freeosgov") ]] currency {
   symbol  symbol;
   name    contract;
+  double  usdrate;
   
   uint64_t primary_key() const { return symbol.raw(); }
 };

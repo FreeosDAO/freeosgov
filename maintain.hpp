@@ -121,14 +121,38 @@ void freeosgov::maintain(string action, name user) {
 
   }
 
-  if (action == "user credit") {
+  if (action == "user credit XPR") {
+
+    symbol xpr_sym = symbol("XPR", 4);
+
     credit_index credit_table(get_self(), user.value);
-    auto credit_iterator = credit_table.begin();
+    auto credit_iterator = credit_table.find(xpr_sym.code().raw());
 
     check(credit_iterator != credit_table.end(), "credit record not found");
     asset credit = credit_iterator->balance;
     string credit_msg = "credit for " + user.to_string() + " = " + credit.to_string();
     check(false, credit_msg);
+  }
+
+  if (action == "user credit FREEBI") {
+
+    symbol xpr_sym = symbol("FREEBI", 4);
+
+    credit_index credit_table(get_self(), user.value);
+    auto credit_iterator = credit_table.find(xpr_sym.code().raw());
+
+    check(credit_iterator != credit_table.end(), "credit record not found");
+    asset credit = credit_iterator->balance;
+    string credit_msg = "credit for " + user.to_string() + " = " + credit.to_string();
+    check(false, credit_msg);
+  }
+
+  if (action == "clear user credit") {
+    credit_index credit_table(get_self(), user.value);
+    auto credit_iterator = credit_table.begin();
+
+    check(credit_iterator != credit_table.end(), "credit record not found");
+    credit_table.erase(credit_iterator);
   }
 
   if (action == "user credit function") {
@@ -413,6 +437,59 @@ void freeosgov::maintain(string action, name user) {
     svr_table15.erase(svr_iterator15);
     
   }
+
+  if (action == "delete stat") {
+    stats statstable(get_self(), POINT_CURRENCY_SYMBOL.code().raw());
+    auto existing = statstable.find(POINT_CURRENCY_SYMBOL.code().raw());
+    statstable.erase(existing);
+  }
+
+  if (action == "restore freeosgov stat") {
+
+    stats statstable(get_self(), POINT_CURRENCY_SYMBOL.code().raw());
+    statstable.emplace(get_self(), [&](auto &s) {
+      s.supply = asset(10077528598, POINT_CURRENCY_SYMBOL);
+      s.max_supply = asset(3500000000000000000, POINT_CURRENCY_SYMBOL);
+      s.issuer = name("freeosgov");
+    });
+  }
+
+  if (action == "restore freeosgov2 stat") {
+
+    stats statstable(get_self(), POINT_CURRENCY_SYMBOL.code().raw());
+    statstable.emplace(get_self(), [&](auto &s) {
+      s.supply = asset(10077528598, POINT_CURRENCY_SYMBOL);
+      s.max_supply = asset(3500000000000000000, POINT_CURRENCY_SYMBOL);
+      s.issuer = name("freeosgov2");
+    });
+  }
+
+  if (action == "get freebi stat") {
+
+    asset input_quantity = asset(10000, FREEBI_CURRENCY_SYMBOL);
+
+    auto sym = input_quantity.symbol;
+    check(sym == POINT_CURRENCY_SYMBOL || sym == FREEBI_CURRENCY_SYMBOL, "invalid currency for quantity");
+
+    // Point at the right contract
+    name token_contract;
+    if (sym == POINT_CURRENCY_SYMBOL) {
+      token_contract = name(get_self());
+    } else {
+      token_contract = name(freebi_acct);
+    }
+
+    check(input_quantity.is_valid(), "invalid quantity");
+    check(input_quantity.amount > 0, "must mint a positive quantity");
+
+    stats statstable(token_contract, sym.code().raw());
+    auto existing = statstable.find(sym.code().raw());
+    
+    check(existing != statstable.end(), "token with symbol does not exist");
+    const auto &st = *existing;
+    check(false, st.issuer.to_string());
+  }
+
 
   if (action == "clear survey") {
     survey_index survey_table(get_self(), get_self().value);
