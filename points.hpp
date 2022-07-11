@@ -214,7 +214,7 @@ void freeosgov::mintfreebi(const name &owner, const asset &quantity) {
 }
 
 
-asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity) {
+asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol mint_fee_currency) {
 
   asset points_subject_to_fee = asset(0, POINT_CURRENCY_SYMBOL);  // default value
   asset mintfeefree_allowance = asset(0, POINT_CURRENCY_SYMBOL);  // default value
@@ -251,13 +251,9 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity) {
   }
   
   if (points_subject_to_fee.amount > 0) {
-    // for now, return a dummy value - read from parameter 'dummyfee'
-    string dummy_fee_str = get_parameter(name("dummyfee"));
-    int dummy_fee = stoi(dummy_fee_str);
-
-    mintfee = asset(dummy_fee * 10000, XPR_CURRENCY_SYMBOL);
+    mintfee = asset(1 * 10000, mint_fee_currency);
   } else {
-    mintfee = asset(0, XPR_CURRENCY_SYMBOL);
+    mintfee = asset(0, mint_fee_currency);
   }
 
   return mintfee;
@@ -299,7 +295,7 @@ bool freeosgov::process_mint_fee(name user, asset mint_quantity, symbol mint_fee
   bool mintfee_status;  // will be set to true if correct mint fee has been paid
 
   // calculate the mint fee
-  asset mintfee = calculate_mint_fee(user, mint_quantity);
+  asset mintfee = calculate_mint_fee(user, mint_quantity, mint_fee_currency);
 
   // has the user paid the mint fee, i.e. got credit?
   asset user_credit = asset(0, mint_fee_currency);  // default
