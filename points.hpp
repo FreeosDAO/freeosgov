@@ -501,6 +501,11 @@ void freeosgov::mintfee(name user, name to, asset quantity, std::string memo) {
 
     check(to == get_self(), "recipient of mint fee is incorrect");
 
+    // check that FREEBI is from the right contract
+    symbol freebi_symbol = symbol("FREEBI", 4);
+    check(quantity.symbol == freebi_symbol, "token symbol is not valid, expected FREEBI");
+    check(get_first_receiver() == name(freebi_acct), "FREEBI payment is invalid");
+
     // record amount of freebi in the credit table
     credit_index credit_table(get_self(), user.value);
     auto credit_iterator = credit_table.find(quantity.symbol.code().raw());

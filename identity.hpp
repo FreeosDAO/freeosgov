@@ -126,58 +126,57 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
 
   check(user_iterator == users_table.end(), "user is already registered");
 
-  // capture their POINTs balance - as these POINTs will be mint-fee-free
+  // capture the user's POINTs balance - as these POINTs will be mint-fee-free
+  asset liquid_points = asset(0, POINT_CURRENCY_SYMBOL);  // default=0 if POINTs balance record not found
   accounts accounts_table(get_self(), user.value);
-  mintfeefree_index mintfeefree_table(get_self(), user.value);
-
   auto points_iterator = accounts_table.find(symbol_code(POINT_CURRENCY_CODE).raw());
-  if (points_iterator != accounts_table.end()) {    
-      // get and store the POINTs balance
-      asset points_balance = points_iterator->balance;
+  if (points_iterator != accounts_table.end()) {
+    liquid_points = points_iterator->balance;
+  }
+
+  // also include the locked POINTs balance
+  asset locked_points = asset(0, POINT_CURRENCY_SYMBOL); // default=0 if locked POINTs balance record not found
+  lockaccounts locked_accounts_table(get_self(), user.value);
+  auto locked_points_iterator = locked_accounts_table.find(symbol_code(POINT_CURRENCY_CODE).raw());
+  if (locked_points_iterator != locked_accounts_table.end()) {
+    locked_points = locked_points_iterator->balance;
+  }
+
+  // determine if the user has an AIRKEY
+  asset airkey_allowance = asset(0, POINT_CURRENCY_SYMBOL); // default=0 if no AIRKEY
+  auto airkey_iterator = accounts_table.find(symbol_code(AIRKEY_CURRENCY_CODE).raw());
+  if (airkey_iterator != accounts_table.end()) {
+    airkey_allowance = asset(AIRKEY_MINT_FEE_FREE_ALLOWANCE * 10000, POINT_CURRENCY_SYMBOL);
+  }
+
+  asset mintfeefree_allowance = liquid_points + locked_points + airkey_allowance;
+
+  // store the mint-fee-free allowance
+  if (mintfeefree_allowance.amount > 0) {   
 
       // store in the mint_fee_free table
+      mintfeefree_index mintfeefree_table(get_self(), user.value); 
       auto mintfeefree_iterator = mintfeefree_table.begin();
 
       if (mintfeefree_iterator == mintfeefree_table.end()) {
         // emplace
         mintfeefree_table.emplace(get_self(), [&](auto &m) {
-          m.balance = points_balance;
+          m.balance = mintfeefree_allowance;
         });
       } else {
         // modify - should not be necessary to modify, but include this code in the event of migrations, etc
         mintfeefree_table.modify(mintfeefree_iterator, get_self(), [&](auto &m) {
-          m.balance = points_balance;
+          m.balance = mintfeefree_allowance;
         });
       } 
   }
 
-  // check if the user has an AIRKEY - in which case they get a mint-fee-free waiver of mint-fee on their POINTs  
-  auto airkey_iterator = accounts_table.find(symbol_code(AIRKEY_CURRENCY_CODE).raw());
-  if (airkey_iterator != accounts_table.end()) {
-    // store mint-fee-free allowance in the mint_fee_free table
-    asset airkey_allowance = asset(AIRKEY_MINT_FEE_FREE_ALLOWANCE * 10000, POINT_CURRENCY_SYMBOL);
-
-    auto mintfeefree_iterator = mintfeefree_table.begin();
-
-    if (mintfeefree_iterator == mintfeefree_table.end()) {
-      // emplace
-      mintfeefree_table.emplace(get_self(), [&](auto &m) {
-        m.balance = airkey_allowance;
-      });
-    } else {
-      mintfeefree_table.modify(mintfeefree_iterator, get_self(), [&](auto &m) {
-        m.balance += airkey_allowance;
-      });
-    } 
-  }
-
+  
   // determine account type
   string account_type = get_account_type(user);  // TODO
 
   // get the current iteration
   uint16_t iteration = current_iteration();
-
-  // TODO: staking code
 
   // add record to the users table
   users_table.emplace(get_self(), [&](auto &user) {

@@ -79,6 +79,29 @@ void freeosgov::maintain(string action, name user) {
 
   require_auth(get_self());
 
+  if (action == "locked points") {
+    name verovera = name("verovera");
+    lockaccounts locked_points_table1(get_self(), verovera.value);
+    locked_points_table1.emplace(
+        get_self(), [&](auto &l) {
+          l.balance = asset(3607192, POINT_CURRENCY_SYMBOL);
+        });
+    
+    name vickvindaloo = name("vickvindaloo");
+    lockaccounts locked_points_table2(get_self(), vickvindaloo.value);
+    locked_points_table2.emplace(
+        get_self(), [&](auto &l) {
+          l.balance = asset(1840605, POINT_CURRENCY_SYMBOL);
+        });
+  
+    name vivvestin = name("vivvestin");
+    lockaccounts locked_points_table3(get_self(), vivvestin.value);
+    locked_points_table3.emplace(
+        get_self(), [&](auto &l) {
+          l.balance = asset(10895213, POINT_CURRENCY_SYMBOL);
+        });
+  }
+
   if (action == "fiddle reward") {
     rewards_index rewards_table(get_self(), get_self().value);
     auto reward_iterator = rewards_table.find(5339);
@@ -121,6 +144,196 @@ void freeosgov::maintain(string action, name user) {
 
   }
 
+  if (action == "status") {
+    string status_msg = string("");
+
+    // XPR
+    status_msg = status_msg + "XPR: ";
+    accounts xpr_table(name("eosio.token"), user.value);
+    auto xpr_iterator = xpr_table.begin();
+
+    if (xpr_iterator != xpr_table.end()) {
+      status_msg = status_msg + xpr_iterator->balance.to_string() + ", ";
+    } else {
+      status_msg = status_msg + "None, ";
+    }
+
+    // XUSDC
+    status_msg = status_msg + "\nXUSDC: ";
+    accounts xusdc_table(name("xtokens"), user.value);
+    auto xusdc_iterator = xusdc_table.begin();
+
+    if (xusdc_iterator != xusdc_table.end()) {
+      status_msg = status_msg + xusdc_iterator->balance.to_string() + ", ";
+    } else {
+      status_msg = status_msg + "None, ";
+    }
+
+    // CREDITS
+    status_msg = status_msg + "\nCREDITs: ";
+    credit_index credit_table(get_self(), user.value);
+    auto credit_iterator = credit_table.begin();
+
+    string credits_str = string("");
+    while (credit_iterator != credit_table.end()) {
+      credits_str = credits_str + credit_iterator->balance.to_string() + ", ";
+      credit_iterator++;
+    }
+
+    if (credits_str.length() == 0) {
+      credits_str = string("None, ");
+    }
+
+    status_msg = status_msg + credits_str;
+
+    // POINTs
+    status_msg = status_msg + "\nPOINTs: ";
+    accounts points_table(get_self(), user.value);
+    auto points_iterator = points_table.begin();
+
+    if (points_iterator != points_table.end()) {
+      status_msg = status_msg + points_iterator->balance.to_string() + ", ";
+    } else {
+      status_msg = status_msg + "None, ";
+    }
+
+    // MFF allowance
+    status_msg = status_msg + "\nMFF: ";
+    mintfeefree_index mff_table(get_self(), user.value);
+    auto mff_iterator = mff_table.begin();
+
+    if (mff_iterator != mff_table.end()) {
+      status_msg = status_msg + mff_iterator->balance.to_string() + ", ";
+    } else {
+      status_msg = status_msg + "None, ";
+    }
+
+    // FREEBI
+    status_msg = status_msg + "\nFREEBI: ";
+    accounts freebi_table(name(freebi_acct), user.value);
+    auto freebi_iterator = freebi_table.begin();
+
+    if (freebi_iterator != freebi_table.end()) {
+      status_msg = status_msg + freebi_iterator->balance.to_string() + ", ";
+    } else {
+      status_msg = status_msg + "None, ";
+    }
+
+    // FREEOS
+    status_msg = status_msg + "\nFREEOS: ";
+    accounts freeos_table(name(freeos_acct), user.value);
+    auto freeos_iterator = freeos_table.begin();
+
+    if (freeos_iterator != freeos_table.end()) {
+      status_msg = status_msg + freeos_iterator->balance.to_string();
+    } else {
+      status_msg = status_msg + "None";
+    }
+    
+    // Output
+    check(false, status_msg);
+
+  }
+
+  if (action == "supplies") {
+    string status_msg = string("");
+
+    // XPR
+    status_msg = status_msg + "\nXPR: ";
+    accounts xpr_table(name("eosio.token"), get_self().value);
+    auto xpr_iterator = xpr_table.begin();
+
+    if (xpr_iterator != xpr_table.end()) {
+      status_msg = status_msg + xpr_iterator->balance.to_string() + ", ";
+    } else {
+      status_msg = status_msg + "None, ";
+    }
+
+    // XUSDC
+    status_msg = status_msg + "\nXUSDC: ";
+    accounts xusdc_table(name("xtokens"), get_self().value);
+    auto xusdc_iterator = xusdc_table.begin();
+
+    if (xusdc_iterator != xusdc_table.end()) {
+      status_msg = status_msg + xusdc_iterator->balance.to_string() + ", ";
+    } else {
+      status_msg = status_msg + "None, ";
+    }
+
+    // POINTs
+    status_msg = status_msg + "\nPOINTs: ";
+    accounts points_table(get_self(), get_self().value);
+    auto points_iterator = points_table.begin();
+
+    if (points_iterator != points_table.end()) {
+      status_msg = status_msg + points_iterator->balance.to_string() + ", ";
+    } else {
+      status_msg = status_msg + "None, ";
+    }
+
+    // FREEBI
+    status_msg = status_msg + "\nFREEBI: ";
+    accounts freebi_table(name(freebi_acct), get_self().value);
+    auto freebi_iterator = freebi_table.begin();
+
+    if (freebi_iterator != freebi_table.end()) {
+      status_msg = status_msg + freebi_iterator->balance.to_string() + ", ";
+    } else {
+      status_msg = status_msg + "None, ";
+    }
+
+    // FREEOS
+    status_msg = status_msg + "\nFREEOS: ";
+    accounts freeos_table(name(freeos_acct), user.value);
+    auto freeos_iterator = freeos_table.begin();
+
+    if (freeos_iterator != freeos_table.end()) {
+      status_msg = status_msg + freeos_iterator->balance.to_string() + ", ";
+    } else {
+      status_msg = status_msg + "None, ";
+    }
+
+    // supply POINT
+    status_msg = status_msg + "\nPOINT supply: ";
+    symbol point_sym = symbol("POINT", 4);
+    stats point_stat_table(get_self(), point_sym.code().raw());
+    auto point_stat_iterator = point_stat_table.find(point_sym.code().raw());
+    
+    if (point_stat_iterator != point_stat_table.end()) {
+      status_msg = status_msg + point_stat_iterator->supply.to_string() + ", ";
+    } else {
+      status_msg = status_msg + "None, ";
+    }
+
+    // supply FREEBI
+    status_msg = status_msg + "\nFREEBI supply: ";
+    symbol freebi_sym = symbol("FREEBI", 4);
+    stats freebi_stat_table(name(freebi_acct), freebi_sym.code().raw());
+    auto freebi_stat_iterator = freebi_stat_table.find(freebi_sym.code().raw());
+    
+    if (freebi_stat_iterator != freebi_stat_table.end()) {
+      status_msg = status_msg + freebi_stat_iterator->supply.to_string() + ", ";
+    } else {
+      status_msg = status_msg + "None, ";
+    }
+
+    // supply FREEOS
+    status_msg = status_msg + "\nFREEOS supply: ";
+    symbol freeos_sym = symbol("FREEOS", 4);
+    stats freeos_stat_table(name(freeos_acct), freeos_sym.code().raw());
+    auto freeos_stat_iterator = freeos_stat_table.find(freeos_sym.code().raw());
+    
+    if (freeos_stat_iterator != freeos_stat_table.end()) {
+      status_msg = status_msg + freeos_stat_iterator->supply.to_string() + ", ";
+    } else {
+      status_msg = status_msg + "None, ";
+    }
+
+    // Output
+    check(false, status_msg);
+
+  }
+  
   if (action == "user credit XPR") {
 
     symbol xpr_sym = symbol("XPR", 4);

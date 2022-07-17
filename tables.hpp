@@ -52,7 +52,7 @@ struct[[ eosio::table("accounts"), eosio::contract("freeosgov") ]] account {
   uint64_t primary_key() const { return balance.symbol.code().raw(); }
 };
 typedef eosio::multi_index<"accounts"_n, account> accounts;
-typedef eosio::multi_index<"lockaccounts"_n, account> lockaccounts;
+typedef eosio::multi_index<"vestaccounts"_n, account> lockaccounts;
 typedef eosio::multi_index<"mintfeefree"_n, account> mintfeefree_index;
 
 
