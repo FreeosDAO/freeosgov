@@ -114,9 +114,9 @@ uint64_t primary_key() const { return paramname.value; }
 using dparameters_index = eosio::multi_index<"dparameters"_n, dparameter>;
 
 
-// USERS
+// USERS - new - will be retired
 // the registered user table
-struct[[ eosio::table("users"), eosio::contract("freeosgov") ]] user {
+struct[[ eosio::table("oldusers"), eosio::contract("freeosgov") ]] olduser {
   asset stake;                    // how many tokens staked
   string account_type;            // user's verification level
   uint32_t registered_iteration;  // when the user was registered
@@ -128,10 +128,27 @@ struct[[ eosio::table("users"), eosio::contract("freeosgov") ]] user {
 
   uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
 };
-using users_index = eosio::multi_index<"users"_n, user>;
+using old_users_index = eosio::multi_index<"users"_n, olduser>;
 
 
-// AIRCLAIM_USERS
+// the participants table
+struct[[ eosio::table("participants"), eosio::contract("freeosgov") ]] participant {
+  string account_type;            // user's verification level
+  uint32_t registered_iteration;  // when the user was registered
+  uint32_t issuances;             // total number of times the user has been issued with POINTs
+  asset total_issuance_amount;    // accrued POINTs
+  uint32_t last_claim;            // the last iteration in which the user attempted to claim
+  uint32_t last_unlock;           // last iteration in which the user unlocked POINTs
+  uint32_t surveys;               // how many surveys the user has completed
+  uint32_t votes;                 // how many votes the user has completed
+  uint32_t ratifys;               // how many ratifys the user has completed  
+
+  uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
+};
+using participants_index = eosio::multi_index<"participants"_n, participant>;
+
+
+// AIRCLAIM_USERS - required to interpret 
 // the airclaim registered user table
 struct[[ eosio::table("users"), eosio::contract("freeos") ]] airclaim_user {
   asset stake;                   // how many XPR tokens staked
@@ -145,6 +162,8 @@ struct[[ eosio::table("users"), eosio::contract("freeos") ]] airclaim_user {
   uint64_t primary_key() const { return stake.symbol.code().raw(); }
 };
 using airclaim_users_index = eosio::multi_index<"users"_n, airclaim_user>;
+
+
 
 // USERSINFO
 // Verification table - a mockup of the verification table on eosio.proton which is not available on the testnet

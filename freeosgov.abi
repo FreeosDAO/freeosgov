@@ -348,6 +348,44 @@
             ]
         },
         {
+            "name": "olduser",
+            "base": "",
+            "fields": [
+                {
+                    "name": "stake",
+                    "type": "asset"
+                },
+                {
+                    "name": "account_type",
+                    "type": "string"
+                },
+                {
+                    "name": "registered_iteration",
+                    "type": "uint32"
+                },
+                {
+                    "name": "staked_iteration",
+                    "type": "uint32"
+                },
+                {
+                    "name": "votes",
+                    "type": "uint32"
+                },
+                {
+                    "name": "issuances",
+                    "type": "uint32"
+                },
+                {
+                    "name": "last_claim",
+                    "type": "uint32"
+                },
+                {
+                    "name": "total_issuance_amount",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
             "name": "paramerase",
             "base": "",
             "fields": [
@@ -382,6 +420,48 @@
                 {
                     "name": "value",
                     "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "participant",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account_type",
+                    "type": "string"
+                },
+                {
+                    "name": "registered_iteration",
+                    "type": "uint32"
+                },
+                {
+                    "name": "issuances",
+                    "type": "uint32"
+                },
+                {
+                    "name": "total_issuance_amount",
+                    "type": "asset"
+                },
+                {
+                    "name": "last_claim",
+                    "type": "uint32"
+                },
+                {
+                    "name": "last_unlock",
+                    "type": "uint32"
+                },
+                {
+                    "name": "surveys",
+                    "type": "uint32"
+                },
+                {
+                    "name": "votes",
+                    "type": "uint32"
+                },
+                {
+                    "name": "ratifys",
+                    "type": "uint32"
                 }
             ]
         },
@@ -785,44 +865,6 @@
             ]
         },
         {
-            "name": "user",
-            "base": "",
-            "fields": [
-                {
-                    "name": "stake",
-                    "type": "asset"
-                },
-                {
-                    "name": "account_type",
-                    "type": "string"
-                },
-                {
-                    "name": "registered_iteration",
-                    "type": "uint32"
-                },
-                {
-                    "name": "staked_iteration",
-                    "type": "uint32"
-                },
-                {
-                    "name": "votes",
-                    "type": "uint32"
-                },
-                {
-                    "name": "issuances",
-                    "type": "uint32"
-                },
-                {
-                    "name": "last_claim",
-                    "type": "uint32"
-                },
-                {
-                    "name": "total_issuance_amount",
-                    "type": "asset"
-                }
-            ]
-        },
-        {
             "name": "version",
             "base": "",
             "fields": []
@@ -1174,6 +1216,13 @@
             "key_types": []
         },
         {
+            "name": "participants",
+            "type": "participant",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
             "name": "ratifyrecord",
             "type": "ratify_record",
             "index_type": "i64",
@@ -1224,7 +1273,7 @@
         },
         {
             "name": "users",
-            "type": "user",
+            "type": "olduser",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

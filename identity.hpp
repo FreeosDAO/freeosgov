@@ -19,11 +19,11 @@ uint32_t freeosgov::user_last_active_iteration(name user) {
   uint32_t ilifespan = abs(stoi(slifespan));
 
   // get the user record
-  users_index users_table(get_self(), user.value);
-  auto user_iterator = users_table.begin();
-  check(user_iterator != users_table.end(), "user registration record is not defined");
+  participants_index participants_table(get_self(), user.value);
+  auto participant_iterator = participants_table.begin();
+  check(participant_iterator != participants_table.end(), "user registration record is not defined");
 
-  return user_iterator->registered_iteration + ilifespan - 1;
+  return participant_iterator->registered_iteration + ilifespan - 1;
 }
 
 // is the user within the allotted 'lifespan' ?
@@ -120,11 +120,11 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
   check(current_iteration() != 0, "The freeos system is not yet available");
 
   // is the user already registered?
-  // find the account in the user table
-  users_index users_table(get_self(), user.value);
-  auto user_iterator = users_table.begin();
+  // find the account in the participants table
+  participants_index participants_table(get_self(), user.value);
+  auto participant_iterator = participants_table.begin();
 
-  check(user_iterator == users_table.end(), "user is already registered");
+  check(participant_iterator == participants_table.end(), "user is already registered");
 
   // capture the user's POINTs balance - as these POINTs will be mint-fee-free
   asset liquid_points = asset(0, POINT_CURRENCY_SYMBOL);  // default=0 if POINTs balance record not found
@@ -178,13 +178,11 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
   // get the current iteration
   uint16_t iteration = current_iteration();
 
-  // add record to the users table
-  users_table.emplace(get_self(), [&](auto &user) {
-    user.stake = asset(0, XPR_CURRENCY_SYMBOL);
-    user.account_type = account_type;
-    user.registered_iteration = iteration;
-    user.staked_iteration = iteration; // TODO
-    user.total_issuance_amount = asset(0, POINT_CURRENCY_SYMBOL);
+  // add record to the participants table
+  participants_table.emplace(get_self(), [&](auto &participant) {
+    participant.account_type = account_type;
+    participant.registered_iteration = iteration;
+    participant.total_issuance_amount = asset(0, POINT_CURRENCY_SYMBOL);
   });
 
   // update the system record - number of users and CLS
@@ -233,18 +231,18 @@ void freeosgov::reregister(name user) {
   check(current_iteration() != 0, "The freeos system is not yet available");
 
   // set the account type
-  users_index users_table(get_self(), user.value);
-  auto user_iterator = users_table.begin();
+  participants_index participants_table(get_self(), user.value);
+  auto participant_iterator = participants_table.begin();
 
   // check if the user has a user registration record
-  check(user_iterator != users_table.end(), "user is not registered with freeos");
+  check(participant_iterator != participants_table.end(), "user is not registered with freeos");
 
   // get the account type
   string account_type = get_account_type(user);
 
-  // set the user account type
-  users_table.modify(user_iterator, get_self(), [&](auto &u) {
-    u.account_type = account_type;
+  // set the participant account type
+  participants_table.modify(participant_iterator, get_self(), [&](auto &participant) {
+    participant.account_type = account_type;
   });
 
   // new verified user status
@@ -269,21 +267,22 @@ void freeosgov::reregister(name user) {
 
 // is user registered?
 bool freeosgov::is_registered(name user) {
-  users_index users_table(get_self(), user.value);
-  auto user_iterator = users_table.begin();
 
-  return (user_iterator != users_table.end()) ? true : false;
+  participants_index participants_table(get_self(), user.value);
+  auto participant_iterator = participants_table.begin();
+
+  return (participant_iterator != participants_table.end()) ? true : false;
 }
 
 
 bool freeosgov::is_user_verified(name user) {
   bool verified = false;
 
-  // get the user record
-  users_index users_table(get_self(), user.value);
-  auto user_iterator = users_table.begin();
-  check(user_iterator != users_table.end(), "user is not registered");
-  string account_type = user_iterator->account_type;
+  // get the participant record
+  participants_index participants_table(get_self(), user.value);
+  auto participant_iterator = participants_table.begin();
+  check(participant_iterator != participants_table.end(), "user is not registered");
+  string account_type = participant_iterator->account_type;
 
   if (account_type == "v" || account_type == "b" || account_type == "c") {
     verified= true;

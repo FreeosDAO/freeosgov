@@ -22,11 +22,11 @@ void freeosgov::claim(name user) {
     // is the system operational?
     check(this_iteration != 0, "The freeos system is not available at this time");
 
-    // find the user's last claim
-    users_index users_table(get_self(), user.value);
-    auto user_iterator = users_table.begin();
-    check(user_iterator != users_table.end(), "user registration record is undefined");
-    uint32_t last_claim = user_iterator->last_claim;
+    // find the participant's last claim
+    participants_index participants_table(get_self(), user.value);
+    auto participant_iterator = participants_table.begin();
+    check(participant_iterator != participants_table.end(), "user registration record is undefined");
+    uint32_t last_claim = participant_iterator->last_claim;
 
     // find the user's svr record
     svr_index svr_table(get_self(), user.value);
@@ -207,11 +207,11 @@ void freeosgov::claim(name user) {
         }
     }
 
-    // update the user record issuance values
-    users_table.modify(user_iterator, get_self(), [&](auto &user_record) {
-        user_record.last_claim = latest_payment_iteration;   // i.e. paid up to this iteration
-        user_record.total_issuance_amount += total_user_payment;
-        user_record.issuances += total_issuances;
+    // update the participant record issuance values
+    participants_table.modify(participant_iterator, get_self(), [&](auto &participant) {
+        participant.last_claim = latest_payment_iteration;   // i.e. paid up to this iteration
+        participant.total_issuance_amount += total_user_payment;
+        participant.issuances += total_issuances;
     });
     
 

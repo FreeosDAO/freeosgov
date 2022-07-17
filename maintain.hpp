@@ -35,30 +35,31 @@ void freeosgov::eraseuser(string username) {
 
     name user = name(username);
 
-    users_index users_table(get_self(), user.value);
-    auto user_iterator = users_table.begin();
+    participants_index participants_table(get_self(), user.value);
+    auto participant_iterator = participants_table.begin();
 
-    if (user_iterator != users_table.end()) {
-      users_table.erase(user_iterator);
+    if (participant_iterator != participants_table.end()) {
+      participants_table.erase(participant_iterator);
     }
     
 }
 
-void freeosgov::createuser(string username, uint32_t stake, string account_type, uint32_t registered, uint32_t staked,
-                          uint32_t votes, uint32_t issues, uint32_t last, uint32_t total) {
+void freeosgov::createuser(string username, string account_type, uint32_t registered, uint32_t surveys,
+                          uint32_t votes, uint32_t ratifys, uint32_t issues, uint32_t last_claim, uint32_t last_unlock, uint32_t total) {
 
   name user = name(username);
 
-  users_index users_table(get_self(), user.value);
+  participants_index participants_table(get_self(), user.value);
 
-  users_table.emplace(get_self(), [&](auto &s) {
-    s.stake = asset(stake * 10000, XPR_CURRENCY_SYMBOL);
+  participants_table.emplace(get_self(), [&](auto &s) {
     s.account_type = account_type;
     s.registered_iteration = registered;
-    s.staked_iteration = staked;
+    s.surveys = surveys;
     s.votes = votes;
+    s.ratifys = ratifys;
     s.issuances = issues;
-    s.last_claim = last;
+    s.last_claim = last_claim;
+    s.last_unlock = last_unlock;
     s.total_issuance_amount = asset(total * 10000, POINT_CURRENCY_SYMBOL);
   });
 }
@@ -115,22 +116,22 @@ void freeosgov::maintain(string action, name user) {
   }
 
   if (action == "unclaim") {
-    users_index users_table(get_self(), user.value);
-    auto user_iterator = users_table.begin();
+    participants_index participants_table(get_self(), user.value);
+    auto participant_iterator = participants_table.begin();
 
-    if (user_iterator != users_table.end()) {
-      users_table.modify(user_iterator, get_self(), [&](auto &u) {
+    if (participant_iterator != participants_table.end()) {
+      participants_table.modify(participant_iterator, get_self(), [&](auto &u) {
         u.last_claim = u.last_claim - 1;
       });
     }
   }
 
   if (action == "erase user") {
-    users_index users_table(get_self(), user.value);
-    auto user_iterator = users_table.begin();
+    participants_index participants_table(get_self(), user.value);
+    auto participant_iterator = participants_table.begin();
 
-    if (user_iterator != users_table.end()) {
-      users_table.erase(user_iterator);
+    if (participant_iterator != participants_table.end()) {
+      participants_table.erase(participant_iterator);
 
       // decrement number of users
       system_index system_table(get_self(), get_self().value);
@@ -383,15 +384,35 @@ void freeosgov::maintain(string action, name user) {
 
   }
 
+  if (action == "migrate") {
+    // old users record
+    old_users_index old_users_table(get_self(), user.value);
+    auto old_user_iterator = old_users_table.begin();
+    check(old_user_iterator != old_users_table.end(), "user not found in old users table");
+
+    // new users table
+    participants_index participants_table(get_self(), user.value);
+    participants_table.emplace(
+        get_self(), [&](auto &p) {
+          p.account_type = old_user_iterator->account_type;
+          p.registered_iteration = old_user_iterator->registered_iteration;
+          p.issuances = old_user_iterator->issuances;
+          p.total_issuance_amount = old_user_iterator->total_issuance_amount;
+          p.votes = old_user_iterator->votes;
+          p.last_claim = old_user_iterator->last_claim;
+        });
+  }
+  
   if (action == "restore users") {
 
+    /*
     createuser("alanappleton",0,"d",3216,3216,0,0,0,0);
     createuser("billbeaumont",0,"e",3216,3216,0,0,0,0);
     createuser("celiacollins",0,"e",3216,3216,0,0,0,0);
     createuser("dennisedolan",0,"e",3216,3216,0,0,0,0);
     createuser("verovera",0,"v",3673,3673,0,1,3675,6);
     createuser("vivvestin",0,"v",3503,3503,0,4,3675,19);
-
+    */
   }
 
   if (action == "size user") {

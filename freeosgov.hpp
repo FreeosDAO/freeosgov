@@ -26,8 +26,8 @@ public:
   // maintain actions TODO: remove in production version
   [[eosio::action]] void maintain(string action, name user);
   [[eosio::action]] void setmff(name user, asset amount);
-  void createuser(string username, uint32_t stake, string account_type, uint32_t registered, uint32_t staked,
-                          uint32_t votes, uint32_t issues, uint32_t last, uint32_t total);
+  void createuser(string username, string account_type, uint32_t registered, uint32_t surveys,
+                          uint32_t votes, uint32_t ratifys, uint32_t issues, uint32_t last_claim, uint32_t last_unlock, uint32_t total);
   void eraseuser(string username);
   void refund_function(name user);
 
