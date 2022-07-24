@@ -57,8 +57,8 @@ void freeosgov::claim(name user) {
     double freedaoshare = get_dparameter(name("freedaoshare"));
     double partnershare = get_dparameter(name("partnershare"));
 
-    // get the freedao and partners accounts
-    name freedao_acct = name(get_parameter(name("freedaoacct")));
+    // get the freeosdiv and partners accounts
+    name freeosdiv_acct = name(get_parameter(name("freedaoacct")));
     name partners_acct = name(get_parameter(name("partnersacct")));
 
     // keep some counters
@@ -166,6 +166,9 @@ void freeosgov::claim(name user) {
                 "mint"_n, std::make_tuple(get_self(), get_self(), iteration_all_payments, issue_memo));
             issue_action.send();
 
+            // explain the unlocked/locked amounts in the memo
+            transfer_memo += " - payment (unlocked/locked) = " + user_liquid_payment.to_string() + "/" + user_locked_payment.to_string();
+
             // transfer liquid POINTs to the user account
             action user_transfer_action = action(
             permission_level{get_self(), "active"_n}, get_self(),
@@ -188,11 +191,14 @@ void freeosgov::claim(name user) {
             string shares_memo = string("share of claim by ") + user.to_string() + " for week " + to_string(iter);
 
             // transfer POINTs to the freedao account
+            // first, record the deposit to the freedao account
+            record_deposit(this_iteration, freedao_payment);
+
             if (freedao_payment_amount > 0) {
                 action freedao_transfer_action = action(
                 permission_level{get_self(), "active"_n}, get_self(),
                     "allocate"_n,
-                    std::make_tuple(get_self(), freedao_acct, freedao_payment, shares_memo));
+                    std::make_tuple(get_self(), freeosdiv_acct, freedao_payment, shares_memo));
                 freedao_transfer_action.send();
             }
             

@@ -22,6 +22,7 @@ public:
   void trigger_new_iteration(uint32_t new_iteration);
   double get_locked_proportion();
   void update_unlock_percentage();
+  bool check_master_switch();
 
   // maintain actions TODO: remove in production version
   [[eosio::action]] void maintain(string action, name user);
@@ -87,6 +88,9 @@ public:
   [[eosio::action]] void mintfreebi(const name &owner, const asset &quantity);
   [[eosio::action]] void mintfreeos(name user, const asset &input_quantity, symbol &mint_fee_currency);
   [[eosio::action]] void withdraw(const name user);
+  [[eosio::action]] void unlock(const name &user);
+  [[eosio::action]] void depositclear(uint64_t iteration_number);
+  void record_deposit(uint64_t iteration_number, asset amount);
   void mintfee(name user, name to, asset quantity, std::string memo);
   asset calculate_mint_fee(name &user, asset &mint_quantity, symbol mint_fee_currency);
   bool process_mint_fee(name user, asset mint_quantity, symbol mint_fee_currency);

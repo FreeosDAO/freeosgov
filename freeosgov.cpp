@@ -16,15 +16,36 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.31";
+const std::string VERSION = "0.9.34";
 
 // ACTION
 void freeosgov::version() {
 
+  string freeosdiv_acct = get_parameter(name("freedaoacct"));
+
   std::string version_message = "version: " + VERSION + ", freeos tokens account: " + freeos_acct + ", freebi tokens account: " + freebi_acct +
-                                ", iteration: " + std::to_string(current_iteration());
+                                + ", freeos divide account: " + freeosdiv_acct + ", iteration: " + std::to_string(current_iteration());
 
   check(false, version_message);
+}
+
+bool freeosgov::check_master_switch() {
+  parameters_index parameters_table(get_self(), get_self().value);
+  auto parameter_iterator = parameters_table.find(name("masterswitch").value);
+
+  // check if the parameter is in the table or not
+  if (parameter_iterator == parameters_table.end()) {
+    // the parameter is not in the table, or table not found, return false
+    // because it should be accessible (failsafe)
+    return false;
+  } else {
+    // the parameter is in the table
+    if (parameter_iterator->value.compare("1") == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 // ACTION
@@ -99,10 +120,6 @@ bool freeosgov::is_action_period(string action) {
     result = true;
   }
 
-  /* string debug_msg = "now_secs=" + to_string(now_secs) + ", init_secs=" + to_string(init_secs) +
-   ", iteration_secs=" + to_string(iteration_secs) + ", surveystart=" + to_string(surveystart) + ", surveyend=" + to_string(surveyend);
-  check(false, debug_msg); */
-
   return result;
 }
 
@@ -149,6 +166,8 @@ void freeosgov::tick() {
     trigger_new_iteration(this_iteration);
 
     // update the recorded iteration
+    system_index system_table(get_self(), get_self().value);  // do a refresh of the system record as the previous system_iterator has old data 
+    system_iterator = system_table.begin();                   // refresh the system iterator to get the record amended by modifications
     system_table.modify(system_iterator, get_self(), [&](auto &sys) {
       sys.iteration = this_iteration;
       sys.participants = 0;
@@ -210,11 +229,12 @@ void freeosgov::update_unlock_percentage() {
 
   // Decide whether we are above target or below target price
   if (locked_proportion == 0.0f) {
+
     // favourable exchange rate, so implement the 'good times' strategy -
     // calculate the new unlock_percentage
     current_unlock_percentage = system_iterator->unlockpercent;
 
-    // move the unlock_percentage on to next level if we have reached a new 'good times' iteration
+    // move the unlock_percentage on to next level as we have reached a 'good times' iteration
     switch (current_unlock_percentage) {
     case 0:
     case 15:

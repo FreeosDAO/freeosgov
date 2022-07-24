@@ -202,6 +202,30 @@
             ]
         },
         {
+            "name": "deposit",
+            "base": "",
+            "fields": [
+                {
+                    "name": "iteration",
+                    "type": "uint64"
+                },
+                {
+                    "name": "accrued",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "depositclear",
+            "base": "",
+            "fields": [
+                {
+                    "name": "iteration_number",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
             "name": "dparamerase",
             "base": "",
             "fields": [
@@ -865,6 +889,16 @@
             ]
         },
         {
+            "name": "unlock",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "version",
             "base": "",
             "fields": []
@@ -1036,6 +1070,11 @@
             "ricardian_contract": ""
         },
         {
+            "name": "depositclear",
+            "type": "depositclear",
+            "ricardian_contract": ""
+        },
+        {
             "name": "dparamerase",
             "type": "dparamerase",
             "ricardian_contract": ""
@@ -1136,6 +1175,11 @@
             "ricardian_contract": ""
         },
         {
+            "name": "unlock",
+            "type": "unlock",
+            "ricardian_contract": ""
+        },
+        {
             "name": "version",
             "type": "version",
             "ricardian_contract": ""
@@ -1176,6 +1220,13 @@
         {
             "name": "currencies",
             "type": "currency",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "deposits",
+            "type": "deposit",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

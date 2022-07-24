@@ -59,8 +59,7 @@ string get_account_type(name user) {
       size_t fn_pos = kyc_prov[i].kyc_level.find("firstname");
       size_t ln_pos = kyc_prov[i].kyc_level.find("lastname");
 
-      if (verification_iterator->verified == true &&
-          fn_pos != std::string::npos && ln_pos != std::string::npos) {
+      if (fn_pos != std::string::npos && ln_pos != std::string::npos) {
         user_account_type = "v";
         break;
       }
@@ -117,7 +116,10 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
 
   require_auth(user);
 
-  check(current_iteration() != 0, "The freeos system is not yet available");
+  // get the current iteration
+  uint32_t iteration = current_iteration();
+
+  check(iteration != 0, "The freeos system is not yet available");
 
   // is the user already registered?
   // find the account in the participants table
@@ -125,6 +127,10 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
   auto participant_iterator = participants_table.begin();
 
   check(participant_iterator == participants_table.end(), "user is already registered");
+
+  // determine account type
+  string account_type = get_account_type(user);
+  check(account_type == "v" || account_type == "b" || account_type == "c", "please complete kyc before registering");
 
   // capture the user's POINTs balance - as these POINTs will be mint-fee-free
   asset liquid_points = asset(0, POINT_CURRENCY_SYMBOL);  // default=0 if POINTs balance record not found
@@ -170,13 +176,6 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
         });
       } 
   }
-
-  
-  // determine account type
-  string account_type = get_account_type(user);  // TODO
-
-  // get the current iteration
-  uint16_t iteration = current_iteration();
 
   // add record to the participants table
   participants_table.emplace(get_self(), [&](auto &participant) {

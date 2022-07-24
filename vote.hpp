@@ -234,4 +234,12 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
         });
     }
 
+    // update the votes counter in the user's participant record
+    participants_index participants_table(get_self(), user.value);
+    auto participant_iterator = participants_table.begin();
+    check(participant_iterator != participants_table.end(), "participant record not found");
+    participants_table.modify(participant_iterator, get_self(), [&](auto &p) {
+        p.votes += 1;
+    });
+
 }

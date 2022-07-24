@@ -81,25 +81,10 @@ void freeosgov::maintain(string action, name user) {
   require_auth(get_self());
 
   if (action == "locked points") {
-    name verovera = name("verovera");
-    lockaccounts locked_points_table1(get_self(), verovera.value);
-    locked_points_table1.emplace(
+    lockaccounts locked_points_table(get_self(), user.value);
+    locked_points_table.emplace(
         get_self(), [&](auto &l) {
-          l.balance = asset(3607192, POINT_CURRENCY_SYMBOL);
-        });
-    
-    name vickvindaloo = name("vickvindaloo");
-    lockaccounts locked_points_table2(get_self(), vickvindaloo.value);
-    locked_points_table2.emplace(
-        get_self(), [&](auto &l) {
-          l.balance = asset(1840605, POINT_CURRENCY_SYMBOL);
-        });
-  
-    name vivvestin = name("vivvestin");
-    lockaccounts locked_points_table3(get_self(), vivvestin.value);
-    locked_points_table3.emplace(
-        get_self(), [&](auto &l) {
-          l.balance = asset(10895213, POINT_CURRENCY_SYMBOL);
+          l.balance = asset(10000000, POINT_CURRENCY_SYMBOL);
         });
   }
 
@@ -123,6 +108,32 @@ void freeosgov::maintain(string action, name user) {
       participants_table.modify(participant_iterator, get_self(), [&](auto &u) {
         u.last_claim = u.last_claim - 1;
       });
+    }
+  }
+
+  if (action == "set iteration") {
+    system_index system_table(get_self(), get_self().value);
+    auto system_iterator = system_table.begin();
+    check(system_iterator != system_table.end(), "system record not found");
+
+    system_table.modify(system_iterator, get_self(), [&](auto &sys) {
+      sys.iteration = 460617;
+    });
+
+    // delete rewards record if found
+    rewards_index rewards_table(get_self(), get_self().value);
+    auto reward_iterator = rewards_table.find(460617);
+    if (reward_iterator != rewards_table.end()) {
+      rewards_table.erase(reward_iterator);
+    }
+  }
+
+  if (action == "erase old user") {
+    airclaim_users_index oldusers_table(get_self(), user.value);
+    auto olduser_iterator = oldusers_table.begin();
+
+    if (olduser_iterator != oldusers_table.end()) {
+      oldusers_table.erase(olduser_iterator);
     }
   }
 
@@ -194,6 +205,17 @@ void freeosgov::maintain(string action, name user) {
 
     if (points_iterator != points_table.end()) {
       status_msg = status_msg + points_iterator->balance.to_string() + ", ";
+    } else {
+      status_msg = status_msg + "None, ";
+    }
+
+    // locked POINTs
+    status_msg = status_msg + "\nLocked POINTs: ";
+    lockaccounts locked_points_table(get_self(), user.value);
+    auto locked_points_iterator = locked_points_table.begin();
+
+    if (locked_points_iterator != locked_points_table.end()) {
+      status_msg = status_msg + locked_points_iterator->balance.to_string() + ", ";
     } else {
       status_msg = status_msg + "None, ";
     }

@@ -92,6 +92,88 @@ void freeosgov::allocate(const name &from, const name &to, const asset &quantity
   transfer(from, to, quantity, memo);
 }
 
+// ACTION
+void freeosgov::unlock(const name &user) {
+  require_auth(user);
+
+  // user-activity-driven background process
+  tick();
+
+  // check that system is operational (global masterswitch parameter set to "1")
+  check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
+
+  // get the current iteration
+  uint32_t this_iteration = current_iteration();
+  check(this_iteration > 0, "unlocking is not possible at this time, please try later");
+
+  // calculate the amount to be unvested - get the percentage for the iteration
+  system_index system_table(get_self(), get_self().value);
+  auto system_iterator = system_table.begin();
+  check(system_iterator != system_table.end(), "system record not found");
+  uint32_t unlock_percent = system_iterator->unlockpercent;
+
+  // check that the unvest percentage is within limits
+  check(unlock_percent > 0 && unlock_percent <= 100,
+        "locked POINTs cannot be unlocked in this claim period. Please try during next claim period");
+
+  // has the user unlocked this iteration? - consult the participant record
+  participants_index participants_table(get_self(), user.value);
+  auto participant_iterator = participants_table.begin();
+  check(participant_iterator != participants_table.end(), "participant record not found");
+
+  // if the participant record has last_unlock == current iteration then the user has already unlocked,
+  // so is not eligible to unlock again
+  check(participant_iterator->last_unlock != this_iteration, "user has already unlocked in this iteration");
+
+  // do the unlocking
+  // get the user's unvested POINT balance
+  asset locked_balance = asset(0, POINT_CURRENCY_SYMBOL);
+  lockaccounts locked_accounts_table(get_self(), user.value);
+  auto locked_account_iterator = locked_accounts_table.begin();
+
+  if (locked_account_iterator != locked_accounts_table.end()) {
+    locked_balance = locked_account_iterator->balance;
+  }
+
+  // if user's locked balance is 0 then nothing to do, so return
+  if (locked_balance.amount == 0) {
+    return;
+  }
+
+  // calculate the amount of locked POINTs to convert to liquid POINTs
+  // Warning: these calculations use mixed-type arithmetic. Any changes need to
+  // be thoroughly tested.
+
+  uint64_t locked_units = locked_balance.amount; // in currency units (i.e. number of 0.0001 POINT)
+
+  double percentage = unlock_percent / 100.0; // required to be a double
+
+  uint64_t converted_units = locked_units * percentage; // in currency units (i.e. number of 0.0001 POINT)
+
+  uint32_t rounded_up_points = (uint32_t)ceil(converted_units / 10000.0); // ceil rounds up to the next whole number of POINTs
+
+  asset converted_points = asset(rounded_up_points * 10000, POINT_CURRENCY_SYMBOL); // express the roundedup points as an asset
+
+  std::string memo = std::string("unlocking POINTs by ");
+  memo.append(user.to_string());
+
+  // Issue the required amount to the freeos account
+  if (converted_points.amount > 0) {
+    issue(get_self(), converted_points, memo);
+
+    // transfer liquid POINTs to user
+    transfer(get_self(), user, converted_points, memo);
+  }
+
+  // subtract the amount transferred from the unvested record
+  locked_accounts_table.modify(locked_account_iterator, get_self(), [&](auto &v) { v.balance -= converted_points; });
+
+  // record the unlock event to the participant record
+  participants_table.modify(participant_iterator, get_self(), [&](auto &p) { p.last_unlock = this_iteration; });
+
+}
+
+
 // Replacement for the issue action - 'mint' enforces a whitelist of who can issue OPTIONs
 // ACTION
 void freeosgov::mint(const name &minter, const name &to, const asset &quantity, const string &memo) {
@@ -457,6 +539,45 @@ void freeosgov::withdraw(const name user) {
   }
 
 }
+
+// record a deposit to the freedao account
+void freeosgov::record_deposit(uint64_t iteration_number, asset amount) {
+  deposits_index deposits_table(get_self(), get_self().value);
+
+  // find the record for the iteration
+  auto deposit_iterator = deposits_table.find(iteration_number);
+
+  if (deposit_iterator == deposits_table.end()) {
+    // insert record and initialise
+    deposits_table.emplace(get_self(), [&](auto &d) {
+      d.iteration = iteration_number;
+      d.accrued = amount;
+    });
+  } else {
+    // modify record
+    deposits_table.modify(deposit_iterator, _self,
+                          [&](auto &d) { d.accrued += amount; });
+  }
+}
+
+// action to clear (remove) a deposit record from the deposit table
+// ACTION
+void freeosgov::depositclear(uint64_t iteration_number) {
+  
+  name freeosdiv_acct = name(get_parameter(name("freedaoacct")));
+  require_auth(freeosdiv_acct);
+
+  deposits_index deposits_table(get_self(), get_self().value);
+
+  // find the record for the iteration
+  auto deposit_iterator = deposits_table.find(iteration_number);
+
+  check(deposit_iterator != deposits_table.end(),
+        "a deposit record for the requested iteration does not exist");
+
+  deposits_table.erase(deposit_iterator);
+}
+
 
 
 // mint fee confirmation

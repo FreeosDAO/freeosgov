@@ -32,6 +32,8 @@ const symbol FREEOS_CURRENCY_SYMBOL = symbol(FREEOS_CURRENCY_CODE, FREEOS_CURREN
 
 const name AIRCLAIM_CONTRACT = name("freeos5");     // TODO: we should not need for production as we are overwriting contract
 
+const string MSG_FREEOS_SYSTEM_NOT_AVAILABLE = "Freeos system is not currently operating. Please try later";
+
 #ifdef PRODUCTION
 const name VERIFICATION_CONTRACT = name("eosio.proton");
 #else

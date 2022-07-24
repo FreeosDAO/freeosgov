@@ -107,4 +107,12 @@ void freeosgov::ratify(name user, bool ratify_vote) {
         }
     }); // end of modify
 
+    // update the ratifys counter in the user's participant record
+    participants_index participants_table(get_self(), user.value);
+    auto participant_iterator = participants_table.begin();
+    check(participant_iterator != participants_table.end(), "participant record not found");
+    participants_table.modify(participant_iterator, get_self(), [&](auto &p) {
+        p.ratifys += 1;
+    });
+
 }

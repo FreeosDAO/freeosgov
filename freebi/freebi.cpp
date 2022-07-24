@@ -99,7 +99,7 @@ void token::transfer( const name&    from,
 
     // check if 'to' account is regsistered in freeosgov with a verified account OR is the freeosgov account
     if (to != name(freeosgov_acct)) {
-      freedao::users_index users_table(name(freeosgov_acct), to.value);
+      freedao::participants_index users_table(name(freeosgov_acct), to.value);
       auto user_iterator = users_table.begin();
       check(user_iterator != users_table.end(), "the recipient must be a registered Freeos user");
       check(user_iterator->account_type == "v" || user_iterator->account_type == "b" || user_iterator->account_type == "c", "the recipent must be a verified Freeos user");

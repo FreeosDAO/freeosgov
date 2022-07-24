@@ -232,4 +232,12 @@ void freeosgov::survey(name user, uint8_t q1response, uint8_t q2response, uint8_
         s.participants += 1;
     });
 
+    // update the surveys counter in the user's participant record
+    participants_index participants_table(get_self(), user.value);
+    auto participant_iterator = participants_table.begin();
+    check(participant_iterator != participants_table.end(), "participant record not found");
+    participants_table.modify(participant_iterator, get_self(), [&](auto &p) {
+        p.surveys += 1;
+    });
+
 }

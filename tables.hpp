@@ -131,6 +131,7 @@ struct[[ eosio::table("oldusers"), eosio::contract("freeosgov") ]] olduser {
 using old_users_index = eosio::multi_index<"users"_n, olduser>;
 
 
+// PARTICIPANTS
 // the participants table
 struct[[ eosio::table("participants"), eosio::contract("freeosgov") ]] participant {
   string account_type;            // user's verification level
@@ -148,8 +149,7 @@ struct[[ eosio::table("participants"), eosio::contract("freeosgov") ]] participa
 using participants_index = eosio::multi_index<"participants"_n, participant>;
 
 
-// AIRCLAIM_USERS - required to interpret 
-// the airclaim registered user table
+// AIRCLAIM_USERS - required to interpret the airclaim registered user table
 struct[[ eosio::table("users"), eosio::contract("freeos") ]] airclaim_user {
   asset stake;                   // how many XPR tokens staked
   char account_type;             // user's verification level
@@ -304,5 +304,14 @@ struct[[ eosio::table("currencies"), eosio::contract("freeosgov") ]] currency {
 };
 using currencies_index = eosio::multi_index<"currencies"_n, currency>;
 
+// DEPOSITS
+// freedao deposits table
+struct[[ eosio::table("deposits"), eosio::contract("freeosgov") ]] deposit {
+  uint64_t iteration;
+  asset accrued;
+
+  uint64_t primary_key() const { return iteration; }
+};
+using deposits_index = eosio::multi_index<"deposits"_n, deposit>;
 
 } // end of namespace freedao
