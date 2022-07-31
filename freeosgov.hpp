@@ -17,7 +17,8 @@ public:
    * @details Prints the version of this contract.
    */
   [[eosio::action]] void version();
-  [[eosio::action]] void init(time_point iterations_start);
+  [[eosio::action]] void init(time_point iterations_start, double issuance_rate, double mint_fee_percent,
+                    double locking_threshold, bool pool);
   [[eosio::action]] void tick();
   void trigger_new_iteration(uint32_t new_iteration);
   double get_locked_proportion();

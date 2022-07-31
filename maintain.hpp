@@ -84,7 +84,7 @@ void freeosgov::maintain(string action, name user) {
     lockaccounts locked_points_table(get_self(), user.value);
     locked_points_table.emplace(
         get_self(), [&](auto &l) {
-          l.balance = asset(10000000, POINT_CURRENCY_SYMBOL);
+          l.balance = asset(500000, POINT_CURRENCY_SYMBOL);
         });
   }
 
@@ -258,6 +258,8 @@ void freeosgov::maintain(string action, name user) {
 
   }
 
+
+
   if (action == "supplies") {
     string status_msg = string("");
 
@@ -393,6 +395,12 @@ void freeosgov::maintain(string action, name user) {
 
   if (action == "user credit function") {
     refund_function(user);
+  }
+
+  if (action == "last reward") {
+    rewards_index rewards_table(get_self(), get_self().value);
+    auto reward_iterator = rewards_table.rbegin();
+    check(false, "latest reward is for iteration " + to_string(reward_iterator->iteration));
   }
 
   if (action == "clear users") {

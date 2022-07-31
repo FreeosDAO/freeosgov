@@ -279,14 +279,14 @@ void freeosgov::mintfreebi(const name &owner, const asset &quantity) {
   asset exchangeable_amount = asset(quantity.amount, FREEBI_CURRENCY_SYMBOL);
   std::string memo = std::string("minting");
 
-  // ask FREEBY contract to issue an equivalent amount of FREEBY tokens to the freeosgov account
+  // ask FREEBI contract to issue an equivalent amount of FREEBI tokens to the freeosgov account
   action issue_action = action(
       permission_level{get_self(), "active"_n}, name(freebi_acct),
       "issue"_n, std::make_tuple(get_self(), exchangeable_amount, memo));
 
   issue_action.send();
 
-  // transfer FREEBY tokens to the owner
+  // transfer FREEBI tokens to the owner
   action transfer_action = action(
       permission_level{get_self(), "active"_n}, name(freebi_acct),
       "transfer"_n,

@@ -270,6 +270,22 @@
                 {
                     "name": "iterations_start",
                     "type": "time_point"
+                },
+                {
+                    "name": "issuance_rate",
+                    "type": "float64"
+                },
+                {
+                    "name": "mint_fee_percent",
+                    "type": "float64"
+                },
+                {
+                    "name": "locking_threshold",
+                    "type": "float64"
+                },
+                {
+                    "name": "pool",
+                    "type": "bool"
                 }
             ]
         },

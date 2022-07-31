@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.34";
+const std::string VERSION = "0.9.35";
 
 // ACTION
 void freeosgov::version() {
@@ -49,7 +49,8 @@ bool freeosgov::check_master_switch() {
 }
 
 // ACTION
-void freeosgov::init(time_point iterations_start) {
+void freeosgov::init(time_point iterations_start, double issuance_rate, double mint_fee_percent,
+                    double locking_threshold, bool pool) {
 
   require_auth(get_self());
 
@@ -65,6 +66,22 @@ void freeosgov::init(time_point iterations_start) {
     // modify system record
     system_table.modify(system_iterator, get_self(), [&](auto &sys) { sys.init = iterations_start; });
   }
+
+  // create the reward record (for iteration 0) containing ratified (by system team) values for vote parameters
+  rewards_index rewards_table(get_self(), get_self().value);
+  rewards_table.emplace(get_self(), [&](auto &rwd) {
+      rwd.iteration = 0;
+      rwd.participants = 0;
+      rwd.iteration_cls = asset(0, POINT_CURRENCY_SYMBOL);
+      rwd.iteration_issuance = asset(0, POINT_CURRENCY_SYMBOL);
+      rwd.participant_issuance = asset(0, POINT_CURRENCY_SYMBOL);
+      rwd.issuance_rate = issuance_rate;
+      rwd.mint_fee_percent = mint_fee_percent;
+      rwd.locking_threshold = locking_threshold;
+      rwd.pool = pool;
+      rwd.burn = !pool;
+      rwd.ratified = true;
+    });
 
   // create the survey, vote and ratify records if they don't already exist
   // survey
@@ -305,6 +322,11 @@ void freeosgov::update_unlock_percentage() {
 
 // tidy up at the end of an iteration - save SVR data in the reward record
 void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
+  double issuance_rate;
+  double mint_fee_percent;
+  double locking_threshold;
+  bool pool;
+  bool burn;
 
   // if the transition is from iteration 0 to 1 there is nothing to do, so return
   if (new_iteration == 1) return;
@@ -317,33 +339,49 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
   auto system_iterator = system_table.begin();
   check(system_iterator != system_table.end(), "system record is undefined");
 
+  // get the previous reward record as we may have to propagate the existing values for vote parameters if the vote was not ratified
+  rewards_index rewards_table(get_self(), get_self().value);
+  auto last_reward_iterator = rewards_table.rbegin();
+  check(last_reward_iterator != rewards_table.rend(), "previous reward table not found");
+
   // capture the data we need from the system, vote and ratify records
   // 1. system record
   uint32_t participants = system_iterator->participants;
   asset cls_snapshot = system_iterator->cls;
   uint32_t old_iteration = system_iterator->iteration;
 
-  // 2. vote record
-  vote_index vote_table(get_self(), get_self().value);
-  auto vote_iterator = vote_table.begin();
-  check(vote_iterator != vote_table.end(), "vote record is undefined");
-  // issuance_rate
-  double issuance_rate = vote_iterator->q1average / 100.0;
-  // mint fee percent
-  double mint_fee_percent = vote_iterator->q2average;
-  // locking threshold
-  double locking_threshold = vote_iterator->q3average;
-  // pool decision
-  bool pool = vote_iterator->q4choice1 >= vote_iterator->q4choice2;
-  // burn decision
-  bool burn = !pool;
-
-  // 3. ratify record
+  // 2. ratify record
   ratify_index ratify_table(get_self(), get_self().value);
   auto ratify_iterator = ratify_table.begin();
   check(ratify_iterator != ratify_table.end(), "ratify record is undefined");
   // ratify decision
   bool ratified = (ratify_iterator->ratified > 0 && (ratify_iterator->ratified >= ((ratify_iterator->participants + 1) / 2)));
+
+
+  // 3. economic parameters
+  if (ratified == true) {
+    // if vote ratified, get the economic parameters from the vote record
+    vote_index vote_table(get_self(), get_self().value);
+    auto vote_iterator = vote_table.begin();
+    check(vote_iterator != vote_table.end(), "vote record is undefined");
+    // issuance_rate
+    issuance_rate = vote_iterator->q1average / 100.0;
+    // mint fee percent
+    mint_fee_percent = vote_iterator->q2average;
+    // locking threshold
+    locking_threshold = vote_iterator->q3average;
+    // pool decision
+    pool = vote_iterator->q4choice1 >= vote_iterator->q4choice2;
+    // burn decision
+    burn = !pool;
+  } else {
+    // if vote not ratified, propagate existing values for issuance_rate, mint_fee_percent, locking_threshold, pool, burn in the event of non-ratification
+    issuance_rate = last_reward_iterator->issuance_rate;
+    mint_fee_percent = last_reward_iterator->mint_fee_percent;
+    locking_threshold = last_reward_iterator->locking_threshold;
+    pool = last_reward_iterator->pool;
+    burn = last_reward_iterator->burn;
+  }
 
   // 4. Calculate the total issuance (shared between participants) and the per-participant issuance for the iteration
   double ISSUANCE_PROPORTION_OF_CLS = get_dparameter(name("issuepropcls"));
@@ -360,7 +398,7 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
   
 
   // populate the rewards table - take a snapshot of the cls, vote results and ratify result
-  rewards_index rewards_table(get_self(), get_self().value);
+  // ??? rewards_index rewards_table(get_self(), get_self().value);
   rewards_table.emplace(get_self(), [&](auto &rwd) {
       rwd.iteration = old_iteration;
       rwd.participants = participants;
