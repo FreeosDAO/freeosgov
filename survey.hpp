@@ -185,25 +185,26 @@ void freeosgov::survey(name user, uint8_t q1response, uint8_t q2response, uint8_
 
         // question 5 - need to iterate the list of choices
         uint8_t q5choices[3] = { q5choice1, q5choice2, q5choice3 };
+        uint8_t points[3] = { 3,2,1 };  // points to distribute for 1st, 2nd, 3rd priorities
         for (size_t i = 0; i < sizeof(q5choices); i++) {
             switch(q5choices[i]) {
                 case 1:
-                    survey.q5choice1++;
+                    survey.q5choice1 += points[i];
                     break;
                 case 2:
-                    survey.q5choice2++;
+                    survey.q5choice2 += points[i];
                     break;
                 case 3:
-                    survey.q5choice3++;
+                    survey.q5choice3 += points[i];
                     break;
                 case 4:
-                    survey.q5choice4++;
+                    survey.q5choice4 += points[i];
                     break;
                 case 5:
-                    survey.q5choice5++;
+                    survey.q5choice5 += points[i];
                     break;
                 case 6:
-                    survey.q5choice6++;
+                    survey.q5choice6 += points[i];
                     break;
             }
         }        

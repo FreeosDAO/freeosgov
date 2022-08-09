@@ -180,7 +180,7 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
         
         // question 6 - need to iterate the list of choices
         uint8_t q6choices[3] = { q6choice1, q6choice2, q6choice3 };
-        uint8_t points[3] = { 3,2,1 };
+        uint8_t points[3] = { 3,2,1 };  // points to distribute for 1st, 2nd, 3rd choices
 
         for (size_t i = 0; i < sizeof(q6choices); i++) {
             switch(q6choices[i]) {

@@ -81,11 +81,21 @@ void freeosgov::maintain(string action, name user) {
   require_auth(get_self());
 
   if (action == "locked points") {
+    symbol point_sym = symbol("POINT", 4);
     lockaccounts locked_points_table(get_self(), user.value);
-    locked_points_table.emplace(
+    auto locked_iterator = locked_points_table.find(point_sym.code().raw());
+
+    if (locked_iterator == locked_points_table.end()) {
+      locked_points_table.emplace(
         get_self(), [&](auto &l) {
           l.balance = asset(500000, POINT_CURRENCY_SYMBOL);
         });
+    } else {
+      locked_points_table.modify(locked_iterator, get_self(), [&](auto &l) {
+        l.balance += asset(500000, POINT_CURRENCY_SYMBOL);
+      });
+    }
+    
   }
 
   if (action == "fiddle reward") {
