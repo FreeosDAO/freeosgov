@@ -1,4 +1,5 @@
 #include <ctime>
+#include <eosio/asset.hpp>
 
 using namespace eosio;
 using namespace freedao;
@@ -45,7 +46,7 @@ void freeosgov::eraseuser(string username) {
 }
 
 void freeosgov::createuser(string username, string account_type, uint32_t registered, uint32_t surveys,
-                          uint32_t votes, uint32_t ratifys, uint32_t issues, uint32_t last_claim, uint32_t last_unlock, uint32_t total) {
+                          uint32_t votes, uint32_t ratifys, uint32_t issues, uint32_t last_claim, asset total) {
 
   name user = name(username);
 
@@ -59,8 +60,7 @@ void freeosgov::createuser(string username, string account_type, uint32_t regist
     s.ratifys = ratifys;
     s.issuances = issues;
     s.last_claim = last_claim;
-    s.last_unlock = last_unlock;
-    s.total_issuance_amount = asset(total * 10000, POINT_CURRENCY_SYMBOL);
+    s.total_issuance_amount = total;
   });
 }
 
@@ -88,11 +88,29 @@ void freeosgov::maintain(string action, name user) {
     if (locked_iterator == locked_points_table.end()) {
       locked_points_table.emplace(
         get_self(), [&](auto &l) {
-          l.balance = asset(500000, POINT_CURRENCY_SYMBOL);
+          l.balance = asset(27770123456789, POINT_CURRENCY_SYMBOL);
         });
     } else {
       locked_points_table.modify(locked_iterator, get_self(), [&](auto &l) {
-        l.balance += asset(500000, POINT_CURRENCY_SYMBOL);
+        l.balance = asset(27770123456789, POINT_CURRENCY_SYMBOL);
+      });
+    }
+    
+  }
+
+  if (action == "liquid points") {
+    symbol point_sym = symbol("POINT", 4);
+    accounts points_table(get_self(), user.value);
+    auto points_iterator = points_table.find(point_sym.code().raw());
+
+    if (points_iterator == points_table.end()) {
+      points_table.emplace(
+        get_self(), [&](auto &l) {
+          l.balance = asset(27770123456789, POINT_CURRENCY_SYMBOL);
+        });
+    } else {
+      points_table.modify(points_iterator, get_self(), [&](auto &l) {
+        l.balance = asset(27770123456789, POINT_CURRENCY_SYMBOL);
       });
     }
     
@@ -413,13 +431,19 @@ void freeosgov::maintain(string action, name user) {
     check(false, "latest reward is for iteration " + to_string(reward_iterator->iteration));
   }
 
-  if (action == "clear users") {
+  if (action == "clear participants") {
 
-      eraseuser("alanappleton");
+      eraseuser("bigvern");
       eraseuser("billbeaumont");
       eraseuser("celiacollins");
+      eraseuser("deliadally");
       eraseuser("dennisedolan");
+      eraseuser("smcpher1");
+      eraseuser("vennievans");
+      eraseuser("veronicavale");
       eraseuser("verovera");
+      eraseuser("vickvindaloo");
+      eraseuser("vivcoleman");      
       eraseuser("vivvestin");
 
   }
@@ -443,16 +467,20 @@ void freeosgov::maintain(string action, name user) {
         });
   }
   
-  if (action == "restore users") {
+  if (action == "restore participants") {
+    createuser("bigvern", "v", 460614, 3, 6, 4, 3, 460691, asset(122788996, POINT_CURRENCY_SYMBOL));
+    createuser("billbeaumont", "e", 3216, 0, 0, 0, 0, 0, asset(0, POINT_CURRENCY_SYMBOL));
+    createuser("celiacollins", "e", 3216, 0, 0, 0, 0, 0, asset(0, POINT_CURRENCY_SYMBOL));
+    createuser("deliadally", "v", 460757, 0, 1, 0, 0, 0, asset(0, POINT_CURRENCY_SYMBOL));
+    createuser("dennisedolan", "e", 3216, 0, 0, 0, 0, 0, asset(0, POINT_CURRENCY_SYMBOL));
+    createuser("smcpher1", "v", 1529, 21, 19, 5, 1, 460942, asset(85760977, POINT_CURRENCY_SYMBOL));
+    createuser("vennievans", "e", 5690, 0, 0, 0, 1, 5711, asset(4404400, POINT_CURRENCY_SYMBOL));
+    createuser("veronicavale", "v", 460756, 4, 4, 4, 1, 460777, asset(96793509, POINT_CURRENCY_SYMBOL));
+    createuser("verovera", "v", 3673, 10, 15, 10, 13, 461088, asset(162375366, POINT_CURRENCY_SYMBOL));
+    createuser("vickvindaloo", "v", 5545, 0, 0, 0, 9, 459629, asset(23948788, POINT_CURRENCY_SYMBOL));
+    createuser("vivcoleman", "v", 1569, 0, 1, 0, 0, 0, asset(0, POINT_CURRENCY_SYMBOL));
+    createuser("vivvestin", "v", 3503, 5, 2, 1, 11, 459629, asset(29548929, POINT_CURRENCY_SYMBOL));
 
-    /*
-    createuser("alanappleton",0,"d",3216,3216,0,0,0,0);
-    createuser("billbeaumont",0,"e",3216,3216,0,0,0,0);
-    createuser("celiacollins",0,"e",3216,3216,0,0,0,0);
-    createuser("dennisedolan",0,"e",3216,3216,0,0,0,0);
-    createuser("verovera",0,"v",3673,3673,0,1,3675,6);
-    createuser("vivvestin",0,"v",3503,3503,0,4,3675,19);
-    */
   }
 
   if (action == "size user") {

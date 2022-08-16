@@ -139,7 +139,6 @@ struct[[ eosio::table("participants"), eosio::contract("freeosgov") ]] participa
   uint32_t issuances;             // total number of times the user has been issued with POINTs
   asset total_issuance_amount;    // accrued POINTs
   uint32_t last_claim;            // the last iteration in which the user attempted to claim
-  uint32_t last_unlock;           // last iteration in which the user unlocked POINTs
   uint32_t surveys;               // how many surveys the user has completed
   uint32_t votes;                 // how many votes the user has completed
   uint32_t ratifys;               // how many ratifys the user has completed  
@@ -313,5 +312,13 @@ struct[[ eosio::table("deposits"), eosio::contract("freeosgov") ]] deposit {
   uint64_t primary_key() const { return iteration; }
 };
 using deposits_index = eosio::multi_index<"deposits"_n, deposit>;
+
+// unvest history table - scoped on user account name
+struct[[ eosio::table("unvests"), eosio::contract("freeosgov") ]] unvestevent {
+  uint64_t iteration_number;
+
+  uint64_t primary_key() const { return 0; } // single record per user
+};
+using unvest_index = eosio::multi_index<"unvests"_n, unvestevent>;
 
 } // end of namespace freedao

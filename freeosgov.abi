@@ -488,10 +488,6 @@
                     "type": "uint32"
                 },
                 {
-                    "name": "last_unlock",
-                    "type": "uint32"
-                },
-                {
                     "name": "surveys",
                     "type": "uint32"
                 },
@@ -915,6 +911,16 @@
             ]
         },
         {
+            "name": "unvestevent",
+            "base": "",
+            "fields": [
+                {
+                    "name": "iteration_number",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
             "name": "version",
             "base": "",
             "fields": []
@@ -1334,6 +1340,13 @@
         {
             "name": "transferers",
             "type": "transfer_whitelist",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "unvests",
+            "type": "unvestevent",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

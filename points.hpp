@@ -116,14 +116,24 @@ void freeosgov::unlock(const name &user) {
   check(unlock_percent > 0 && unlock_percent <= 100,
         "locked POINTs cannot be unlocked in this claim period. Please try during next claim period");
 
-  // has the user unlocked this iteration? - consult the participant record
-  participants_index participants_table(get_self(), user.value);
-  auto participant_iterator = participants_table.begin();
-  check(participant_iterator != participants_table.end(), "participant record not found");
+  // TO REMOVE // has the user unlocked this iteration? - consult the participant record
+  // TO REMOVE // participants_index participants_table(get_self(), user.value);
+  // TO REMOVE // auto participant_iterator = participants_table.begin();
+  // TO REMOVE // check(participant_iterator != participants_table.end(), "participant record not found");
 
-  // if the participant record has last_unlock == current iteration then the user has already unlocked,
-  // so is not eligible to unlock again
-  check(participant_iterator->last_unlock != this_iteration, "user has already unlocked in this iteration");
+  // has the user unlocked in this iteration? - consult the unvest history table
+  unvest_index unvest_table(get_self(), user.value);
+  auto unvest_iterator = unvest_table.begin();
+  // if the unvest record exists for the current iteration then the user has already unvested,
+  // so is not eligible to unvest again
+  if (unvest_iterator != unvest_table.end()) {
+    check(unvest_iterator->iteration_number != this_iteration,
+        "user has already unlocked in this iteration");
+  }
+
+  // TO REMOVE // if the participant record has last_unlock == current iteration then the user has already unlocked,
+  // TO REMOVE // so is not eligible to unlock again
+  // TO REMOVE // check(participant_iterator->last_unlock != this_iteration, "user has already unlocked in this iteration");
 
   // do the unlocking
   // get the user's unvested POINT balance
@@ -168,9 +178,19 @@ void freeosgov::unlock(const name &user) {
   // subtract the amount transferred from the unvested record
   locked_accounts_table.modify(locked_account_iterator, get_self(), [&](auto &v) { v.balance -= converted_points; });
 
-  // record the unlock event to the participant record
-  participants_table.modify(participant_iterator, get_self(), [&](auto &p) { p.last_unlock = this_iteration; });
-
+  // TO REMOVE // record the unlock event to the participant record
+  // TO REMOVE // participants_table.modify(participant_iterator, get_self(), [&](auto &p) { p.last_unlock = this_iteration; });
+  // record the unlock event in the unvest history table
+  unvest_iterator = unvest_table.begin();
+  if (unvest_iterator == unvest_table.end()) {
+    unvest_table.emplace(get_self(), [&](auto &unvest) {
+      unvest.iteration_number = this_iteration;
+    });
+  } else {
+    unvest_table.modify(unvest_iterator, same_payer, [&](auto &unvest) {
+      unvest.iteration_number = this_iteration;
+    });
+  }
 }
 
 
