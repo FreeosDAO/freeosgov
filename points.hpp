@@ -116,11 +116,6 @@ void freeosgov::unlock(const name &user) {
   check(unlock_percent > 0 && unlock_percent <= 100,
         "locked POINTs cannot be unlocked in this claim period. Please try during next claim period");
 
-  // TO REMOVE // has the user unlocked this iteration? - consult the participant record
-  // TO REMOVE // participants_index participants_table(get_self(), user.value);
-  // TO REMOVE // auto participant_iterator = participants_table.begin();
-  // TO REMOVE // check(participant_iterator != participants_table.end(), "participant record not found");
-
   // has the user unlocked in this iteration? - consult the unvest history table
   unvest_index unvest_table(get_self(), user.value);
   auto unvest_iterator = unvest_table.begin();
@@ -130,10 +125,6 @@ void freeosgov::unlock(const name &user) {
     check(unvest_iterator->iteration_number != this_iteration,
         "user has already unlocked in this iteration");
   }
-
-  // TO REMOVE // if the participant record has last_unlock == current iteration then the user has already unlocked,
-  // TO REMOVE // so is not eligible to unlock again
-  // TO REMOVE // check(participant_iterator->last_unlock != this_iteration, "user has already unlocked in this iteration");
 
   // do the unlocking
   // get the user's unvested POINT balance
@@ -154,15 +145,18 @@ void freeosgov::unlock(const name &user) {
   // Warning: these calculations use mixed-type arithmetic. Any changes need to
   // be thoroughly tested.
 
-  uint64_t locked_units = locked_balance.amount; // in currency units (i.e. number of 0.0001 POINT)
+  double percentage = unlock_percent / 100.0;
+  uint64_t locked_amount = locked_balance.amount;
+  uint64_t percentage_applied = locked_amount * percentage;
+  uint64_t adjusted_amount = (percentage_applied / 10000) * 10000; // rounding to whole units
 
-  double percentage = unlock_percent / 100.0; // required to be a double
+  // this logic deals with a remaining small amount
+  // if the rounded amount is zero then unlock the remaining balance of locked points
+  if (adjusted_amount == 0) {
+    adjusted_amount = locked_amount;
+  }
 
-  uint64_t converted_units = locked_units * percentage; // in currency units (i.e. number of 0.0001 POINT)
-
-  uint32_t rounded_up_points = (uint32_t)ceil(converted_units / 10000.0); // ceil rounds up to the next whole number of POINTs
-
-  asset converted_points = asset(rounded_up_points * 10000, POINT_CURRENCY_SYMBOL); // express the roundedup points as an asset
+  asset converted_points = asset(adjusted_amount, POINT_CURRENCY_SYMBOL);
 
   std::string memo = std::string("unlocking POINTs by ");
   memo.append(user.to_string());
@@ -173,13 +167,11 @@ void freeosgov::unlock(const name &user) {
 
     // transfer liquid POINTs to user
     transfer(get_self(), user, converted_points, memo);
-  }
 
   // subtract the amount transferred from the unvested record
   locked_accounts_table.modify(locked_account_iterator, get_self(), [&](auto &v) { v.balance -= converted_points; });
-
-  // TO REMOVE // record the unlock event to the participant record
-  // TO REMOVE // participants_table.modify(participant_iterator, get_self(), [&](auto &p) { p.last_unlock = this_iteration; });
+  }
+  
   // record the unlock event in the unvest history table
   unvest_iterator = unvest_table.begin();
   if (unvest_iterator == unvest_table.end()) {
@@ -655,7 +647,7 @@ void freeosgov::depositclear(uint64_t iteration_number) {
 // mint fee confirmation
 [[eosio::on_notify("*::transfer")]]    // was "eosio.token::transfer"
 void freeosgov::mintfee(name user, name to, asset quantity, std::string memo) {
-  if (memo == "freeos mint fee") {
+  if (memo == "freeos mint fee" || memo == "freeos mint credit") {
 
     if (user == get_self()) {
       return;

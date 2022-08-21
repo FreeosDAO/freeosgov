@@ -1,5 +1,6 @@
 #include <ctime>
 #include <eosio/asset.hpp>
+#include <cmath>
 
 using namespace eosio;
 using namespace freedao;
@@ -80,6 +81,59 @@ void freeosgov::maintain(string action, name user) {
 
   require_auth(get_self());
 
+  if (action == "diagnose unlock") {
+
+    // calculate the amount to be unvested - get the percentage for the iteration
+    system_index system_table(get_self(), get_self().value);
+    auto system_iterator = system_table.begin();
+    check(system_iterator != system_table.end(), "system record not found");
+    uint32_t unlock_percent = system_iterator->unlockpercent;
+
+    // check that the unvest percentage is within limits
+    check(unlock_percent > 0 && unlock_percent <= 100,
+          "locked POINTs cannot be unlocked in this claim period. Please try during next claim period");
+
+
+    asset locked_balance = asset(0, POINT_CURRENCY_SYMBOL);
+    lockaccounts locked_accounts_table(get_self(), user.value);
+    auto locked_account_iterator = locked_accounts_table.begin();
+
+    if (locked_account_iterator != locked_accounts_table.end()) {
+      locked_balance = locked_account_iterator->balance;
+    }
+
+    // if user's locked balance is 0 then nothing to do, so return
+    if (locked_balance.amount == 0) {
+      return;
+    }
+
+    // calculate the amount of locked POINTs to convert to liquid POINTs
+    // Warning: these calculations use mixed-type arithmetic. Any changes need to
+    // be thoroughly tested.
+
+    double percentage = unlock_percent / 100.0;
+    uint64_t locked_amount = locked_balance.amount;
+    uint64_t percentage_applied = locked_amount * percentage;
+    uint64_t adjusted_amount = (percentage_applied / 10000) * 10000; // rounding to whole units
+
+    // this logic deals with a remaining small amount
+    // if the rounded amount is zero then unlock the remaining balance of locked points
+    if (adjusted_amount == 0) {
+      adjusted_amount = locked_amount;
+    }
+
+    asset converted_points = asset(adjusted_amount, POINT_CURRENCY_SYMBOL);
+
+    string diagnostic =  "percentage: " + to_string(percentage) +
+                        ", locked_amount: " + to_string(locked_amount) +
+                        ", percentage_applied: " + to_string(percentage_applied) +
+                        ", adjusted_amount: " + to_string(adjusted_amount) +
+                        ", converted_points: " + converted_points.to_string();
+
+    check(false, diagnostic);
+  }
+
+
   if (action == "locked points") {
     symbol point_sym = symbol("POINT", 4);
     lockaccounts locked_points_table(get_self(), user.value);
@@ -106,11 +160,11 @@ void freeosgov::maintain(string action, name user) {
     if (points_iterator == points_table.end()) {
       points_table.emplace(
         get_self(), [&](auto &l) {
-          l.balance = asset(27770123456789, POINT_CURRENCY_SYMBOL);
+          l.balance = asset(1000000000, POINT_CURRENCY_SYMBOL);
         });
     } else {
       points_table.modify(points_iterator, get_self(), [&](auto &l) {
-        l.balance = asset(27770123456789, POINT_CURRENCY_SYMBOL);
+        l.balance = asset(1000000000, POINT_CURRENCY_SYMBOL);
       });
     }
     
