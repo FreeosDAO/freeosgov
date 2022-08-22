@@ -81,6 +81,67 @@ void freeosgov::maintain(string action, name user) {
 
   require_auth(get_self());
 
+  if (action == "diagnose unlock 2") {
+
+    // calculate the amount to be unvested - get the percentage for the iteration
+    system_index system_table(get_self(), get_self().value);
+    auto system_iterator = system_table.begin();
+    check(system_iterator != system_table.end(), "system record not found");
+    uint32_t unlock_percent = system_iterator->unlockpercent;
+
+    // check that the unvest percentage is within limits
+    check(unlock_percent > 0 && unlock_percent <= 100,
+          "locked POINTs cannot be unlocked in this claim period. Please try during next claim period");
+
+
+    asset locked_balance = asset(0, POINT_CURRENCY_SYMBOL);
+    lockaccounts locked_accounts_table(get_self(), user.value);
+    auto locked_account_iterator = locked_accounts_table.begin();
+
+    if (locked_account_iterator != locked_accounts_table.end()) {
+      locked_balance = locked_account_iterator->balance;
+    }
+
+    // if user's locked balance is 0 then nothing to do, so return
+    if (locked_balance.amount == 0) {
+      return;
+    }
+
+    // calculate the amount of locked POINTs to convert to liquid POINTs
+    // Warning: these calculations use mixed-type arithmetic. Any changes need to
+    // be thoroughly tested.
+
+    double percentage = unlock_percent / 100.0;
+    double locked_amount = locked_balance.amount / 10000;
+    double percentage_applied = locked_amount * percentage;
+    double adjusted_amount = ceil(percentage_applied); // rounding up to whole units
+    uint64_t adjusted_units = adjusted_amount * 10000;
+
+    // to prevent rounding up to more than the locked point balance, apply this adjustment
+    // this will bring the locked balance to zero
+    if (adjusted_units > locked_balance.amount) {
+      adjusted_units = locked_balance.amount;
+    }
+
+    asset converted_points = asset(adjusted_units, POINT_CURRENCY_SYMBOL);
+
+    string diagnostic =  "percentage: " + to_string(percentage) +
+                        ", locked_amount: " + to_string(locked_amount) +
+                        ", percentage_applied: " + to_string(percentage_applied) +
+                        ", adjusted_amount: " + to_string(adjusted_amount) +
+                        ", adjusted_units: " + to_string(adjusted_units) +
+                        ", converted_points: " + converted_points.to_string();
+
+    check(false, diagnostic);
+  }
+
+
+
+
+
+
+
+
   if (action == "diagnose unlock") {
 
     // calculate the amount to be unvested - get the percentage for the iteration

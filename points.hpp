@@ -146,17 +146,18 @@ void freeosgov::unlock(const name &user) {
   // be thoroughly tested.
 
   double percentage = unlock_percent / 100.0;
-  uint64_t locked_amount = locked_balance.amount;
-  uint64_t percentage_applied = locked_amount * percentage;
-  uint64_t adjusted_amount = (percentage_applied / 10000) * 10000; // rounding to whole units
+  double locked_amount = locked_balance.amount / 10000;
+  double percentage_applied = locked_amount * percentage;
+  double adjusted_amount = ceil(percentage_applied); // rounding up to whole units
+  uint64_t adjusted_units = adjusted_amount * 10000;
 
-  // this logic deals with a remaining small amount
-  // if the rounded amount is zero then unlock the remaining balance of locked points
-  if (adjusted_amount == 0) {
-    adjusted_amount = locked_amount;
+  // to prevent rounding up to more than the locked point balance, apply this adjustment
+  // this will bring the locked balance to zero
+  if (adjusted_units > locked_balance.amount) {
+    adjusted_units = locked_balance.amount;
   }
 
-  asset converted_points = asset(adjusted_amount, POINT_CURRENCY_SYMBOL);
+  asset converted_points = asset(adjusted_units, POINT_CURRENCY_SYMBOL);
 
   std::string memo = std::string("unlocking POINTs by ");
   memo.append(user.to_string());
@@ -313,6 +314,7 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
   asset points_subject_to_fee = asset(0, POINT_CURRENCY_SYMBOL);  // default value
   asset mintfeefree_allowance = asset(0, POINT_CURRENCY_SYMBOL);  // default value
   asset mintfee = asset(0, XPR_CURRENCY_SYMBOL);                  // default value - TODO: set for different currencies
+  
   // express the mint quantity as an equivalent number of POINTs
   asset mint_quantity_points = asset(mint_quantity.amount, POINT_CURRENCY_SYMBOL);
   double mintfee_amount = 0;    // amount of currency, e.g. 123.4567 represents 123.4567 FREEOS
@@ -365,7 +367,11 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
     }
 
     // apply the currency conversion if necessary
-    if (mint_fee_currency != symbol("FREEOS", 4)) {
+    if (mint_fee_currency == symbol("FREEOS", 4)) {
+      mintfee_units = mintfee_in_freeos * 10000;
+    } else {
+      // conversion required
+
       // get the FREEOS exchange rate
       currencies_index currencies_table(get_self(), get_self().value);
       auto freeos_iterator = currencies_table.find(symbol("FREEOS", 4).raw());
@@ -396,7 +402,7 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
       
     }
 
-    mintfee = asset(mintfee_amount, mint_fee_currency);
+    mintfee = asset(mintfee_units, mint_fee_currency);
 
   } else {
     mintfee = asset(0, mint_fee_currency);
