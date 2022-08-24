@@ -78,6 +78,9 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
 
     tick();
 
+    // check that system is operational (masterswitch parameter set to "1")
+    check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
+
     // is the user registered?
     check(is_registered(user), "voting is not open to unregistered users");
     

@@ -150,6 +150,9 @@ void freeosgov::maintain(string action, name user) {
     check(system_iterator != system_table.end(), "system record not found");
     uint32_t unlock_percent = system_iterator->unlockpercent;
 
+    // DIAG
+    unlock_percent = 21;
+
     // check that the unvest percentage is within limits
     check(unlock_percent > 0 && unlock_percent <= 100,
           "locked POINTs cannot be unlocked in this claim period. Please try during next claim period");
@@ -173,22 +176,24 @@ void freeosgov::maintain(string action, name user) {
     // be thoroughly tested.
 
     double percentage = unlock_percent / 100.0;
-    uint64_t locked_amount = locked_balance.amount;
-    uint64_t percentage_applied = locked_amount * percentage;
-    uint64_t adjusted_amount = (percentage_applied / 10000) * 10000; // rounding to whole units
+    double locked_amount = locked_balance.amount / 10000.0;
+    double percentage_applied = locked_amount * percentage;
+    double adjusted_amount = ceil(percentage_applied); // rounding up to whole units
+    uint64_t adjusted_units = adjusted_amount * 10000;
 
-    // this logic deals with a remaining small amount
-    // if the rounded amount is zero then unlock the remaining balance of locked points
-    if (adjusted_amount == 0) {
-      adjusted_amount = locked_amount;
+    // to prevent rounding up to more than the locked point balance, apply this adjustment
+    // this will bring the locked balance to zero
+    if (adjusted_units > locked_balance.amount) {
+      adjusted_units = locked_balance.amount;
     }
 
-    asset converted_points = asset(adjusted_amount, POINT_CURRENCY_SYMBOL);
+    asset converted_points = asset(adjusted_units, POINT_CURRENCY_SYMBOL);
 
     string diagnostic =  "percentage: " + to_string(percentage) +
                         ", locked_amount: " + to_string(locked_amount) +
                         ", percentage_applied: " + to_string(percentage_applied) +
                         ", adjusted_amount: " + to_string(adjusted_amount) +
+                        ", adjusted_units: " + to_string(adjusted_units) +
                         ", converted_points: " + converted_points.to_string();
 
     check(false, diagnostic);
@@ -203,11 +208,11 @@ void freeosgov::maintain(string action, name user) {
     if (locked_iterator == locked_points_table.end()) {
       locked_points_table.emplace(
         get_self(), [&](auto &l) {
-          l.balance = asset(27770123456789, POINT_CURRENCY_SYMBOL);
+          l.balance = asset(9000, POINT_CURRENCY_SYMBOL);
         });
     } else {
       locked_points_table.modify(locked_iterator, get_self(), [&](auto &l) {
-        l.balance = asset(27770123456789, POINT_CURRENCY_SYMBOL);
+        l.balance = asset(9000, POINT_CURRENCY_SYMBOL);
       });
     }
     

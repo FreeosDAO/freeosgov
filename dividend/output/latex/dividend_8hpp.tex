@@ -1,0 +1,164 @@
+\hypertarget{dividend_8hpp}{}\doxysection{D\+:/doxygenintro/incl\+\_\+optionsdiv/dividend.hpp File Reference}
+\label{dividend_8hpp}\index{D:/doxygenintro/incl\_optionsdiv/dividend.hpp@{D:/doxygenintro/incl\_optionsdiv/dividend.hpp}}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{dividend_8hpp_a7268b598ab179e53d216a4fad466e3e0}{role\+\_\+type}} \{ \mbox{\hyperlink{dividend_8hpp_a7268b598ab179e53d216a4fad466e3e0aaa395486672b3cae7409cd37e91acd20}{PROPOSER}} =1
+, \mbox{\hyperlink{dividend_8hpp_a7268b598ab179e53d216a4fad466e3e0a352769f418d6275ff9ef714499069a07}{VOTER1}} =2
+, \mbox{\hyperlink{dividend_8hpp_a7268b598ab179e53d216a4fad466e3e0a2471f330cdea0e9b46e0b5102ed130f7}{VOTER2}} =3
+ \}
+\item 
+enum \mbox{\hyperlink{group__dividenda_ga943a308f745ea7ddc590893803538b3b}{roi\+\_\+target\+\_\+cap}} \{ \mbox{\hyperlink{group__dividenda_ga943a308f745ea7ddc590893803538b3ba6cdecbcf3e967dc8d4f9b63ef3a598cb}{ITERATION}} =1
+, \mbox{\hyperlink{group__dividenda_ga943a308f745ea7ddc590893803538b3ba4dd51ad73508d6fc83a502966779e48e}{HORIZONTAL}} =2
+, \mbox{\hyperlink{group__dividenda_ga943a308f745ea7ddc590893803538b3ba1a88641fcd39f2ed3e58a18526e97138}{VERTICAL}} =3
+ \}
+\begin{DoxyCompactList}\small\item\em 1-\/ iterative 2-\/ horizontal 3-\/ vertical \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const std\+::string \mbox{\hyperlink{dividend_8hpp_a1e20c163c03189acfe600030f8ef8b95}{VERSION}} = \char`\"{}Version = 140 QA2\char`\"{}
+\item 
+const std\+::string \mbox{\hyperlink{dividend_8hpp_a0d0cf628ac4bbc0bc6c65b3909042303}{freeos\+\_\+acct}} = \char`\"{}freeos\char`\"{}
+\item 
+const std\+::string \mbox{\hyperlink{dividend_8hpp_a1bc443d10a837fd05e2c96e100691387}{freeosconfig\+\_\+acct}} = \char`\"{}freeosconfig\char`\"{}
+\item 
+symbol\+\_\+code \mbox{\hyperlink{dividend_8hpp_abe83249704a244adff75b83221968e74}{freeos}} = symbol\+\_\+code(\char`\"{}FREEOS\char`\"{})
+\item 
+const name \mbox{\hyperlink{dividend_8hpp_a8d258a2e0159cac6501128ea1fe33f90}{tokencontra}} = \char`\"{}freeos\char`\"{}\+\_\+n
+\begin{DoxyCompactList}\small\item\em Token contract (for inline transfers) \end{DoxyCompactList}\item 
+const name \mbox{\hyperlink{dividend_8hpp_af7cdaf8d9ba3f058125a5d2cf59446ef}{daoaccount}} = \char`\"{}freeosdaodao\char`\"{}\+\_\+n
+\begin{DoxyCompactList}\small\item\em Organizational target DAO account. \end{DoxyCompactList}\item 
+const name \mbox{\hyperlink{dividend_8hpp_ae2477cad32de938e60520e69ef953a5b}{this\+\_\+account}} = \char`\"{}optionsdiv\char`\"{}\+\_\+n
+\item 
+const int \mbox{\hyperlink{dividend_8hpp_a923fb65f0f9168a0447bbdf7d51072ed}{UNKNOWN\+\_\+\+ITERATION}} = 1
+\item 
+const int \mbox{\hyperlink{dividend_8hpp_a639fc45c97f52f724bf814c8efa981cd}{ACTION\+\_\+\+IGNORED}} = 2
+\item 
+const int \mbox{\hyperlink{dividend_8hpp_a1686fe7c0c0c4ae513c95c5f819477d6}{NON\+\_\+\+FOUNDER}} = 3
+\item 
+const int \mbox{\hyperlink{dividend_8hpp_a67e6ba363593fb6a1b1fa00df41b7f29}{NFT\+\_\+\+MINTED}} = 4
+\item 
+const int \mbox{\hyperlink{dividend_8hpp_a0f217723f2b54cbe4b0d4dda89cfa8a2}{NFT\+\_\+\+REFUSED}} = 5
+\item 
+const int \mbox{\hyperlink{dividend_8hpp_abc70da2f3aba31456a2839dbad867056}{NFT\+\_\+\+CHOWN}} = 6
+\item 
+const int \mbox{\hyperlink{dividend_8hpp_aec395e327e336a0a36a8f9a6e99a9d4e}{ITERATION\+\_\+\+ZERO}} = 7
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{dividend_8hpp_a7268b598ab179e53d216a4fad466e3e0}\label{dividend_8hpp_a7268b598ab179e53d216a4fad466e3e0}} 
+\index{dividend.hpp@{dividend.hpp}!role\_type@{role\_type}}
+\index{role\_type@{role\_type}!dividend.hpp@{dividend.hpp}}
+\doxysubsubsection{\texorpdfstring{role\_type}{role\_type}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{dividend_8hpp_a7268b598ab179e53d216a4fad466e3e0}{role\+\_\+type}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PROPOSER@{PROPOSER}!dividend.hpp@{dividend.hpp}}\index{dividend.hpp@{dividend.hpp}!PROPOSER@{PROPOSER}}}\mbox{\Hypertarget{dividend_8hpp_a7268b598ab179e53d216a4fad466e3e0aaa395486672b3cae7409cd37e91acd20}\label{dividend_8hpp_a7268b598ab179e53d216a4fad466e3e0aaa395486672b3cae7409cd37e91acd20}} 
+PROPOSER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VOTER1@{VOTER1}!dividend.hpp@{dividend.hpp}}\index{dividend.hpp@{dividend.hpp}!VOTER1@{VOTER1}}}\mbox{\Hypertarget{dividend_8hpp_a7268b598ab179e53d216a4fad466e3e0a352769f418d6275ff9ef714499069a07}\label{dividend_8hpp_a7268b598ab179e53d216a4fad466e3e0a352769f418d6275ff9ef714499069a07}} 
+VOTER1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VOTER2@{VOTER2}!dividend.hpp@{dividend.hpp}}\index{dividend.hpp@{dividend.hpp}!VOTER2@{VOTER2}}}\mbox{\Hypertarget{dividend_8hpp_a7268b598ab179e53d216a4fad466e3e0a2471f330cdea0e9b46e0b5102ed130f7}\label{dividend_8hpp_a7268b598ab179e53d216a4fad466e3e0a2471f330cdea0e9b46e0b5102ed130f7}} 
+VOTER2&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{dividend_8hpp_a639fc45c97f52f724bf814c8efa981cd}\label{dividend_8hpp_a639fc45c97f52f724bf814c8efa981cd}} 
+\index{dividend.hpp@{dividend.hpp}!ACTION\_IGNORED@{ACTION\_IGNORED}}
+\index{ACTION\_IGNORED@{ACTION\_IGNORED}!dividend.hpp@{dividend.hpp}}
+\doxysubsubsection{\texorpdfstring{ACTION\_IGNORED}{ACTION\_IGNORED}}
+{\footnotesize\ttfamily const int ACTION\+\_\+\+IGNORED = 2}
+
+\mbox{\Hypertarget{dividend_8hpp_af7cdaf8d9ba3f058125a5d2cf59446ef}\label{dividend_8hpp_af7cdaf8d9ba3f058125a5d2cf59446ef}} 
+\index{dividend.hpp@{dividend.hpp}!daoaccount@{daoaccount}}
+\index{daoaccount@{daoaccount}!dividend.hpp@{dividend.hpp}}
+\doxysubsubsection{\texorpdfstring{daoaccount}{daoaccount}}
+{\footnotesize\ttfamily const name daoaccount = \char`\"{}freeosdaodao\char`\"{}\+\_\+n}
+
+
+
+Organizational target DAO account. 
+
+\mbox{\Hypertarget{dividend_8hpp_abe83249704a244adff75b83221968e74}\label{dividend_8hpp_abe83249704a244adff75b83221968e74}} 
+\index{dividend.hpp@{dividend.hpp}!freeos@{freeos}}
+\index{freeos@{freeos}!dividend.hpp@{dividend.hpp}}
+\doxysubsubsection{\texorpdfstring{freeos}{freeos}}
+{\footnotesize\ttfamily symbol\+\_\+code freeos = symbol\+\_\+code(\char`\"{}FREEOS\char`\"{})}
+
+\mbox{\Hypertarget{dividend_8hpp_a0d0cf628ac4bbc0bc6c65b3909042303}\label{dividend_8hpp_a0d0cf628ac4bbc0bc6c65b3909042303}} 
+\index{dividend.hpp@{dividend.hpp}!freeos\_acct@{freeos\_acct}}
+\index{freeos\_acct@{freeos\_acct}!dividend.hpp@{dividend.hpp}}
+\doxysubsubsection{\texorpdfstring{freeos\_acct}{freeos\_acct}}
+{\footnotesize\ttfamily const std\+::string freeos\+\_\+acct = \char`\"{}freeos\char`\"{}}
+
+\mbox{\Hypertarget{dividend_8hpp_a1bc443d10a837fd05e2c96e100691387}\label{dividend_8hpp_a1bc443d10a837fd05e2c96e100691387}} 
+\index{dividend.hpp@{dividend.hpp}!freeosconfig\_acct@{freeosconfig\_acct}}
+\index{freeosconfig\_acct@{freeosconfig\_acct}!dividend.hpp@{dividend.hpp}}
+\doxysubsubsection{\texorpdfstring{freeosconfig\_acct}{freeosconfig\_acct}}
+{\footnotesize\ttfamily const std\+::string freeosconfig\+\_\+acct = \char`\"{}freeosconfig\char`\"{}}
+
+\mbox{\Hypertarget{dividend_8hpp_aec395e327e336a0a36a8f9a6e99a9d4e}\label{dividend_8hpp_aec395e327e336a0a36a8f9a6e99a9d4e}} 
+\index{dividend.hpp@{dividend.hpp}!ITERATION\_ZERO@{ITERATION\_ZERO}}
+\index{ITERATION\_ZERO@{ITERATION\_ZERO}!dividend.hpp@{dividend.hpp}}
+\doxysubsubsection{\texorpdfstring{ITERATION\_ZERO}{ITERATION\_ZERO}}
+{\footnotesize\ttfamily const int ITERATION\+\_\+\+ZERO = 7}
+
+\mbox{\Hypertarget{dividend_8hpp_abc70da2f3aba31456a2839dbad867056}\label{dividend_8hpp_abc70da2f3aba31456a2839dbad867056}} 
+\index{dividend.hpp@{dividend.hpp}!NFT\_CHOWN@{NFT\_CHOWN}}
+\index{NFT\_CHOWN@{NFT\_CHOWN}!dividend.hpp@{dividend.hpp}}
+\doxysubsubsection{\texorpdfstring{NFT\_CHOWN}{NFT\_CHOWN}}
+{\footnotesize\ttfamily const int NFT\+\_\+\+CHOWN = 6}
+
+\mbox{\Hypertarget{dividend_8hpp_a67e6ba363593fb6a1b1fa00df41b7f29}\label{dividend_8hpp_a67e6ba363593fb6a1b1fa00df41b7f29}} 
+\index{dividend.hpp@{dividend.hpp}!NFT\_MINTED@{NFT\_MINTED}}
+\index{NFT\_MINTED@{NFT\_MINTED}!dividend.hpp@{dividend.hpp}}
+\doxysubsubsection{\texorpdfstring{NFT\_MINTED}{NFT\_MINTED}}
+{\footnotesize\ttfamily const int NFT\+\_\+\+MINTED = 4}
+
+\mbox{\Hypertarget{dividend_8hpp_a0f217723f2b54cbe4b0d4dda89cfa8a2}\label{dividend_8hpp_a0f217723f2b54cbe4b0d4dda89cfa8a2}} 
+\index{dividend.hpp@{dividend.hpp}!NFT\_REFUSED@{NFT\_REFUSED}}
+\index{NFT\_REFUSED@{NFT\_REFUSED}!dividend.hpp@{dividend.hpp}}
+\doxysubsubsection{\texorpdfstring{NFT\_REFUSED}{NFT\_REFUSED}}
+{\footnotesize\ttfamily const int NFT\+\_\+\+REFUSED = 5}
+
+\mbox{\Hypertarget{dividend_8hpp_a1686fe7c0c0c4ae513c95c5f819477d6}\label{dividend_8hpp_a1686fe7c0c0c4ae513c95c5f819477d6}} 
+\index{dividend.hpp@{dividend.hpp}!NON\_FOUNDER@{NON\_FOUNDER}}
+\index{NON\_FOUNDER@{NON\_FOUNDER}!dividend.hpp@{dividend.hpp}}
+\doxysubsubsection{\texorpdfstring{NON\_FOUNDER}{NON\_FOUNDER}}
+{\footnotesize\ttfamily const int NON\+\_\+\+FOUNDER = 3}
+
+\mbox{\Hypertarget{dividend_8hpp_ae2477cad32de938e60520e69ef953a5b}\label{dividend_8hpp_ae2477cad32de938e60520e69ef953a5b}} 
+\index{dividend.hpp@{dividend.hpp}!this\_account@{this\_account}}
+\index{this\_account@{this\_account}!dividend.hpp@{dividend.hpp}}
+\doxysubsubsection{\texorpdfstring{this\_account}{this\_account}}
+{\footnotesize\ttfamily const name this\+\_\+account = \char`\"{}optionsdiv\char`\"{}\+\_\+n}
+
+\mbox{\Hypertarget{dividend_8hpp_a8d258a2e0159cac6501128ea1fe33f90}\label{dividend_8hpp_a8d258a2e0159cac6501128ea1fe33f90}} 
+\index{dividend.hpp@{dividend.hpp}!tokencontra@{tokencontra}}
+\index{tokencontra@{tokencontra}!dividend.hpp@{dividend.hpp}}
+\doxysubsubsection{\texorpdfstring{tokencontra}{tokencontra}}
+{\footnotesize\ttfamily const name tokencontra = \char`\"{}freeos\char`\"{}\+\_\+n}
+
+
+
+Token contract (for inline transfers) 
+
+\mbox{\Hypertarget{dividend_8hpp_a923fb65f0f9168a0447bbdf7d51072ed}\label{dividend_8hpp_a923fb65f0f9168a0447bbdf7d51072ed}} 
+\index{dividend.hpp@{dividend.hpp}!UNKNOWN\_ITERATION@{UNKNOWN\_ITERATION}}
+\index{UNKNOWN\_ITERATION@{UNKNOWN\_ITERATION}!dividend.hpp@{dividend.hpp}}
+\doxysubsubsection{\texorpdfstring{UNKNOWN\_ITERATION}{UNKNOWN\_ITERATION}}
+{\footnotesize\ttfamily const int UNKNOWN\+\_\+\+ITERATION = 1}
+
+\mbox{\Hypertarget{dividend_8hpp_a1e20c163c03189acfe600030f8ef8b95}\label{dividend_8hpp_a1e20c163c03189acfe600030f8ef8b95}} 
+\index{dividend.hpp@{dividend.hpp}!VERSION@{VERSION}}
+\index{VERSION@{VERSION}!dividend.hpp@{dividend.hpp}}
+\doxysubsubsection{\texorpdfstring{VERSION}{VERSION}}
+{\footnotesize\ttfamily const std\+::string VERSION = \char`\"{}Version = 140 QA2\char`\"{}}
+

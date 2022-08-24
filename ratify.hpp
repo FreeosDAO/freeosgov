@@ -38,6 +38,9 @@ void freeosgov::ratify(name user, bool ratify_vote) {
     
     require_auth(user);
 
+    // check that system is operational (masterswitch parameter set to "1")
+    check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
+
     tick();
 
     // is the user registered?

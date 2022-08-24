@@ -99,7 +99,7 @@ void freeosgov::unlock(const name &user) {
   // user-activity-driven background process
   tick();
 
-  // check that system is operational (global masterswitch parameter set to "1")
+  // check that system is operational masterswitch parameter set to "1")
   check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
 
   // get the current iteration
@@ -146,7 +146,7 @@ void freeosgov::unlock(const name &user) {
   // be thoroughly tested.
 
   double percentage = unlock_percent / 100.0;
-  double locked_amount = locked_balance.amount / 10000;
+  double locked_amount = locked_balance.amount / 10000.0;
   double percentage_applied = locked_amount * percentage;
   double adjusted_amount = ceil(percentage_applied); // rounding up to whole units
   uint64_t adjusted_units = adjusted_amount * 10000;
@@ -266,6 +266,14 @@ void freeosgov::add_balance(const name &owner, const asset &value,
 // ACTION
 void freeosgov::mintfreebi(const name &owner, const asset &quantity) {
   require_auth(owner);
+
+  // check that system is operational (masterswitch parameter set to "1")
+  check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
+
+  uint32_t this_iteration = current_iteration();
+    
+  // is the system operational?
+  check(this_iteration != 0, "The freeos system is not available at this time");
 
   // is the 'owner' user verified?
   check(is_user_verified(owner), "minting is restricted to verified users");
@@ -411,7 +419,9 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
   return mintfee;
 }
 
-
+// This function is not called. If the mintfreeos transaction fails then all actions
+// in the transaction are rolled back, which means there is no need to refund the mint fee.
+// The code is reserved for future use
 void freeosgov::refund_mintfee(name user, symbol mint_fee_currency) {
 
   credit_index credit_table(get_self(), user.value);
@@ -524,6 +534,14 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
 
   require_auth(user);
 
+  // check that system is operational (masterswitch parameter set to "1")
+  check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
+
+  uint32_t this_iteration = current_iteration();
+    
+  // is the system operational?
+  check(this_iteration != 0, "The freeos system is not available at this time");
+
   check(input_quantity.is_valid(), "invalid quantity");
   check(input_quantity.amount > 0, "must mint a positive quantity");
 
@@ -569,6 +587,9 @@ void freeosgov::withdraw(const name user) {
   string  memo;
 
   require_auth(user);
+
+  // check that system is operational (global masterswitch parameter set to "1")
+  check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
 
   // currencies table
   currencies_index currencies_table(get_self(), get_self().value);

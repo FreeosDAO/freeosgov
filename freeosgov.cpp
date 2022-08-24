@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.42";
+const std::string VERSION = "0.9.43";
 
 // ACTION
 void freeosgov::version() {
@@ -169,6 +169,9 @@ uint32_t freeosgov::current_iteration() {
 // ACTION
 void freeosgov::tick() {
 
+  // check that system is operational (masterswitch parameter set to "1")
+  check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
+
   // are we on a new iteration?
   system_index system_table(get_self(), get_self().value);
   auto system_iterator = system_table.begin();
@@ -176,6 +179,7 @@ void freeosgov::tick() {
 
   uint32_t recorded_iteration = system_iterator->iteration;
   uint32_t this_iteration = current_iteration();
+
 
   // set the new iteration in the system record
   if (this_iteration != recorded_iteration) {

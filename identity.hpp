@@ -116,6 +116,9 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
 
   require_auth(user);
 
+  // check that system is operational (masterswitch parameter set to "1")
+  check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
+
   // get the current iteration
   uint32_t iteration = current_iteration();
 
@@ -222,6 +225,9 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
 // ACTION
 void freeosgov::reregister(name user) {
   require_auth(user);
+
+  // check that system is operational (masterswitch parameter set to "1")
+  check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
 
   // original verified user status
   bool verified_before = is_user_verified(user);

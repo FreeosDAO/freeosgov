@@ -1,0 +1,92 @@
+﻿//verify version of contract - the result should be as the last record in messages table
+
+
+cleos --url   https://proton-testnet.eosphere.io:443 push action optionsdiva sendversion '{}' -p optionsdiva@active
+
+
+// Create a whitelist table (three instructions). The table whitelist remains unchanged for all the future operations. The last column of the table displays last votes.
+
+
+cleos --url   https://proton-testnet.eosphere.io:443 push action optionsdiva upsert '{"role_type":1,"role_acct":"freeosfreeos"}' -p optionsdiva@active
+
+
+cleos --url   https://proton-testnet.eosphere.io:443 push action optionsdiva upsert '{"role_type":2,"role_acct":"freeosandy11"}' -p optionsdiva@active
+
+
+cleos --url   https://proton-testnet.eosphere.io:443 push action optionsdiva upsert '{"role_type":3,"role_acct":"freeandyandy"}' -p optionsdiva@active
+
+
+// Create proposal
+
+
+cleos --url   https://proton-testnet.eosphere.io:443 push action optionsdiva proposalnew '{"proposername":"freeosfreeos","eosaccount":"ala1ma12kota","roi_target_cap":1,"period_percentage":"3.5","threshold":"0.0000 OPTIONS","rates_left":12,"locked":false}' -p freeosfreeos@active
+
+
+// successfully vote proposal
+
+
+// first voter
+cleos --url   https://proton-testnet.eosphere.io:443 push action optionsdiva proposalvote '{"votername":"freeandyandy","vote":2}' -p freeandyandy@active
+
+
+
+
+//second voter
+cleos --url   https://proton-testnet.eosphere.io:443 push action optionsdiva proposalvote '{"votername":"freeosandy11","vote":2}' -p freeosandy11@active
+
+
+
+
+
+
+
+
+
+
+
+
+dividompute Counting and transferring dividends. The action takes all waiting (non processed iterations) and realizes it one by one by counting dividends and sending to the NFT’s owners. The transfer is cumulative, so all dividends counted from all active NFTs belonging to one person are sent at once as one transfer.
+cleos -u https://proton-testnet.eoscafeblock.com push transaction '{
+  "delay_sec": 0,
+  "max_cpu_usage_ms": 0,
+  "actions": [
+    {
+      "account": "optionsdiv",
+      "name": "dividcompute",
+      "data": {},
+      "authorization": [
+        {
+          "actor": "fredivregist",
+          "permission": "active"
+        }
+      ]
+    }
+  ]
+}'
+
+
+
+
+OTHER
+
+
+// Read which iteration is current - the result is written at the end of the messages table.
+cleos --url   https://proton-testnet.eosphere.io:443 push action optionsdiva extreadtest '{}' -p freeosandy11@active
+
+
+// Read software version - the result is written at the end of the messages table.
+cleos --url   https://proton-testnet.eosphere.io:443 push action optionsdiva sendversion '{}' -p freeosandy11@active
+
+
+// dryrun - estimation of dividends - results are contained in two tables: dryruns (by users) and ewstables (by category).
+cleos --url   https://proton-testnet.eosphere.io:443 push action optionsdiva dryrun '{"proposername":"freeosfreeos"}' -p freeosfreeos@active
+
+
+// Query: gives in messages the code for the currently logged user (this is used to select the correct page on the front page. Result in messages. The other contents of messages will be deleted.
+cleos --url   https://proton-testnet.eosphere.io:443 push action optionsdiva query '{"eosaccount":"freeosfreeos"}' -p freeosfreeos@active
+
+
+In messages table:  1-proposer 2,3 - voters, 0 - users.
+
+
+Updated: 3rd May 2021.

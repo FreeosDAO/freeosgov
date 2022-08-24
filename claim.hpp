@@ -15,6 +15,9 @@ void freeosgov::claim(name user) {
 
     require_auth(user);
 
+    // check that system is operational (masterswitch parameter set to "1")
+    check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
+
     tick();
 
     uint32_t this_iteration = current_iteration();

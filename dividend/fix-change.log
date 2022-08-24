@@ -1,0 +1,23 @@
+
+
+Changes after last audit:
+
+Ver. 1.42
+569 - 570 'quantity.amount' replaced by 'profit.to_string()' in the memo string
+ 23 Feb 2022 10:54 am by AZ
+
+Ver. 1.41
+454 - 456 corrected precision issues when counting individual dividend
+568 - 570 quantity information added to dividend transaction memo.
+750 - 758 clean partial voting results when proposal cancelled. (So called 2nd voter issue)
+ 22 Feb 2022 3:34 pm by AZ
+ 
+andy@andy-front:~/devel-allocate/dividenda/Dividend/depl_freeosdivide/dividenda$ 
+
+Compiled by eosio.cdt_1.7
+
+ sha256sum dividenda.abi
+d5e52c4dceb0ec28a66fd09cbf248a1905f69b24f48bae92d21ee09cc77e4afa  dividenda.abi
+0f2533d09f5282a3eb4e803229bf741075c59a8c1002cd40e14ad6a73e6800dc  dividenda.wasm
+ 23 Feb 2022 11:17 am by AZ
+
