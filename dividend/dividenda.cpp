@@ -580,7 +580,7 @@ void dividenda::proposalvote(  const name votername,
         if(quantity.amount>0){
           action dtransfer = action(
             permission_level{get_self(),"active"_n},
-            name(freeos_acct),   
+            freeos_acct,   
             "allocate"_n,
             std::make_tuple(get_self(), user, quantity, memo )
           );
@@ -658,7 +658,7 @@ void dividenda::cron()
 
 void dividenda::replay()
 {  
-  deposit_index deposit_tbl(tokencontra, tokencontra.value);           //external deposit table 
+  deposit_index deposit_tbl(freeos_acct, freeos_acct.value);           //external deposit table 
 
   // read current iteration externally 
   uint64_t current_iter;                  // The row containing this iteration number cannot be processed! 
@@ -679,8 +679,8 @@ void dividenda::replay()
       dividendhand( iterpoint, itervalue );   // Process single iteration dividend. 
       // action to remove a deposit row from the deposit table
       action diverase = action(
-        permission_level{ this_account, "active"_n},  // 'this_account' already has _n 
-        name(freeos_acct),   
+        permission_level{ get_self(), "active"_n},
+        freeos_acct,   
         "depositclear"_n,
          std::make_tuple( iterpoint )
       );

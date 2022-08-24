@@ -1,3 +1,0 @@
-845553762231ba747d86ab0d861c6c6f  dividenda.abi
-20ec6594b61b2f1a191a7c6176cbaad2  dividenda.wasm
-

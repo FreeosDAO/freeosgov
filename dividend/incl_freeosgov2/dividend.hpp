@@ -1,4 +1,7 @@
 
+using namespace eosio;
+using namespace std;
+
 // Versions description and CHANGE LOG
  
 // 130 - identification function auth_vip to identify members of whitelist table. Changes in names. 20th Apr.
@@ -19,25 +22,9 @@ const static double ALLOWED_PERCENTAGE = 90.00; ///< cumulative percentage of al
 enum role_type { PROPOSER=1, VOTER1=2, VOTER2=3}; 
 enum roi_target_cap { ITERATION=1, HORIZONTAL=2, VERTICAL=3 };
 
-// Account names used in the code: (for mainnet)
-// const std::string freeos_acct       = "freeosclaim";
-// const std::string freeosconfig_acct = "freeoscfg"; // Tom's configuration contract 
-//
-//const name tokencontra   = "freeosclaim"_n;          ///< Token contract (for inline transfers)    
-//const name daoaccount    = "freedaofdn"_n;     ///< Organizational target DAO account
-//const name this_account  = "freeosdivide"_n;  
-
-// Accounts names used for proton testnet
-const std::string freeos_acct       = "freeos5";  // freeosclaim
-const std::string freeosconfig_acct = "freeoscfg5"; // Tom's configuration contract 
-
-const name tokencontra   = "freeos5"_n;          ///< Token contract (for inline transfers)    
-const name daoaccount    = "freeosdaodao"_n;     ///< Organizational target DAO account
-const name this_account  = "freeosdiv5"_n;  
-
-
-
-
+// Accounts names
+const name freeos_acct  = "freeosgov2"_n;   // freeos governance contract
+const name daoaccount   = "freeosdaodao"_n; // target DAO account
 
 
 //                          Non-catastrophic frontend warnings used in 'messages' (notify_front)

@@ -1,11 +1,12 @@
-// "Ver 139, 21 May, 2021";
 #include <eosio/asset.hpp>
 #include <eosio/eosio.hpp>
 #include <eosio/system.hpp>
 #include <eosio/time.hpp>
-#include <math.h>
-#include "freeos.hpp"       
+#include <math.h>      
 #include "dividend.hpp"     // Must be dividend.hpp - not dividenda :)
+
+// freeosgov table definitions
+#include "../tables.hpp"
 
 using namespace std;
 using namespace eosio; 
@@ -24,7 +25,7 @@ using namespace eosio;
 CONTRACT dividenda : public contract {
 
   // current version string:
-  const std::string VERSION = "1.46";
+  const std::string VERSION = "2.0";
 
 
   public:
@@ -422,8 +423,31 @@ CONTRACT dividenda : public contract {
 // returns the current iteration number  Updated 5th May 21.
 uint32_t getclaimiteration() {
 
-  uint32_t this_iteration = 0;
+  uint32_t iteration = 0;
 
+  freedao::system_index system_table(freeos_acct, freeos_acct.value);
+  auto system_iterator = system_table.begin();
+  check(system_iterator != system_table.end(), "freeos system record not defined");
+
+  time_point init = system_iterator->init;
+
+  // how far are we into the current iteration?
+  uint64_t now_secs = current_time_point().sec_since_epoch();
+  uint64_t init_secs = init.sec_since_epoch();
+
+  // read the iteration length in seconds
+  freedao::parameters_index parameters_table(freeos_acct, freeos_acct.value);
+  auto parameter_iterator = parameters_table.find(name("iterationsec").value);
+  check(parameter_iterator != parameters_table.end(), "the parameter iterationsec is not defined");
+  int iteration_secs = stoi(parameter_iterator->value);
+
+  if (now_secs >= init_secs) {
+    iteration = ((now_secs - init_secs) / iteration_secs) + 1;
+  }
+  
+  return iteration;
+
+  /* old stuff
   uint64_t now = current_time_point().time_since_epoch()._count;
 
   // iterate through iteration records and find one that matches current time
@@ -442,6 +466,7 @@ uint32_t getclaimiteration() {
   }  
  
   return this_iteration;
+  */
 }
 
 
