@@ -16,14 +16,16 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.43";
+const std::string VERSION = "0.9.47";
 
 // ACTION
 void freeosgov::version() {
 
   string freeosdiv_acct = get_parameter(name("freedaoacct"));
+  string freebi_tokens_contract = get_parameter(name("freebitokens"));
+  string freeos_tokens_contract = get_parameter(name("freeostokens"));
 
-  std::string version_message = "version: " + VERSION + ", freeos tokens account: " + freeos_acct + ", freebi tokens account: " + freebi_acct +
+  std::string version_message = "version: " + VERSION + ", freeos tokens account: " + freeos_tokens_contract + ", freebi tokens account: " + freebi_tokens_contract +
                                 + ", freeos divide account: " + freeosdiv_acct + ", iteration: " + std::to_string(current_iteration());
 
   check(false, version_message);
@@ -49,8 +51,8 @@ bool freeosgov::check_master_switch() {
 }
 
 // ACTION
-void freeosgov::init(time_point iterations_start, double issuance_rate, double mint_fee_percent,
-                    double locking_threshold, bool pool) {
+void freeosgov::init(time_point iterations_start, double issuance_rate, double mint_fee_percent_freeos,
+                    double mint_fee_percent_xpr, double mint_fee_percent_xusdc, double locking_threshold, bool pool) {
 
   require_auth(get_self());
 
@@ -76,7 +78,9 @@ void freeosgov::init(time_point iterations_start, double issuance_rate, double m
       rwd.iteration_issuance = asset(0, POINT_CURRENCY_SYMBOL);
       rwd.participant_issuance = asset(0, POINT_CURRENCY_SYMBOL);
       rwd.issuance_rate = issuance_rate;
-      rwd.mint_fee_percent = mint_fee_percent;
+      rwd.mint_fee_percent = mint_fee_percent_freeos;
+      rwd.mint_fee_percent = mint_fee_percent_xpr;
+      rwd.mint_fee_percent = mint_fee_percent_xusdc;
       rwd.locking_threshold = locking_threshold;
       rwd.pool = pool;
       rwd.burn = !pool;
@@ -328,6 +332,8 @@ void freeosgov::update_unlock_percentage() {
 void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
   double issuance_rate;
   double mint_fee_percent;
+  double mint_fee_percent_xpr;
+  double mint_fee_percent_xusdc;
   double locking_threshold;
   bool pool;
   bool burn;
@@ -382,6 +388,8 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
     // if vote not ratified, propagate existing values for issuance_rate, mint_fee_percent, locking_threshold, pool, burn in the event of non-ratification
     issuance_rate = last_reward_iterator->issuance_rate;
     mint_fee_percent = last_reward_iterator->mint_fee_percent;
+    mint_fee_percent_xpr = last_reward_iterator->mint_fee_percent_xpr;
+    mint_fee_percent_xusdc = last_reward_iterator->mint_fee_percent_xusdc;
     locking_threshold = last_reward_iterator->locking_threshold;
     pool = last_reward_iterator->pool;
     burn = last_reward_iterator->burn;
@@ -411,6 +419,8 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
       rwd.participant_issuance = participant_issuance;
       rwd.issuance_rate = issuance_rate;
       rwd.mint_fee_percent = mint_fee_percent;
+      rwd.mint_fee_percent_xpr = mint_fee_percent_xpr;
+      rwd.mint_fee_percent_xusdc = mint_fee_percent_xusdc;
       rwd.locking_threshold = locking_threshold;
       rwd.pool = pool;
       rwd.burn = burn;

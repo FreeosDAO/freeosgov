@@ -301,15 +301,16 @@ void freeosgov::mintfreebi(const name &owner, const asset &quantity) {
   std::string memo = std::string("minting");
 
   // ask FREEBI contract to issue an equivalent amount of FREEBI tokens to the freeosgov account
+  string freebi_tokens_contract = get_parameter(name("freebitokens"));
   action issue_action = action(
-      permission_level{get_self(), "active"_n}, name(freebi_acct),
+      permission_level{get_self(), "active"_n}, name(freebi_tokens_contract),
       "issue"_n, std::make_tuple(get_self(), exchangeable_amount, memo));
 
   issue_action.send();
 
   // transfer FREEBI tokens to the owner
   action transfer_action = action(
-      permission_level{get_self(), "active"_n}, name(freebi_acct),
+      permission_level{get_self(), "active"_n}, name(freebi_tokens_contract),
       "transfer"_n,
       std::make_tuple(get_self(), owner, exchangeable_amount, memo));
 
@@ -321,7 +322,8 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
 
   asset points_subject_to_fee = asset(0, POINT_CURRENCY_SYMBOL);  // default value
   asset mintfeefree_allowance = asset(0, POINT_CURRENCY_SYMBOL);  // default value
-  asset mintfee = asset(0, XPR_CURRENCY_SYMBOL);                  // default value - TODO: set for different currencies
+  asset mintfee;
+  double mint_fee_percent;
   
   // express the mint quantity as an equivalent number of POINTs
   asset mint_quantity_points = asset(mint_quantity.amount, POINT_CURRENCY_SYMBOL);
@@ -362,7 +364,15 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
     rewards_index rewards_table(get_self(), get_self().value);
     auto reward_iterator = rewards_table.rbegin();
     check(reward_iterator != rewards_table.rend(), "latest reward record not found");
-    double mint_fee_percent = reward_iterator->mint_fee_percent;
+
+    // get the latest voted mint fee percent - depending on which currency user is paying with
+    if (mint_fee_currency ==  symbol("FREEOS", 4)) {
+      mint_fee_percent = reward_iterator->mint_fee_percent;
+    } else if (mint_fee_currency ==  symbol("XPR", 4)) {
+      mint_fee_percent = reward_iterator->mint_fee_percent_xpr;
+    } else if (mint_fee_currency ==  symbol("XUSDC", 6)) {
+      mint_fee_percent = reward_iterator->mint_fee_percent_xusdc;
+    }
 
     // we have to work in double rather asset for accuracy in division and because currencies (e.g. FREEOS, XPR and XUSDC) have different precisions
     double amount_in_units = points_subject_to_fee.amount / 10000.0;
@@ -415,6 +425,9 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
   } else {
     mintfee = asset(0, mint_fee_currency);
   }
+
+  // DIAG
+  // check(false, "mint fee = " + mintfee.to_string());
 
   return mintfee;
 }
@@ -521,8 +534,9 @@ void freeosgov::adjust_balances_from_freebi(const name user, const asset &input_
   credits_table.erase(credit_iterator);
 
   // burn the FREEBI amount
+  string freebi_tokens_contract = get_parameter(name("freebitokens"));
   action retire_freebi_action = action(
-    permission_level{get_self(), "active"_n}, name(freebi_acct),
+    permission_level{get_self(), "active"_n}, name(freebi_tokens_contract),
     "retire"_n, std::make_tuple(input_quantity, string("burning FREEBI to mint FREEOS")));
 
   retire_freebi_action.send();
@@ -530,7 +544,7 @@ void freeosgov::adjust_balances_from_freebi(const name user, const asset &input_
 
 // convert non-exchangeable currency for exchangeable currency
 // ACTION: MINTFREEOS MINTFREEOS MINTFREEOS MINTFREEOS MINTFREEOS MINTFREEOS MINTFREEOS 
-void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_fee_currency) {
+void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_fee_currency, bool use_airclaim_points) {
 
   require_auth(user);
 
@@ -545,8 +559,11 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
   check(input_quantity.is_valid(), "invalid quantity");
   check(input_quantity.amount > 0, "must mint a positive quantity");
 
-  // check whether user has paid correct mint fee, whether they have a credit record, adjust their mintfeefree allowance
-  check(process_mint_fee(user, input_quantity, mint_fee_currency) == true, "incorrect mint fee has been paid");
+  if (use_airclaim_points == false) {
+    // check whether user has paid correct mint fee, whether they have a credit record, adjust their mintfeefree allowance
+    check(process_mint_fee(user, input_quantity, mint_fee_currency) == true, "incorrect mint fee has been paid");
+  }
+  
 
   // different processing required for input_quantity currencies
   symbol input_currency_symbol = input_quantity.symbol;
@@ -563,15 +580,16 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
   std::string memo = std::string("minting");
 
   // ask FREEOS contract to issue an equivalent amount of FREEOS tokens to the freeosgov account
+  string freeos_tokens_contract = get_parameter(name("freeostokens"));
   action issue_action = action(
-      permission_level{get_self(), "active"_n}, name(freeos_acct),
+      permission_level{get_self(), "active"_n}, name(freeos_tokens_contract),
       "issue"_n, std::make_tuple(get_self(), exchangeable_amount, memo));
 
   issue_action.send();
 
   // transfer FREEOS tokens to the user
   action transfer_action = action(
-      permission_level{get_self(), "active"_n}, name(freeos_acct),
+      permission_level{get_self(), "active"_n}, name(freeos_tokens_contract),
       "transfer"_n,
       std::make_tuple(get_self(), user, exchangeable_amount, memo));
 
@@ -605,9 +623,11 @@ void freeosgov::withdraw(const name user) {
     // get the currency contract
     string credit_code = credit_amount.symbol.code().to_string();
     if (credit_code == "FREEOS") {
-      currency_contract = name(freeos_acct);
+      string freeos_tokens_contract = get_parameter(name("freebitokens"));
+      currency_contract = name(freeos_tokens_contract);
     } else if (credit_code == "FREEBI") {
-      currency_contract = name(freebi_acct);
+      string freebi_tokens_contract = get_parameter(name("freebitokens"));
+      currency_contract = name(freebi_tokens_contract);
     } else {
       // look in the currencies table
       auto currency_iterator = currencies_table.find(credit_amount.symbol.raw());
@@ -716,7 +736,8 @@ void freeosgov::mintfee(name user, name to, asset quantity, std::string memo) {
     // check that FREEBI is from the right contract
     symbol freebi_symbol = symbol("FREEBI", 4);
     check(quantity.symbol == freebi_symbol, "token symbol is not valid, expected FREEBI");
-    check(get_first_receiver() == name(freebi_acct), "FREEBI payment is invalid");
+    string freebi_tokens_contract = get_parameter(name("freebitokens"));
+    check(get_first_receiver() == name(freebi_tokens_contract), "FREEBI payment is invalid");
 
     // record amount of freebi in the credit table
     credit_index credit_table(get_self(), user.value);

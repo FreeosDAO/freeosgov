@@ -2,11 +2,12 @@
 
 using namespace std;
 
+/* old method for defining contract names, now replaced with parameters
 #define _STRINGIZE(x) #x
 #define STRINGIZE(x) _STRINGIZE(x)
-
 std::string freebi_acct = STRINGIZE(FREEBY);
 std::string freeos_acct = STRINGIZE(FREEOS);
+*/
 
 // Currency constants
 const string XPR_CURRENCY_CODE = "XPR";

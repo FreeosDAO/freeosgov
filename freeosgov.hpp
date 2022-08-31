@@ -17,8 +17,8 @@ public:
    * @details Prints the version of this contract.
    */
   [[eosio::action]] void version();
-  [[eosio::action]] void init(time_point iterations_start, double issuance_rate, double mint_fee_percent,
-                    double locking_threshold, bool pool);
+  [[eosio::action]] void init(time_point iterations_start, double issuance_rate, double mint_fee_percent_freeos,
+                    double mint_fee_percent_xpr, double mint_fee_percent_xusdc, double locking_threshold, bool pool);
   [[eosio::action]] void tick();
   void trigger_new_iteration(uint32_t new_iteration);
   double get_locked_proportion();
@@ -64,7 +64,9 @@ public:
   void survey_reset();
 
   // vote actions/functions
-  [[eosio::action]] void vote(name user, uint8_t q1response, uint8_t q2response, double q3response, string q4response, uint8_t q5response, uint8_t q6choice1, uint8_t q6choice2, uint8_t q6choice3);
+  [[eosio::action]] void vote(name user, uint8_t q1response, uint8_t q2response, uint8_t q2response_xpr, uint8_t q2response_xusdc,
+                    double q3response, string q4response, uint8_t q5response, uint8_t q6choice1, uint8_t q6choice2, uint8_t q6choice3,
+                    double q7response, double q8response, double q9response, uint8_t q10response);
   void vote_init();
   void vote_reset();
 
@@ -87,7 +89,7 @@ public:
   void sub_balance(const name &owner, const asset &value);
   void add_balance(const name &owner, const asset &value, const name &ram_payer);
   [[eosio::action]] void mintfreebi(const name &owner, const asset &quantity);
-  [[eosio::action]] void mintfreeos(name user, const asset &input_quantity, symbol &mint_fee_currency);
+  [[eosio::action]] void mintfreeos(name user, const asset &input_quantity, symbol &mint_fee_currency, bool use_airclaim_points);
   [[eosio::action]] void withdraw(const name user);
   [[eosio::action]] void unlock(const name &user);
   [[eosio::action]] void depositclear(uint64_t iteration_number);

@@ -81,6 +81,113 @@ void freeosgov::maintain(string action, name user) {
 
   require_auth(get_self());
 
+  if (action == "clear rewards") {
+    rewards_index rewards_table(get_self(), get_self().value);
+    auto reward_iterator = rewards_table.begin();
+    
+    while (reward_iterator != rewards_table.end()) {
+      reward_iterator = rewards_table.erase(reward_iterator);
+    }
+  }
+
+  if (action == "restore rewards") {
+    rewards_index rewards_table(get_self(), get_self().value);
+
+    rewards_table.emplace(get_self(), [&](auto &r) {
+      r.iteration = 461495,
+      r.iteration_cls = asset(535671010708, POINT_CURRENCY_SYMBOL);
+      r.iteration_issuance = asset(0, POINT_CURRENCY_SYMBOL);
+      r.participant_issuance = asset(0, POINT_CURRENCY_SYMBOL);
+      r.participants = 0;
+      r.issuance_rate = 1.00000000000000000;
+      r.mint_fee_percent = 6.00000000000000000;
+      r.mint_fee_percent_xpr = 6.0;
+      r.mint_fee_percent_xusdc = 6.0;
+      r.locking_threshold = 0.01670000000000000;
+      r.pool = 1;
+      r.burn = 0;
+      r.ratified = 0;
+      double    mint_freebi_transfer_fee = 0.0;
+      double    point_freeos_ratio = 1.0;
+      double    mint_throttle = 0.0;
+      bool    burn_to_boost = false;
+      });
+
+      rewards_table.emplace(get_self(), [&](auto &r) {
+      r.iteration = 461496,
+      r.iteration_cls = asset(535671010708, POINT_CURRENCY_SYMBOL);
+      r.iteration_issuance = asset(0, POINT_CURRENCY_SYMBOL);
+      r.participant_issuance = asset(0, POINT_CURRENCY_SYMBOL);
+      r.participants = 0;
+      r.issuance_rate = 1.00000000000000000;
+      r.mint_fee_percent = 6.00000000000000000;
+      r.mint_fee_percent_xpr = 6.0;
+      r.mint_fee_percent_xusdc = 6.0;
+      r.locking_threshold = 0.01670000000000000;
+      r.pool = 1;
+      r.burn = 0;
+      r.ratified = 0;
+      double    mint_freebi_transfer_fee = 0.0;
+      double    point_freeos_ratio = 1.0;
+      double    mint_throttle = 0.0;
+      bool      burn_to_boost = false;
+      });
+
+      rewards_table.emplace(get_self(), [&](auto &r) {
+      r.iteration = 461497,
+      r.iteration_cls = asset(535671010708, POINT_CURRENCY_SYMBOL);
+      r.iteration_issuance = asset(0, POINT_CURRENCY_SYMBOL);
+      r.participant_issuance = asset(0, POINT_CURRENCY_SYMBOL);
+      r.participants = 0;
+      r.issuance_rate = 1.00000000000000000;
+      r.mint_fee_percent = 6.00000000000000000;
+      r.mint_fee_percent_xpr = 6.0;
+      r.mint_fee_percent_xusdc = 6.0;
+      r.locking_threshold = 0.01670000000000000;
+      r.pool = 1;
+      r.burn = 0;
+      r.ratified = 0;
+      double    mint_freebi_transfer_fee = 0.0;
+      double    point_freeos_ratio = 1.0;
+      double    mint_throttle = 0.0;
+      bool      burn_to_boost = false;
+      });
+
+      rewards_table.emplace(get_self(), [&](auto &r) {
+      r.iteration = 461498,
+      r.iteration_cls = asset(535671010708, POINT_CURRENCY_SYMBOL);
+      r.iteration_issuance = asset(0, POINT_CURRENCY_SYMBOL);
+      r.participant_issuance = asset(0, POINT_CURRENCY_SYMBOL);
+      r.participants = 0;
+      r.issuance_rate = 1.00000000000000000;
+      r.mint_fee_percent = 6.00000000000000000;
+      r.mint_fee_percent_xpr = 6.0;
+      r.mint_fee_percent_xusdc = 6.0;
+      r.locking_threshold = 0.01670000000000000;
+      r.pool = 1;
+      r.burn = 0;
+      r.ratified = 0;
+      double    mint_freebi_transfer_fee = 0.0;
+      double    point_freeos_ratio = 1.0;
+      double    mint_throttle = 0.0;
+      bool      burn_to_boost = false;
+      });
+  }
+  
+  if (action == "clear voterecord") {
+    vote_index voterecord_table(get_self(), get_self().value);
+    auto voterecord_iterator = voterecord_table.begin();
+    check(voterecord_iterator != voterecord_table.end(), "voterecord not found");
+
+    voterecord_table.erase(voterecord_iterator);
+  }
+
+  if (action == "restore voterecord") {
+    vote_index voterecord_table(get_self(), get_self().value);
+
+    voterecord_table.emplace(get_self(), [&](auto &v) { v.iteration = 461498; });
+  }
+
   if (action == "diagnose unlock") {
 
     // calculate the amount to be unvested - get the percentage for the iteration
@@ -327,7 +434,8 @@ void freeosgov::maintain(string action, name user) {
 
     // FREEBI
     status_msg = status_msg + "\nFREEBI: ";
-    accounts freebi_table(name(freebi_acct), user.value);
+    string freebi_tokens_contract = get_parameter(name("freebitokens"));
+    accounts freebi_table(name(freebi_tokens_contract), user.value);
     auto freebi_iterator = freebi_table.begin();
 
     if (freebi_iterator != freebi_table.end()) {
@@ -338,7 +446,8 @@ void freeosgov::maintain(string action, name user) {
 
     // FREEOS
     status_msg = status_msg + "\nFREEOS: ";
-    accounts freeos_table(name(freeos_acct), user.value);
+    string freeos_tokens_contract = get_parameter(name("freeostokens"));
+    accounts freeos_table(name(freeos_tokens_contract), user.value);
     auto freeos_iterator = freeos_table.begin();
 
     if (freeos_iterator != freeos_table.end()) {
@@ -392,7 +501,8 @@ void freeosgov::maintain(string action, name user) {
 
     // FREEBI
     status_msg = status_msg + "\nFREEBI: ";
-    accounts freebi_table(name(freebi_acct), get_self().value);
+    string freebi_tokens_contract = get_parameter(name("freebitokens"));
+    accounts freebi_table(name(freebi_tokens_contract), get_self().value);
     auto freebi_iterator = freebi_table.begin();
 
     if (freebi_iterator != freebi_table.end()) {
@@ -403,7 +513,8 @@ void freeosgov::maintain(string action, name user) {
 
     // FREEOS
     status_msg = status_msg + "\nFREEOS: ";
-    accounts freeos_table(name(freeos_acct), user.value);
+    string freeos_tokens_contract = get_parameter(name("freebitokens"));
+    accounts freeos_table(name(freeos_tokens_contract), user.value);
     auto freeos_iterator = freeos_table.begin();
 
     if (freeos_iterator != freeos_table.end()) {
@@ -427,7 +538,7 @@ void freeosgov::maintain(string action, name user) {
     // supply FREEBI
     status_msg = status_msg + "\nFREEBI supply: ";
     symbol freebi_sym = symbol("FREEBI", 4);
-    stats freebi_stat_table(name(freebi_acct), freebi_sym.code().raw());
+    stats freebi_stat_table(name(freebi_tokens_contract), freebi_sym.code().raw());
     auto freebi_stat_iterator = freebi_stat_table.find(freebi_sym.code().raw());
     
     if (freebi_stat_iterator != freebi_stat_table.end()) {
@@ -439,7 +550,7 @@ void freeosgov::maintain(string action, name user) {
     // supply FREEOS
     status_msg = status_msg + "\nFREEOS supply: ";
     symbol freeos_sym = symbol("FREEOS", 4);
-    stats freeos_stat_table(name(freeos_acct), freeos_sym.code().raw());
+    stats freeos_stat_table(name(freeos_tokens_contract), freeos_sym.code().raw());
     auto freeos_stat_iterator = freeos_stat_table.find(freeos_sym.code().raw());
     
     if (freeos_stat_iterator != freeos_stat_table.end()) {
@@ -844,7 +955,8 @@ void freeosgov::maintain(string action, name user) {
     if (sym == POINT_CURRENCY_SYMBOL) {
       token_contract = name(get_self());
     } else {
-      token_contract = name(freebi_acct);
+      string freebi_tokens_contract = get_parameter(name("freebitokens"));
+      token_contract = name(freebi_tokens_contract);
     }
 
     check(input_quantity.is_valid(), "invalid quantity");

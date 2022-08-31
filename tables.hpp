@@ -35,10 +35,16 @@ asset     participant_issuance;
 uint32_t  participants;
 double    issuance_rate;
 double    mint_fee_percent;
+double    mint_fee_percent_xpr;
+double    mint_fee_percent_xusdc;
 double    locking_threshold;
 bool      pool;
 bool      burn;
 bool      ratified;
+double    mint_freebi_transfer_fee;
+double    point_freeos_ratio;
+double    mint_throttle;
+bool      burn_to_boost;
 
 uint64_t primary_key() const { return iteration; }
 };
@@ -243,7 +249,9 @@ struct[[ eosio::table("voterecord"), eosio::contract("freeosgov") ]] vote_record
     uint32_t iteration;
     uint32_t participants;
     double q1average;   // issuance rate (0 - 100)
-    double q2average;   // mint fee percent (6 - 30)
+    double q2average;   // mint fee percent (6 - 30) for FREEOS
+    double q2average_xpr; // mint fee percent (6 - 30) for XPR
+    double q2average_xusdc; // mint fee percent (6 - 30) for XUSDC
     double q3average;   // locking threshold - expressed as asset price
     uint32_t q4choice1; // POOL
     uint32_t q4choice2; // BURN
@@ -254,6 +262,10 @@ struct[[ eosio::table("voterecord"), eosio::contract("freeosgov") ]] vote_record
     uint32_t q6choice4; // partner 4
     uint32_t q6choice5; // partner 5
     uint32_t q6choice6; // partner 6
+    double q7average;   // reserved for future use
+    double q8average;   // reserved for future use
+    double q9average;   // reserved for future use
+    double q10average;  // reserved for future use
 
     uint64_t primary_key() const { return 0; } // return a constant to ensure a single-row table
 };

@@ -30,6 +30,8 @@ void freeosgov::vote_reset() {
             vote.participants = 0;
             vote.q1average = 0.0;
             vote.q2average = 0.0;
+            vote.q2average_xpr = 0.0;
+            vote.q2average_xusdc = 0.0;
             vote.q3average = 0.0;
             vote.q4choice1 = 0;   // POOL
             vote.q4choice2 = 0;   // BURN
@@ -40,6 +42,10 @@ void freeosgov::vote_reset() {
             vote.q6choice4 = 0;
             vote.q6choice5 = 0;
             vote.q6choice6 = 0;
+            vote.q7average = 0.0;
+            vote.q8average = 0.0;
+            vote.q9average = 0.0;
+            vote.q10average = 0.0;
         });
     }
 
@@ -72,7 +78,9 @@ std::vector<int> parse_vote_ranges(string voteranges) {
 }
 
 // ACTION
-void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q3response, string q4response, uint8_t q5response, uint8_t q6choice1, uint8_t q6choice2, uint8_t q6choice3) {
+void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, uint8_t q2response_xpr, uint8_t q2response_xusdc,
+                    double q3response, string q4response, uint8_t q5response, uint8_t q6choice1, uint8_t q6choice2, uint8_t q6choice3,
+                    double q7response, double q8response, double q9response, uint8_t q10response) {
     
     require_auth(user);
 
@@ -141,7 +149,9 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
 
     
     check(q1response >= vote_range_values[0] && q1response <= vote_range_values[1],  "Response 1 is out of range");
-    check(q2response >= vote_range_values[2] && q2response <= vote_range_values[3],  "Response 2 is out of range");
+    check(q2response >= vote_range_values[2] && q2response <= vote_range_values[3],  "Response 2 (FREEOS mint fee) is out of range");
+    check(q2response_xpr >= vote_range_values[2] && q2response_xpr <= vote_range_values[3],  "Response 2 (XPR mint fee) is out of range");
+    check(q2response_xusdc >= vote_range_values[2] && q2response_xusdc <= vote_range_values[3],  "Response 2 (XUSDC mint fee) is out of range");
     check(q3response >= HARD_EXCHANGE_RATE_FLOOR && q3response <= locking_threshold_upper_limit,   "Response 3 is out of range");
     check(q4response == "POOL" || q4response == "BURN",  "Response 4 must be 'POOL' or 'BURN'");
     check(q5response >= vote_range_values[4] && q5response <= vote_range_values[5],  "Response 5 is out of range");
@@ -167,6 +177,8 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, double q
 
         // question 2
         vote.q2average = ((vote.q2average * vote.participants) + q2response) / (vote.participants + 1);
+        vote.q2average_xpr = ((vote.q2average_xpr * vote.participants) + q2response_xpr) / (vote.participants + 1);
+        vote.q2average_xusdc = ((vote.q2average_xusdc * vote.participants) + q2response_xusdc) / (vote.participants + 1);
 
         // question 3
         vote.q3average = ((vote.q3average * vote.participants) + q3response) / (vote.participants + 1);
