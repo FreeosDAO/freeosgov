@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.47";
+const std::string VERSION = "0.9.49";
 
 // ACTION
 void freeosgov::version() {
@@ -378,6 +378,8 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
     issuance_rate = vote_iterator->q1average / 100.0;
     // mint fee percent
     mint_fee_percent = vote_iterator->q2average;
+    mint_fee_percent_xpr = vote_iterator->q2average_xpr;
+    mint_fee_percent_xusdc = vote_iterator->q2average_xusdc;
     // locking threshold
     locking_threshold = vote_iterator->q3average;
     // pool decision
@@ -410,7 +412,6 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
   
 
   // populate the rewards table - take a snapshot of the cls, vote results and ratify result
-  // ??? rewards_index rewards_table(get_self(), get_self().value);
   rewards_table.emplace(get_self(), [&](auto &rwd) {
       rwd.iteration = old_iteration;
       rwd.participants = participants;
@@ -427,6 +428,15 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
       rwd.ratified = ratified;
     });
 
+    // write the locking threshold into the exchangerate table
+    exchange_index exchangerate_table(get_self(), get_self().value);
+    auto exchange_iterator = exchangerate_table.begin();
+    check(exchange_iterator != exchangerate_table.end(), "exchangerate record not defined");
+    exchangerate_table.modify(exchange_iterator, get_self(), [&](auto &exc) {
+      exc.targetprice = locking_threshold;
+    });
+
+    
   // delete old rewards records, if necessary
   if (old_iteration > 4) {
     auto rewards_iterator = rewards_table.begin();
