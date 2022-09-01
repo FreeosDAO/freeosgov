@@ -843,6 +843,7 @@ void dividenda::maintain( string action, name user ){
 
   require_auth(get_self());
 
+  /*
   if (action == "copy nfts") {
     // nfts table
     nft_table nft_register( get_self(), get_self().value );
@@ -915,6 +916,7 @@ void dividenda::maintain( string action, name user ){
       copynft_iterator = copynft_register.erase(copynft_iterator);
     }
   } // end of "delete copynfts"
+  */
 
 }
 //
