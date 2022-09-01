@@ -562,6 +562,23 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
   if (use_airclaim_points == false) {
     // check whether user has paid correct mint fee, whether they have a credit record, adjust their mintfeefree allowance
     check(process_mint_fee(user, input_quantity, mint_fee_currency) == true, "incorrect mint fee has been paid");
+  } else {
+    // check mff balance, then decrease by the appropriate amount of POINTs minted
+
+    // get the user's mff balance
+    asset mff_balance = asset(0, POINT_CURRENCY_SYMBOL);  // default value
+    mintfeefree_index mff_table(get_self(), user.value);
+    auto mff_iterator = mff_table.begin();
+    if (mff_iterator != mff_table.end()) {
+      mff_balance = mff_iterator->balance;
+    }
+
+    // check whether the user has enough mff POINTs
+    check(input_quantity.amount <= mff_balance.amount, "insufficient Airclaim points to mint the requested amount");
+
+    // decrease the mff balance
+    mff_table.modify(mff_iterator, get_self(),
+                          [&](auto &mff) { mff.balance -= input_quantity; });
   }
   
 
@@ -666,7 +683,7 @@ void freeosgov::record_deposit(uint64_t iteration_number, asset amount) {
     });
   } else {
     // modify record
-    deposits_table.modify(deposit_iterator, _self,
+    deposits_table.modify(deposit_iterator, get_self(),
                           [&](auto &d) { d.accrued += amount; });
   }
 }
