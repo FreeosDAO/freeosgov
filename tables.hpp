@@ -333,4 +333,21 @@ struct[[ eosio::table("unvests"), eosio::contract("freeosgov") ]] unvestevent {
 };
 using unvest_index = eosio::multi_index<"unvests"_n, unvestevent>;
 
+// DIVIDEND
+struct nft_struct {                        //!< Each record is a single NFT by itself
+      uint64_t nft_key;
+      name     eosaccount;                  //!< POINT account used to receive dividends and for identification (as a secondary key)
+      uint8_t  roi_target_cap;              //!< 1- iterative 2- horizontal 3- vertical 
+      double   nft_percentage;              //!< Only this is used for counting dividend to pay - the other parameters examine eligibility,
+      time_point_sec mint_date;             //!< NFT mint date. In fact, the current date of the moment when this nftx record was created,
+      bool     locked;                      //!< lock dividends for selected new members. Note: When unlock should be not lock again.
+      asset    threshold = asset(0,symbol("POINT",4) ); //!< max total divident (2) for horizontal cap or max weekly dividend for vertical (3) cap
+      uint32_t rates_left;                  //!< count down payments left in iteration cap=1 only   
+      asset    accrued = asset(0,symbol("POINT",4) ); ;                       
+      uint64_t primary_key() const {return nft_key;}
+      uint64_t get_secondary() const { return eosaccount.value; }
+  };
+  using nft_table = eosio::multi_index<"nfts"_n, nft_struct, indexed_by<"account"_n, const_mem_fun<nft_struct, uint64_t, &nft_struct::get_secondary>>>; 
+
+
 } // end of namespace freedao

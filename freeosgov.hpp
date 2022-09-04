@@ -37,6 +37,7 @@ public:
   [[eosio::action]] void reguser(name user);
   [[eosio::action]] void reregister(name user);
   bool is_user_verified(name user);
+  bool has_nft(name user);
 
   // config actions
   [[eosio::action]] void paramupsert(name paramname, std::string value);

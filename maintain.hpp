@@ -1,6 +1,7 @@
 #include <ctime>
 #include <eosio/asset.hpp>
 #include <cmath>
+#include "identity.hpp"
 
 using namespace eosio;
 using namespace freedao;
@@ -243,6 +244,16 @@ void freeosgov::maintain(string action, name user) {
                         ", converted_points: " + converted_points.to_string();
 
     check(false, diagnostic);
+  }
+
+  if (action == "test has_nft") {
+    bool nft_holder = has_nft(user);
+
+    if (nft_holder) {
+      check(false, "user has nft");
+    } else {
+      check(false, "user has no nft");
+    }
   }
 
   if (action == "clear deposits") {
