@@ -320,111 +320,75 @@ void freeosgov::mintfreebi(const name &owner, const asset &quantity) {
 
 asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol mint_fee_currency) {
 
-  asset points_subject_to_fee = asset(0, POINT_CURRENCY_SYMBOL);  // default value
-  asset mintfeefree_allowance = asset(0, POINT_CURRENCY_SYMBOL);  // default value
   asset mintfee;
   double mint_fee_percent;
   
-  // express the mint quantity as an equivalent number of POINTs
-  asset mint_quantity_points = asset(mint_quantity.amount, POINT_CURRENCY_SYMBOL);
   double mintfee_amount = 0;    // amount of currency, e.g. 123.4567 represents 123.4567 FREEOS
   int64_t mintfee_units = 0;    // units of currency, e.g. 1234567 represents 123.4567 FREEOS
 
-  // adjust the requested quantity as mint fee may be fully or partially covered by the mint-fee-free allowance
-  mintfeefree_index mintfeefree_table(get_self(), user.value);
-  auto mintfeefree_iterator = mintfeefree_table.begin();
-  if (mintfeefree_iterator != mintfeefree_table.end()) {
-
-    mintfeefree_allowance = mintfeefree_iterator->balance;
-
-    if (mintfeefree_allowance.amount > mint_quantity.amount) {
-      // user can cover the mint fee requirement with their allowance
-
-      // decrease the minfeefree allowance accordingly
-      mintfeefree_table.modify(mintfeefree_iterator, same_payer, [&](auto &m) {
-        m.balance -= mint_quantity_points;
-      });
-
-      points_subject_to_fee = asset(0, POINT_CURRENCY_SYMBOL);
-    } else {
-      // user can cover SOME of their mint fee with the allowance
-      points_subject_to_fee = mint_quantity_points - mintfeefree_allowance;
-
-      // the mintfeefree allowance is used up, so delete the record to save RAM
-      mintfeefree_table.erase(mintfeefree_iterator);
-    }
-  } else {
-    // user has no mintfeefree allowance, the entire amount of points is subject to the mint fee
-    points_subject_to_fee = mint_quantity_points;
-  }
-
+  check(mint_quantity.amount > 0, "invalid mint quantity");
   
-  if (points_subject_to_fee.amount > 0) {
-    // retrieve the latest mint fee percent from the last reward record
-    rewards_index rewards_table(get_self(), get_self().value);
-    auto reward_iterator = rewards_table.rbegin();
-    check(reward_iterator != rewards_table.rend(), "latest reward record not found");
+  // retrieve the latest mint fee percent from the last reward record
+  rewards_index rewards_table(get_self(), get_self().value);
+  auto reward_iterator = rewards_table.rbegin();
+  check(reward_iterator != rewards_table.rend(), "latest reward record not found");
 
-    // get the latest voted mint fee percent - depending on which currency user is paying with
-    if (mint_fee_currency ==  symbol("FREEOS", 4)) {
-      mint_fee_percent = reward_iterator->mint_fee_percent;
-    } else if (mint_fee_currency ==  symbol("XPR", 4)) {
-      mint_fee_percent = reward_iterator->mint_fee_percent_xpr;
-    } else if (mint_fee_currency ==  symbol("XUSDC", 6)) {
-      mint_fee_percent = reward_iterator->mint_fee_percent_xusdc;
-    }
-
-    // we have to work in double rather asset for accuracy in division and because currencies (e.g. FREEOS, XPR and XUSDC) have different precisions
-    double amount_in_units = points_subject_to_fee.amount / 10000.0;
-    double mintfee_in_freeos = amount_in_units * (mint_fee_percent / 100.0);
-
-    // apply the minimum fee
-    double mintfee_min = get_dparameter(name("mintfeemin"));
-    if (mintfee_in_freeos < mintfee_min) {
-      mintfee_in_freeos = mintfee_min;
-    }
-
-    // apply the currency conversion if necessary
-    if (mint_fee_currency == symbol("FREEOS", 4)) {
-      mintfee_units = mintfee_in_freeos * 10000;
-    } else {
-      // conversion required
-
-      // get the FREEOS exchange rate
-      currencies_index currencies_table(get_self(), get_self().value);
-      auto freeos_iterator = currencies_table.find(symbol("FREEOS", 4).raw());
-      check(freeos_iterator != currencies_table.end(), "FREEOS currency record not defined");
-      double freeos_rate = freeos_iterator->usdrate;
-
-      if (mint_fee_currency == symbol("XPR",4)) {
-        // get the XPR exchange rate
-        auto xpr_iterator = currencies_table.find(symbol("XPR", 4).raw());
-        check(xpr_iterator != currencies_table.end(), "XPR currency record not defined");
-        double xpr_rate = xpr_iterator->usdrate;
-
-        // do the conversion
-        mintfee_amount = mintfee_in_freeos * freeos_rate / xpr_rate;
-        mintfee_units = mintfee_amount * 10000;
-      }
-
-      if (mint_fee_currency == symbol("XUSDC",6)) {
-        // get the XUSDC exchange rate
-        auto xusdc_iterator = currencies_table.find(symbol("XUSDC", 6).raw());
-        check(xusdc_iterator != currencies_table.end(), "XUSDC currency record not defined");
-        double xusdc_rate = xusdc_iterator->usdrate;
-
-        // do the conversion
-        mintfee_amount = mintfee_in_freeos * freeos_rate / xusdc_rate;
-        mintfee_units = mintfee_amount * 1000000;
-      }
-      
-    }
-
-    mintfee = asset(mintfee_units, mint_fee_currency);
-
-  } else {
-    mintfee = asset(0, mint_fee_currency);
+  // get the latest voted mint fee percent - depending on which currency user is paying with
+  if (mint_fee_currency ==  symbol("FREEOS", 4)) {
+    mint_fee_percent = reward_iterator->mint_fee_percent;
+  } else if (mint_fee_currency ==  symbol("XPR", 4)) {
+    mint_fee_percent = reward_iterator->mint_fee_percent_xpr;
+  } else if (mint_fee_currency ==  symbol("XUSDC", 6)) {
+    mint_fee_percent = reward_iterator->mint_fee_percent_xusdc;
   }
+
+  // we have to work in double rather asset for accuracy in division and because currencies (e.g. FREEOS, XPR and XUSDC) have different precisions
+  double amount_in_units = mint_quantity.amount / 10000.0;
+  double mintfee_in_freeos = amount_in_units * (mint_fee_percent / 100.0);
+
+  // apply the minimum fee
+  double mintfee_min = get_dparameter(name("mintfeemin"));
+  if (mintfee_in_freeos < mintfee_min) {
+    mintfee_in_freeos = mintfee_min;
+  }
+
+  // apply the currency conversion if necessary
+  if (mint_fee_currency == symbol("FREEOS", 4)) {
+    mintfee_units = mintfee_in_freeos * 10000;
+  } else {
+    // conversion required
+
+    // get the FREEOS exchange rate
+    currencies_index currencies_table(get_self(), get_self().value);
+    auto freeos_iterator = currencies_table.find(symbol("FREEOS", 4).raw());
+    check(freeos_iterator != currencies_table.end(), "FREEOS currency record not defined");
+    double freeos_rate = freeos_iterator->usdrate;
+
+    if (mint_fee_currency == symbol("XPR",4)) {
+      // get the XPR exchange rate
+      auto xpr_iterator = currencies_table.find(symbol("XPR", 4).raw());
+      check(xpr_iterator != currencies_table.end(), "XPR currency record not defined");
+      double xpr_rate = xpr_iterator->usdrate;
+
+      // do the conversion
+      mintfee_amount = mintfee_in_freeos * freeos_rate / xpr_rate;
+      mintfee_units = mintfee_amount * 10000;
+    }
+
+    if (mint_fee_currency == symbol("XUSDC",6)) {
+      // get the XUSDC exchange rate
+      auto xusdc_iterator = currencies_table.find(symbol("XUSDC", 6).raw());
+      check(xusdc_iterator != currencies_table.end(), "XUSDC currency record not defined");
+      double xusdc_rate = xusdc_iterator->usdrate;
+
+      // do the conversion
+      mintfee_amount = mintfee_in_freeos * freeos_rate / xusdc_rate;
+      mintfee_units = mintfee_amount * 1000000;
+    }
+    
+  }
+
+  mintfee = asset(mintfee_units, mint_fee_currency);
 
   // DIAG
   // check(false, "mint fee = " + mintfee.to_string());
