@@ -1,5 +1,7 @@
 #include "dividenda.hpp" 
 
+using namespace freedao;
+
   /*
    +-----------------------------------
    +  upsert -  

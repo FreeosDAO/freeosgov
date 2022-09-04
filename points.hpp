@@ -391,7 +391,7 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
   mintfee = asset(mintfee_units, mint_fee_currency);
 
   // DIAG
-  // check(false, "mint fee = " + mintfee.to_string());
+  check(false, "mint fee = " + mintfee.to_string());
 
   return mintfee;
 }
