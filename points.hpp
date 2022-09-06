@@ -371,8 +371,8 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
       double xpr_rate = xpr_iterator->usdrate;
 
       // do the conversion
-      mintfee_amount = mintfee_in_freeos * freeos_rate / xpr_rate;
-      mintfee_units = mintfee_amount * 10000;
+      mintfee_amount = round(mintfee_in_freeos * freeos_rate / xpr_rate * 10000);
+      mintfee_units = (int64_t) mintfee_amount;
     }
 
     if (mint_fee_currency == symbol("XUSDC",6)) {
@@ -382,17 +382,17 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
       double xusdc_rate = xusdc_iterator->usdrate;
 
       // do the conversion
-      mintfee_amount = mintfee_in_freeos * freeos_rate / xusdc_rate;
-      mintfee_units = mintfee_amount * 1000000;
+      mintfee_amount = round(mintfee_in_freeos * freeos_rate / xusdc_rate * 1000000);
+      mintfee_units = (int64_t) mintfee_amount;
     }
     
   }
 
-  mintfee = asset(mintfee_units, mint_fee_currency);
+  mintfee = asset(mintfee_units, mint_fee_currency);   // asset
 
   // DIAG
-  check(false, "mint fee = " + mintfee.to_string());
-
+  // check(false, "mintfee_amount = " + to_string(mintfee_amount) + ", mintfee_units = " + to_string(mintfee_units) + ", mint fee = " + mintfee.to_string());
+  
   return mintfee;
 }
 
