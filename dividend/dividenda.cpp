@@ -798,13 +798,19 @@ void dividenda::propreset( name proposername ) {
 [[eosio::action]]
 void dividenda::regchown(name userfrom, name userto, uint64_t nft_key){
   require_auth(userfrom);
-  nft_table nft_register( get_self(), get_self().value );
-  auto pro_itr = nft_register.find(nft_key);
-  check( (pro_itr->eosaccount == userfrom ), "The NFT key does not agree with the owner account name!");
 
-  check( nft_key >= 0, "wrong or undefined NFT key"); //nft_key is used because userfrom may have several nft_register
   check( userfrom != userto, "cannot transfer to self" );    
   check( is_account( userto ), "userto account does not exist");
+
+  nft_table nft_register( get_self(), get_self().value );
+  auto pro_itr = nft_register.find(nft_key);
+  check(pro_itr != nft_register.end(), "NFT not found with the specified key"); // v2.2
+
+  check( (pro_itr->eosaccount == userfrom ), "The NFT key does not agree with the owner account name!");
+
+  if (pro_itr->roi_target_cap == ITERATION) {
+     check(pro_itr->rates_left > 0, "You cannot change ownership of an expired NFT"); // v2.2
+  }
 
   nft_register.modify(pro_itr, get_self(), [&](auto &p) {
             p.eosaccount = userto; 
@@ -845,7 +851,28 @@ void dividenda::maintain( string action, name user ){
 
   require_auth(get_self());
 
-  /*
+  if (action == "modify nfts") {
+    nft_table nft_register( get_self(), get_self().value );
+    auto nft_iterator = nft_register.begin();
+
+    while (nft_iterator != nft_register.end()) {
+      nft_register.modify(nft_iterator, get_self(), [&](auto &p) {
+            p.threshold = asset(1010000, symbol("POINT",4));
+      });
+
+      nft_iterator++;
+    }
+  }
+
+  if (action == "remove nfts") {
+    nft_table nft_register( get_self(), get_self().value );
+    auto nft_iterator = nft_register.begin();
+
+    while (nft_iterator != nft_register.end()) {
+      nft_iterator = nft_register.erase(nft_iterator);
+    }
+  }
+
   if (action == "copy nfts") {
     // nfts table
     nft_table nft_register( get_self(), get_self().value );
@@ -918,7 +945,6 @@ void dividenda::maintain( string action, name user ){
       copynft_iterator = copynft_register.erase(copynft_iterator);
     }
   } // end of "delete copynfts"
-  */
 
 }
 //

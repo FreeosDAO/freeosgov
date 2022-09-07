@@ -25,7 +25,7 @@ using namespace eosio;
 CONTRACT dividenda : public contract {
 
   // current version string:
-  const std::string VERSION = "2.1";
+  const std::string VERSION = "2.2";
 
 
   public:
