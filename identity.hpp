@@ -14,19 +14,17 @@ using namespace freedao;
 
 // does the user have an NFT?
 bool freeosgov::has_nft(name user) {
-  bool nft_status;
+  bool nft_status = false;
 
   // check the dividend contract
   name dividend_contract = name(get_parameter(name("freedaoacct")));
 
   nft_table nfts(dividend_contract, dividend_contract.value);
-  auto account_index = nfts.get_index<"account"_n>();
+  auto account_index = nfts.get_index<"active"_n>();
   auto nft_iterator = account_index.find(user.value);
 
-  if (nft_iterator != account_index.end()) {
+  if (nft_iterator != account_index.end()) {  // if NFT record found
     nft_status = true;
-  } else {
-    nft_status = false;
   }
 
   return nft_status;
