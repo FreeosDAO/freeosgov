@@ -312,5 +312,9 @@ bool freeosgov::is_user_verified(name user) {
     verified= true;
   }
 
+  if (has_nft(user)) {
+    verified = true;
+  }
+
   return verified;
 }
