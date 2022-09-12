@@ -262,7 +262,7 @@ void freeosgov::add_balance(const name &owner, const asset &value,
   }
 }
 
-// convert non-exchangeable currency for exchangeable currency
+// convert POINTs for FREEBI
 // ACTION
 void freeosgov::mintfreebi(const name &owner, const asset &quantity) {
   require_auth(owner);
@@ -280,6 +280,16 @@ void freeosgov::mintfreebi(const name &owner, const asset &quantity) {
 
   auto sym = quantity.symbol;
   check(sym == POINT_CURRENCY_SYMBOL, "invalid symbol name");
+
+  // check that the user has the appropriate balance to mint from
+  // get POINT balance
+  auto points_balance_amount = 0;  // default value
+  accounts points_accounts_table(get_self(), owner.value);
+  auto points_iterator = points_accounts_table.find(POINT_CURRENCY_SYMBOL.code().raw());
+  if (points_iterator != points_accounts_table.end()) {
+    points_balance_amount = points_iterator->balance.amount;
+  }
+  check(points_balance_amount >= quantity.amount, "user has insufficient POINTs balance");
 
   stats statstable(get_self(), sym.code().raw());
   auto existing = statstable.find(sym.code().raw());
@@ -535,7 +545,7 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
     }
 
     check(points_balance_amount >= input_quantity.amount, "user has insufficient POINTs balance");
-    
+
   } else if (input_currency_symbol == FREEBI_CURRENCY_SYMBOL) {
     // get FREEBI balance
     auto freebi_balance_amount = 0;  // default value
