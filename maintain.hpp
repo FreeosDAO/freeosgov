@@ -349,6 +349,23 @@ void freeosgov::maintain(string action, name user) {
     }
   }
 
+  if (action == "freebi balance") {
+    asset freebi_balance;
+
+    int64_t freebi_balance_amount = 0;  // default value
+    string freebi_tokens_contract = get_parameter(name("freebitokens"));
+    freebi_accounts freebi_accounts_table(name(freebi_tokens_contract), user.value);
+    // DIAG auto freebi_iterator = freebi_accounts_table.find(FREEBI_CURRENCY_SYMBOL.code().raw());
+    auto freebi_iterator = freebi_accounts_table.begin(); // DIAG
+    if (freebi_iterator != freebi_accounts_table.end()) {
+      freebi_balance = freebi_iterator->balance;
+      freebi_balance_amount = freebi_balance.amount;
+    }
+
+    // DIAG
+    check(false, "user = " + user.to_string() + ", contract = " + freebi_tokens_contract + ", freebi_balance = " + freebi_balance.to_string());
+  }
+
   if (action == "erase user") {
     participants_index participants_table(get_self(), user.value);
     auto participant_iterator = participants_table.begin();

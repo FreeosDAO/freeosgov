@@ -533,9 +533,9 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
   check(input_quantity.is_valid(), "invalid quantity");
   check(input_quantity.amount > 0, "must mint a positive quantity");
 
-  // check that the user has the appropriate balance to mint from
-  symbol input_currency_symbol = input_quantity.symbol;
-  if (input_currency_symbol == POINT_CURRENCY_SYMBOL) {
+  // check that the user has the appropriate POINTs balance to mint with
+  // We don't need to do this for minting from FREEBI because the FREEBI is sent as a transfer credit
+  if (input_quantity.symbol == POINT_CURRENCY_SYMBOL) {
     // get POINT balance
     auto points_balance_amount = 0;  // default value
     accounts points_accounts_table(get_self(), user.value);
@@ -545,19 +545,6 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
     }
 
     check(points_balance_amount >= input_quantity.amount, "user has insufficient POINTs balance");
-
-  } else if (input_currency_symbol == FREEBI_CURRENCY_SYMBOL) {
-    // get FREEBI balance
-    auto freebi_balance_amount = 0;  // default value
-    string freebi_tokens_contract = get_parameter(name("freebitokens"));
-    accounts freebi_accounts_table(name(freebi_tokens_contract), user.value);
-    auto freebi_iterator = freebi_accounts_table.find(FREEBI_CURRENCY_SYMBOL.code().raw());
-    if (freebi_iterator != freebi_accounts_table.end()) {
-      freebi_balance_amount = freebi_iterator->balance.amount;
-    }
-
-    check(freebi_balance_amount >= input_quantity.amount, "user has insufficient FREEBI balance");
-
   }
 
   if (use_airclaim_points == false) {
@@ -584,9 +571,9 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
   
 
   // different processing required for input_quantity currencies
-  if (input_currency_symbol == POINT_CURRENCY_SYMBOL) {
+  if (input_quantity.symbol == POINT_CURRENCY_SYMBOL) {
     adjust_balances_from_points(user, input_quantity);
-  } else if (input_currency_symbol == FREEBI_CURRENCY_SYMBOL) {
+  } else if (input_quantity.symbol == FREEBI_CURRENCY_SYMBOL) {
     adjust_balances_from_freebi(user, input_quantity);
   } else {
     check(false, "invalid currency for input quantity");
