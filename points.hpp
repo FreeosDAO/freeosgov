@@ -66,7 +66,7 @@ void freeosgov::retire(const asset &quantity, const string &memo) {
   const auto &st = *existing;
 
   check(quantity.is_valid(), "invalid quantity");
-  check(quantity.amount > 0, "must retire positive quantity");
+  check(quantity.amount > 0, "must retire positive quantity of POINTs");
 
   check(quantity.symbol == st.supply.symbol, "symbol precision mismatch");
 
@@ -202,8 +202,7 @@ void freeosgov::mint(const name &minter, const name &to, const asset &quantity, 
   issue(to, quantity, memo);
 }
 
-// Replacement for the retire action - 'burn' enforces a whitelist of who can
-// retire OPTIONs ACTION
+// Replacement for the retire action - 'burn' enforces a whitelist of who can retire POINTs
 void freeosgov::burn(const name &burner, const asset &quantity, const string &memo) {
   // check if the 'burner' account is in the burner whitelist
   burners_index burners_table(get_self(), get_self().value);
