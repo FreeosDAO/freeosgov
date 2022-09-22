@@ -26,6 +26,7 @@ public:
   bool check_master_switch();
 
   // maintain actions TODO: remove in production version
+  [[eosio::action]] void calcfee(const name &from, const asset& transfer_quantity);
   [[eosio::action]] void maintain(string action, name user);
   [[eosio::action]] void setmff(name user, asset amount);
   void createuser(string username, string account_type, uint32_t registered, uint32_t surveys,

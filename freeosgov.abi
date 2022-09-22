@@ -84,6 +84,20 @@
             ]
         },
         {
+            "name": "calcfee",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "transfer_quantity",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
             "name": "claim",
             "base": "",
             "fields": [
@@ -1143,6 +1157,11 @@
         {
             "name": "burnererase",
             "type": "burnererase",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "calcfee",
+            "type": "calcfee",
             "ricardian_contract": ""
         },
         {

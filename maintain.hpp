@@ -9,6 +9,31 @@ using namespace std;
 
 // TODO: Remove this action in production version
 
+void freeosgov::calcfee(const name &from, const asset& transfer_quantity)
+{
+   asset fee = asset(0, symbol("FREEBI", 4));   // default value
+   
+   name freeoscontract = name("freeosgov2");
+   name freebicontract = name("freebi");
+
+   // the transfer fee is only charged for user-to-user transfers - do not charge if the transfer is from a contract
+   if (from != freeoscontract && from != freebicontract) {
+      name fee_parameter = name("freebixfee");
+   
+      freedao::dparameters_index dparameters_table(freeoscontract, freeoscontract.value);
+      auto dparameter_iterator = dparameters_table.find(fee_parameter.value);
+      check(dparameter_iterator != dparameters_table.end(), fee_parameter.to_string() + " is not defined");
+      double fee_percent = dparameter_iterator->value;
+
+      int64_t fee_units = transfer_quantity.amount * (fee_percent / 100.0);
+      fee = asset(fee_units, symbol("FREEBI", 4));
+   }
+
+   asset recipient_receives = transfer_quantity - fee;   
+   
+   check(false, "transfer_quanity = " + to_string(transfer_quantity.amount) + ", fee = " + to_string(fee.amount) + ", recipient_recives = " + to_string(recipient_receives.amount));
+}
+
 // set mintfeefree amount
 void freeosgov::setmff(name user, asset amount) {
   require_auth(get_self());
@@ -348,6 +373,7 @@ void freeosgov::maintain(string action, name user) {
       oldusers_table.erase(olduser_iterator);
     }
   }
+
 
   if (action == "freebi balance") {
     asset freebi_balance;
