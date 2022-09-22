@@ -7,7 +7,14 @@
 using namespace eosio;
 using namespace freedao;
 
-// get string parameter value
+
+/**
+ * It returns the string value of a parameter from the parameters table
+ * 
+ * @param paramname The name of the parameter to retrieve.
+ * 
+ * @return The value of the parameter.
+ */
 string freeosgov::get_parameter(name paramname) {
   parameters_index parameters_table(get_self(), get_self().value);
   auto parameter_iterator = parameters_table.find(paramname.value);
@@ -18,7 +25,13 @@ string freeosgov::get_parameter(name paramname) {
   return parameter_iterator->value;
 }
 
-// get integer parameter value
+/**
+ * It gets the integer value of a parameter from the parameters table
+ * 
+ * @param paramname The name of the parameter to get.
+ * 
+ * @return The value of the parameter.
+ */
 int freeosgov::get_iparameter(name paramname) {
   parameters_index parameters_table(get_self(), get_self().value);
   auto parameter_iterator = parameters_table.find(paramname.value);

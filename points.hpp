@@ -547,8 +547,12 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
   }
 
   if (use_airclaim_points == false) {
-    // check whether user has paid correct mint fee, whether they have a credit record, adjust their mintfeefree allowance
-    check(process_mint_fee(user, input_quantity, mint_fee_currency) == true, "incorrect mint fee has been paid");
+
+    if (has_nft(user) == false) {   // users with an active NFT do not pay the mint fee
+      // check whether user has paid correct mint fee, whether they have a credit record, adjust their mintfeefree allowance
+      check(process_mint_fee(user, input_quantity, mint_fee_currency) == true, "incorrect mint fee has been paid");
+    }
+    
   } else {
     // check mff balance, then decrease by the appropriate amount of POINTs minted
 
