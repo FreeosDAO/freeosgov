@@ -11,7 +11,7 @@ using namespace std;
 
 void freeosgov::calcfee(const name &from, const asset& transfer_quantity)
 {
-   asset fee = asset(0, symbol("FREEBI", 4));   // default value
+   asset fee = asset(0, symbol(FREEBI_CURRENCY_CODE, 4));   // default value
    
    name freeoscontract = name("freeosgov2");
    name freebicontract = name("freebi");
@@ -26,7 +26,7 @@ void freeosgov::calcfee(const name &from, const asset& transfer_quantity)
       double fee_percent = dparameter_iterator->value;
 
       int64_t fee_units = transfer_quantity.amount * (fee_percent / 100.0);
-      fee = asset(fee_units, symbol("FREEBI", 4));
+      fee = asset(fee_units, symbol(FREEBI_CURRENCY_CODE, 4));
    }
 
    asset recipient_receives = transfer_quantity - fee;   
@@ -222,9 +222,6 @@ void freeosgov::maintain(string action, name user) {
     check(system_iterator != system_table.end(), "system record not found");
     uint32_t unlock_percent = system_iterator->unlockpercent;
 
-    // DIAG
-    // unlock_percent = 21;
-
     // check that the unvest percentage is within limits
     check(unlock_percent > 0 && unlock_percent <= 100,
           "locked POINTs cannot be unlocked in this claim period. Please try during next claim period");
@@ -290,7 +287,7 @@ void freeosgov::maintain(string action, name user) {
   }
 
   if (action == "locked points") {
-    symbol point_sym = symbol("POINT", 4);
+    symbol point_sym = symbol(POINT_CURRENCY_CODE, 4);
     lockaccounts locked_points_table(get_self(), user.value);
     auto locked_iterator = locked_points_table.find(point_sym.code().raw());
 
@@ -307,8 +304,18 @@ void freeosgov::maintain(string action, name user) {
     
   }
 
+  if (action == "constant test") {
+    symbol ca_point_sym = symbol(POINT_CURRENCY_CODE, 4);
+    asset ca = asset(1234567, ca_point_sym);
+
+    symbol st_point_sym = symbol(POINT_CURRENCY_CODE, 4);
+    asset st = asset(1234567, st_point_sym);
+
+    check(false, "ca_asset = " + ca.to_string() + ", st asset = " + st.to_string());
+  }
+  
   if (action == "liquid points") {
-    symbol point_sym = symbol("POINT", 4);
+    symbol point_sym = symbol(POINT_CURRENCY_CODE, 4);
     accounts points_table(get_self(), user.value);
     auto points_iterator = points_table.find(point_sym.code().raw());
 
@@ -381,14 +388,12 @@ void freeosgov::maintain(string action, name user) {
     int64_t freebi_balance_amount = 0;  // default value
     string freebi_tokens_contract = get_parameter(name("freebitokens"));
     freebi_accounts freebi_accounts_table(name(freebi_tokens_contract), user.value);
-    // DIAG auto freebi_iterator = freebi_accounts_table.find(FREEBI_CURRENCY_SYMBOL.code().raw());
-    auto freebi_iterator = freebi_accounts_table.begin(); // DIAG
+    auto freebi_iterator = freebi_accounts_table.begin();
     if (freebi_iterator != freebi_accounts_table.end()) {
       freebi_balance = freebi_iterator->balance;
       freebi_balance_amount = freebi_balance.amount;
     }
 
-    // DIAG
     check(false, "user = " + user.to_string() + ", contract = " + freebi_tokens_contract + ", freebi_balance = " + freebi_balance.to_string());
   }
 
@@ -579,7 +584,7 @@ void freeosgov::maintain(string action, name user) {
 
     // supply POINT
     status_msg = status_msg + "\nPOINT supply: ";
-    symbol point_sym = symbol("POINT", 4);
+    symbol point_sym = symbol(POINT_CURRENCY_CODE, 4);
     stats point_stat_table(get_self(), point_sym.code().raw());
     auto point_stat_iterator = point_stat_table.find(point_sym.code().raw());
     
@@ -591,7 +596,7 @@ void freeosgov::maintain(string action, name user) {
 
     // supply FREEBI
     status_msg = status_msg + "\nFREEBI supply: ";
-    symbol freebi_sym = symbol("FREEBI", 4);
+    symbol freebi_sym = symbol(FREEBI_CURRENCY_CODE, 4);
     stats freebi_stat_table(name(freebi_tokens_contract), freebi_sym.code().raw());
     auto freebi_stat_iterator = freebi_stat_table.find(freebi_sym.code().raw());
     
@@ -603,7 +608,7 @@ void freeosgov::maintain(string action, name user) {
 
     // supply FREEOS
     status_msg = status_msg + "\nFREEOS supply: ";
-    symbol freeos_sym = symbol("FREEOS", 4);
+    symbol freeos_sym = symbol(FREEOS_CURRENCY_CODE, 4);
     stats freeos_stat_table(name(freeos_tokens_contract), freeos_sym.code().raw());
     auto freeos_stat_iterator = freeos_stat_table.find(freeos_sym.code().raw());
     
@@ -620,7 +625,7 @@ void freeosgov::maintain(string action, name user) {
   
   if (action == "user credit XPR") {
 
-    symbol xpr_sym = symbol("XPR", 4);
+    symbol xpr_sym = symbol(XPR_CURRENCY_CODE, 4);
 
     credit_index credit_table(get_self(), user.value);
     auto credit_iterator = credit_table.find(xpr_sym.code().raw());
@@ -633,7 +638,7 @@ void freeosgov::maintain(string action, name user) {
 
   if (action == "user credit FREEBI") {
 
-    symbol xpr_sym = symbol("FREEBI", 4);
+    symbol xpr_sym = symbol(FREEBI_CURRENCY_CODE, 4);
 
     credit_index credit_table(get_self(), user.value);
     auto credit_iterator = credit_table.find(xpr_sym.code().raw());

@@ -343,11 +343,11 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
   check(reward_iterator != rewards_table.rend(), "latest reward record not found");
 
   // get the latest voted mint fee percent - depending on which currency user is paying with
-  if (mint_fee_currency ==  symbol("FREEOS", 4)) {
+  if (mint_fee_currency ==  symbol(FREEOS_CURRENCY_CODE, 4)) {
     mint_fee_percent = reward_iterator->mint_fee_percent;
-  } else if (mint_fee_currency ==  symbol("XPR", 4)) {
+  } else if (mint_fee_currency ==  symbol(XPR_CURRENCY_CODE, 4)) {
     mint_fee_percent = reward_iterator->mint_fee_percent_xpr;
-  } else if (mint_fee_currency ==  symbol("XUSDC", 6)) {
+  } else if (mint_fee_currency ==  symbol(XUSDC_CURRENCY_CODE, 6)) {
     mint_fee_percent = reward_iterator->mint_fee_percent_xusdc;
   }
 
@@ -362,20 +362,20 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
   }
 
   // apply the currency conversion if necessary
-  if (mint_fee_currency == symbol("FREEOS", 4)) {
+  if (mint_fee_currency == symbol(FREEOS_CURRENCY_CODE, 4)) {
     mintfee_units = mintfee_in_freeos * 10000;
   } else {
     // conversion required
 
     // get the FREEOS exchange rate
     currencies_index currencies_table(get_self(), get_self().value);
-    auto freeos_iterator = currencies_table.find(symbol("FREEOS", 4).raw());
+    auto freeos_iterator = currencies_table.find(symbol(FREEOS_CURRENCY_CODE, 4).raw());
     check(freeos_iterator != currencies_table.end(), "FREEOS currency record not defined");
     double freeos_rate = freeos_iterator->usdrate;
 
-    if (mint_fee_currency == symbol("XPR",4)) {
+    if (mint_fee_currency == symbol(XPR_CURRENCY_CODE, 4)) {
       // get the XPR exchange rate
-      auto xpr_iterator = currencies_table.find(symbol("XPR", 4).raw());
+      auto xpr_iterator = currencies_table.find(symbol(XPR_CURRENCY_CODE, 4).raw());
       check(xpr_iterator != currencies_table.end(), "XPR currency record not defined");
       double xpr_rate = xpr_iterator->usdrate;
 
@@ -384,9 +384,9 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
       mintfee_units = (int64_t) mintfee_amount;
     }
 
-    if (mint_fee_currency == symbol("XUSDC",6)) {
+    if (mint_fee_currency == symbol(XUSDC_CURRENCY_CODE, 6)) {
       // get the XUSDC exchange rate
-      auto xusdc_iterator = currencies_table.find(symbol("XUSDC", 6).raw());
+      auto xusdc_iterator = currencies_table.find(symbol(XUSDC_CURRENCY_CODE, 6).raw());
       check(xusdc_iterator != currencies_table.end(), "XUSDC currency record not defined");
       double xusdc_rate = xusdc_iterator->usdrate;
 
@@ -625,10 +625,10 @@ void freeosgov::withdraw(const name user) {
 
     // get the currency contract
     string credit_code = credit_amount.symbol.code().to_string();
-    if (credit_code == "FREEOS") {
-      string freeos_tokens_contract = get_parameter(name("freebitokens"));
+    if (credit_code == FREEOS_CURRENCY_CODE) {
+      string freeos_tokens_contract = get_parameter(name("freeostokens"));
       currency_contract = name(freeos_tokens_contract);
-    } else if (credit_code == "FREEBI") {
+    } else if (credit_code == FREEBI_CURRENCY_CODE) {
       string freebi_tokens_contract = get_parameter(name("freebitokens"));
       currency_contract = name(freebi_tokens_contract);
     } else {
@@ -737,7 +737,7 @@ void freeosgov::mintfee(name user, name to, asset quantity, std::string memo) {
     check(to == get_self(), "recipient of mint fee is incorrect");
 
     // check that FREEBI is from the right contract
-    symbol freebi_symbol = symbol("FREEBI", 4);
+    symbol freebi_symbol = symbol(FREEBI_CURRENCY_CODE, 4);
     check(quantity.symbol == freebi_symbol, "token symbol is not valid, expected FREEBI");
     string freebi_tokens_contract = get_parameter(name("freebitokens"));
     check(get_first_receiver() == name(freebi_tokens_contract), "FREEBI payment is invalid");
