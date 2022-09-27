@@ -10,8 +10,17 @@ using namespace eosio;
 using namespace freedao;
 using namespace std;
 
+/** @defgroup points Points
+ *  These Actions and functions are related to managing the POINTs ledger each participant.
+ *  @{
+ */
 
-// ACTION
+/**
+ * Action creates a new token
+ * 
+ * @param issuer The account that will issue the token.
+ * @param maximum_supply The maximum amount of tokens that can be created.
+ */
 void freeosgov::create(const name &issuer, const asset &maximum_supply) {
   require_auth(get_self());
 
@@ -31,6 +40,18 @@ void freeosgov::create(const name &issuer, const asset &maximum_supply) {
   });
 }
 
+
+/**
+ * Function checks that the issuer is the account that's calling the function, that the quantity is valid,
+ * that the quantity is positive, that the quantity is less than the maximum supply, and then it adds
+ * the quantity to the supply and adds the quantity to the issuer's balance.
+ * 
+ * This function is called by the 'mint' action which applies a whitelist of accounts that are permitted to issue POINTs.
+ * 
+ * @param to The account to which the tokens are issued.
+ * @param quantity The amount of tokens to issue.
+ * @param memo A string that can be used to store additional information about the transaction.
+ */
 void freeosgov::issue(const name &to, const asset &quantity, const string &memo) {
   auto sym = quantity.symbol;
   check(sym.is_valid(), "invalid symbol name");
@@ -55,6 +76,17 @@ void freeosgov::issue(const name &to, const asset &quantity, const string &memo)
   add_balance(st.issuer, quantity, st.issuer);
 }
 
+
+/**
+ * Function takes an asset and a memo, checks that the asset is valid, and then subtracts the asset from the
+ * supply and the issuer's balance
+ * 
+ * This is a standard token management function that is not exposed as an action. It is called by the 'burn' action which
+ * applies a whitelist of accounts that are permitted to reduce the supply of a token.
+ * 
+ * @param quantity The amount of POINTs to retire.
+ * @param memo A string that can be used to store additional information about the transaction.
+ */
 void freeosgov::retire(const asset &quantity, const string &memo) {
   auto sym = quantity.symbol;
   check(sym.is_valid(), "invalid symbol name");
@@ -75,9 +107,18 @@ void freeosgov::retire(const asset &quantity, const string &memo) {
   sub_balance(st.issuer, quantity);
 }
 
-// Replacement for the transfer action - 'allocate' enforces a whitelist of
-// those who can transfer
-// ACTION
+
+/**
+ * Action checks if the `from` account is in the `transferers` table, and if it is, it calls the `transfer`
+ * function. It is therefore a wrapper for the transfer function that applies a whitelist of which accounts are
+ * permitted to transfer POINTs.
+ * 
+ * @param from The account that is sending the tokens.
+ * @param to The account that will receive the tokens.
+ * @param quantity The amount of tokens to be allocated.
+ * @param memo The memo is a string that can be used to store additional information about the
+ * transfer.
+ */
 void freeosgov::allocate(const name &from, const name &to, const asset &quantity, const string &memo) {
   require_auth(from);
 
@@ -92,7 +133,17 @@ void freeosgov::allocate(const name &from, const name &to, const asset &quantity
   transfer(from, to, quantity, memo);
 }
 
-// ACTION
+
+/**
+ * Action is called by the user to unlock some of their locked POINTs.
+ * It checks that the user has not already unlocked in the current iteration, and if not, it
+ * calculates the amount to be unlocked based on the unlock_percentage set in the system table, and then it
+ * unlocks the amount.
+ * 
+ * @param user the account name of the user who is unlocking
+ * 
+ * @return Nothing.
+ */
 void freeosgov::unlock(const name &user) {
   require_auth(user);
 
@@ -187,8 +238,15 @@ void freeosgov::unlock(const name &user) {
 }
 
 
-// Replacement for the issue action - 'mint' enforces a whitelist of who can issue OPTIONs
-// ACTION
+/**
+ * Action checks if the `minter` account is in the `minters` table, and if it is, it calls the `issue`
+ * function
+ * 
+ * @param minter the account that is allowed to mint tokens
+ * @param to The account to receive the tokens.
+ * @param quantity The amount of tokens to be minted.
+ * @param memo a string that can be used to store additional information about the transaction.
+ */
 void freeosgov::mint(const name &minter, const name &to, const asset &quantity, const string &memo) {
   // check if the 'to' account is in the minter whitelist
   minters_index minters_table(get_self(), get_self().value);
@@ -202,7 +260,15 @@ void freeosgov::mint(const name &minter, const name &to, const asset &quantity, 
   issue(to, quantity, memo);
 }
 
-// Replacement for the retire action - 'burn' enforces a whitelist of who can retire POINTs
+
+/**
+ * Action checks if the account that is calling the burn action is in the burners table, and if it is, it
+ * calls the retire function
+ * 
+ * @param burner The account that is burning the tokens.
+ * @param quantity The amount of tokens to burn.
+ * @param memo The memo is a string that is passed along with the transfer.
+ */
 void freeosgov::burn(const name &burner, const asset &quantity, const string &memo) {
   // check if the 'burner' account is in the burner whitelist
   burners_index burners_table(get_self(), get_self().value);
@@ -216,6 +282,16 @@ void freeosgov::burn(const name &burner, const asset &quantity, const string &me
   retire(quantity, memo);
 }
 
+
+/**
+ * Function to transfer POINT tokens from sender to receiver.
+ * This is a wrapper to the transfer function that applies a whitelist of which accounts are permitted to transfer POINTs.
+ * 
+ * @param from The account that is sending the tokens.
+ * @param to The account to which the tokens are transferred.
+ * @param quantity The amount of tokens to transfer.
+ * @param memo A string that can be used to store additional information about the transfer.
+ */
 void freeosgov::transfer(const name &from, const name &to, const asset &quantity, const string &memo) {
   check(from != to, "cannot transfer to self");
   // require_auth(from);
@@ -240,6 +316,12 @@ void freeosgov::transfer(const name &from, const name &to, const asset &quantity
 }
 
 
+/**
+ * It subtracts the amount of the asset from the balance of the account
+ * 
+ * @param owner The account that will be debited
+ * @param value The amount of tokens to be transferred.
+ */
 void freeosgov::sub_balance(const name &owner, const asset &value) {
   accounts from_acnts(get_self(), owner.value);
 
@@ -250,6 +332,14 @@ void freeosgov::sub_balance(const name &owner, const asset &value) {
   from_acnts.modify(from, owner, [&](auto &a) { a.balance -= value; });
 }
 
+
+/**
+ * It adds the value of the asset to the balance of the owner
+ * 
+ * @param owner The account to which the tokens are being transferred.
+ * @param value The amount of tokens to be transferred.
+ * @param ram_payer The account that will pay for the RAM used by the new account.
+ */
 void freeosgov::add_balance(const name &owner, const asset &value,
                          const name &ram_payer) {
   accounts to_acnts(get_self(), owner.value);
@@ -261,8 +351,14 @@ void freeosgov::add_balance(const name &owner, const asset &value,
   }
 }
 
-// convert POINTs for FREEBI
-// ACTION
+
+/**
+ * Action takes a quantity of POINT tokens from the user and issues an equivalent amount of FREEBI tokens
+ * to the user
+ * 
+ * @param owner the account that is minting the FREEBI tokens
+ * @param quantity the amount of POINTs to be converted to FREEBIs
+ */
 void freeosgov::mintfreebi(const name &owner, const asset &quantity) {
   require_auth(owner);
 
@@ -327,6 +423,13 @@ void freeosgov::mintfreebi(const name &owner, const asset &quantity) {
 }
 
 
+/**
+ * The function calculates the mint fee in the currency that the user is paying with.
+ * 
+ * @param user the account name of the user who is minting
+ * @param mint_quantity the amount of tokens to be exchanged for FREEOS
+ * @param mint_fee_currency symbol: the currency the user is paying the mint fee with
+ */
 asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol mint_fee_currency) {
 
   asset mintfee;
@@ -408,6 +511,21 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
 // This function is not called. If the mintfreeos transaction fails then all actions
 // in the transaction are rolled back, which means there is no need to refund the mint fee.
 // The code is reserved for future use
+
+
+/**
+ * Function looks up the user's credit record for the mint fee, and if it finds one, it transfers
+ * the fee back to the user and deletes the credit record.
+ * 
+ * N.B. This function is not called. If the mintfreeos transaction fails then all actions
+ * in the transaction are rolled back, which means there is no need to refund the mint fee.
+ * The code is reserved for future use.
+ * 
+ * @param user the account name of the user who paid the fee
+ * @param mint_fee_currency the currency that the user paid the mint fee in
+ * 
+ * @return The mint fee is being returned to the user.
+ */
 void freeosgov::refund_mintfee(name user, symbol mint_fee_currency) {
 
   credit_index credit_table(get_self(), user.value);
@@ -437,7 +555,17 @@ void freeosgov::refund_mintfee(name user, symbol mint_fee_currency) {
   credit_table.erase(credit_iterator);
 }
 
-// function to check if the correct mint fee has been paid - returns true if mint fee has processed correctly
+
+/**
+ * Function `process_mint_fee` checks if the user has paid the correct mint fee, and if so, erases the credit
+ * record and returns True to indicate that processing the mint fee was successful.
+ * 
+ * @param user the account name of the user who is minting the token
+ * @param mint_quantity the amount of tokens to be minted
+ * @param mint_fee_currency the symbol of the currency that the mint fee is paid in
+ * 
+ * @return A boolean value to indicate success or failure
+ */
 bool freeosgov::process_mint_fee(name user, asset mint_quantity, symbol mint_fee_currency) {
 
   bool mintfee_status;  // will be set to true if correct mint fee has been paid
@@ -472,7 +600,14 @@ bool freeosgov::process_mint_fee(name user, asset mint_quantity, symbol mint_fee
   return mintfee_status;
 }
 
-// adjust balances when minting from points
+
+/**
+ * Function adjusts balances when minting FREEOS from POINTs.
+ * It takes a user and an asset, and it decreases the user's balance of the asset and burns the asset.
+ * 
+ * @param user the account name of the user who is redeeming points
+ * @param input_quantity the amount of POINTs the user is trying to convert
+ */
 void freeosgov::adjust_balances_from_points(const name user, const asset &input_quantity) {
   
   stats statstable(get_self(), input_quantity.symbol.code().raw());
@@ -489,7 +624,14 @@ void freeosgov::adjust_balances_from_points(const name user, const asset &input_
     });
 }
 
-// adjust balances when minting from freebi
+
+/**
+ * Function adjusts balances when minting FREEOS from POINTs.
+ * It takes a user and an asset, and it decreases the user's balance of the asset and burns the asset.
+ * 
+ * @param user the account name of the user who is redeeming points
+ * @param input_quantity the amount of POINTs the user is trying to convert
+ */
 void freeosgov::adjust_balances_from_freebi(const name user, const asset &input_quantity) {
   
   // check that we have a credit for the input FREEBI
@@ -515,8 +657,16 @@ void freeosgov::adjust_balances_from_freebi(const name user, const asset &input_
   retire_freebi_action.send();
 }
 
-// convert non-exchangeable currency for exchangeable currency
-// ACTION: MINTFREEOS MINTFREEOS MINTFREEOS MINTFREEOS MINTFREEOS MINTFREEOS MINTFREEOS 
+
+/**
+ * Action checks that the user has paid the correct mint fee, then it issues the FREEOS tokens to the user
+ * 
+ * @param user the account name of the user who is minting
+ * @param input_quantity the amount of POINTs or FREEBIs that the user is minting
+ * @param mint_fee_currency the currency that the user has paid the mint fee in
+ * @param use_airclaim_points If true, the user is using their Airclaim points to mint FREEOS.  If
+ * false, the user is using POINTs or FREEBI to mint FREEOS.
+ */
 void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_fee_currency, bool use_airclaim_points) {
 
   require_auth(user);
@@ -603,8 +753,12 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
   transfer_action.send();
 }
 
-// ACTION
-// withdraw credits
+
+/**
+ * Action withdraws all credits from the user's credit table and transfers the credit amount back to the user's account
+ * 
+ * @param user the account name of the user who is withdrawing their credits
+ */
 void freeosgov::withdraw(const name user) {
   action  transfer_action;
   asset   credit_amount;
@@ -658,7 +812,16 @@ void freeosgov::withdraw(const name user) {
 
 }
 
-// record a deposit to the freedao account
+
+/**
+ * Function finds the record for the iteration number, and if it doesn't exist, it creates it and initialises
+ * it with the amount, otherwise it adds the amount to the existing record.
+ * 
+ * A deposit record for an iteration records how many POINTs are to be divided by the dividend contract to NFT holders.
+ * 
+ * @param iteration_number The iteration number of the deposit.
+ * @param amount The amount of the deposit
+ */
 void freeosgov::record_deposit(uint64_t iteration_number, asset amount) {
   deposits_index deposits_table(get_self(), get_self().value);
 
@@ -678,8 +841,13 @@ void freeosgov::record_deposit(uint64_t iteration_number, asset amount) {
   }
 }
 
-// action to clear (remove) a deposit record from the deposit table
-// ACTION
+
+/**
+ * Action deletes the deposit record for the iteration number passed in.
+ * This is called by the dividend contract after successfully processing dividends for an iteration.
+ * 
+ * @param iteration_number The iteration number of the deposit record to be cleared.
+ */
 void freeosgov::depositclear(uint64_t iteration_number) {
   
   name freeosdiv_acct = name(get_parameter(name("freedaoacct")));
@@ -697,8 +865,17 @@ void freeosgov::depositclear(uint64_t iteration_number) {
 }
 
 
-
-// mint fee confirmation
+/**
+ * When a user sends a token to the freeosgov contract, the freeosgov contract checks that the token is
+ * from the valid token contract, and then records the amount of tokens recived as a credit record in the credit table.
+ * 
+ * @param user the account that sent the transfer
+ * @param to the account that will receive the minted tokens
+ * @param quantity the amount of the fee
+ * @param memo "freeos mint fee"
+ * 
+ * @return The mintfee function is being returned.
+ */
 [[eosio::on_notify("*::transfer")]]    // was "eosio.token::transfer"
 void freeosgov::mintfee(name user, name to, asset quantity, std::string memo) {
   if (memo == "freeos mint fee" || memo == "freeos mint credit") {
@@ -759,3 +936,5 @@ void freeosgov::mintfee(name user, name to, asset quantity, std::string memo) {
     });
   }
 }
+
+/** @} */ // end of points group

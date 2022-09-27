@@ -7,13 +7,18 @@
 using namespace eosio;
 using namespace freedao;
 
+/** @defgroup config Configuration
+ *  These Actions and functions are related to configuring the dApp.
+ *  @{
+ */
+
 
 /**
  * It returns the string value of a parameter from the parameters table
  * 
- * @param paramname The name of the parameter to retrieve.
+ * @param paramname The name of the parameter record to retrieve from the parameters table.
  * 
- * @return The value of the parameter.
+ * @return The string value of the parameter.
  */
 string freeosgov::get_parameter(name paramname) {
   parameters_index parameters_table(get_self(), get_self().value);
@@ -28,9 +33,9 @@ string freeosgov::get_parameter(name paramname) {
 /**
  * It gets the integer value of a parameter from the parameters table
  * 
- * @param paramname The name of the parameter to get.
+ * @param paramname The name of the parameter record to get from the parameters table.
  * 
- * @return The value of the parameter.
+ * @return The integer value of the parameter.
  */
 int freeosgov::get_iparameter(name paramname) {
   parameters_index parameters_table(get_self(), get_self().value);
@@ -42,7 +47,13 @@ int freeosgov::get_iparameter(name paramname) {
   return stoi(parameter_iterator->value);
 }
 
-// get double parameter value
+/**
+ * It gets the double value of a parameter from the dparameters (double parameters) table
+ * 
+ * @param paramname The name of the parameter record to get from the dparameters table.
+ * 
+ * @return The double value of the parameter.
+ */
 double freeosgov::get_dparameter(name paramname) {
   dparameters_index dparameters_table(get_self(), get_self().value);
   auto dparameter_iterator = dparameters_table.find(paramname.value);
@@ -53,9 +64,15 @@ double freeosgov::get_dparameter(name paramname) {
   return dparameter_iterator->value;
 }
 
-//void freeosgov::svrsplit(uint)
 
-// ACTION
+
+/**
+ * Action takes a parameter name and a value, and either inserts the parameter into the parameters table if it doesn't
+ * exist, or updates the parameter if it does exist
+ * 
+ * @param paramname The name of the parameter.
+ * @param value The string value of the parameter.
+ */
 void freeosgov::paramupsert(name paramname, std::string value) {
 
   require_auth(get_self());
@@ -78,8 +95,12 @@ void freeosgov::paramupsert(name paramname, std::string value) {
   }
 }
 
-// erase parameter from the table
-// ACTION
+
+/**
+ * Action deletes a parameter from the parameters table
+ * 
+ * @param paramname The name of the parameter to be deleted.
+ */
 void freeosgov::paramerase(name paramname) {
   require_auth(_self);
 
@@ -94,7 +115,14 @@ void freeosgov::paramerase(name paramname) {
   parameters_table.erase(parameter_iterator);
 }
 
-// ACTION
+
+/**
+ * Action either inserts a new double parameter into the table or updates an existing double parameter in
+ * the table
+ * 
+ * @param paramname the name of the parameter in the dparameters table
+ * @param the double value of the parameter
+ */
 void freeosgov::dparamupsert(name paramname, double dvalue) {
 
   require_auth(get_self());
@@ -117,8 +145,12 @@ void freeosgov::dparamupsert(name paramname, double dvalue) {
   }
 }
 
-// erase dparameter from the table
-// ACTION
+
+/**
+ * Action deletes a double parameter from the dparameters table
+ * 
+ * @param paramname The name of the parameter to be deleted.
+ */
 void freeosgov::dparamerase(name paramname) {
   require_auth(_self);
 
@@ -134,9 +166,11 @@ void freeosgov::dparamerase(name paramname) {
 }
 
 
-
-// add an account to the transferers whitelist
-// ACTION
+/**
+ * Action adds an account to the transferers table: list of accounts that can transfer (allocate) POINT tokens
+ * 
+ * @param account The account that will be able to transfer POINT tokens.
+ */
 void freeosgov::transfadd(name account) {
   require_auth(get_self());
 
@@ -145,7 +179,12 @@ void freeosgov::transfadd(name account) {
       get_self(), [&](auto &transferer) { transferer.account = account; });
 }
 
-// ACTION
+
+/**
+ * Action removes an account from the transferers table
+ * 
+ * @param account the account to be removed from the table
+ */
 void freeosgov::transferase(name account) {
   require_auth(get_self());
 
@@ -160,8 +199,12 @@ void freeosgov::transferase(name account) {
   transferers_table.erase(transferer_iterator);
 }
 
-// add an account to the issuers whitelist
-// ACTION
+
+/**
+ * Action adds a new account to the minters table: list of accounts that can issue POINT tokens.
+ * 
+ * @param account The account that will be able to mint (issue) tokens.
+ */
 void freeosgov::minteradd(name account) {
   require_auth(get_self());
 
@@ -169,8 +212,12 @@ void freeosgov::minteradd(name account) {
   minters_table.emplace(_self, [&](auto &issuer) { issuer.account = account; });
 }
 
-// erase an account from the issuers whitelist
-// ACTION
+
+/**
+ * Action removes an account from the minters table
+ * 
+ * @param account the account to be removed from the minters table
+ */
 void freeosgov::mintererase(name account) {
   require_auth(get_self());
 
@@ -185,8 +232,12 @@ void freeosgov::mintererase(name account) {
   minters_table.erase(minter_iterator);
 }
 
-// add an account to the burners whitelist
-// ACTION
+
+/**
+ * Action adds an account to the burners table: people who can burn (retire) POINT tokens
+ * 
+ * @param account The account that will be added to the burners table.
+ */
 void freeosgov::burneradd(name account) {
   require_auth(get_self());
 
@@ -194,8 +245,12 @@ void freeosgov::burneradd(name account) {
   burners_table.emplace(_self, [&](auto &burner) { burner.account = account; });
 }
 
-// erase an account from the burners whitelist
-// ACTION
+
+/**
+ * Action deletes an account from the burners table
+ * 
+ * @param account the account to be removed from the burners table
+ */
 void freeosgov::burnererase(name account) {
   require_auth(get_self());
 
@@ -210,7 +265,14 @@ void freeosgov::burnererase(name account) {
   burners_table.erase(burner_iterator);
 }
 
-// ACTION
+
+/**
+ * Action sets the current FREEOS usd price in the exchangerate table
+ * 
+ * @pre Must be run under the authority of the contract or the account defined by the 'exchangeacc' parameter
+ * 
+ * @param double price The current price of the token which must have a positive value
+ */
 void freeosgov::currentrate(double price) {
 
   // check if the exchange account is calling this action, or the contract itself
@@ -239,7 +301,13 @@ void freeosgov::currentrate(double price) {
   }
 }
 
-// ACTION
+/**
+ * Action sets the target FREEOS usd price in the exchangerate table
+ * 
+ * @pre Must be run under the authority of the contract
+ * 
+ * @param double price The target price of the token which must have a positive value
+ */
 void freeosgov::targetrate(double exchangerate) {
 
   require_auth(get_self());
@@ -270,8 +338,14 @@ void freeosgov::targetrate(double exchangerate) {
   }
 }
 
-// ACTION
-// update/insert a currency record to the currencies table
+
+/**
+ * Action takes a symbol and a contract name as arguments, and then either creates a new currency entry in
+ * the currencies table or updates an existing one
+ * 
+ * @param symbol The symbol of the currency you want to add.
+ * @param contract The contract that manages the token ledger.
+ */
 void freeosgov::currupsert(symbol symbol, name contract) {
 
   require_auth(get_self());
@@ -293,7 +367,15 @@ void freeosgov::currupsert(symbol symbol, name contract) {
   }
 }
 
-// update the usdrate for a currency record in the currencies table
+
+/**
+ * Action sets the USD rate for a given token currency
+ * 
+ * @pre Must be run under the authority of the contract or the account defined by the 'exchangeacc' parameter
+ * 
+ * @param symbol the symbol of the currency to set the rate for
+ * @param usdrate The USD rate of the currency.
+ */
 void freeosgov::currsetrate(symbol symbol, double usdrate) {
 
   // check if the exchange account is calling this action, or the contract itself
@@ -317,8 +399,11 @@ void freeosgov::currsetrate(symbol symbol, double usdrate) {
 }
 
 
-// ACTION
-// delete a currency record from the currencies table
+/**
+ * Action erases a token currency from the currencies table
+ * 
+ * @param symbol The symbol of the currency to be erased.
+ */
 void freeosgov::currerase(symbol symbol) {
 
   require_auth(get_self());
@@ -331,4 +416,4 @@ void freeosgov::currerase(symbol symbol) {
   currencies_table.erase(curr_iterator);
 }
 
-
+/** @} */ // end of config group

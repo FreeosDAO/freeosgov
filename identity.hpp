@@ -12,7 +12,19 @@ using namespace eosio;
 using namespace freedao;
 
 
-// does the user have an NFT?
+/** @defgroup identity Identity
+ *  These Actions and functions are related to the personal attributes of each participant.
+ *  @{
+ */
+
+
+/**
+ * Function checks the `nft_table` in the `dividend` contract to see if the user has an active (unlocked) NFT
+ * 
+ * @param user the account name of the user
+ * 
+ * @return A boolean value indicating whether the user has an active NFT
+ */
 bool freeosgov::has_nft(name user) {
   bool nft_status = false;
 
@@ -30,7 +42,14 @@ bool freeosgov::has_nft(name user) {
   return nft_status;
 }
 
-// user's last active iteration
+
+/**
+ * Function returns the iteration number after which the user will be deactivated
+ * 
+ * @param user the user account name
+ * 
+ * @return The last iteration that the user is active.
+ */
 uint32_t freeosgov::user_last_active_iteration(name user) {
   // fetch the user lifespan parameter
   string slifespan = get_parameter(name("userlifespan"));
@@ -45,7 +64,15 @@ uint32_t freeosgov::user_last_active_iteration(name user) {
   return participant_iterator->registered_iteration + ilifespan - 1;
 }
 
-// is the user within the allotted 'lifespan' ?
+
+/**
+ * If the current iteration is less than or equal to the user's last active iteration, then the user is
+ * alive
+ * 
+ * @param user: the user's account name
+ * 
+ * @return A boolean value
+ */
 bool freeosgov::is_user_alive(name user) {
   uint32_t user_last_iteration = user_last_active_iteration(user);
 
@@ -53,7 +80,19 @@ bool freeosgov::is_user_alive(name user) {
   return current_iteration() <= user_last_iteration ? true : false;
 }
 
-// determine the user account type from the Proton verification table
+
+/**
+ * Function checks the user's verification status and returns a string indicating the user's account type, as follows:
+ * "d" indicates an account created via the Proton wallet,
+ * "e" indicates an account created programmatically, i.e. not via a Proton process
+ * "v" indicates that the user has completed the Proton KYC process.
+ * 
+ * The above is determined by examining the user entry (if it exists) in the eosio.proton::usersinfo table
+ * 
+ * @param user the account name of the user we are checking
+ * 
+ * @return The account type of the user.
+ */
 string get_account_type(name user) {
   // default result
   string user_account_type = "e";
@@ -88,7 +127,12 @@ string get_account_type(name user) {
   return user_account_type;
 }
 
-// add user CLS contribution
+
+/**
+ * Function calculates the amount by which the Conditionally Limited Supply (CLS) will be increased on a user registration
+ * 
+ * @return asset: The number of POINTs to add to the CLS 
+ */
 asset freeosgov::calculate_user_cls_addition() {
   // get parameters
   parameters_index parameters_table(get_self(), get_self().value);
@@ -130,7 +174,17 @@ asset freeosgov::calculate_user_cls_addition() {
   return ucls;
 }
 
-// ACTION
+
+/**
+ * The `reguser` action is called by a user to register with the Freeos system.
+ * 
+ * The function:
+ * 1. creates an appropriately populated record in the participants table,
+ * 2. creates and populates the mff (mint-fee-free) record with the user's POINTs balance,
+ * 3. updates the CLS with a contribution for the user
+ * 
+ * @param user the user's account name
+ */
 void freeosgov::reguser(name user) {  // TODO: detect if the user has an existing record from the airclaim
 
   require_auth(user);
@@ -241,7 +295,11 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
 }
 
 
-// ACTION
+/**
+ * The reregister function is called by a user to update their account_type in their participant record
+ * 
+ * @param user the account name of the user who is reregistering
+ */
 void freeosgov::reregister(name user) {
   require_auth(user);
 
@@ -289,7 +347,13 @@ void freeosgov::reregister(name user) {
 }
 
 
-// is user registered?
+/**
+ * Function checks if the user is registered in the participants table
+ * 
+ * @param user The account name of the user to check.
+ * 
+ * @return A boolean value.
+ */
 bool freeosgov::is_registered(name user) {
 
   participants_index participants_table(get_self(), user.value);
@@ -299,6 +363,13 @@ bool freeosgov::is_registered(name user) {
 }
 
 
+/**
+ * If the user is a verified user, or if the user has an NFT, then the user is verified
+ * 
+ * @param user the account name of the user
+ * 
+ * @return A boolean value.
+ */
 bool freeosgov::is_user_verified(name user) {
   bool verified = false;
 
@@ -318,3 +389,5 @@ bool freeosgov::is_user_verified(name user) {
 
   return verified;
 }
+
+/** @} */ // end of identity group

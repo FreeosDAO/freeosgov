@@ -9,6 +9,15 @@ using namespace eosio;
 using namespace freedao;
 using namespace std;
 
+/** @defgroup vote Vote
+ *  These Actions and functions are related to processing user voting.
+ *  @{
+ */
+
+/**
+ * Function to create and initialise the vote results record.
+ * If the voterecord table is empty, then create the (single record) in the voterecord table
+ */
 void freeosgov::vote_init() {
     vote_index vote_table(get_self(), get_self().value);
     auto vote_iterator = vote_table.begin();
@@ -19,7 +28,10 @@ void freeosgov::vote_init() {
     }
 }
 
-// rest the vote record, ready for the new iteration
+
+/**
+ * Function to reset the vote record at the beginning of a new iteration
+ */
 void freeosgov::vote_reset() {
     vote_index vote_table(get_self(), get_self().value);
     auto vote_iterator = vote_table.begin();
@@ -52,6 +64,14 @@ void freeosgov::vote_reset() {
 }
 
 
+/**
+ * This function parses the ranges in the voteranges parameter.
+ * It takes a string like "q1:0-100,q2:6-30,q5:0-50" and returns a vector of integers like [0, 100, 6, 30, 0, 50]
+ * 
+ * @param voteranges a string that looks like this: q1:0-100,q2:6-30,q5:0-50 from the voteranges parameter
+ * 
+ * @return A vector of integers.
+ */
 std::vector<int> parse_vote_ranges(string voteranges) {
     
     // the voteranges string looks like this: q1:0-100,q2:6-30,q5:0-50
@@ -77,7 +97,28 @@ std::vector<int> parse_vote_ranges(string voteranges) {
     return limits;
 }
 
-// ACTION
+
+
+/**
+ * Action by the user to votes on the parameters for the next iteration.
+ * The iteration number of the vote is recorded in the user's SVR record
+ * 
+ * @param user the user's account name
+ * @param q1response the user's response to question 1
+ * @param q2response the fee for minting FREEOS
+ * @param q2response_xpr the fee for minting XPR
+ * @param q2response_xusdc the fee for minting XUSDC
+ * @param q3response locking threshold
+ * @param q4response "POOL" or "BURN"
+ * @param q5response the number of iterations the user wants to lock their Freeos for
+ * @param q6choice1 1st choice for question 6
+ * @param q6choice2 2nd choice for question 6
+ * @param q6choice3 3rd choice for question 6
+ * @param q7response reserved for future use
+ * @param q8response reserved for future use
+ * @param q9response reserved for future use
+ * @param q10response reserved for future use
+ */
 void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, uint8_t q2response_xpr, uint8_t q2response_xusdc,
                     double q3response, string q4response, uint8_t q5response, uint8_t q6choice1, uint8_t q6choice2, uint8_t q6choice3,
                     double q7response, double q8response, double q9response, uint8_t q10response) {
@@ -258,3 +299,5 @@ void freeosgov::vote(name user, uint8_t q1response, uint8_t q2response, uint8_t 
     });
 
 }
+
+/** @} */ // end of vote group

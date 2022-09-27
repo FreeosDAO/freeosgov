@@ -18,7 +18,15 @@ using namespace std;
 
 const std::string VERSION = "0.9.57";
 
-// ACTION
+/** @defgroup core Core Functions
+ *  These Actions and functions are related to core functionality.
+ *  @{
+ */
+
+/**
+ * Action prints out the version of the contract, the accounts that are used for the freeos tokens, freebi
+ * tokens, and the freeos divide account, and the current iteration
+ */
 void freeosgov::version() {
 
   string freeosdiv_acct = get_parameter(name("freedaoacct"));
@@ -31,6 +39,14 @@ void freeosgov::version() {
   check(false, version_message);
 }
 
+
+/**
+ * Function checks if the master switch (parameter: masterswitch) is on (set to "1") or off.
+ * The masterswitch parameter is checked by all user-initiated actions. In effect
+ * this can be used to prohibit user activity in the event of a serious problem.
+ * 
+ * @return A boolean value.
+ */
 bool freeosgov::check_master_switch() {
   parameters_index parameters_table(get_self(), get_self().value);
   auto parameter_iterator = parameters_table.find(name("masterswitch").value);
@@ -50,7 +66,20 @@ bool freeosgov::check_master_switch() {
   }
 }
 
-// ACTION
+
+/**
+ * Action initializes the system by creating the system record, the reward record for iteration 0, and the
+ * survey, vote and ratify records if they don't already exist
+ * 
+ * @param iterations_start the time at which the first iteration will start
+ * @param issuance_rate the amount of points to be issued per iteration
+ * @param mint_fee_percent_freeos the percentage of the issuance that goes to the freeos.io team
+ * @param mint_fee_percent_xpr the percentage of the issuance that goes to the XPR pool
+ * @param mint_fee_percent_xusdc The percentage of the issuance that goes to the XUSDC pool.
+ * @param locking_threshold the minimum percentage of a user's total points that must be locked in
+ * order to participate in the vote
+ * @param pool true if the rewards are to be distributed to the pool, false if they are to be burned
+ */
 void freeosgov::init(time_point iterations_start, double issuance_rate, double mint_fee_percent_freeos,
                     double mint_fee_percent_xpr, double mint_fee_percent_xusdc, double locking_threshold, bool pool) {
 
@@ -100,9 +129,13 @@ void freeosgov::init(time_point iterations_start, double issuance_rate, double m
 }
 
 
-// helper functions
-
-// are we in the survey, vote or ratify period?
+/**
+ * If the current time is between the start and end of the action period, return true
+ * 
+ * @param action the name of the activity, i.e. "survey", "vote" or "ratify"
+ * 
+ * @return A boolean value indicating whether the activity period is current
+ */
 bool freeosgov::is_action_period(string action) {
   // default return is false
   bool result = false;
@@ -145,7 +178,11 @@ bool freeosgov::is_action_period(string action) {
 }
 
 
-// which iteration are we in?
+/**
+ * The function returns the current iteration number
+ * 
+ * @return The current iteration number.
+ */
 uint32_t freeosgov::current_iteration() {
 
   uint32_t iteration = 0;
@@ -170,7 +207,12 @@ uint32_t freeosgov::current_iteration() {
   return iteration;
 }
 
-// ACTION
+
+/**
+ * The `tick()` function is called every time a user runs an action. It checks that the system is
+ * operational (i.e. that the `masterswitch` parameter is set to `1`). If the iteration has changed, the
+ * trigger_new_iteration() function is called to perform app housekeeping operations
+ */
 void freeosgov::tick() {
 
   // check that system is operational (masterswitch parameter set to "1")
@@ -202,6 +244,13 @@ void freeosgov::tick() {
 }
 
 
+/**
+ * Function returns the double proportion of the total supply that should be locked, based on the current and target
+ * exchange rates in the exchangerate table. For example, a target rate of $2 and a current rate of $1.5 returns a
+ * lock proportion = 0.25. The proportion is capped at 0.9
+ * 
+ * @return The proportion of the amount of tokens that will be locked.
+ */
 double freeosgov::get_locked_proportion() {
   // default rate if exchange rate record not found, or if current price >= target price (so no need to lock)
   double proportion = 0.0;
@@ -238,8 +287,18 @@ double freeosgov::get_locked_proportion() {
 }
 
 
-
-// this is only ever called by tick() when a switch to a new iteration is detected
+/**
+ * If the exchange rate is favourable, i.e current rate > target rate (good times), increase the unlock percentage.
+ * If the exchange rate is unfavourable (bad times), decrease the unlock percentage.
+ * 
+ * The rate of unlock percentage increases in good times according to a Fibonacci sequence, i.e. 1%, 2%, 3%, 5%, etc
+ * The unlock percentage is capped at 21%.
+ * 
+ * Going into 'bad times' resets the unlock percentage to 0.
+ * 
+ * "failsafe" unlocking applies in bad times. Every so many weeks, users can unlock 15%. The interval is determined by
+ * parameter: failsafefreq
+ */
 void freeosgov::update_unlock_percentage() {
   uint32_t current_unlock_percentage = 0;
   uint32_t new_unlock_percentage = 0;
@@ -328,7 +387,14 @@ void freeosgov::update_unlock_percentage() {
 }
 
 
-// tidy up at the end of an iteration - save SVR data in the reward record
+/**
+ * Function performs various housekeeping activities at the switchover to a new iteration.
+ * It updates the system record with the new iteration, updates the locking threshold, calculates the
+ * issuance for the iteration, updates the rewards record, updates the exchange rate record, deletes
+ * old rewards records, and resets the survey, vote and ratify records
+ * 
+ * @param new_iteration the iteration number of the new iteration
+ */
 void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
   double issuance_rate;
   double mint_fee_percent;
@@ -460,3 +526,5 @@ void freeosgov::trigger_new_iteration(uint32_t new_iteration) {
 }
 
 } // end of namespace freedao
+
+/** @} */ // end of core group

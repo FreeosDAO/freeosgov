@@ -8,6 +8,20 @@ using namespace eosio;
 using namespace freedao;
 using namespace std;
 
+/** @defgroup survey Survey
+ *  These Actions and functions are related to processing user surveys.
+ *  @{
+ */
+
+/**
+ * Utility function to split a string into a vector of strings, using a delimiter.
+ * This function is used by parse_survey_ranges() to interpret the surveyranges parameter.
+ * 
+ * @param s The string to be split
+ * @param delimiter The delimiter to use to split the string.
+ * 
+ * @return A vector of strings.
+ */
 vector<string> split (string s, string delimiter) {
     size_t pos_start = 0, pos_end, delim_len = delimiter.length();
     string token;
@@ -23,6 +37,15 @@ vector<string> split (string s, string delimiter) {
     return res;
 }
 
+
+/**
+ * This function parses the ranges in the surveyranges parameter.
+ * It takes a string like "q2:1-48,q4:1-36" and returns a vector of integers like [1, 48, 1, 36]
+ * 
+ * @param surveyranges a string that looks like this: q2:1-48,q4:1-48
+ * 
+ * @return A vector of integers.
+ */
 std::vector<int> parse_survey_ranges(string surveyranges) {
     
     // the surveyranges string looks like this: q2:1-48,q4:1-48
@@ -44,6 +67,11 @@ std::vector<int> parse_survey_ranges(string surveyranges) {
     return limits;
 }
 
+
+/**
+ * Function to create and initialise the survey results record.
+ * If the surveyrecord table is empty, then create the (single record) in the surveyrecord table
+ */
 void freeosgov::survey_init() {
     survey_index survey_table(get_self(), get_self().value);
     auto survey_iterator = survey_table.begin();
@@ -54,7 +82,10 @@ void freeosgov::survey_init() {
     }    
 }
 
-// reset the survey record, ready for the new iteration
+
+/**
+ * Function to reset the survey record at the beginning of a new iteration
+ */
 void freeosgov::survey_reset() {
     survey_index survey_table(get_self(), get_self().value);
     auto survey_iterator = survey_table.begin();
@@ -83,7 +114,19 @@ void freeosgov::survey_reset() {
     }
 }
 
-// ACTION
+
+/**
+ * Action called by a user to submit their responses to the weekly survey
+ * 
+ * @param user the account name of the user
+ * @param q1response 1, 2, or 3
+ * @param q2response a number between 1 and 10
+ * @param q3response 1, 2, 3
+ * @param q4response 
+ * @param q5choice1 the user's first choice for question 5
+ * @param q5choice2 the user's second choice for question 5
+ * @param q5choice3 the user's 3rd choice for question 5
+ */
 void freeosgov::survey(name user, uint8_t q1response, uint8_t q2response, uint8_t q3response, uint8_t q4response, uint8_t q5choice1, uint8_t q5choice2, uint8_t q5choice3) {
     
     require_auth(user);
@@ -245,3 +288,5 @@ void freeosgov::survey(name user, uint8_t q1response, uint8_t q2response, uint8_
     });
 
 }
+
+/** @} */ // end of survey group

@@ -9,9 +9,14 @@ using namespace eosio;
 using namespace freedao;
 using namespace std;
 
+/** @defgroup claim Claiming
+ *  These Actions and functions are related to the weekly claim of each participant.
+ *  @{
+ */
+
 
 /**
- * Action checks that the user has completed the required number of votes, surveys and ratifications, and
+ * Action checks that the user has completed the required number of surveys, votes and ratifications, and
  * if so, it mints the appropriate number of POINTs and transfers them to the user's account
  * 
  * @param user the account name of the user who is claiming
@@ -242,3 +247,5 @@ void freeosgov::claim(name user) {
     
 
 }
+
+/** @} */ // end of claim group

@@ -8,7 +8,15 @@ using namespace eosio;
 using namespace freedao;
 using namespace std;
 
+/** @defgroup ratify Ratify
+ *  These Actions and functions are related to ratification.
+ *  @{
+ */
 
+/**
+ * Function to create and initialise the ratify results record.
+ * If the ratifyrecord table is empty, then create the (single record) in the ratifyrecord table
+ */
 void freeosgov::ratify_init() {
     ratify_index ratify_table(get_self(), get_self().value);
     auto ratify_iterator = ratify_table.begin();
@@ -19,7 +27,12 @@ void freeosgov::ratify_init() {
     }
 }
 
-// reset the ratify record, ready for the new iteration
+
+/**
+ * This function is called at the start of a new iteration.
+ * It resets the ratify record in the ratifyrecord table to the current iteration, resets the number
+ * of participants to zero, and initialises the default setting of 'ratify' to false.
+ */
 void freeosgov::ratify_reset() {
     ratify_index ratify_table(get_self(), get_self().value);
     auto ratify_iterator = ratify_table.begin();
@@ -33,7 +46,15 @@ void freeosgov::ratify_reset() {
     }
 }
 
-// ACTION
+
+/**
+ * Action called by the user each iteration to ratify the results of the vote.
+ * 
+ * The iteration number of the ratification is recorded in the user's survey-vote-ratify (SVR) record.
+ * 
+ * @param user the account name of the user
+ * @param ratify_vote true or false
+ */
 void freeosgov::ratify(name user, bool ratify_vote) {
     
     require_auth(user);
@@ -119,3 +140,5 @@ void freeosgov::ratify(name user, bool ratify_vote) {
     });
 
 }
+
+/** @} */ // end of ratify group

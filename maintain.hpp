@@ -7,7 +7,8 @@ using namespace eosio;
 using namespace freedao;
 using namespace std;
 
-// TODO: Remove this action in production version
+
+// TODO: Remove all of the code in this module in production version
 
 void freeosgov::calcfee(const name &from, const asset& transfer_quantity)
 {
