@@ -1,0 +1,282 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="group__identity" kind="group">
+    <compoundname>identity</compoundname>
+    <title>Identity</title>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__identity_1ga41857775ea623287c812b3081e81ee7f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string get_account_type</definition>
+        <argsstring>(name user)</argsstring>
+        <name>get_account_type</name>
+        <param>
+          <type>name</type>
+          <declname>user</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function checks the user&apos;s verification status and returns a string indicating the user&apos;s account type, as follows: &quot;d&quot; indicates an account created via the Proton wallet, &quot;e&quot; indicates an account created programmatically, i.e. not via a Proton process &quot;v&quot; indicates that the user has completed the Proton KYC process.</para>
+<para>The above is determined by examining the user entry (if it exists) in the eosio.proton::usersinfo table</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account name of the user we are checking</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The account type of the user. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="identity.hpp" line="96" column="8" bodyfile="identity.hpp" bodystart="96" bodyend="128"/>
+      </memberdef>
+      <memberdef kind="function" id="group__identity_1ga902ae7ebb4bdaf3e2c79debe7837d21f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool freeosgov::has_nft</definition>
+        <argsstring>(name user)</argsstring>
+        <name>has_nft</name>
+        <qualifiedname>freedao::has_nft</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>user</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function checks the <computeroutput>nft_table</computeroutput> in the <computeroutput>dividend</computeroutput> contract to see if the user has an active (unlocked) NFT</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account name of the user</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A boolean value indicating whether the user has an active NFT </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="41" column="8" bodyfile="identity.hpp" bodystart="28" bodyend="43" declfile="freeosgov.hpp" declline="41" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__identity_1ga96c4bd9831997a09c2935898ebdaff3b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>uint32_t</type>
+        <definition>uint32_t freeosgov::user_last_active_iteration</definition>
+        <argsstring>(name user)</argsstring>
+        <name>user_last_active_iteration</name>
+        <qualifiedname>freedao::user_last_active_iteration</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>user</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function returns the iteration number after which the user will be deactivated</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the user account name</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The last iteration that the user is active. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="110" column="12" bodyfile="identity.hpp" bodystart="53" bodyend="65" declfile="freeosgov.hpp" declline="110" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="group__identity_1ga4210ea712d659c25ea75383f2542bff1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool freeosgov::is_user_alive</definition>
+        <argsstring>(name user)</argsstring>
+        <name>is_user_alive</name>
+        <qualifiedname>freedao::is_user_alive</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>user</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>If the current iteration is less than or equal to the user&apos;s last active iteration, then the user is alive</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the user&apos;s account name</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A boolean value </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="111" column="8" bodyfile="identity.hpp" bodystart="76" bodyend="81" declfile="freeosgov.hpp" declline="111" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__identity_1ga8c70e7d4b7de03fcacc779c592add5dc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>asset</type>
+        <definition>asset freeosgov::calculate_user_cls_addition</definition>
+        <argsstring>()</argsstring>
+        <name>calculate_user_cls_addition</name>
+        <qualifiedname>freedao::calculate_user_cls_addition</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function calculates the amount by which the Conditionally Limited Supply (CLS) will be increased on a user registration</para>
+<para><simplesect kind="return"><para>asset: The number of POINTs to add to the CLS </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="112" column="9" bodyfile="identity.hpp" bodystart="136" bodyend="175" declfile="freeosgov.hpp" declline="112" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__identity_1gaefe73a847bdaafab06244891a97288be" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::reguser</definition>
+        <argsstring>(name user)</argsstring>
+        <name>reguser</name>
+        <qualifiedname>freedao::reguser</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>user</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The <computeroutput>reguser</computeroutput> action is called by a user to register with the Freeos system.</para>
+<para>The function:<orderedlist>
+<listitem><para>creates an appropriately populated record in the participants table,</para>
+</listitem><listitem><para>creates and populates the mff (mint-fee-free) record with the user&apos;s POINTs balance,</para>
+</listitem><listitem><para>updates the CLS with a contribution for the user</para>
+</listitem></orderedlist>
+</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the user&apos;s account name </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="38" column="9" bodyfile="identity.hpp" bodystart="188" bodyend="295" declfile="freeosgov.hpp" declline="38" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__identity_1gae10cd39a0a766716debdc9ad9cb31586" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::reregister</definition>
+        <argsstring>(name user)</argsstring>
+        <name>reregister</name>
+        <qualifiedname>freedao::reregister</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>user</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The reregister function is called by a user to update their account_type in their participant record</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account name of the user who is reregistering </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="39" column="9" bodyfile="identity.hpp" bodystart="303" bodyend="347" declfile="freeosgov.hpp" declline="39" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__identity_1gae606cca008a6d2f91a5b158dcd86ee46" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool freeosgov::is_registered</definition>
+        <argsstring>(name user)</argsstring>
+        <name>is_registered</name>
+        <qualifiedname>freedao::is_registered</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>user</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function checks if the user is registered in the participants table</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The account name of the user to check.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A boolean value. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="109" column="8" bodyfile="identity.hpp" bodystart="357" bodyend="363" declfile="freeosgov.hpp" declline="109" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__identity_1ga3958d16d2ce524d53eb907e7826f5046" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool freeosgov::is_user_verified</definition>
+        <argsstring>(name user)</argsstring>
+        <name>is_user_verified</name>
+        <qualifiedname>freedao::is_user_verified</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>user</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>If the user is a verified user, or if the user has an NFT, then the user is verified</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account name of the user</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A boolean value. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="40" column="8" bodyfile="identity.hpp" bodystart="373" bodyend="391" declfile="freeosgov.hpp" declline="40" declcolumn="8"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>These Actions and functions are related to the personal attributes of each participant. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

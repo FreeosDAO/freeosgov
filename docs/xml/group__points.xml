@@ -1,0 +1,1021 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="group__points" kind="group">
+    <compoundname>points</compoundname>
+    <title>Points</title>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__points_1ga4fc129feed6008b5d856031767fd8eae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::create</definition>
+        <argsstring>(const name &amp;issuer, const asset &amp;maximum_supply)</argsstring>
+        <name>create</name>
+        <qualifiedname>freedao::create</qualifiedname>
+        <param>
+          <type>const name &amp;</type>
+          <declname>issuer</declname>
+        </param>
+        <param>
+          <type>const asset &amp;</type>
+          <declname>maximum_supply</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action creates a new token</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>issuer</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The account that will issue the token. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>maximum_supply</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The maximum amount of tokens that can be created. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="84" column="9" bodyfile="points.hpp" bodystart="24" bodyend="41" declfile="freeosgov.hpp" declline="84" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1ga193a37b2aa3799710b11eca7e08b9746" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::issue</definition>
+        <argsstring>(const name &amp;to, const asset &amp;quantity, const string &amp;memo)</argsstring>
+        <name>issue</name>
+        <qualifiedname>freedao::issue</qualifiedname>
+        <param>
+          <type>const name &amp;</type>
+          <declname>to</declname>
+        </param>
+        <param>
+          <type>const asset &amp;</type>
+          <declname>quantity</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>memo</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function checks that the issuer is the account that&apos;s calling the function, that the quantity is valid, that the quantity is positive, that the quantity is less than the maximum supply, and then it adds the quantity to the supply and adds the quantity to the issuer&apos;s balance.</para>
+<para>This function is called by the &apos;mint&apos; action which applies a whitelist of accounts that are permitted to issue POINTs.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>to</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The account to which the tokens are issued. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>quantity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The amount of tokens to issue. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>memo</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A string that can be used to store additional information about the transaction. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="85" column="8" bodyfile="points.hpp" bodystart="55" bodyend="77" declfile="freeosgov.hpp" declline="85" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1gaa899256b67a997f284069de37053b1ad" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::retire</definition>
+        <argsstring>(const asset &amp;quantity, const string &amp;memo)</argsstring>
+        <name>retire</name>
+        <qualifiedname>freedao::retire</qualifiedname>
+        <param>
+          <type>const asset &amp;</type>
+          <declname>quantity</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>memo</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function takes an asset and a memo, checks that the asset is valid, and then subtracts the asset from the supply and the issuer&apos;s balance</para>
+<para>This is a standard token management function that is not exposed as an action. It is called by the &apos;burn&apos; action which applies a whitelist of accounts that are permitted to reduce the supply of a token.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>quantity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The amount of POINTs to retire. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>memo</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A string that can be used to store additional information about the transaction. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="86" column="8" bodyfile="points.hpp" bodystart="90" bodyend="108" declfile="freeosgov.hpp" declline="86" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1ga7d7f4ee6456e168e1464cecffb8282bf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::allocate</definition>
+        <argsstring>(const name &amp;from, const name &amp;to, const asset &amp;quantity, const string &amp;memo)</argsstring>
+        <name>allocate</name>
+        <qualifiedname>freedao::allocate</qualifiedname>
+        <param>
+          <type>const name &amp;</type>
+          <declname>from</declname>
+        </param>
+        <param>
+          <type>const name &amp;</type>
+          <declname>to</declname>
+        </param>
+        <param>
+          <type>const asset &amp;</type>
+          <declname>quantity</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>memo</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action checks if the <computeroutput>from</computeroutput> account is in the <computeroutput>transferers</computeroutput> table, and if it is, it calls the <computeroutput>transfer</computeroutput> function. It is therefore a wrapper for the transfer function that applies a whitelist of which accounts are permitted to transfer POINTs.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>from</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The account that is sending the tokens. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>to</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The account that will receive the tokens. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>quantity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The amount of tokens to be allocated. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>memo</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The memo is a string that can be used to store additional information about the transfer. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="87" column="9" bodyfile="points.hpp" bodystart="122" bodyend="134" declfile="freeosgov.hpp" declline="87" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1gac93b758053acebce53fa76cae9c38fc2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::unlock</definition>
+        <argsstring>(const name &amp;user)</argsstring>
+        <name>unlock</name>
+        <qualifiedname>freedao::unlock</qualifiedname>
+        <param>
+          <type>const name &amp;</type>
+          <declname>user</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action is called by the user to unlock some of their locked POINTs. It checks that the user has not already unlocked in the current iteration, and if not, it calculates the amount to be unlocked based on the unlock_percentage set in the system table, and then it unlocks the amount.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account name of the user who is unlocking</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Nothing. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="96" column="9" bodyfile="points.hpp" bodystart="147" bodyend="238" declfile="freeosgov.hpp" declline="96" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1ga9e690436f328f9e2cf803812335e26e6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::mint</definition>
+        <argsstring>(const name &amp;minter, const name &amp;to, const asset &amp;quantity, const string &amp;memo)</argsstring>
+        <name>mint</name>
+        <qualifiedname>freedao::mint</qualifiedname>
+        <param>
+          <type>const name &amp;</type>
+          <declname>minter</declname>
+        </param>
+        <param>
+          <type>const name &amp;</type>
+          <declname>to</declname>
+        </param>
+        <param>
+          <type>const asset &amp;</type>
+          <declname>quantity</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>memo</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action checks if the <computeroutput>minter</computeroutput> account is in the <computeroutput>minters</computeroutput> table, and if it is, it calls the <computeroutput>issue</computeroutput> function</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>minter</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account that is allowed to mint tokens </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>to</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The account to receive the tokens. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>quantity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The amount of tokens to be minted. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>memo</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a string that can be used to store additional information about the transaction. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="88" column="9" bodyfile="points.hpp" bodystart="250" bodyend="261" declfile="freeosgov.hpp" declline="88" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1ga1ad20b46e07e76ab22ce65cfcf144098" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::transfer</definition>
+        <argsstring>(const name &amp;from, const name &amp;to, const asset &amp;quantity, const string &amp;memo)</argsstring>
+        <name>transfer</name>
+        <qualifiedname>freedao::transfer</qualifiedname>
+        <param>
+          <type>const name &amp;</type>
+          <declname>from</declname>
+        </param>
+        <param>
+          <type>const name &amp;</type>
+          <declname>to</declname>
+        </param>
+        <param>
+          <type>const asset &amp;</type>
+          <declname>quantity</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>memo</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function to transfer POINT tokens from sender to receiver. This is a wrapper to the transfer function that applies a whitelist of which accounts are permitted to transfer POINTs.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>from</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The account that is sending the tokens. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>to</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The account to which the tokens are transferred. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>quantity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The amount of tokens to transfer. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>memo</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A string that can be used to store additional information about the transfer. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="90" column="8" bodyfile="points.hpp" bodystart="295" bodyend="316" declfile="freeosgov.hpp" declline="90" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1ga010a7cd8c211c200e4a79b2a7f044a95" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::sub_balance</definition>
+        <argsstring>(const name &amp;owner, const asset &amp;value)</argsstring>
+        <name>sub_balance</name>
+        <qualifiedname>freedao::sub_balance</qualifiedname>
+        <param>
+          <type>const name &amp;</type>
+          <declname>owner</declname>
+        </param>
+        <param>
+          <type>const asset &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>It subtracts the amount of the asset from the balance of the account</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>owner</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The account that will be debited </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The amount of tokens to be transferred. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="91" column="8" bodyfile="points.hpp" bodystart="325" bodyend="333" declfile="freeosgov.hpp" declline="91" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1ga3de396c5ddc66e511d33cf3eff1e984e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::add_balance</definition>
+        <argsstring>(const name &amp;owner, const asset &amp;value, const name &amp;ram_payer)</argsstring>
+        <name>add_balance</name>
+        <qualifiedname>freedao::add_balance</qualifiedname>
+        <param>
+          <type>const name &amp;</type>
+          <declname>owner</declname>
+        </param>
+        <param>
+          <type>const asset &amp;</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>const name &amp;</type>
+          <declname>ram_payer</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>It adds the value of the asset to the balance of the owner</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>owner</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The account to which the tokens are being transferred. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The amount of tokens to be transferred. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>ram_payer</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The account that will pay for the RAM used by the new account. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="92" column="8" bodyfile="points.hpp" bodystart="343" bodyend="352" declfile="freeosgov.hpp" declline="92" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1gacedaaa66b9a9b7bc12f462055cbc25b1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::mintfreebi</definition>
+        <argsstring>(const name &amp;owner, const asset &amp;quantity)</argsstring>
+        <name>mintfreebi</name>
+        <qualifiedname>freedao::mintfreebi</qualifiedname>
+        <param>
+          <type>const name &amp;</type>
+          <declname>owner</declname>
+        </param>
+        <param>
+          <type>const asset &amp;</type>
+          <declname>quantity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action takes a quantity of POINT tokens from the user and issues an equivalent amount of FREEBI tokens to the user</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>owner</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account that is minting the FREEBI tokens </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>quantity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the amount of POINTs to be converted to FREEBIs </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="93" column="9" bodyfile="points.hpp" bodystart="362" bodyend="423" declfile="freeosgov.hpp" declline="93" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1ga17eb2820132fccb693b7f9f3bcfc2a32" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>asset</type>
+        <definition>asset freeosgov::calculate_mint_fee</definition>
+        <argsstring>(name &amp;user, asset &amp;mint_quantity, symbol mint_fee_currency)</argsstring>
+        <name>calculate_mint_fee</name>
+        <qualifiedname>freedao::calculate_mint_fee</qualifiedname>
+        <param>
+          <type>name &amp;</type>
+          <declname>user</declname>
+        </param>
+        <param>
+          <type>asset &amp;</type>
+          <declname>mint_quantity</declname>
+        </param>
+        <param>
+          <type>symbol</type>
+          <declname>mint_fee_currency</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The function calculates the mint fee in the currency that the user is paying with.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account name of the user who is minting </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>mint_quantity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the amount of tokens to be exchanged for FREEOS </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>mint_fee_currency</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>symbol: the currency the user is paying the mint fee with </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="100" column="9" bodyfile="points.hpp" bodystart="433" bodyend="509" declfile="freeosgov.hpp" declline="100" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1gaf31f2d05e9eefd4548fe930a112db1eb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::refund_mintfee</definition>
+        <argsstring>(name user, symbol mint_fee_currency)</argsstring>
+        <name>refund_mintfee</name>
+        <qualifiedname>freedao::refund_mintfee</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>user</declname>
+        </param>
+        <param>
+          <type>symbol</type>
+          <declname>mint_fee_currency</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function looks up the user&apos;s credit record for the mint fee, and if it finds one, it transfers the fee back to the user and deletes the credit record.</para>
+<para>N.B. This function is not called. If the mintfreeos transaction fails then all actions in the transaction are rolled back, which means there is no need to refund the mint fee. The code is reserved for future use.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account name of the user who paid the fee </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>mint_fee_currency</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the currency that the user paid the mint fee in</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The mint fee is being returned to the user. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="102" column="8" bodyfile="points.hpp" bodystart="529" bodyend="556" declfile="freeosgov.hpp" declline="102" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1ga20fb8e9e29cb529477ed800fa022e1c3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool freeosgov::process_mint_fee</definition>
+        <argsstring>(name user, asset mint_quantity, symbol mint_fee_currency)</argsstring>
+        <name>process_mint_fee</name>
+        <qualifiedname>freedao::process_mint_fee</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>user</declname>
+        </param>
+        <param>
+          <type>asset</type>
+          <declname>mint_quantity</declname>
+        </param>
+        <param>
+          <type>symbol</type>
+          <declname>mint_fee_currency</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function <computeroutput>process_mint_fee</computeroutput> checks if the user has paid the correct mint fee, and if so, erases the credit record and returns True to indicate that processing the mint fee was successful.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account name of the user who is minting the token </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>mint_quantity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the amount of tokens to be minted </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>mint_fee_currency</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the symbol of the currency that the mint fee is paid in</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A boolean value to indicate success or failure </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="101" column="8" bodyfile="points.hpp" bodystart="569" bodyend="601" declfile="freeosgov.hpp" declline="101" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1ga06c068a58e41615ae7bea92f2c3adaea" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::adjust_balances_from_points</definition>
+        <argsstring>(const name user, const asset &amp;input_quantity)</argsstring>
+        <name>adjust_balances_from_points</name>
+        <qualifiedname>freedao::adjust_balances_from_points</qualifiedname>
+        <param>
+          <type>const name</type>
+          <declname>user</declname>
+        </param>
+        <param>
+          <type>const asset &amp;</type>
+          <declname>input_quantity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function adjusts balances when minting FREEOS from POINTs. It takes a user and an asset, and it decreases the user&apos;s balance of the asset and burns the asset.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account name of the user who is redeeming points </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>input_quantity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the amount of POINTs the user is trying to convert </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="103" column="8" bodyfile="points.hpp" bodystart="611" bodyend="625" declfile="freeosgov.hpp" declline="103" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1ga7a752c5f88082b72e941bc5ee39b7ee8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::adjust_balances_from_freebi</definition>
+        <argsstring>(const name user, const asset &amp;input_quantity)</argsstring>
+        <name>adjust_balances_from_freebi</name>
+        <qualifiedname>freedao::adjust_balances_from_freebi</qualifiedname>
+        <param>
+          <type>const name</type>
+          <declname>user</declname>
+        </param>
+        <param>
+          <type>const asset &amp;</type>
+          <declname>input_quantity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function adjusts balances when minting FREEOS from POINTs. It takes a user and an asset, and it decreases the user&apos;s balance of the asset and burns the asset.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account name of the user who is redeeming points </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>input_quantity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the amount of POINTs the user is trying to convert </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="104" column="8" bodyfile="points.hpp" bodystart="635" bodyend="658" declfile="freeosgov.hpp" declline="104" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1ga2e561e548c70dcdf75bf6ffc0076bbdd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::mintfreeos</definition>
+        <argsstring>(name user, const asset &amp;input_quantity, symbol &amp;mint_fee_currency, bool use_airclaim_points)</argsstring>
+        <name>mintfreeos</name>
+        <qualifiedname>freedao::mintfreeos</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>user</declname>
+        </param>
+        <param>
+          <type>const asset &amp;</type>
+          <declname>input_quantity</declname>
+        </param>
+        <param>
+          <type>symbol &amp;</type>
+          <declname>mint_fee_currency</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>use_airclaim_points</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action checks that the user has paid the correct mint fee, then it issues the FREEOS tokens to the user</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account name of the user who is minting </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>input_quantity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the amount of POINTs or FREEBIs that the user is minting </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>mint_fee_currency</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the currency that the user has paid the mint fee in </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>use_airclaim_points</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If true, the user is using their Airclaim points to mint FREEOS. If false, the user is using POINTs or FREEBI to mint FREEOS. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="94" column="9" bodyfile="points.hpp" bodystart="670" bodyend="754" declfile="freeosgov.hpp" declline="94" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1ga1efc9a0e333d47dc5e186e97386dd12c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::withdraw</definition>
+        <argsstring>(const name user)</argsstring>
+        <name>withdraw</name>
+        <qualifiedname>freedao::withdraw</qualifiedname>
+        <param>
+          <type>const name</type>
+          <declname>user</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action withdraws all credits from the user&apos;s credit table and transfers the credit amount back to the user&apos;s account</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account name of the user who is withdrawing their credits </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="95" column="9" bodyfile="points.hpp" bodystart="762" bodyend="813" declfile="freeosgov.hpp" declline="95" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1ga3ac52570ababa28e48939c418b6fb38e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::record_deposit</definition>
+        <argsstring>(uint64_t iteration_number, asset amount)</argsstring>
+        <name>record_deposit</name>
+        <qualifiedname>freedao::record_deposit</qualifiedname>
+        <param>
+          <type>uint64_t</type>
+          <declname>iteration_number</declname>
+        </param>
+        <param>
+          <type>asset</type>
+          <declname>amount</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function finds the record for the iteration number, and if it doesn&apos;t exist, it creates it and initialises it with the amount, otherwise it adds the amount to the existing record.</para>
+<para>A deposit record for an iteration records how many POINTs are to be divided by the dividend contract to NFT holders.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>iteration_number</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The iteration number of the deposit. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>amount</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The amount of the deposit </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="98" column="8" bodyfile="points.hpp" bodystart="825" bodyend="842" declfile="freeosgov.hpp" declline="98" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1ga6a11764cd7c26d3a4a05995d9d6a5c01" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::depositclear</definition>
+        <argsstring>(uint64_t iteration_number)</argsstring>
+        <name>depositclear</name>
+        <qualifiedname>freedao::depositclear</qualifiedname>
+        <param>
+          <type>uint64_t</type>
+          <declname>iteration_number</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action deletes the deposit record for the iteration number passed in. This is called by the dividend contract after successfully processing dividends for an iteration.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>iteration_number</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The iteration number of the deposit record to be cleared. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="97" column="9" bodyfile="points.hpp" bodystart="851" bodyend="865" declfile="freeosgov.hpp" declline="97" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__points_1ga73658ba9535383e56d733cb7fa6c59bf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::mintfee</definition>
+        <argsstring>(name user, name to, asset quantity, std::string memo)</argsstring>
+        <name>mintfee</name>
+        <qualifiedname>freedao::mintfee</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>user</declname>
+        </param>
+        <param>
+          <type>name</type>
+          <declname>to</declname>
+        </param>
+        <param>
+          <type>asset</type>
+          <declname>quantity</declname>
+        </param>
+        <param>
+          <type>std::string</type>
+          <declname>memo</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>When a user sends a token to the freeosgov contract, the freeosgov contract checks that the token is from the valid token contract, and then records the amount of tokens recived as a credit record in the credit table.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account that sent the transfer </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>to</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account that will receive the minted tokens </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>quantity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the amount of the fee </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>memo</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>&quot;freeos mint fee&quot;</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The mintfee function is being returned. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="99" column="8" bodyfile="points.hpp" bodystart="880" bodyend="938" declfile="freeosgov.hpp" declline="99" declcolumn="8"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="group__points_1gac09329aadc29576dc0a942be034b1c85" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>void freeosgov::burn</definition>
+        <argsstring></argsstring>
+        <name>burn</name>
+        <qualifiedname>freedao::burn</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action checks if the account that is calling the burn action is in the burners table, and if it is, it calls the retire function</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>burner</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The account that is burning the tokens. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>quantity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The amount of tokens to burn. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>memo</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The memo is a string that is passed along with the transfer. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="tables.hpp" line="42" column="11" bodyfile="tables.hpp" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>These Actions and functions are related to managing the POINTs ledger each participant. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,230 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="freeosgov_8hpp" kind="file" language="C++">
+    <compoundname>freeosgov.hpp</compoundname>
+    <includes local="no">eosio/eosio.hpp</includes>
+    <includes local="no">eosio/asset.hpp</includes>
+    <includedby refid="claim_8hpp" local="yes">claim.hpp</includedby>
+    <includedby refid="config_8hpp" local="yes">config.hpp</includedby>
+    <includedby refid="freeosgov_8cpp" local="yes">freeosgov.cpp</includedby>
+    <includedby refid="identity_8hpp" local="yes">identity.hpp</includedby>
+    <includedby refid="points_8hpp" local="yes">points.hpp</includedby>
+    <includedby refid="ratify_8hpp" local="yes">ratify.hpp</includedby>
+    <includedby refid="survey_8hpp" local="yes">survey.hpp</includedby>
+    <includedby refid="vote_8hpp" local="yes">vote.hpp</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>freeosgov.hpp</label>
+        <link refid="freeosgov_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>eosio/asset.hpp</label>
+      </node>
+      <node id="2">
+        <label>eosio/eosio.hpp</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>claim.hpp</label>
+        <link refid="claim_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>config.hpp</label>
+        <link refid="config_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>freeosgov.cpp</label>
+        <link refid="freeosgov_8cpp"/>
+      </node>
+      <node id="1">
+        <label>freeosgov.hpp</label>
+        <link refid="freeosgov_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>identity.hpp</label>
+        <link refid="identity_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>maintain.hpp</label>
+        <link refid="maintain_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>points.hpp</label>
+        <link refid="points_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>ratify.hpp</label>
+        <link refid="ratify_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>survey.hpp</label>
+        <link refid="survey_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>vote.hpp</label>
+        <link refid="vote_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innernamespace refid="namespacefreedao">freedao</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;eosio/eosio.hpp&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;eosio/asset.hpp&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="namespacefreedao" kindref="compound">freedao</ref><sp/>{</highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="keyword">using<sp/>namespace<sp/></highlight><highlight class="normal"><ref refid="namespaceeosio" kindref="compound">eosio</ref>;</highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="keyword">using<sp/>namespace<sp/></highlight><highlight class="normal">std;</highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="keyword">class</highlight><highlight class="normal">[[eosio::contract(</highlight><highlight class="stringliteral">&quot;freeosgov&quot;</highlight><highlight class="normal">)]]<sp/>freeosgov<sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a7af4bacb11b8b006d63993bd9372231c" kindref="member">contract</ref><sp/>{</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">using<sp/></highlight><highlight class="normal">contract::contract;</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__core_1ga6c2561c61fb830b838f1b73ccc94f829" kindref="member">version</ref>();</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__core_1ga95d6eab7ab518ca346326e62b86ee230" kindref="member">init</ref>(time_point<sp/>iterations_start,<sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1ad14aae796d5610084947cfaf0f2ad7b0" kindref="member">issuance_rate</ref>,<sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>mint_fee_percent_freeos,</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a3e17e5418923f720472eca0388bc00e1" kindref="member">mint_fee_percent_xpr</ref>,<sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1ac9ad0060eb19eb391fa5fcff24aa372d" kindref="member">mint_fee_percent_xusdc</ref>,<sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a6ddd8c20a26ef772ca3d3591e43aaed5" kindref="member">locking_threshold</ref>,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a0aecf9c0e4c3d240a5c71024fbf6827f" kindref="member">pool</ref>);</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__core_1ga707783d4644c3b79cedf5e6f037ebbd4" kindref="member">tick</ref>();</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__core_1ga63b131def8c2fe0c10e8617af5377588" kindref="member">trigger_new_iteration</ref>(uint32_t<sp/>new_iteration);</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="group__core_1ga1edb9084f1478955ad9cc01d63cc4593" kindref="member">get_locked_proportion</ref>();</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__core_1ga7f5855a1cb0a734f257cbad3f59ba1f2" kindref="member">update_unlock_percentage</ref>();</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="group__core_1ga51aa050f2ae06745744b56cd04184c96" kindref="member">check_master_switch</ref>();</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>maintain<sp/>actions<sp/>TODO:<sp/>remove<sp/>in<sp/>production<sp/>version</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a7bf944b80ab7fa6f74af9dbdb6d4545b" kindref="member">calcfee</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;from,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asset&amp;<sp/>transfer_quantity);</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a9b91cf1c5a8d6d730e1f6a002144a9ea" kindref="member">maintain</ref>(</highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>action,<sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user);</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a5f4573bdde4dfb21fc1dfe931b1d0e42" kindref="member">setmff</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user,<sp/>asset<sp/>amount);</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1abaf0333cc6449e7f35ca613abeeb775d" kindref="member">createuser</ref>(</highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>username,<sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1aca5956f1e4d2f2b06acf24dde06415b4" kindref="member">account_type</ref>,<sp/>uint32_t<sp/>registered,<sp/>uint32_t<sp/><ref refid="namespacefreedao_1ae7fd9fbaccb179b0407c315626c8562f" kindref="member">surveys</ref>,</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint32_t<sp/><ref refid="namespacefreedao_1aa92920229a51478381f7e5ce63c8eadd" kindref="member">votes</ref>,<sp/>uint32_t<sp/><ref refid="namespacefreedao_1afcc07c821b1d52d68d984c0057ad3dad" kindref="member">ratifys</ref>,<sp/>uint32_t<sp/>issues,<sp/>uint32_t<sp/><ref refid="namespacefreedao_1a6012c1091d3f5d00746751a755020c97" kindref="member">last_claim</ref>,<sp/>asset<sp/>total);</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1adaafa6175bbe617e11c8e9f07484614c" kindref="member">eraseuser</ref>(</highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>username);</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a6e280a67561f5333fd830bfa7c427e16" kindref="member">refund_function</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user);</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>identity<sp/>actions</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__identity_1gaefe73a847bdaafab06244891a97288be" kindref="member">reguser</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user);</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__identity_1gae10cd39a0a766716debdc9ad9cb31586" kindref="member">reregister</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user);</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="group__identity_1ga3958d16d2ce524d53eb907e7826f5046" kindref="member">is_user_verified</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user);</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="group__identity_1ga902ae7ebb4bdaf3e2c79debe7837d21f" kindref="member">has_nft</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user);</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>config<sp/>actions</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__config_1ga90b74b907922af79c6c2ee5932da5f5b" kindref="member">paramupsert</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>paramname,<sp/>std::string<sp/><ref refid="namespacefreedao_1a4b32c29077d5af600a57e7b5414c16e9" kindref="member">value</ref>);</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__config_1gab2307e8b713257e1fefb97d164534d31" kindref="member">paramerase</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>paramname);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__config_1ga481cd68c05350546c301b5a0fef872d7" kindref="member">dparamupsert</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>paramname,<sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a4b32c29077d5af600a57e7b5414c16e9" kindref="member">value</ref>);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__config_1gaa05e731f1bc56f4300267e3f44a39446" kindref="member">dparamerase</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>paramname);</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__config_1gabf91178328cbca5af4f83d113acc75ae" kindref="member">transfadd</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>account);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__config_1gaac61a2c48cd5a5e8d46cbe04b8364f6d" kindref="member">transferase</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>account);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__config_1gaaa7dceccdf12a61c041c0dc97e073f0d" kindref="member">minteradd</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>account);</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__config_1ga368f805fd75cb0b281b73f7041860f37" kindref="member">mintererase</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>account);</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__config_1ga46cd6550e8bf3cf28d1888c89d34189c" kindref="member">burneradd</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>account);</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__config_1ga5f4e48755025617a3b8a4e81225142c3" kindref="member">burnererase</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>account);</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__config_1ga0387236f6ea9c5209c3cee5fec92fb18" kindref="member">currentrate</ref>(</highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>price);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__config_1ga3e37798342a62cfc59e77adb4304bb74" kindref="member">targetrate</ref>(</highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>price);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__config_1ga907262ceb0bc9c12a5626036c5e33ed9" kindref="member">currupsert</ref>(symbol<sp/>symbol,<sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/><ref refid="namespacefreedao_1a7af4bacb11b8b006d63993bd9372231c" kindref="member">contract</ref>);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__config_1ga856faa93c22297dba2ee1466e810f418" kindref="member">currerase</ref>(symbol<sp/>symbol);</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__config_1gaa856d46a2c18513dc05d0ce7da17b3a5" kindref="member">currsetrate</ref>(symbol<sp/>symbol,<sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1ae90796b9434ef02fba694958c483bd10" kindref="member">usdrate</ref>);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/><ref refid="group__config_1ga852fcc49c92b61339f7cc58a822b5b2e" kindref="member">get_parameter</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>parameter);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="group__config_1ga4b5e6e573da276f6e662735cc4caaedc" kindref="member">get_dparameter</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>parameter);</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__config_1gad25bb1f207ca4ad3011c40107ac50908" kindref="member">get_iparameter</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>parameter);</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>survey<sp/>actions<sp/>(In<sp/>survey.hpp)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user,<sp/>uint8_t<sp/>q1response,<sp/>uint8_t<sp/>q2response,<sp/>uint8_t<sp/>q3response,<sp/>uint8_t<sp/>q4response,<sp/>uint8_t<sp/><ref refid="namespacefreedao_1a0a8fc98626b8c79fabf6348096708a04" kindref="member">q5choice1</ref>,<sp/>uint8_t<sp/><ref refid="namespacefreedao_1a23e751262cd60c9c0cbd195efe014fec" kindref="member">q5choice2</ref>,<sp/>uint8_t<sp/><ref refid="namespacefreedao_1ac9126508a02b4c3ce4bb7e0d74cb481e" kindref="member">q5choice3</ref>);</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__survey_1gab32cdc96c25d307ac99ac3570cf06116" kindref="member">survey_init</ref>();</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__survey_1ga67cd0c5406f70216896a4570c18f7b1c" kindref="member">survey_reset</ref>();</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>vote<sp/>actions/functions</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="namespacefreedao_1af9c384f12d57a5f752e15b7fc9c80dde" refkind="member"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1af9c384f12d57a5f752e15b7fc9c80dde" kindref="member">vote</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user,<sp/>uint8_t<sp/>q1response,<sp/>uint8_t<sp/>q2response,<sp/>uint8_t<sp/>q2response_xpr,<sp/>uint8_t<sp/>q2response_xusdc,</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>q3response,<sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>q4response,<sp/>uint8_t<sp/>q5response,<sp/>uint8_t<sp/><ref refid="namespacefreedao_1ac44453f5685d342d9d7c79531b0439b2" kindref="member">q6choice1</ref>,<sp/>uint8_t<sp/><ref refid="namespacefreedao_1abdf396f7b7560d46b934a0e081b57056" kindref="member">q6choice2</ref>,<sp/>uint8_t<sp/><ref refid="namespacefreedao_1a1b683815675e2ad8133e7a9f133b9c51" kindref="member">q6choice3</ref>,</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>q7response,<sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>q8response,<sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>q9response,<sp/>uint8_t<sp/>q10response);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__vote_1ga3ddf24a88e72a5030582a9dc011e025b" kindref="member">vote_init</ref>();</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__vote_1ga4fe9414be443e02b8bebf467239029bb" kindref="member">vote_reset</ref>();</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>ratify<sp/>actions/functions</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__ratify_1gaff4def45f109fcaee99f560a615c9041" kindref="member">ratify</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>ratify_vote);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__ratify_1ga53eb1b0df5a50862fe3d6cd7fd91fccb" kindref="member">ratify_init</ref>();</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__ratify_1gac0605393ba3458354177b08f752ec736" kindref="member">ratify_reset</ref>();</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>claim<sp/>actions/functions</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__claim_1ga79bfb41affbdeac466e2ab03c5270d80" kindref="member">claim</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>points<sp/>actions<sp/>and<sp/>functions</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1ga4fc129feed6008b5d856031767fd8eae" kindref="member">create</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;<ref refid="namespacefreedao_1a44c9bfe6ce312f5fc8c56ae9ff86855a" kindref="member">issuer</ref>,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asset<sp/>&amp;maximum_supply);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1ga193a37b2aa3799710b11eca7e08b9746" kindref="member">issue</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;to,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asset<sp/>&amp;quantity,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>&amp;memo);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1gaa899256b67a997f284069de37053b1ad" kindref="member">retire</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asset<sp/>&amp;quantity,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>&amp;memo);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1ga7d7f4ee6456e168e1464cecffb8282bf" kindref="member">allocate</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;from,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;to,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asset<sp/>&amp;quantity,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>&amp;memo);</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1ga9e690436f328f9e2cf803812335e26e6" kindref="member">mint</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;minter,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;to,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asset<sp/>&amp;quantity,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>&amp;memo);</highlight></codeline>
+<codeline lineno="89" refid="namespacefreedao_1aaa86a20a76392ecb9a3ee3dff621617b" refkind="member"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1gac09329aadc29576dc0a942be034b1c85" kindref="member">burn</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;burner,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asset<sp/>&amp;quantity,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>&amp;memo);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1ga1ad20b46e07e76ab22ce65cfcf144098" kindref="member">transfer</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;from,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;to,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asset<sp/>&amp;quantity,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>&amp;memo);</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1ga010a7cd8c211c200e4a79b2a7f044a95" kindref="member">sub_balance</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;owner,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asset<sp/>&amp;<ref refid="namespacefreedao_1a4b32c29077d5af600a57e7b5414c16e9" kindref="member">value</ref>);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1ga3de396c5ddc66e511d33cf3eff1e984e" kindref="member">add_balance</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;owner,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asset<sp/>&amp;<ref refid="namespacefreedao_1a4b32c29077d5af600a57e7b5414c16e9" kindref="member">value</ref>,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;ram_payer);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1gacedaaa66b9a9b7bc12f462055cbc25b1" kindref="member">mintfreebi</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;owner,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asset<sp/>&amp;quantity);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1ga2e561e548c70dcdf75bf6ffc0076bbdd" kindref="member">mintfreeos</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asset<sp/>&amp;input_quantity,<sp/>symbol<sp/>&amp;mint_fee_currency,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>use_airclaim_points);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1ga1efc9a0e333d47dc5e186e97386dd12c" kindref="member">withdraw</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user);</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1gac93b758053acebce53fa76cae9c38fc2" kindref="member">unlock</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;user);</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/>[[eosio::action]]<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1ga6a11764cd7c26d3a4a05995d9d6a5c01" kindref="member">depositclear</ref>(uint64_t<sp/>iteration_number);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1ga3ac52570ababa28e48939c418b6fb38e" kindref="member">record_deposit</ref>(uint64_t<sp/>iteration_number,<sp/>asset<sp/>amount);</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1ga73658ba9535383e56d733cb7fa6c59bf" kindref="member">mintfee</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user,<sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>to,<sp/>asset<sp/>quantity,<sp/>std::string<sp/>memo);</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/>asset<sp/><ref refid="group__points_1ga17eb2820132fccb693b7f9f3bcfc2a32" kindref="member">calculate_mint_fee</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>&amp;user,<sp/>asset<sp/>&amp;mint_quantity,<sp/>symbol<sp/>mint_fee_currency);</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="group__points_1ga20fb8e9e29cb529477ed800fa022e1c3" kindref="member">process_mint_fee</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user,<sp/>asset<sp/>mint_quantity,<sp/>symbol<sp/>mint_fee_currency);</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1gaf31f2d05e9eefd4548fe930a112db1eb" kindref="member">refund_mintfee</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user,<sp/>symbol<sp/>mint_fee_currency);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1ga06c068a58e41615ae7bea92f2c3adaea" kindref="member">adjust_balances_from_points</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asset<sp/>&amp;input_quantity);</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__points_1ga7a752c5f88082b72e941bc5ee39b7ee8" kindref="member">adjust_balances_from_freebi</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asset<sp/>&amp;input_quantity);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>functions</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="group__core_1ga8848c723d286f37e8ca7930753bab5f0" kindref="member">is_action_period</ref>(</highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>action);</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/>uint32_t<sp/><ref refid="group__core_1ga227e0705813c5a3ab9dfcdc438d667b2" kindref="member">current_iteration</ref>();</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="group__identity_1gae606cca008a6d2f91a5b158dcd86ee46" kindref="member">is_registered</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user);</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/>uint32_t<sp/><ref refid="group__identity_1ga96c4bd9831997a09c2935898ebdaff3b" kindref="member">user_last_active_iteration</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user);</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="group__identity_1ga4210ea712d659c25ea75383f2542bff1" kindref="member">is_user_alive</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/>asset<sp/><ref refid="group__identity_1ga8c70e7d4b7de03fcacc779c592add5dc" kindref="member">calculate_user_cls_addition</ref>();</highlight></codeline>
+<codeline lineno="113"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal">}<sp/></highlight><highlight class="comment">//<sp/>end<sp/>of<sp/>namespace<sp/>freedao</highlight></codeline>
+    </programlisting>
+    <location file="freeosgov.hpp"/>
+  </compounddef>
+</doxygen>

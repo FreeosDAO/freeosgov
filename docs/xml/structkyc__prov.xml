@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="structkyc__prov" kind="struct" language="C++" prot="public">
+    <compoundname>kyc_prov</compoundname>
+    <includes refid="eosio_8proton_8hpp" local="no">eosio.proton.hpp</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structkyc__prov_1ae2b88c57646682abdce34e65268f79e3" prot="public" static="no" mutable="no">
+        <type>name</type>
+        <definition>name kyc_prov::kyc_provider</definition>
+        <argsstring></argsstring>
+        <name>kyc_provider</name>
+        <qualifiedname>kyc_prov::kyc_provider</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="23" column="6" bodyfile="eosio.proton.hpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkyc__prov_1a2947972719ea888ca317b96a2c7334de" prot="public" static="no" mutable="no">
+        <type>string</type>
+        <definition>string kyc_prov::kyc_level</definition>
+        <argsstring></argsstring>
+        <name>kyc_level</name>
+        <qualifiedname>kyc_prov::kyc_level</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="24" column="8" bodyfile="eosio.proton.hpp" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkyc__prov_1a6eb0392be3b9900fb0b8f5e9b4d9cea9" prot="public" static="no" mutable="no">
+        <type>uint64_t</type>
+        <definition>uint64_t kyc_prov::kyc_date</definition>
+        <argsstring></argsstring>
+        <name>kyc_date</name>
+        <qualifiedname>kyc_prov::kyc_date</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="25" column="10" bodyfile="eosio.proton.hpp" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="eosio.proton.hpp" line="22" column="1" bodyfile="eosio.proton.hpp" bodystart="22" bodyend="26"/>
+    <listofallmembers>
+      <member refid="structkyc__prov_1a6eb0392be3b9900fb0b8f5e9b4d9cea9" prot="public" virt="non-virtual"><scope>kyc_prov</scope><name>kyc_date</name></member>
+      <member refid="structkyc__prov_1a2947972719ea888ca317b96a2c7334de" prot="public" virt="non-virtual"><scope>kyc_prov</scope><name>kyc_level</name></member>
+      <member refid="structkyc__prov_1ae2b88c57646682abdce34e65268f79e3" prot="public" virt="non-virtual"><scope>kyc_prov</scope><name>kyc_provider</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

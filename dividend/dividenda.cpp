@@ -660,7 +660,7 @@ void dividenda::cron()
 
 void dividenda::replay()
 {  
-  deposit_index deposit_tbl(freeos_acct, freeos_acct.value);           //external deposit table 
+  deposits_index deposit_tbl(freeos_acct, freeos_acct.value);           //external deposit table 
 
   // read current iteration externally 
   uint64_t current_iter;                  // The row containing this iteration number cannot be processed! 
@@ -845,26 +845,14 @@ void dividenda::unlocknft( uint64_t nft_key ){
   else notify_front( NON_FOUNDER ); // notify frontend: 'action ignored: trying to unlock non-founder account'. 
 }
 
-// MAINTAIN
+// MAINTAIN - reserved for future use
+/*
 [[eosio::action]]
 void dividenda::maintain( string action, name user ){
 
   require_auth(get_self());
 
-  if (action == "modify nfts") {
-    nft_table nft_register( get_self(), get_self().value );
-    auto nft_iterator = nft_register.begin();
-
-    while (nft_iterator != nft_register.end()) {
-      nft_register.modify(nft_iterator, get_self(), [&](auto &p) {
-            p.threshold = asset(1010000, symbol("POINT",4));
-      });
-
-      nft_iterator++;
-    }
-  }
-
-  if (action == "remove nfts") {
+  iif (action == "remove nfts") {
     nft_table nft_register( get_self(), get_self().value );
     auto nft_iterator = nft_register.begin();
 
@@ -946,7 +934,7 @@ void dividenda::maintain( string action, name user ){
     }
   } // end of "delete copynfts"
 
-}
+} */
 //
 //---
 

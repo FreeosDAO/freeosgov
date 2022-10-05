@@ -1,0 +1,229 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="group__survey" kind="group">
+    <compoundname>survey</compoundname>
+    <title>Survey</title>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__survey_1ga491ed1aa6d59db88f7078a4c02abb1f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>vector&lt; string &gt;</type>
+        <definition>vector&lt; string &gt; split</definition>
+        <argsstring>(string s, string delimiter)</argsstring>
+        <name>split</name>
+        <param>
+          <type>string</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>delimiter</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Utility function to split a string into a vector of strings, using a delimiter. This function is used by <ref refid="group__survey_1ga8d9eebb128306c0bc88b84bf66e9e005" kindref="member">parse_survey_ranges()</ref> to interpret the surveyranges parameter.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>s</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The string to be split </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>delimiter</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The delimiter to use to split the string.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A vector of strings. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="survey.hpp" line="25" column="8" bodyfile="survey.hpp" bodystart="25" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="group__survey_1ga8d9eebb128306c0bc88b84bf66e9e005" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::vector&lt; int &gt;</type>
+        <definition>std::vector&lt; int &gt; parse_survey_ranges</definition>
+        <argsstring>(string surveyranges)</argsstring>
+        <name>parse_survey_ranges</name>
+        <param>
+          <type>string</type>
+          <declname>surveyranges</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>This function parses the ranges in the surveyranges parameter. It takes a string like &quot;q2:1-48,q4:1-36&quot; and returns a vector of integers like [1, 48, 1, 36]</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>surveyranges</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a string that looks like this: q2:1-48,q4:1-48</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A vector of integers. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="survey.hpp" line="49" column="13" bodyfile="survey.hpp" bodystart="49" bodyend="68"/>
+      </memberdef>
+      <memberdef kind="function" id="group__survey_1gab32cdc96c25d307ac99ac3570cf06116" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::survey_init</definition>
+        <argsstring>()</argsstring>
+        <name>survey_init</name>
+        <qualifiedname>freedao::survey_init</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function to create and initialise the survey results record. If the surveyrecord table is empty, then create the (single record) in the surveyrecord table </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="65" column="8" bodyfile="survey.hpp" bodystart="75" bodyend="83" declfile="freeosgov.hpp" declline="65" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__survey_1ga67cd0c5406f70216896a4570c18f7b1c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::survey_reset</definition>
+        <argsstring>()</argsstring>
+        <name>survey_reset</name>
+        <qualifiedname>freedao::survey_reset</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function to reset the survey record at the beginning of a new iteration </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="66" column="8" bodyfile="survey.hpp" bodystart="89" bodyend="115" declfile="freeosgov.hpp" declline="66" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::survey</definition>
+        <argsstring>(name user, uint8_t q1response, uint8_t q2response, uint8_t q3response, uint8_t q4response, uint8_t q5choice1, uint8_t q5choice2, uint8_t q5choice3)</argsstring>
+        <name>survey</name>
+        <qualifiedname>freedao::survey</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>user</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>q1response</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>q2response</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>q3response</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>q4response</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>q5choice1</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>q5choice2</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>q5choice3</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action called by a user to submit their responses to the weekly survey</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account name of the user </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>q1response</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>1, 2, or 3 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>q2response</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a number between 1 and 10 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>q3response</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>1, 2, 3 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>q4response</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>q5choice1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the user&apos;s first choice for question 5 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>q5choice2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the user&apos;s second choice for question 5 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>q5choice3</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the user&apos;s 3rd choice for question 5 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="64" column="9" bodyfile="survey.hpp" bodystart="130" bodyend="290" declfile="freeosgov.hpp" declline="64" declcolumn="9"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>These Actions and functions are related to processing user surveys. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,1347 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="classeosio_1_1eosioproton" kind="class" language="C++" prot="public">
+    <compoundname>eosio::eosioproton</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">contract</basecompoundref>
+    <includes refid="eosio_8proton_8hpp" local="no">eosio.proton.hpp</includes>
+    <innerclass refid="structeosio_1_1eosioproton_1_1kyc__providers__list" prot="private">eosio::eosioproton::kyc_providers_list</innerclass>
+    <innerclass refid="structeosio_1_1eosioproton_1_1permission" prot="private">eosio::eosioproton::permission</innerclass>
+    <innerclass refid="structeosio_1_1eosioproton_1_1user__resources" prot="private">eosio::eosioproton::user_resources</innerclass>
+    <innerclass refid="structeosio_1_1eosioproton_1_1userinfo" prot="private">eosio::eosioproton::userinfo</innerclass>
+      <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1a0117e5396604c1b87ceac78166fd13d1" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;setperm&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1a0e7327523a9fc0414be1743fc1cf2467" kindref="member">eosioproton::setperm</ref> &gt;</type>
+        <definition>using eosio::eosioproton::setperm_action =  eosio::action_wrapper&lt;&quot;setperm&quot;_n, &amp;eosioproton::setperm&gt;</definition>
+        <argsstring></argsstring>
+        <name>setperm_action</name>
+        <qualifiedname>eosio::eosioproton::setperm_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="49" column="1" bodyfile="eosio.proton.hpp" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1a842f6c630df86a8184aa30449846dae1" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;setperm2&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1a3e2693616bb1e8d8938e0bf5822e11a8" kindref="member">eosioproton::setperm2</ref> &gt;</type>
+        <definition>using eosio::eosioproton::setperm2_action =  eosio::action_wrapper&lt;&quot;setperm2&quot;_n, &amp;eosioproton::setperm2&gt;</definition>
+        <argsstring></argsstring>
+        <name>setperm2_action</name>
+        <qualifiedname>eosio::eosioproton::setperm2_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="64" column="1" bodyfile="eosio.proton.hpp" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1aa12f3d2a190285be6bfae7aac40b84fd" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;remove&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1a89ddb9917c188d0fa9edbe9036e66d4f" kindref="member">eosioproton::remove</ref> &gt;</type>
+        <definition>using eosio::eosioproton::remove_action =  eosio::action_wrapper&lt;&quot;remove&quot;_n, &amp;eosioproton::remove&gt;</definition>
+        <argsstring></argsstring>
+        <name>remove_action</name>
+        <qualifiedname>eosio::eosioproton::remove_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="76" column="1" bodyfile="eosio.proton.hpp" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1ac4705e9cfffc1e09872add92378d4c81" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;reqperm&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1a2ae26018c6fb4a54bb708c30dbb2f4d3" kindref="member">eosioproton::reqperm</ref> &gt;</type>
+        <definition>using eosio::eosioproton::reqperm_action =  eosio::action_wrapper&lt;&quot;reqperm&quot;_n, &amp;eosioproton::reqperm&gt;</definition>
+        <argsstring></argsstring>
+        <name>reqperm_action</name>
+        <qualifiedname>eosio::eosioproton::reqperm_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="88" column="1" bodyfile="eosio.proton.hpp" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1a24925c941673e91a02d9d4c2a489985a" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;setuserava&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1a87510a26ca397b0f0c3e0fc0a46651d0" kindref="member">eosioproton::setuserava</ref> &gt;</type>
+        <definition>using eosio::eosioproton::setuserava_action =  eosio::action_wrapper&lt;&quot;setuserava&quot;_n, &amp;eosioproton::setuserava&gt;</definition>
+        <argsstring></argsstring>
+        <name>setuserava_action</name>
+        <qualifiedname>eosio::eosioproton::setuserava_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="98" column="1" bodyfile="eosio.proton.hpp" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1aee53ca391cce4bf4526a1bef9dc42827" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;setusername&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1a9842b282c49914422ef9c3706b190e8c" kindref="member">eosioproton::setusername</ref> &gt;</type>
+        <definition>using eosio::eosioproton::setusername_action =  eosio::action_wrapper&lt;&quot;setusername&quot;_n, &amp;eosioproton::setusername&gt;</definition>
+        <argsstring></argsstring>
+        <name>setusername_action</name>
+        <qualifiedname>eosio::eosioproton::setusername_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="108" column="1" bodyfile="eosio.proton.hpp" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1a354d68ad4da34e371c7b613facafd6db" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;userverify&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1a7cf1b2891a17e8cf16fe5ec65fa7b1a7" kindref="member">eosioproton::userverify</ref> &gt;</type>
+        <definition>using eosio::eosioproton::userverify_action =  eosio::action_wrapper&lt;&quot;userverify&quot;_n, &amp;eosioproton::userverify&gt;</definition>
+        <argsstring></argsstring>
+        <name>userverify_action</name>
+        <qualifiedname>eosio::eosioproton::userverify_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="119" column="1" bodyfile="eosio.proton.hpp" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1ae5151ba475944bc9dfc2b48d52a9a7fa" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;updateraccs&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1a099332e3f983efa0dab32d1b89ed7ef4" kindref="member">eosioproton::updateraccs</ref> &gt;</type>
+        <definition>using eosio::eosioproton::updateraccs_action =  eosio::action_wrapper&lt;&quot;updateraccs&quot;_n, &amp;eosioproton::updateraccs&gt;</definition>
+        <argsstring></argsstring>
+        <name>updateraccs_action</name>
+        <qualifiedname>eosio::eosioproton::updateraccs_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="131" column="1" bodyfile="eosio.proton.hpp" bodystart="131" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1ac0e143f69706bd219688d13be791481b" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;updateaacts&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1a17214d092ed6f751afbbe3b4abcb402d" kindref="member">eosioproton::updateaacts</ref> &gt;</type>
+        <definition>using eosio::eosioproton::updateaacts_action =  eosio::action_wrapper&lt;&quot;updateaacts&quot;_n, &amp;eosioproton::updateaacts&gt;</definition>
+        <argsstring></argsstring>
+        <name>updateaacts_action</name>
+        <qualifiedname>eosio::eosioproton::updateaacts_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="143" column="1" bodyfile="eosio.proton.hpp" bodystart="143" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1ac41e04aa926d80555b754320d35c1bf2" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;updateac&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1ab7e46cd1900ef771dcbcb7535fbe5bef" kindref="member">eosioproton::updateac</ref> &gt;</type>
+        <definition>using eosio::eosioproton::updateac_action =  eosio::action_wrapper&lt;&quot;updateac&quot;_n, &amp;eosioproton::updateac&gt;</definition>
+        <argsstring></argsstring>
+        <name>updateac_action</name>
+        <qualifiedname>eosio::eosioproton::updateac_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="155" column="1" bodyfile="eosio.proton.hpp" bodystart="155" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1a70a7285bb55b4fb46e65ad4f3d33d821" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;dappreg&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1a6d74744b224fbe5ec7b16fcd389e8ead" kindref="member">eosioproton::dappreg</ref> &gt;</type>
+        <definition>using eosio::eosioproton::dappreg_action =  eosio::action_wrapper&lt;&quot;dappreg&quot;_n, &amp;eosioproton::dappreg&gt;</definition>
+        <argsstring></argsstring>
+        <name>dappreg_action</name>
+        <qualifiedname>eosio::eosioproton::dappreg_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="167" column="1" bodyfile="eosio.proton.hpp" bodystart="167" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1ac7a79c499448bfc9a080b4935798288b" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;setdappconf&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1afc68a0ea8fff7d2615581f7ac7aa574a" kindref="member">eosioproton::setdappconf</ref> &gt;</type>
+        <definition>using eosio::eosioproton::setdappconf_action =  eosio::action_wrapper&lt;&quot;setdappconf&quot;_n, &amp;eosioproton::setdappconf&gt;</definition>
+        <argsstring></argsstring>
+        <name>setdappconf_action</name>
+        <qualifiedname>eosio::eosioproton::setdappconf_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="180" column="1" bodyfile="eosio.proton.hpp" bodystart="180" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1a6b713e15e32fa8d6933110d742f6af11" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;kickbp&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1a57659473d68fd259160465798a7afd6c" kindref="member">eosioproton::kickbp</ref> &gt;</type>
+        <definition>using eosio::eosioproton::kickbp_action =  eosio::action_wrapper&lt;&quot;kickbp&quot;_n, &amp;eosioproton::kickbp&gt;</definition>
+        <argsstring></argsstring>
+        <name>kickbp_action</name>
+        <qualifiedname>eosio::eosioproton::kickbp_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="192" column="1" bodyfile="eosio.proton.hpp" bodystart="192" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1aa1f53c3fc4edd648bfc53bdc3b158cc9" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;addkyc&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1ac9a161e45aed5e28325e635d405eb22a" kindref="member">eosioproton::addkyc</ref> &gt;</type>
+        <definition>using eosio::eosioproton::addkyc_action =  eosio::action_wrapper&lt;&quot;addkyc&quot;_n, &amp;eosioproton::addkyc&gt;</definition>
+        <argsstring></argsstring>
+        <name>addkyc_action</name>
+        <qualifiedname>eosio::eosioproton::addkyc_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="238" column="1" bodyfile="eosio.proton.hpp" bodystart="238" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1a9b4a1206182bf041f3483878255b6249" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;updatekyc&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1acb9a22fc0a861f39fa1c102de82e8ff9" kindref="member">eosioproton::updatekyc</ref> &gt;</type>
+        <definition>using eosio::eosioproton::updatekyc_action =  eosio::action_wrapper&lt;&quot;updatekyc&quot;_n, &amp;eosioproton::updatekyc&gt;</definition>
+        <argsstring></argsstring>
+        <name>updatekyc_action</name>
+        <qualifiedname>eosio::eosioproton::updatekyc_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="251" column="1" bodyfile="eosio.proton.hpp" bodystart="251" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1a7d1c63b3b2b1c9b11dc3e1fd55821463" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;removekyc&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1a4c9b3bc0e867f18fd61ba656f5bc4094" kindref="member">eosioproton::removekyc</ref> &gt;</type>
+        <definition>using eosio::eosioproton::removekyc_action =  eosio::action_wrapper&lt;&quot;removekyc&quot;_n, &amp;eosioproton::removekyc&gt;</definition>
+        <argsstring></argsstring>
+        <name>removekyc_action</name>
+        <qualifiedname>eosio::eosioproton::removekyc_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="264" column="1" bodyfile="eosio.proton.hpp" bodystart="264" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1a5b2d74dd0b7a1a30bcb888f0e6ef64f9" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;addkycprov&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1aa1c07a86f226cf36d2501307070c5817" kindref="member">eosioproton::addkycprov</ref> &gt;</type>
+        <definition>using eosio::eosioproton::addkycprov_action =  eosio::action_wrapper&lt;&quot;addkycprov&quot;_n, &amp;eosioproton::addkycprov&gt;</definition>
+        <argsstring></argsstring>
+        <name>addkycprov_action</name>
+        <qualifiedname>eosio::eosioproton::addkycprov_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="278" column="1" bodyfile="eosio.proton.hpp" bodystart="278" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1a15148fee0f68d1aaf42af15badf074ed" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;blkycprov&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1a2e48b941307f10666eb164a0931cfe95" kindref="member">eosioproton::blkycprov</ref> &gt;</type>
+        <definition>using eosio::eosioproton::blkycprov_action =  eosio::action_wrapper&lt;&quot;blkycprov&quot;_n, &amp;eosioproton::blkycprov&gt;</definition>
+        <argsstring></argsstring>
+        <name>blkycprov_action</name>
+        <qualifiedname>eosio::eosioproton::blkycprov_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="290" column="1" bodyfile="eosio.proton.hpp" bodystart="290" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1a5c98cab80418224a0dff634b87b779d1" prot="public" static="no">
+        <type>eosio::action_wrapper&lt;&quot;rmvkycprov&quot;_n, &amp;<ref refid="classeosio_1_1eosioproton_1a21bba9f8b9c5bdea7b4ee23bdfcd05a2" kindref="member">eosioproton::rmvkycprov</ref> &gt;</type>
+        <definition>using eosio::eosioproton::rmvkycprov_action =  eosio::action_wrapper&lt;&quot;rmvkycprov&quot;_n, &amp;eosioproton::rmvkycprov&gt;</definition>
+        <argsstring></argsstring>
+        <name>rmvkycprov_action</name>
+        <qualifiedname>eosio::eosioproton::rmvkycprov_action</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="300" column="1" bodyfile="eosio.proton.hpp" bodystart="300" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-type">
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1a390696b7f257cd121d0b19147ec978b0" prot="private" static="no">
+        <type>eosio::multi_index&lt; &quot;permissions&quot;_n, permission &gt;</type>
+        <definition>typedef eosio::multi_index&lt; &quot;permissions&quot;_n, permission &gt; eosio::eosioproton::permissions</definition>
+        <argsstring></argsstring>
+        <name>permissions</name>
+        <qualifiedname>eosio::eosioproton::permissions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="322" column="28" bodyfile="eosio.proton.hpp" bodystart="322" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1ac741d02ba11f9f0c106a72bb2c354103" prot="private" static="no">
+        <type>eosio::multi_index&lt; &quot;usersinfo&quot;_n, userinfo &gt;</type>
+        <definition>typedef eosio::multi_index&lt; &quot;usersinfo&quot;_n, userinfo &gt; eosio::eosioproton::usersinfo</definition>
+        <argsstring></argsstring>
+        <name>usersinfo</name>
+        <qualifiedname>eosio::eosioproton::usersinfo</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="345" column="28" bodyfile="eosio.proton.hpp" bodystart="345" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1ab333cffdacde3a6e01932b3e4e6e9f54" prot="private" static="no">
+        <type>eosio::multi_index&lt; &quot;kycproviders&quot;_n, kyc_providers_list &gt;</type>
+        <definition>typedef eosio::multi_index&lt; &quot;kycproviders&quot;_n, kyc_providers_list &gt; eosio::eosioproton::kycproviders</definition>
+        <argsstring></argsstring>
+        <name>kycproviders</name>
+        <qualifiedname>eosio::eosioproton::kycproviders</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="359" column="28" bodyfile="eosio.proton.hpp" bodystart="359" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1a401fd4d635bea79a157931d2836edf32" prot="private" static="no">
+        <type>eosio::multi_index&lt; &quot;userres&quot;_n, user_resources &gt;</type>
+        <definition>typedef eosio::multi_index&lt; &quot;userres&quot;_n, user_resources &gt; eosio::eosioproton::user_resources_table</definition>
+        <argsstring></argsstring>
+        <name>user_resources_table</name>
+        <qualifiedname>eosio::eosioproton::user_resources_table</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="374" column="28" bodyfile="eosio.proton.hpp" bodystart="374" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="classeosio_1_1eosioproton_1af36c79545fe5ad2504a7777ac5dc8502" prot="private" static="no">
+        <type>eosio::singleton&lt; &quot;dappconf&quot;_n, dappconf &gt;</type>
+        <definition>typedef eosio::singleton&lt; &quot;dappconf&quot;_n, dappconf&gt; eosio::eosioproton::dappconfig</definition>
+        <argsstring></argsstring>
+        <name>dappconfig</name>
+        <qualifiedname>eosio::eosioproton::dappconfig</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="385" column="26" bodyfile="eosio.proton.hpp" bodystart="385" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classeosio_1_1eosioproton_1aa085adbe0f21a0a496800b393b1b62ac" prot="private" static="no" mutable="no">
+        <type>TABLE</type>
+        <definition>TABLE eosio::eosioproton::dappconf</definition>
+        <argsstring></argsstring>
+        <name>dappconf</name>
+        <qualifiedname>eosio::eosioproton::dappconf</qualifiedname>
+        <initializer>{
+			dappconf(){}
+			uint64_t dappram = 2 * 1024 * 1024</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="377" column="7" bodyfile="eosio.proton.hpp" bodystart="377" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classeosio_1_1eosioproton_1a0416235b5eb53ca30bdea90dfa1c3ad3" prot="private" static="no" mutable="no">
+        <type>uint64_t</type>
+        <definition>uint64_t eosio::eosioproton::dappcpu</definition>
+        <argsstring></argsstring>
+        <name>dappcpu</name>
+        <qualifiedname>eosio::eosioproton::dappcpu</qualifiedname>
+        <initializer>= 200000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="380" column="10" bodyfile="eosio.proton.hpp" bodystart="380" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classeosio_1_1eosioproton_1ac80c52feedb9a1ceb71259c895ecd8c9" prot="private" static="no" mutable="no">
+        <type>uint64_t</type>
+        <definition>uint64_t eosio::eosioproton::dappnet</definition>
+        <argsstring></argsstring>
+        <name>dappnet</name>
+        <qualifiedname>eosio::eosioproton::dappnet</qualifiedname>
+        <initializer>= 200000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="381" column="10" bodyfile="eosio.proton.hpp" bodystart="381" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classeosio_1_1eosioproton_1a75a1ab207d99778fb50ceda4692e9247" prot="private" static="no" mutable="no">
+        <type>dappconf</type>
+        <definition>dappconf eosio::eosioproton::_dcstate</definition>
+        <argsstring></argsstring>
+        <name>_dcstate</name>
+        <qualifiedname>eosio::eosioproton::_dcstate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="386" column="10" bodyfile="eosio.proton.hpp" bodystart="386" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a0e7327523a9fc0414be1743fc1cf2467" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::setperm</definition>
+        <argsstring>(name acc, const std::map&lt; std::string, uint8_t &gt; &amp;perms)</argsstring>
+        <name>setperm</name>
+        <qualifiedname>eosio::eosioproton::setperm</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>acc</declname>
+        </param>
+        <param>
+          <type>const std::map&lt; std::string, uint8_t &gt; &amp;</type>
+          <declname>perms</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set Permissions</para>
+<para>Sets permissions for specified account for whitelisted EOSIO functionality. (no longer used)</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>acc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- account name for which to set permissions </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>perms</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- permissions </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="48" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a3e2693616bb1e8d8938e0bf5822e11a8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::setperm2</definition>
+        <argsstring>(name acc, const std::vector&lt; uint8_t &gt; &amp;perms)</argsstring>
+        <name>setperm2</name>
+        <qualifiedname>eosio::eosioproton::setperm2</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>acc</declname>
+        </param>
+        <param>
+          <type>const std::vector&lt; uint8_t &gt; &amp;</type>
+          <declname>perms</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set Permissions 2</para>
+<para>Sets permissions for specified account for whitelisted EOSIO functionality.</para>
+<para>NOTE: The setperm, wasn&apos;t used because it didn&apos;t work in eosjs when we were deploying. We created this new action, setperm2, which worked with an array, and that&apos;s what is used.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>acc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- account name for which to set permissions </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>perms</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- permissions </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="63" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a89ddb9917c188d0fa9edbe9036e66d4f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::remove</definition>
+        <argsstring>(name acc)</argsstring>
+        <name>remove</name>
+        <qualifiedname>eosio::eosioproton::remove</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>acc</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Remove User Info</para>
+<para>Removes user info data for specified account.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>acc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- account name for which to remove user info data </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="75" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a2ae26018c6fb4a54bb708c30dbb2f4d3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::reqperm</definition>
+        <argsstring>(name acc, std::string permission)</argsstring>
+        <name>reqperm</name>
+        <qualifiedname>eosio::eosioproton::reqperm</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>acc</declname>
+        </param>
+        <param>
+          <type>std::string</type>
+          <declname>permission</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Request Permission</para>
+<para>Request whitelisted permissions. (sets status to pending)</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>acc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>permission</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="87" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a87510a26ca397b0f0c3e0fc0a46651d0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::setuserava</definition>
+        <argsstring>(name acc, std::string ava)</argsstring>
+        <name>setuserava</name>
+        <qualifiedname>eosio::eosioproton::setuserava</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>acc</declname>
+        </param>
+        <param>
+          <type>std::string</type>
+          <declname>ava</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set User Avatar</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>acc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>ava</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- transcoded image for avatar </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="97" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a9842b282c49914422ef9c3706b190e8c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::setusername</definition>
+        <argsstring>(name acc, std::string name)</argsstring>
+        <name>setusername</name>
+        <qualifiedname>eosio::eosioproton::setusername</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>acc</declname>
+        </param>
+        <param>
+          <type>std::string</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set User Name</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>acc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="107" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a7cf1b2891a17e8cf16fe5ec65fa7b1a7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::userverify</definition>
+        <argsstring>(name acc, name verifier, bool verified)</argsstring>
+        <name>userverify</name>
+        <qualifiedname>eosio::eosioproton::userverify</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>acc</declname>
+        </param>
+        <param>
+          <type>name</type>
+          <declname>verifier</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>verified</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set User Verify</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>acc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- account name of user to be verified </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>verifier</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- account name of verfier authority </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>verified</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="118" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a099332e3f983efa0dab32d1b89ed7ef4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::updateraccs</definition>
+        <argsstring>(name acc, vector&lt; name &gt; raccs)</argsstring>
+        <name>updateraccs</name>
+        <qualifiedname>eosio::eosioproton::updateraccs</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>acc</declname>
+        </param>
+        <param>
+          <type>vector&lt; name &gt;</type>
+          <declname>raccs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Update Accounts</para>
+<para>Updates a list of trusted accounts for the specified user</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>acc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>raccs</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="130" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a17214d092ed6f751afbbe3b4abcb402d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::updateaacts</definition>
+        <argsstring>(name acc, vector&lt; tuple&lt; name, name &gt; &gt; aacts)</argsstring>
+        <name>updateaacts</name>
+        <qualifiedname>eosio::eosioproton::updateaacts</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>acc</declname>
+        </param>
+        <param>
+          <type>vector&lt; tuple&lt; name, name &gt; &gt;</type>
+          <declname>aacts</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Update Actions</para>
+<para>Updates a list of trusted actions for the specified user</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>acc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>accts</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="142" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1ab7e46cd1900ef771dcbcb7535fbe5bef" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::updateac</definition>
+        <argsstring>(name acc, vector&lt; tuple&lt; name, string &gt; &gt; ac)</argsstring>
+        <name>updateac</name>
+        <qualifiedname>eosio::eosioproton::updateac</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>acc</declname>
+        </param>
+        <param>
+          <type>vector&lt; tuple&lt; name, string &gt; &gt;</type>
+          <declname>ac</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Update Coins</para>
+<para>Updates a list of trusted tokens for the specified user</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>acc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="154" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a6d74744b224fbe5ec7b16fcd389e8ead" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::dappreg</definition>
+        <argsstring>(name account)</argsstring>
+        <name>dappreg</name>
+        <qualifiedname>eosio::eosioproton::dappreg</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>account</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Dapp Reg</para>
+<para>Gives specified account permission to set contracts, and raises their resources up to specified level. (Depreciated)</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>account</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="166" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1afc68a0ea8fff7d2615581f7ac7aa574a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::setdappconf</definition>
+        <argsstring>(uint64_t ram, uint64_t cpu, uint64_t net)</argsstring>
+        <name>setdappconf</name>
+        <qualifiedname>eosio::eosioproton::setdappconf</qualifiedname>
+        <param>
+          <type>uint64_t</type>
+          <declname>ram</declname>
+        </param>
+        <param>
+          <type>uint64_t</type>
+          <declname>cpu</declname>
+        </param>
+        <param>
+          <type>uint64_t</type>
+          <declname>net</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set Dapp Configuration</para>
+<para>Admin action to set resource thresholds</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>RAM</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>CPU</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>NET</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="179" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a57659473d68fd259160465798a7afd6c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::kickbp</definition>
+        <argsstring>(name producer)</argsstring>
+        <name>kickbp</name>
+        <qualifiedname>eosio::eosioproton::kickbp</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>producer</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Kick BP</para>
+<para>Removes the ability of specified BP to register as a block producer. This is probably called from kickbp in eosio.system, which also unregisters them.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>producer</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="191" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1ac9a161e45aed5e28325e635d405eb22a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::addkyc</definition>
+        <argsstring>(name acc, kyc_prov kyc)</argsstring>
+        <name>addkyc</name>
+        <qualifiedname>eosio::eosioproton::addkyc</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>acc</declname>
+        </param>
+        <param>
+          <type><ref refid="structkyc__prov" kindref="compound">kyc_prov</ref></type>
+          <declname>kyc</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Add KYC Approval</para>
+<para>Adds KYC Approval to specified account</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>acc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- account name receiving approval </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>kyc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- account name of kyc provider </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="237" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1acb9a22fc0a861f39fa1c102de82e8ff9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::updatekyc</definition>
+        <argsstring>(name acc, kyc_prov kyc)</argsstring>
+        <name>updatekyc</name>
+        <qualifiedname>eosio::eosioproton::updatekyc</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>acc</declname>
+        </param>
+        <param>
+          <type><ref refid="structkyc__prov" kindref="compound">kyc_prov</ref></type>
+          <declname>kyc</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Update KYC Approval</para>
+<para>Update KYC approval for specified account</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>acc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- account name whose approval gets modified </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>kyc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- account name of kyc provider </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="250" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a4c9b3bc0e867f18fd61ba656f5bc4094" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::removekyc</definition>
+        <argsstring>(name acc, name kyc_provider)</argsstring>
+        <name>removekyc</name>
+        <qualifiedname>eosio::eosioproton::removekyc</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>acc</declname>
+        </param>
+        <param>
+          <type>name</type>
+          <declname>kyc_provider</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Remove KYC Approval</para>
+<para>Remove KYC approval for specified account</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>acc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- account name losing approval </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>kyc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- account name of kyc provider </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="263" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1aa1c07a86f226cf36d2501307070c5817" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::addkycprov</definition>
+        <argsstring>(name kyc_provider, std::string desc, std::string url, std::string iconurl, std::string name)</argsstring>
+        <name>addkycprov</name>
+        <qualifiedname>eosio::eosioproton::addkycprov</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>kyc_provider</declname>
+        </param>
+        <param>
+          <type>std::string</type>
+          <declname>desc</declname>
+        </param>
+        <param>
+          <type>std::string</type>
+          <declname>url</declname>
+        </param>
+        <param>
+          <type>std::string</type>
+          <declname>iconurl</declname>
+        </param>
+        <param>
+          <type>std::string</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Add KYC Provider</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>kyc_provider</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>desc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>url</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>iconurl</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="277" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a2e48b941307f10666eb164a0931cfe95" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::blkycprov</definition>
+        <argsstring>(name kyc_provider, bool state)</argsstring>
+        <name>blkycprov</name>
+        <qualifiedname>eosio::eosioproton::blkycprov</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>kyc_provider</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>state</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Blacklist KYC Provider</para>
+<para>This is an alternative to removing them.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>kyc_provider</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>state</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="289" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a21bba9f8b9c5bdea7b4ee23bdfcd05a2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void eosio::eosioproton::rmvkycprov</definition>
+        <argsstring>(name kyc_provider)</argsstring>
+        <name>rmvkycprov</name>
+        <qualifiedname>eosio::eosioproton::rmvkycprov</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>kyc_provider</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Remove KYC Provider</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>kyc_provider</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="299" column="6"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a2ea50bb24eb55a6a47198d95c3cce1ce" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>std::map&lt; std::string, uint8_t &gt;</type>
+        <definition>static std::map&lt; std::string, uint8_t &gt; eosio::eosioproton::get_priv</definition>
+        <argsstring>(name contract_account, name acc)</argsstring>
+        <name>get_priv</name>
+        <qualifiedname>eosio::eosioproton::get_priv</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>contract_account</declname>
+        </param>
+        <param>
+          <type>name</type>
+          <declname>acc</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="194" column="17" bodyfile="eosio.proton.hpp" bodystart="194" bodyend="223"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classeosio_1_1eosioproton_1a216a8657e6ce4e51c63fa5f479b0571e" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>eosio::eosioproton::EOSLIB_SERIALIZE</definition>
+        <argsstring>(dappconf,(dappram)(dappcpu)(dappnet)) }</argsstring>
+        <name>EOSLIB_SERIALIZE</name>
+        <qualifiedname>eosio::eosioproton::EOSLIB_SERIALIZE</qualifiedname>
+        <param>
+          <type>dappconf</type>
+        </param>
+        <param>
+          <type>(dappram)(dappcpu)(dappnet)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="383" column="1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>contract</label>
+      </node>
+      <node id="1">
+        <label>eosio::eosioproton</label>
+        <link refid="classeosio_1_1eosioproton"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>contract</label>
+      </node>
+      <node id="1">
+        <label>eosio::eosioproton</label>
+        <link refid="classeosio_1_1eosioproton"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="eosio.proton.hpp" line="35" column="1" bodyfile="eosio.proton.hpp" bodystart="35" bodyend="390"/>
+    <listofallmembers>
+      <member refid="classeosio_1_1eosioproton_1a75a1ab207d99778fb50ceda4692e9247" prot="private" virt="non-virtual"><scope>eosio::eosioproton</scope><name>_dcstate</name></member>
+      <member refid="classeosio_1_1eosioproton_1ac9a161e45aed5e28325e635d405eb22a" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>addkyc</name></member>
+      <member refid="classeosio_1_1eosioproton_1aa1f53c3fc4edd648bfc53bdc3b158cc9" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>addkyc_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1aa1c07a86f226cf36d2501307070c5817" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>addkycprov</name></member>
+      <member refid="classeosio_1_1eosioproton_1a5b2d74dd0b7a1a30bcb888f0e6ef64f9" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>addkycprov_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1a2e48b941307f10666eb164a0931cfe95" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>blkycprov</name></member>
+      <member refid="classeosio_1_1eosioproton_1a15148fee0f68d1aaf42af15badf074ed" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>blkycprov_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1aa085adbe0f21a0a496800b393b1b62ac" prot="private" virt="non-virtual"><scope>eosio::eosioproton</scope><name>dappconf</name></member>
+      <member refid="classeosio_1_1eosioproton_1af36c79545fe5ad2504a7777ac5dc8502" prot="private" virt="non-virtual"><scope>eosio::eosioproton</scope><name>dappconfig</name></member>
+      <member refid="classeosio_1_1eosioproton_1a0416235b5eb53ca30bdea90dfa1c3ad3" prot="private" virt="non-virtual"><scope>eosio::eosioproton</scope><name>dappcpu</name></member>
+      <member refid="classeosio_1_1eosioproton_1ac80c52feedb9a1ceb71259c895ecd8c9" prot="private" virt="non-virtual"><scope>eosio::eosioproton</scope><name>dappnet</name></member>
+      <member refid="classeosio_1_1eosioproton_1a6d74744b224fbe5ec7b16fcd389e8ead" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>dappreg</name></member>
+      <member refid="classeosio_1_1eosioproton_1a70a7285bb55b4fb46e65ad4f3d33d821" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>dappreg_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1a216a8657e6ce4e51c63fa5f479b0571e" prot="private" virt="non-virtual"><scope>eosio::eosioproton</scope><name>EOSLIB_SERIALIZE</name></member>
+      <member refid="classeosio_1_1eosioproton_1a2ea50bb24eb55a6a47198d95c3cce1ce" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>get_priv</name></member>
+      <member refid="classeosio_1_1eosioproton_1a57659473d68fd259160465798a7afd6c" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>kickbp</name></member>
+      <member refid="classeosio_1_1eosioproton_1a6b713e15e32fa8d6933110d742f6af11" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>kickbp_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1ab333cffdacde3a6e01932b3e4e6e9f54" prot="private" virt="non-virtual"><scope>eosio::eosioproton</scope><name>kycproviders</name></member>
+      <member refid="classeosio_1_1eosioproton_1a390696b7f257cd121d0b19147ec978b0" prot="private" virt="non-virtual"><scope>eosio::eosioproton</scope><name>permissions</name></member>
+      <member refid="classeosio_1_1eosioproton_1a89ddb9917c188d0fa9edbe9036e66d4f" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>remove</name></member>
+      <member refid="classeosio_1_1eosioproton_1aa12f3d2a190285be6bfae7aac40b84fd" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>remove_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1a4c9b3bc0e867f18fd61ba656f5bc4094" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>removekyc</name></member>
+      <member refid="classeosio_1_1eosioproton_1a7d1c63b3b2b1c9b11dc3e1fd55821463" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>removekyc_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1a2ae26018c6fb4a54bb708c30dbb2f4d3" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>reqperm</name></member>
+      <member refid="classeosio_1_1eosioproton_1ac4705e9cfffc1e09872add92378d4c81" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>reqperm_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1a21bba9f8b9c5bdea7b4ee23bdfcd05a2" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>rmvkycprov</name></member>
+      <member refid="classeosio_1_1eosioproton_1a5c98cab80418224a0dff634b87b779d1" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>rmvkycprov_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1afc68a0ea8fff7d2615581f7ac7aa574a" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>setdappconf</name></member>
+      <member refid="classeosio_1_1eosioproton_1ac7a79c499448bfc9a080b4935798288b" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>setdappconf_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1a0e7327523a9fc0414be1743fc1cf2467" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>setperm</name></member>
+      <member refid="classeosio_1_1eosioproton_1a3e2693616bb1e8d8938e0bf5822e11a8" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>setperm2</name></member>
+      <member refid="classeosio_1_1eosioproton_1a842f6c630df86a8184aa30449846dae1" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>setperm2_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1a0117e5396604c1b87ceac78166fd13d1" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>setperm_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1a87510a26ca397b0f0c3e0fc0a46651d0" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>setuserava</name></member>
+      <member refid="classeosio_1_1eosioproton_1a24925c941673e91a02d9d4c2a489985a" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>setuserava_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1a9842b282c49914422ef9c3706b190e8c" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>setusername</name></member>
+      <member refid="classeosio_1_1eosioproton_1aee53ca391cce4bf4526a1bef9dc42827" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>setusername_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1a17214d092ed6f751afbbe3b4abcb402d" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>updateaacts</name></member>
+      <member refid="classeosio_1_1eosioproton_1ac0e143f69706bd219688d13be791481b" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>updateaacts_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1ab7e46cd1900ef771dcbcb7535fbe5bef" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>updateac</name></member>
+      <member refid="classeosio_1_1eosioproton_1ac41e04aa926d80555b754320d35c1bf2" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>updateac_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1acb9a22fc0a861f39fa1c102de82e8ff9" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>updatekyc</name></member>
+      <member refid="classeosio_1_1eosioproton_1a9b4a1206182bf041f3483878255b6249" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>updatekyc_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1a099332e3f983efa0dab32d1b89ed7ef4" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>updateraccs</name></member>
+      <member refid="classeosio_1_1eosioproton_1ae5151ba475944bc9dfc2b48d52a9a7fa" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>updateraccs_action</name></member>
+      <member refid="classeosio_1_1eosioproton_1a401fd4d635bea79a157931d2836edf32" prot="private" virt="non-virtual"><scope>eosio::eosioproton</scope><name>user_resources_table</name></member>
+      <member refid="classeosio_1_1eosioproton_1ac741d02ba11f9f0c106a72bb2c354103" prot="private" virt="non-virtual"><scope>eosio::eosioproton</scope><name>usersinfo</name></member>
+      <member refid="classeosio_1_1eosioproton_1a7cf1b2891a17e8cf16fe5ec65fa7b1a7" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>userverify</name></member>
+      <member refid="classeosio_1_1eosioproton_1a354d68ad4da34e371c7b613facafd6db" prot="public" virt="non-virtual"><scope>eosio::eosioproton</scope><name>userverify_action</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

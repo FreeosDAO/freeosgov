@@ -367,7 +367,7 @@ struct[[ eosio::table("nfts"), eosio::contract("dividenda") ]] nft_struct {     
         >
     >;
 
-  
+  /* Used during NFT table migrations - reserved for future use
   struct[[ eosio::table("copynfts"), eosio::contract("dividenda") ]] copynft_struct {                        //!< Each record is a single NFT by itself
       uint64_t nft_key;
       name     eosaccount;                  //!< POINT account used to receive dividends and for identification (as a secondary key)
@@ -383,6 +383,6 @@ struct[[ eosio::table("nfts"), eosio::contract("dividenda") ]] nft_struct {     
       // uint64_t get_active_nft() const { if (locked == true) return 0; else return eosaccount.value; }
   };
   using copynft_table = eosio::multi_index<"nfts"_n, copynft_struct, indexed_by<"account"_n, const_mem_fun<copynft_struct, uint64_t, &copynft_struct::get_secondary>>>; 
-
+  */
 
 } // end of namespace freedao

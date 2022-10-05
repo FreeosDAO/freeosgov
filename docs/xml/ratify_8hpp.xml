@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="ratify_8hpp" kind="file" language="C++">
+    <compoundname>ratify.hpp</compoundname>
+    <includes local="no">eosio/eosio.hpp</includes>
+    <includes local="no">eosio/system.hpp</includes>
+    <includes refid="freeosgov_8hpp" local="yes">freeosgov.hpp</includes>
+    <includes refid="tables_8hpp" local="yes">tables.hpp</includes>
+    <includedby refid="freeosgov_8cpp" local="yes">freeosgov.cpp</includedby>
+    <incdepgraph>
+      <node id="7">
+        <label>eosio.proton.hpp</label>
+        <link refid="eosio_8proton_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>freeosgov.hpp</label>
+        <link refid="freeosgov_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>ratify.hpp</label>
+        <link refid="ratify_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>tables.hpp</label>
+        <link refid="tables_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>eosio/asset.hpp</label>
+      </node>
+      <node id="2">
+        <label>eosio/eosio.hpp</label>
+      </node>
+      <node id="8">
+        <label>eosio/singleton.hpp</label>
+      </node>
+      <node id="3">
+        <label>eosio/system.hpp</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>freeosgov.cpp</label>
+        <link refid="freeosgov_8cpp"/>
+      </node>
+      <node id="1">
+        <label>ratify.hpp</label>
+        <link refid="ratify_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;eosio/eosio.hpp&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;eosio/system.hpp&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="freeosgov_8hpp" kindref="compound">freeosgov.hpp</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="tables_8hpp" kindref="compound">tables.hpp</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="keyword">using<sp/>namespace<sp/></highlight><highlight class="normal"><ref refid="namespaceeosio" kindref="compound">eosio</ref>;</highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="keyword">using<sp/>namespace<sp/></highlight><highlight class="normal"><ref refid="namespacefreedao" kindref="compound">freedao</ref>;</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="keyword">using<sp/>namespace<sp/></highlight><highlight class="normal">std;</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="group__ratify_1ga53eb1b0df5a50862fe3d6cd7fd91fccb" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>freeosgov::ratify_init()<sp/>{</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1a58c01451bca6bfc20c00831c7cf00de6" kindref="member">ratify_index</ref><sp/>ratify_table(get_self(),<sp/>get_self().<ref refid="namespacefreedao_1a4b32c29077d5af600a57e7b5414c16e9" kindref="member">value</ref>);</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>ratify_iterator<sp/>=<sp/>ratify_table.begin();</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(ratify_iterator<sp/>==<sp/>ratify_table.end())<sp/>{</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>emplace</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ratify_table.emplace(get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;r)<sp/>{<sp/>r.iteration<sp/>=<sp/><ref refid="group__core_1ga227e0705813c5a3ab9dfcdc438d667b2" kindref="member">current_iteration</ref>();<sp/>});</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="28"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="group__ratify_1gac0605393ba3458354177b08f752ec736" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>freeosgov::ratify_reset()<sp/>{</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1a58c01451bca6bfc20c00831c7cf00de6" kindref="member">ratify_index</ref><sp/>ratify_table(get_self(),<sp/>get_self().<ref refid="namespacefreedao_1a4b32c29077d5af600a57e7b5414c16e9" kindref="member">value</ref>);</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>ratify_iterator<sp/>=<sp/>ratify_table.begin();</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(ratify_iterator<sp/>!=<sp/>ratify_table.end())<sp/>{</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ratify_table.modify(ratify_iterator,<sp/>get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;<ref refid="group__ratify_1gaff4def45f109fcaee99f560a615c9041" kindref="member">ratify</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__ratify_1gaff4def45f109fcaee99f560a615c9041" kindref="member">ratify</ref>.iteration<sp/>=<sp/><ref refid="group__core_1ga227e0705813c5a3ab9dfcdc438d667b2" kindref="member">current_iteration</ref>();</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__ratify_1gaff4def45f109fcaee99f560a615c9041" kindref="member">ratify</ref>.participants<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__ratify_1gaff4def45f109fcaee99f560a615c9041" kindref="member">ratify</ref>.ratified<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="47"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="group__ratify_1gaff4def45f109fcaee99f560a615c9041" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>freeosgov::ratify(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>ratify_vote)<sp/>{</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/>require_auth(user);</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>check<sp/>that<sp/>system<sp/>is<sp/>operational<sp/>(masterswitch<sp/>parameter<sp/>set<sp/>to<sp/>&quot;1&quot;)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/>check(<ref refid="group__core_1ga51aa050f2ae06745744b56cd04184c96" kindref="member">check_master_switch</ref>(),<sp/><ref refid="constants_8hpp_1ae275e78329194567be33e687db0f4a55" kindref="member">MSG_FREEOS_SYSTEM_NOT_AVAILABLE</ref>);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__core_1ga707783d4644c3b79cedf5e6f037ebbd4" kindref="member">tick</ref>();</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>is<sp/>the<sp/>user<sp/>registered?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/>check(<ref refid="group__identity_1gae606cca008a6d2f91a5b158dcd86ee46" kindref="member">is_registered</ref>(user),<sp/></highlight><highlight class="stringliteral">&quot;ratify<sp/>is<sp/>not<sp/>open<sp/>to<sp/>unregistered<sp/>users&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>is<sp/>the<sp/>user<sp/>verified?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>check(<ref refid="group__identity_1ga3958d16d2ce524d53eb907e7826f5046" kindref="member">is_user_verified</ref>(user),<sp/></highlight><highlight class="stringliteral">&quot;ratify<sp/>is<sp/>not<sp/>open<sp/>to<sp/>unverified<sp/>users&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>is<sp/>the<sp/>system<sp/>operational?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/>this_iteration<sp/>=<sp/><ref refid="group__core_1ga227e0705813c5a3ab9dfcdc438d667b2" kindref="member">current_iteration</ref>();</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/>check(this_iteration<sp/>!=<sp/>0,<sp/></highlight><highlight class="stringliteral">&quot;The<sp/>freeos<sp/>system<sp/>is<sp/>not<sp/>available<sp/>at<sp/>this<sp/>time&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>is<sp/>the<sp/>user<sp/>alive?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>check(<ref refid="group__identity_1ga4210ea712d659c25ea75383f2542bff1" kindref="member">is_user_alive</ref>(user),<sp/></highlight><highlight class="stringliteral">&quot;user<sp/>has<sp/>exceeded<sp/>the<sp/>maximum<sp/>number<sp/>of<sp/>iterations&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>are<sp/>we<sp/>in<sp/>the<sp/>ratify<sp/>period?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/>check(<ref refid="group__core_1ga8848c723d286f37e8ca7930753bab5f0" kindref="member">is_action_period</ref>(</highlight><highlight class="stringliteral">&quot;ratify&quot;</highlight><highlight class="normal">),<sp/></highlight><highlight class="stringliteral">&quot;It<sp/>is<sp/>outside<sp/>of<sp/>the<sp/>ratify<sp/>period&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>has<sp/>the<sp/>user<sp/>met<sp/>the<sp/>requirement<sp/>of<sp/>voting<sp/>then<sp/>ratifying?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1a363d235ed74e4ea72f90826f3ba236b5" kindref="member">svr_index</ref><sp/>svrs_table(get_self(),<sp/>user.value);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>svr_iterator<sp/>=<sp/>svrs_table.begin();</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/>check(svr_iterator<sp/>!=<sp/>svrs_table.end(),<sp/></highlight><highlight class="stringliteral">&quot;user<sp/>must<sp/>have<sp/>voted<sp/>in<sp/>order<sp/>to<sp/>ratify&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>check<sp/>if<sp/>the<sp/>user<sp/>has<sp/>voted<sp/>-<sp/>a<sp/>requirement<sp/>for<sp/>ratification</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/>check(svr_iterator-&gt;vote0<sp/>==<sp/>this_iteration<sp/>||</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;vote1<sp/>==<sp/>this_iteration<sp/>||</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;vote2<sp/>==<sp/>this_iteration<sp/>||</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;vote3<sp/>==<sp/>this_iteration<sp/>||</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;vote4<sp/>==<sp/>this_iteration,</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;user<sp/>must<sp/>have<sp/>voted<sp/>in<sp/>order<sp/>to<sp/>ratify&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>check<sp/>if<sp/>the<sp/>user<sp/>has<sp/>already<sp/>ratified</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/>check(svr_iterator-&gt;ratify0<sp/>!=<sp/>this_iteration<sp/>&amp;&amp;</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;ratify1<sp/>!=<sp/>this_iteration<sp/>&amp;&amp;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;ratify2<sp/>!=<sp/>this_iteration<sp/>&amp;&amp;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;ratify3<sp/>!=<sp/>this_iteration<sp/>&amp;&amp;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;ratify4<sp/>!=<sp/>this_iteration,</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;user<sp/>has<sp/>already<sp/>ratified&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>store<sp/>the<sp/>responses</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1a58c01451bca6bfc20c00831c7cf00de6" kindref="member">ratify_index</ref><sp/>ratify_table(get_self(),<sp/>get_self().<ref refid="namespacefreedao_1a4b32c29077d5af600a57e7b5414c16e9" kindref="member">value</ref>);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>ratify_iterator<sp/>=<sp/>ratify_table.begin();</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>check(ratify_iterator<sp/>!=<sp/>ratify_table.end(),<sp/></highlight><highlight class="stringliteral">&quot;ratify<sp/>record<sp/>is<sp/>not<sp/>defined&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>process<sp/>the<sp/>responses<sp/>from<sp/>the<sp/>user</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/>ratify_table.modify(ratify_iterator,<sp/>get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;<ref refid="group__ratify_1gaff4def45f109fcaee99f560a615c9041" kindref="member">ratify</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>ratified?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(ratify_vote<sp/>==<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__ratify_1gaff4def45f109fcaee99f560a615c9041" kindref="member">ratify</ref>.ratified++;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>update<sp/>the<sp/>number<sp/>of<sp/>participants</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__ratify_1gaff4def45f109fcaee99f560a615c9041" kindref="member">ratify</ref>.participants<sp/>+=<sp/>1;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/>});<sp/></highlight><highlight class="comment">//<sp/>end<sp/>of<sp/>modify</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>record<sp/>that<sp/>the<sp/>user<sp/>has<sp/>ratified</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/>svrs_table.modify(svr_iterator,<sp/>get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;svr)<sp/>{</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(this_iteration<sp/>%<sp/>5)<sp/>{</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0:<sp/>svr.ratify0<sp/>=<sp/>this_iteration;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>1:<sp/>svr.ratify1<sp/>=<sp/>this_iteration;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>2:<sp/>svr.ratify2<sp/>=<sp/>this_iteration;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>3:<sp/>svr.ratify3<sp/>=<sp/>this_iteration;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>4:<sp/>svr.ratify4<sp/>=<sp/>this_iteration;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/>});<sp/></highlight><highlight class="comment">//<sp/>end<sp/>of<sp/>modify</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>update<sp/>the<sp/>ratifys<sp/>counter<sp/>in<sp/>the<sp/>user&apos;s<sp/>participant<sp/>record</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1ad361703972a83924b6fe1c21ea2d5fc5" kindref="member">participants_index</ref><sp/>participants_table(get_self(),<sp/>user.value);</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>participant_iterator<sp/>=<sp/>participants_table.begin();</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/>check(participant_iterator<sp/>!=<sp/>participants_table.end(),<sp/></highlight><highlight class="stringliteral">&quot;participant<sp/>record<sp/>not<sp/>found&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/>participants_table.modify(participant_iterator,<sp/>get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;p)<sp/>{</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>p.ratifys<sp/>+=<sp/>1;</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/></highlight><highlight class="comment">//<sp/>end<sp/>of<sp/>ratify<sp/>group</highlight></codeline>
+    </programlisting>
+    <location file="ratify.hpp"/>
+  </compounddef>
+</doxygen>

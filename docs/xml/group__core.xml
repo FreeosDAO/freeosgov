@@ -1,0 +1,279 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="group__core" kind="group">
+    <compoundname>core</compoundname>
+    <title>Core Functions</title>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__core_1ga6c2561c61fb830b838f1b73ccc94f829" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freedao::freeosgov::version</definition>
+        <argsstring>()</argsstring>
+        <name>version</name>
+        <qualifiedname>freedao::version</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>version action.</para>
+<para>Prints the version of this contract.</para>
+<para>Action prints out the version of the contract, the accounts that are used for the freeos tokens, freebi tokens, and the freeos divide account, and the current iteration </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="19" column="9" bodyfile="freeosgov.cpp" bodystart="30" bodyend="40" declfile="freeosgov.hpp" declline="19" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__core_1ga51aa050f2ae06745744b56cd04184c96" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool freedao::freeosgov::check_master_switch</definition>
+        <argsstring>()</argsstring>
+        <name>check_master_switch</name>
+        <qualifiedname>freedao::check_master_switch</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function checks if the master switch (parameter: masterswitch) is on (set to &quot;1&quot;) or off. The masterswitch parameter is checked by all user-initiated actions. In effect this can be used to prohibit user activity in the event of a serious problem.</para>
+<para><simplesect kind="return"><para>A boolean value. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="26" column="8" bodyfile="freeosgov.cpp" bodystart="50" bodyend="67" declfile="freeosgov.hpp" declline="26" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__core_1ga95d6eab7ab518ca346326e62b86ee230" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freedao::freeosgov::init</definition>
+        <argsstring>(time_point iterations_start, double issuance_rate, double mint_fee_percent_freeos, double mint_fee_percent_xpr, double mint_fee_percent_xusdc, double locking_threshold, bool pool)</argsstring>
+        <name>init</name>
+        <qualifiedname>freedao::init</qualifiedname>
+        <param>
+          <type>time_point</type>
+          <declname>iterations_start</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>issuance_rate</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>mint_fee_percent_freeos</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>mint_fee_percent_xpr</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>mint_fee_percent_xusdc</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>locking_threshold</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>pool</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action initializes the system by creating the system record, the reward record for iteration 0, and the survey, vote and ratify records if they don&apos;t already exist</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>iterations_start</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the time at which the first iteration will start </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>issuance_rate</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the amount of points to be issued per iteration </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>mint_fee_percent_freeos</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the percentage of the issuance that goes to the freeos.io team </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>mint_fee_percent_xpr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the percentage of the issuance that goes to the XPR pool </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>mint_fee_percent_xusdc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The percentage of the issuance that goes to the XUSDC pool. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>locking_threshold</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the minimum percentage of a user&apos;s total points that must be locked in order to participate in the vote </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>pool</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>true if the rewards are to be distributed to the pool, false if they are to be burned </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="20" column="9" bodyfile="freeosgov.cpp" bodystart="83" bodyend="129" declfile="freeosgov.hpp" declline="20" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__core_1ga8848c723d286f37e8ca7930753bab5f0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool freedao::freeosgov::is_action_period</definition>
+        <argsstring>(string action)</argsstring>
+        <name>is_action_period</name>
+        <qualifiedname>freedao::is_action_period</qualifiedname>
+        <param>
+          <type>string</type>
+          <declname>action</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>If the current time is between the start and end of the action period, return true</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>action</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the name of the activity, i.e. &quot;survey&quot;, &quot;vote&quot; or &quot;ratify&quot;</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A boolean value indicating whether the activity period is current </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="107" column="8" bodyfile="freeosgov.cpp" bodystart="139" bodyend="178" declfile="freeosgov.hpp" declline="107" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__core_1ga227e0705813c5a3ab9dfcdc438d667b2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>uint32_t</type>
+        <definition>uint32_t freedao::freeosgov::current_iteration</definition>
+        <argsstring>()</argsstring>
+        <name>current_iteration</name>
+        <qualifiedname>freedao::current_iteration</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The function returns the current iteration number</para>
+<para><simplesect kind="return"><para>The current iteration number. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="108" column="12" bodyfile="freeosgov.cpp" bodystart="186" bodyend="208" declfile="freeosgov.hpp" declline="108" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="group__core_1ga707783d4644c3b79cedf5e6f037ebbd4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freedao::freeosgov::tick</definition>
+        <argsstring>()</argsstring>
+        <name>tick</name>
+        <qualifiedname>freedao::tick</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The <computeroutput><ref refid="group__core_1ga707783d4644c3b79cedf5e6f037ebbd4" kindref="member">tick()</ref></computeroutput> function is called every time a user runs an action. It checks that the system is operational (i.e. that the <computeroutput>masterswitch</computeroutput> parameter is set to <computeroutput>1</computeroutput>). If the iteration has changed, the <ref refid="group__core_1ga63b131def8c2fe0c10e8617af5377588" kindref="member">trigger_new_iteration()</ref> function is called to perform app housekeeping operations </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="22" column="9" bodyfile="freeosgov.cpp" bodystart="216" bodyend="244" declfile="freeosgov.hpp" declline="22" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__core_1ga1edb9084f1478955ad9cc01d63cc4593" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double freedao::freeosgov::get_locked_proportion</definition>
+        <argsstring>()</argsstring>
+        <name>get_locked_proportion</name>
+        <qualifiedname>freedao::get_locked_proportion</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function returns the double proportion of the total supply that should be locked, based on the current and target exchange rates in the exchangerate table. For example, a target rate of $2 and a current rate of $1.5 returns a lock proportion = 0.25. The proportion is capped at 0.9</para>
+<para><simplesect kind="return"><para>The proportion of the amount of tokens that will be locked. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="24" column="10" bodyfile="freeosgov.cpp" bodystart="254" bodyend="287" declfile="freeosgov.hpp" declline="24" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="group__core_1ga7f5855a1cb0a734f257cbad3f59ba1f2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freedao::freeosgov::update_unlock_percentage</definition>
+        <argsstring>()</argsstring>
+        <name>update_unlock_percentage</name>
+        <qualifiedname>freedao::update_unlock_percentage</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>If the exchange rate is favourable, i.e current rate &gt; target rate (good times), increase the unlock percentage. If the exchange rate is unfavourable (bad times), decrease the unlock percentage.</para>
+<para>The rate of unlock percentage increases in good times according to a Fibonacci sequence, i.e. 1%, 2%, 3%, 5%, etc The unlock percentage is capped at 21%.</para>
+<para>Going into &apos;bad times&apos; resets the unlock percentage to 0.</para>
+<para>&quot;failsafe&quot; unlocking applies in bad times. Every so many weeks, users can unlock 15%. The interval is determined by parameter: failsafefreq </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="25" column="8" bodyfile="freeosgov.cpp" bodystart="302" bodyend="387" declfile="freeosgov.hpp" declline="25" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__core_1ga63b131def8c2fe0c10e8617af5377588" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freedao::freeosgov::trigger_new_iteration</definition>
+        <argsstring>(uint32_t new_iteration)</argsstring>
+        <name>trigger_new_iteration</name>
+        <qualifiedname>freedao::trigger_new_iteration</qualifiedname>
+        <param>
+          <type>uint32_t</type>
+          <declname>new_iteration</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function performs various housekeeping activities at the switchover to a new iteration. It updates the system record with the new iteration, updates the locking threshold, calculates the issuance for the iteration, updates the rewards record, updates the exchange rate record, deletes old rewards records, and resets the survey, vote and ratify records</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>new_iteration</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the iteration number of the new iteration </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="23" column="8" bodyfile="freeosgov.cpp" bodystart="398" bodyend="526" declfile="freeosgov.hpp" declline="23" declcolumn="8"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>These Actions and functions are related to core functionality. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

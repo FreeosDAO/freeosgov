@@ -25,7 +25,7 @@ using namespace eosio;
 CONTRACT dividenda : public contract {
 
   // current version string:
-  const std::string VERSION = "2.2";
+  const std::string VERSION = "2.2.1";
 
 
   public:
@@ -244,9 +244,11 @@ CONTRACT dividenda : public contract {
     void query( name eosaccount ); 
 
 
-    // MAINTAIN
+    // MAINTAIN action - reserved for future use
+    /*
     [[eosio::action]]
-    void maintain( string action, name user ); 
+    void maintain( string action, name user );
+    */
 
               
   
@@ -376,12 +378,14 @@ CONTRACT dividenda : public contract {
         >;
 
  //--- freedao deposits table ---//
+ /*
   struct [[eosio::table]] deposit {  //
       uint64_t   iteration;
       asset      accrued;
       uint64_t primary_key()const { return iteration; }
   };
   using deposit_index = eosio::multi_index<"deposits"_n, deposit>;
+  */
   // end of imported -----------------------------------------------------
 
   struct [[eosio::table]] ewstable { //!< dryrun table to keep value of all active NFT's by their categories.

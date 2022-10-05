@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="group__claim" kind="group">
+    <compoundname>claim</compoundname>
+    <title>Claiming</title>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__claim_1ga79bfb41affbdeac466e2ab03c5270d80" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::claim</definition>
+        <argsstring>(name user)</argsstring>
+        <name>claim</name>
+        <qualifiedname>freedao::claim</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>user</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action checks that the user has completed the required number of surveys, votes and ratifications, and if so, it mints the appropriate number of POINTs and transfers them to the user&apos;s account</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>user</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account name of the user who is claiming </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="81" column="9" bodyfile="claim.hpp" bodystart="24" bodyend="249" declfile="freeosgov.hpp" declline="81" declcolumn="9"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>These Actions and functions are related to the weekly claim of each participant. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

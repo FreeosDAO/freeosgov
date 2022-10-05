@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="structeosio_1_1eosioproton_1_1user__resources" kind="struct" language="C++" prot="private">
+    <compoundname>eosio::eosioproton::user_resources</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1user__resources_1ae4d3215edf8b7b803c6330b86907fbd3" prot="public" static="no" mutable="no">
+        <type>name</type>
+        <definition>name eosio::eosioproton::user_resources::owner</definition>
+        <argsstring></argsstring>
+        <name>owner</name>
+        <qualifiedname>eosio::eosioproton::user_resources::owner</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="363" column="15" bodyfile="eosio.proton.hpp" bodystart="363" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1user__resources_1ab0fc0c5203a69d993a0dbf0915108c48" prot="public" static="no" mutable="no">
+        <type>asset</type>
+        <definition>asset eosio::eosioproton::user_resources::net_weight</definition>
+        <argsstring></argsstring>
+        <name>net_weight</name>
+        <qualifiedname>eosio::eosioproton::user_resources::net_weight</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="364" column="15" bodyfile="eosio.proton.hpp" bodystart="364" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1user__resources_1a48a3eefaeebfc1e6fda00a832b8d3dba" prot="public" static="no" mutable="no">
+        <type>asset</type>
+        <definition>asset eosio::eosioproton::user_resources::cpu_weight</definition>
+        <argsstring></argsstring>
+        <name>cpu_weight</name>
+        <qualifiedname>eosio::eosioproton::user_resources::cpu_weight</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="365" column="15" bodyfile="eosio.proton.hpp" bodystart="365" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1user__resources_1a3d5f9b46d6b54a200932c7e58a5162ff" prot="public" static="no" mutable="no">
+        <type>int64_t</type>
+        <definition>int64_t eosio::eosioproton::user_resources::ram_bytes</definition>
+        <argsstring></argsstring>
+        <name>ram_bytes</name>
+        <qualifiedname>eosio::eosioproton::user_resources::ram_bytes</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="366" column="15" bodyfile="eosio.proton.hpp" bodystart="366" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structeosio_1_1eosioproton_1_1user__resources_1a6574369e284b3aa60aa0ef8dc2bd123e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool eosio::eosioproton::user_resources::is_empty</definition>
+        <argsstring>() const</argsstring>
+        <name>is_empty</name>
+        <qualifiedname>eosio::eosioproton::user_resources::is_empty</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="368" column="6" bodyfile="eosio.proton.hpp" bodystart="368" bodyend="368"/>
+      </memberdef>
+      <memberdef kind="function" id="structeosio_1_1eosioproton_1_1user__resources_1a7addb14ee1971a690f22b6308d861ea1" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>uint64_t</type>
+        <definition>uint64_t eosio::eosioproton::user_resources::primary_key</definition>
+        <argsstring>() const</argsstring>
+        <name>primary_key</name>
+        <qualifiedname>eosio::eosioproton::user_resources::primary_key</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="369" column="10" bodyfile="eosio.proton.hpp" bodystart="369" bodyend="369"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="eosio.proton.hpp" line="362" column="1" bodyfile="eosio.proton.hpp" bodystart="362" bodyend="373"/>
+    <listofallmembers>
+      <member refid="structeosio_1_1eosioproton_1_1user__resources_1a48a3eefaeebfc1e6fda00a832b8d3dba" prot="public" virt="non-virtual"><scope>eosio::eosioproton::user_resources</scope><name>cpu_weight</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1user__resources_1a6574369e284b3aa60aa0ef8dc2bd123e" prot="public" virt="non-virtual"><scope>eosio::eosioproton::user_resources</scope><name>is_empty</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1user__resources_1ab0fc0c5203a69d993a0dbf0915108c48" prot="public" virt="non-virtual"><scope>eosio::eosioproton::user_resources</scope><name>net_weight</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1user__resources_1ae4d3215edf8b7b803c6330b86907fbd3" prot="public" virt="non-virtual"><scope>eosio::eosioproton::user_resources</scope><name>owner</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1user__resources_1a7addb14ee1971a690f22b6308d861ea1" prot="public" virt="non-virtual"><scope>eosio::eosioproton::user_resources</scope><name>primary_key</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1user__resources_1a3d5f9b46d6b54a200932c7e58a5162ff" prot="public" virt="non-virtual"><scope>eosio::eosioproton::user_resources</scope><name>ram_bytes</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

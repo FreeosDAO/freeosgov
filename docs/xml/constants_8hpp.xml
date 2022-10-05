@@ -1,0 +1,497 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="constants_8hpp" kind="file" language="C++">
+    <compoundname>constants.hpp</compoundname>
+    <includedby refid="claim_8hpp" local="yes">claim.hpp</includedby>
+    <includedby refid="config_8hpp" local="yes">config.hpp</includedby>
+    <includedby refid="identity_8hpp" local="yes">identity.hpp</includedby>
+    <invincdepgraph>
+      <node id="2">
+        <label>claim.hpp</label>
+        <link refid="claim_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>config.hpp</label>
+        <link refid="config_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>constants.hpp</label>
+        <link refid="constants_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>freeosgov.cpp</label>
+        <link refid="freeosgov_8cpp"/>
+      </node>
+      <node id="5">
+        <label>identity.hpp</label>
+        <link refid="identity_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>maintain.hpp</label>
+        <link refid="maintain_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>vote.hpp</label>
+        <link refid="vote_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="constants_8hpp_1a322f6b19bf9367011d003dae4651db49" prot="public" static="no" mutable="no">
+        <type>const string</type>
+        <definition>const string XPR_CURRENCY_CODE</definition>
+        <argsstring></argsstring>
+        <name>XPR_CURRENCY_CODE</name>
+        <initializer>= &quot;XPR&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="13" column="14" bodyfile="constants.hpp" bodystart="13" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1ab3063b592b2c49f12d2b370929bdab0e" prot="public" static="no" mutable="no">
+        <type>const uint8_t</type>
+        <definition>const uint8_t XPR_CURRENCY_PRECISION</definition>
+        <argsstring></argsstring>
+        <name>XPR_CURRENCY_PRECISION</name>
+        <initializer>= 4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="14" column="15" bodyfile="constants.hpp" bodystart="14" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a2f58011d3092f590d9eb798066e2a2db" prot="public" static="no" mutable="no">
+        <type>const symbol</type>
+        <definition>const symbol XPR_CURRENCY_SYMBOL</definition>
+        <argsstring></argsstring>
+        <name>XPR_CURRENCY_SYMBOL</name>
+        <initializer>= symbol(<ref refid="constants_8hpp_1a322f6b19bf9367011d003dae4651db49" kindref="member">XPR_CURRENCY_CODE</ref>, <ref refid="constants_8hpp_1ab3063b592b2c49f12d2b370929bdab0e" kindref="member">XPR_CURRENCY_PRECISION</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="15" column="14" bodyfile="constants.hpp" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1aad637adeeb893f4a0bd7d97984c5ff6e" prot="public" static="no" mutable="no">
+        <type>const string</type>
+        <definition>const string XUSDC_CURRENCY_CODE</definition>
+        <argsstring></argsstring>
+        <name>XUSDC_CURRENCY_CODE</name>
+        <initializer>= &quot;XUSDC&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="17" column="14" bodyfile="constants.hpp" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1aa144cb75945d3b7486cd9f4231058871" prot="public" static="no" mutable="no">
+        <type>const uint8_t</type>
+        <definition>const uint8_t XUSDC_CURRENCY_PRECISION</definition>
+        <argsstring></argsstring>
+        <name>XUSDC_CURRENCY_PRECISION</name>
+        <initializer>= 4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="18" column="15" bodyfile="constants.hpp" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a7cbfbf1445dbff9c41fd7253e518afd7" prot="public" static="no" mutable="no">
+        <type>const symbol</type>
+        <definition>const symbol XUSDC_CURRENCY_SYMBOL</definition>
+        <argsstring></argsstring>
+        <name>XUSDC_CURRENCY_SYMBOL</name>
+        <initializer>= symbol(<ref refid="constants_8hpp_1aad637adeeb893f4a0bd7d97984c5ff6e" kindref="member">XUSDC_CURRENCY_CODE</ref>, <ref refid="constants_8hpp_1aa144cb75945d3b7486cd9f4231058871" kindref="member">XUSDC_CURRENCY_PRECISION</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="19" column="14" bodyfile="constants.hpp" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1acb0201d267a4c159ce4a2828f4208735" prot="public" static="no" mutable="no">
+        <type>const string</type>
+        <definition>const string POINT_CURRENCY_CODE</definition>
+        <argsstring></argsstring>
+        <name>POINT_CURRENCY_CODE</name>
+        <initializer>= &quot;POINT&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="21" column="14" bodyfile="constants.hpp" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a107124ddd5624e066546aa927a677d25" prot="public" static="no" mutable="no">
+        <type>const uint8_t</type>
+        <definition>const uint8_t POINT_CURRENCY_PRECISION</definition>
+        <argsstring></argsstring>
+        <name>POINT_CURRENCY_PRECISION</name>
+        <initializer>= 4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="22" column="15" bodyfile="constants.hpp" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a11630f45663213dbea3d8606df790e94" prot="public" static="no" mutable="no">
+        <type>const symbol</type>
+        <definition>const symbol POINT_CURRENCY_SYMBOL</definition>
+        <argsstring></argsstring>
+        <name>POINT_CURRENCY_SYMBOL</name>
+        <initializer>= symbol(<ref refid="constants_8hpp_1acb0201d267a4c159ce4a2828f4208735" kindref="member">POINT_CURRENCY_CODE</ref>, <ref refid="constants_8hpp_1a107124ddd5624e066546aa927a677d25" kindref="member">POINT_CURRENCY_PRECISION</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="23" column="14" bodyfile="constants.hpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1aced9a557ce1010e32f381edd7f8857a9" prot="public" static="no" mutable="no">
+        <type>const string</type>
+        <definition>const string AIRKEY_CURRENCY_CODE</definition>
+        <argsstring></argsstring>
+        <name>AIRKEY_CURRENCY_CODE</name>
+        <initializer>= &quot;AIRKEY&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="25" column="14" bodyfile="constants.hpp" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a2346436e281ce4583fd1a72eba104ec7" prot="public" static="no" mutable="no">
+        <type>const uint8_t</type>
+        <definition>const uint8_t AIRKEY_CURRENCY_PRECISION</definition>
+        <argsstring></argsstring>
+        <name>AIRKEY_CURRENCY_PRECISION</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="26" column="15" bodyfile="constants.hpp" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a5ccb280851fea58ac89de3129c13bb01" prot="public" static="no" mutable="no">
+        <type>const symbol</type>
+        <definition>const symbol AIRKEY_CURRENCY_SYMBOL</definition>
+        <argsstring></argsstring>
+        <name>AIRKEY_CURRENCY_SYMBOL</name>
+        <initializer>= symbol(<ref refid="constants_8hpp_1aced9a557ce1010e32f381edd7f8857a9" kindref="member">AIRKEY_CURRENCY_CODE</ref>, <ref refid="constants_8hpp_1a2346436e281ce4583fd1a72eba104ec7" kindref="member">AIRKEY_CURRENCY_PRECISION</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="27" column="14" bodyfile="constants.hpp" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a040849566bef711962719abacf211bce" prot="public" static="no" mutable="no">
+        <type>const string</type>
+        <definition>const string FREEBI_CURRENCY_CODE</definition>
+        <argsstring></argsstring>
+        <name>FREEBI_CURRENCY_CODE</name>
+        <initializer>= &quot;FREEBI&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="29" column="14" bodyfile="constants.hpp" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1ab8a6f22b7cda7cfac760a58f1e50f483" prot="public" static="no" mutable="no">
+        <type>const uint8_t</type>
+        <definition>const uint8_t FREEBI_CURRENCY_PRECISION</definition>
+        <argsstring></argsstring>
+        <name>FREEBI_CURRENCY_PRECISION</name>
+        <initializer>= 4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="30" column="15" bodyfile="constants.hpp" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a93fac2ae842815fa60baea0d9c3da04e" prot="public" static="no" mutable="no">
+        <type>const symbol</type>
+        <definition>const symbol FREEBI_CURRENCY_SYMBOL</definition>
+        <argsstring></argsstring>
+        <name>FREEBI_CURRENCY_SYMBOL</name>
+        <initializer>= symbol(<ref refid="constants_8hpp_1a040849566bef711962719abacf211bce" kindref="member">FREEBI_CURRENCY_CODE</ref>, <ref refid="constants_8hpp_1ab8a6f22b7cda7cfac760a58f1e50f483" kindref="member">FREEBI_CURRENCY_PRECISION</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="31" column="14" bodyfile="constants.hpp" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a345f03bc321561d355374b1876790885" prot="public" static="no" mutable="no">
+        <type>const string</type>
+        <definition>const string FREEOS_CURRENCY_CODE</definition>
+        <argsstring></argsstring>
+        <name>FREEOS_CURRENCY_CODE</name>
+        <initializer>= &quot;FREEOS&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="33" column="14" bodyfile="constants.hpp" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a6e3c4a7d047ebce20305dcf541fee59f" prot="public" static="no" mutable="no">
+        <type>const uint8_t</type>
+        <definition>const uint8_t FREEOS_CURRENCY_PRECISION</definition>
+        <argsstring></argsstring>
+        <name>FREEOS_CURRENCY_PRECISION</name>
+        <initializer>= 4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="34" column="15" bodyfile="constants.hpp" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a360697c1e66dbae79be5ad3315c93924" prot="public" static="no" mutable="no">
+        <type>const symbol</type>
+        <definition>const symbol FREEOS_CURRENCY_SYMBOL</definition>
+        <argsstring></argsstring>
+        <name>FREEOS_CURRENCY_SYMBOL</name>
+        <initializer>= symbol(<ref refid="constants_8hpp_1a345f03bc321561d355374b1876790885" kindref="member">FREEOS_CURRENCY_CODE</ref>, <ref refid="constants_8hpp_1a6e3c4a7d047ebce20305dcf541fee59f" kindref="member">FREEOS_CURRENCY_PRECISION</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="35" column="14" bodyfile="constants.hpp" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1aa1269f693072060b108e960e9acf0c7a" prot="public" static="no" mutable="no">
+        <type>const name</type>
+        <definition>const name AIRCLAIM_CONTRACT</definition>
+        <argsstring></argsstring>
+        <name>AIRCLAIM_CONTRACT</name>
+        <initializer>= name(&quot;freeos5&quot;)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="38" column="12" bodyfile="constants.hpp" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1ae275e78329194567be33e687db0f4a55" prot="public" static="no" mutable="no">
+        <type>const string</type>
+        <definition>const string MSG_FREEOS_SYSTEM_NOT_AVAILABLE</definition>
+        <argsstring></argsstring>
+        <name>MSG_FREEOS_SYSTEM_NOT_AVAILABLE</name>
+        <initializer>= &quot;Freeos system is not currently operating. Please try later&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="40" column="14" bodyfile="constants.hpp" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a8e33b7bb3adbc76136ec693e0c41dcf9" prot="public" static="no" mutable="no">
+        <type>const name</type>
+        <definition>const name VERIFICATION_CONTRACT</definition>
+        <argsstring></argsstring>
+        <name>VERIFICATION_CONTRACT</name>
+        <initializer>= name(&quot;freeosconfig&quot;)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="45" column="12" bodyfile="constants.hpp" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a7b9efcc3fc7800179487a5441450798e" prot="public" static="no" mutable="no">
+        <type>const double</type>
+        <definition>const double HARD_EXCHANGE_RATE_FLOOR</definition>
+        <argsstring></argsstring>
+        <name>HARD_EXCHANGE_RATE_FLOOR</name>
+        <initializer>= 0.0167</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="48" column="14" bodyfile="constants.hpp" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a23c646f6efd4427604ed4ad017be53e0" prot="public" static="no" mutable="no">
+        <type>const int64_t</type>
+        <definition>const int64_t UCLSAMOUNT</definition>
+        <argsstring></argsstring>
+        <name>UCLSAMOUNT</name>
+        <initializer>= 3500000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="51" column="15" bodyfile="constants.hpp" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1aa285cb02e451ed96f684270b478e56ed" prot="public" static="no" mutable="no">
+        <type>const double</type>
+        <definition>const double PARTNERSHARE</definition>
+        <argsstring></argsstring>
+        <name>PARTNERSHARE</name>
+        <initializer>= 0.03</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="54" column="14" bodyfile="constants.hpp" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a0768bf21324b2abeb467ac2524138f8e" prot="public" static="no" mutable="no">
+        <type>const double</type>
+        <definition>const double DAOSHARE</definition>
+        <argsstring></argsstring>
+        <name>DAOSHARE</name>
+        <initializer>= 0.07</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="57" column="14" bodyfile="constants.hpp" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1ab36993337dc5f43b6d444e3ff5cc4389" prot="public" static="no" mutable="no">
+        <type>const int</type>
+        <definition>const int AIRKEY_MINT_FEE_FREE_ALLOWANCE</definition>
+        <argsstring></argsstring>
+        <name>AIRKEY_MINT_FEE_FREE_ALLOWANCE</name>
+        <initializer>= 5000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="constants.hpp" line="63" column="11" bodyfile="constants.hpp" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="keyword">using<sp/>namespace<sp/></highlight><highlight class="normal">std;</highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>old<sp/>method<sp/>for<sp/>defining<sp/>contract<sp/>names,<sp/>now<sp/>replaced<sp/>with<sp/>parameters</highlight></codeline>
+<codeline lineno="6"><highlight class="comment">#define<sp/>_STRINGIZE(x)<sp/>#x</highlight></codeline>
+<codeline lineno="7"><highlight class="comment">#define<sp/>STRINGIZE(x)<sp/>_STRINGIZE(x)</highlight></codeline>
+<codeline lineno="8"><highlight class="comment">std::string<sp/>freebi_acct<sp/>=<sp/>STRINGIZE(FREEBY);</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">std::string<sp/>freeos_acct<sp/>=<sp/>STRINGIZE(FREEOS);</highlight></codeline>
+<codeline lineno="10"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Currency<sp/>constants</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13" refid="constants_8hpp_1a322f6b19bf9367011d003dae4651db49" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/><ref refid="constants_8hpp_1a322f6b19bf9367011d003dae4651db49" kindref="member">XPR_CURRENCY_CODE</ref><sp/>=<sp/></highlight><highlight class="stringliteral">&quot;XPR&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="14" refid="constants_8hpp_1ab3063b592b2c49f12d2b370929bdab0e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/><ref refid="constants_8hpp_1ab3063b592b2c49f12d2b370929bdab0e" kindref="member">XPR_CURRENCY_PRECISION</ref><sp/>=<sp/>4;</highlight></codeline>
+<codeline lineno="15" refid="constants_8hpp_1a2f58011d3092f590d9eb798066e2a2db" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>symbol<sp/><ref refid="constants_8hpp_1a2f58011d3092f590d9eb798066e2a2db" kindref="member">XPR_CURRENCY_SYMBOL</ref><sp/>=<sp/>symbol(<ref refid="constants_8hpp_1a322f6b19bf9367011d003dae4651db49" kindref="member">XPR_CURRENCY_CODE</ref>,<sp/><ref refid="constants_8hpp_1ab3063b592b2c49f12d2b370929bdab0e" kindref="member">XPR_CURRENCY_PRECISION</ref>);</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17" refid="constants_8hpp_1aad637adeeb893f4a0bd7d97984c5ff6e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/><ref refid="constants_8hpp_1aad637adeeb893f4a0bd7d97984c5ff6e" kindref="member">XUSDC_CURRENCY_CODE</ref><sp/>=<sp/></highlight><highlight class="stringliteral">&quot;XUSDC&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="18" refid="constants_8hpp_1aa144cb75945d3b7486cd9f4231058871" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/><ref refid="constants_8hpp_1aa144cb75945d3b7486cd9f4231058871" kindref="member">XUSDC_CURRENCY_PRECISION</ref><sp/>=<sp/>4;</highlight></codeline>
+<codeline lineno="19" refid="constants_8hpp_1a7cbfbf1445dbff9c41fd7253e518afd7" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>symbol<sp/><ref refid="constants_8hpp_1a7cbfbf1445dbff9c41fd7253e518afd7" kindref="member">XUSDC_CURRENCY_SYMBOL</ref><sp/>=<sp/>symbol(<ref refid="constants_8hpp_1aad637adeeb893f4a0bd7d97984c5ff6e" kindref="member">XUSDC_CURRENCY_CODE</ref>,<sp/><ref refid="constants_8hpp_1aa144cb75945d3b7486cd9f4231058871" kindref="member">XUSDC_CURRENCY_PRECISION</ref>);</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21" refid="constants_8hpp_1acb0201d267a4c159ce4a2828f4208735" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/><ref refid="constants_8hpp_1acb0201d267a4c159ce4a2828f4208735" kindref="member">POINT_CURRENCY_CODE</ref><sp/>=<sp/></highlight><highlight class="stringliteral">&quot;POINT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="22" refid="constants_8hpp_1a107124ddd5624e066546aa927a677d25" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/><ref refid="constants_8hpp_1a107124ddd5624e066546aa927a677d25" kindref="member">POINT_CURRENCY_PRECISION</ref><sp/>=<sp/>4;</highlight></codeline>
+<codeline lineno="23" refid="constants_8hpp_1a11630f45663213dbea3d8606df790e94" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>symbol<sp/><ref refid="constants_8hpp_1a11630f45663213dbea3d8606df790e94" kindref="member">POINT_CURRENCY_SYMBOL</ref><sp/>=<sp/>symbol(<ref refid="constants_8hpp_1acb0201d267a4c159ce4a2828f4208735" kindref="member">POINT_CURRENCY_CODE</ref>,<sp/><ref refid="constants_8hpp_1a107124ddd5624e066546aa927a677d25" kindref="member">POINT_CURRENCY_PRECISION</ref>);</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight></codeline>
+<codeline lineno="25" refid="constants_8hpp_1aced9a557ce1010e32f381edd7f8857a9" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/><ref refid="constants_8hpp_1aced9a557ce1010e32f381edd7f8857a9" kindref="member">AIRKEY_CURRENCY_CODE</ref><sp/>=<sp/></highlight><highlight class="stringliteral">&quot;AIRKEY&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="26" refid="constants_8hpp_1a2346436e281ce4583fd1a72eba104ec7" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/><ref refid="constants_8hpp_1a2346436e281ce4583fd1a72eba104ec7" kindref="member">AIRKEY_CURRENCY_PRECISION</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="27" refid="constants_8hpp_1a5ccb280851fea58ac89de3129c13bb01" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>symbol<sp/><ref refid="constants_8hpp_1a5ccb280851fea58ac89de3129c13bb01" kindref="member">AIRKEY_CURRENCY_SYMBOL</ref><sp/>=<sp/>symbol(<ref refid="constants_8hpp_1aced9a557ce1010e32f381edd7f8857a9" kindref="member">AIRKEY_CURRENCY_CODE</ref>,<sp/><ref refid="constants_8hpp_1a2346436e281ce4583fd1a72eba104ec7" kindref="member">AIRKEY_CURRENCY_PRECISION</ref>);</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29" refid="constants_8hpp_1a040849566bef711962719abacf211bce" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/><ref refid="constants_8hpp_1a040849566bef711962719abacf211bce" kindref="member">FREEBI_CURRENCY_CODE</ref><sp/>=<sp/></highlight><highlight class="stringliteral">&quot;FREEBI&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="30" refid="constants_8hpp_1ab8a6f22b7cda7cfac760a58f1e50f483" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/><ref refid="constants_8hpp_1ab8a6f22b7cda7cfac760a58f1e50f483" kindref="member">FREEBI_CURRENCY_PRECISION</ref><sp/>=<sp/>4;</highlight></codeline>
+<codeline lineno="31" refid="constants_8hpp_1a93fac2ae842815fa60baea0d9c3da04e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>symbol<sp/><ref refid="constants_8hpp_1a93fac2ae842815fa60baea0d9c3da04e" kindref="member">FREEBI_CURRENCY_SYMBOL</ref><sp/>=<sp/>symbol(<ref refid="constants_8hpp_1a040849566bef711962719abacf211bce" kindref="member">FREEBI_CURRENCY_CODE</ref>,<sp/><ref refid="constants_8hpp_1ab8a6f22b7cda7cfac760a58f1e50f483" kindref="member">FREEBI_CURRENCY_PRECISION</ref>);</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33" refid="constants_8hpp_1a345f03bc321561d355374b1876790885" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/><ref refid="constants_8hpp_1a345f03bc321561d355374b1876790885" kindref="member">FREEOS_CURRENCY_CODE</ref><sp/>=<sp/></highlight><highlight class="stringliteral">&quot;FREEOS&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="34" refid="constants_8hpp_1a6e3c4a7d047ebce20305dcf541fee59f" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/><ref refid="constants_8hpp_1a6e3c4a7d047ebce20305dcf541fee59f" kindref="member">FREEOS_CURRENCY_PRECISION</ref><sp/>=<sp/>4;</highlight></codeline>
+<codeline lineno="35" refid="constants_8hpp_1a360697c1e66dbae79be5ad3315c93924" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>symbol<sp/><ref refid="constants_8hpp_1a360697c1e66dbae79be5ad3315c93924" kindref="member">FREEOS_CURRENCY_SYMBOL</ref><sp/>=<sp/>symbol(<ref refid="constants_8hpp_1a345f03bc321561d355374b1876790885" kindref="member">FREEOS_CURRENCY_CODE</ref>,<sp/><ref refid="constants_8hpp_1a6e3c4a7d047ebce20305dcf541fee59f" kindref="member">FREEOS_CURRENCY_PRECISION</ref>);</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="constants_8hpp_1aa1269f693072060b108e960e9acf0c7a" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>name<sp/><ref refid="constants_8hpp_1aa1269f693072060b108e960e9acf0c7a" kindref="member">AIRCLAIM_CONTRACT</ref><sp/>=<sp/>name(</highlight><highlight class="stringliteral">&quot;freeos5&quot;</highlight><highlight class="normal">);<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>TODO:<sp/>we<sp/>should<sp/>not<sp/>need<sp/>for<sp/>production<sp/>as<sp/>we<sp/>are<sp/>overwriting<sp/>contract</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="constants_8hpp_1ae275e78329194567be33e687db0f4a55" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/><ref refid="constants_8hpp_1ae275e78329194567be33e687db0f4a55" kindref="member">MSG_FREEOS_SYSTEM_NOT_AVAILABLE</ref><sp/>=<sp/></highlight><highlight class="stringliteral">&quot;Freeos<sp/>system<sp/>is<sp/>not<sp/>currently<sp/>operating.<sp/>Please<sp/>try<sp/>later&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PRODUCTION</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>name<sp/><ref refid="constants_8hpp_1a8e33b7bb3adbc76136ec693e0c41dcf9" kindref="member">VERIFICATION_CONTRACT</ref><sp/>=<sp/>name(</highlight><highlight class="stringliteral">&quot;eosio.proton&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="constants_8hpp_1a8e33b7bb3adbc76136ec693e0c41dcf9" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>name<sp/><ref refid="constants_8hpp_1a8e33b7bb3adbc76136ec693e0c41dcf9" kindref="member">VERIFICATION_CONTRACT</ref><sp/>=<sp/>name(</highlight><highlight class="stringliteral">&quot;freeosconfig&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="constants_8hpp_1a7b9efcc3fc7800179487a5441450798e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="constants_8hpp_1a7b9efcc3fc7800179487a5441450798e" kindref="member">HARD_EXCHANGE_RATE_FLOOR</ref><sp/>=<sp/>0.0167;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="comment">//<sp/>user<sp/>CLS<sp/>amount<sp/>hard<sp/>floor<sp/>(in<sp/>the<sp/>absence<sp/>of<sp/>uclsamount<sp/>parameter)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="constants_8hpp_1a23c646f6efd4427604ed4ad017be53e0" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>int64_t<sp/><ref refid="constants_8hpp_1a23c646f6efd4427604ed4ad017be53e0" kindref="member">UCLSAMOUNT</ref><sp/>=<sp/>3500000;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Partner<sp/>share<sp/>hard<sp/>floor<sp/>(in<sp/>the<sp/>absence<sp/>of<sp/>the<sp/>partnershare<sp/>parameter)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="constants_8hpp_1aa285cb02e451ed96f684270b478e56ed" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="constants_8hpp_1aa285cb02e451ed96f684270b478e56ed" kindref="member">PARTNERSHARE</ref><sp/>=<sp/>0.03;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="comment">//<sp/>DAO<sp/>share<sp/>hard<sp/>floor<sp/>(in<sp/>the<sp/>absence<sp/>of<sp/>the<sp/>daoshare<sp/>parameter)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="constants_8hpp_1a0768bf21324b2abeb467ac2524138f8e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="constants_8hpp_1a0768bf21324b2abeb467ac2524138f8e" kindref="member">DAOSHARE</ref><sp/>=<sp/>0.07;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Issuance<sp/>percentage<sp/>(expressed<sp/>as<sp/>floating<sp/>point)<sp/>of<sp/>CLS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="comment">//<sp/>const<sp/>double<sp/>ISSUANCE_PROPORTION_OF_CLS<sp/>=<sp/>0.000286;<sp/><sp/>//<sp/>now<sp/>implemented<sp/>as<sp/>parameter<sp/>&apos;issuepropcls&apos;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="comment">//<sp/>mint-fee-free<sp/>allowance<sp/>for<sp/>AIRKEY<sp/>holders</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="constants_8hpp_1ab36993337dc5f43b6d444e3ff5cc4389" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="constants_8hpp_1ab36993337dc5f43b6d444e3ff5cc4389" kindref="member">AIRKEY_MINT_FEE_FREE_ALLOWANCE</ref><sp/>=<sp/>5000;</highlight></codeline>
+    </programlisting>
+    <location file="constants.hpp"/>
+  </compounddef>
+</doxygen>

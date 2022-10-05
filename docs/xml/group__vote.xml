@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="group__vote" kind="group">
+    <compoundname>vote</compoundname>
+    <title>Vote</title>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__vote_1gab7563a911a0d8027f3152d68d523e893" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::vector&lt; int &gt;</type>
+        <definition>std::vector&lt; int &gt; parse_vote_ranges</definition>
+        <argsstring>(string voteranges)</argsstring>
+        <name>parse_vote_ranges</name>
+        <param>
+          <type>string</type>
+          <declname>voteranges</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>This function parses the ranges in the voteranges parameter. It takes a string like &quot;q1:0-100,q2:6-30,q5:0-50&quot; and returns a vector of integers like [0, 100, 6, 30, 0, 50]</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>voteranges</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a string that looks like this: q1:0-100,q2:6-30,q5:0-50 from the voteranges parameter</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A vector of integers. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="vote.hpp" line="75" column="13" bodyfile="vote.hpp" bodystart="75" bodyend="98"/>
+      </memberdef>
+      <memberdef kind="function" id="group__vote_1ga3ddf24a88e72a5030582a9dc011e025b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::vote_init</definition>
+        <argsstring>()</argsstring>
+        <name>vote_init</name>
+        <qualifiedname>freedao::vote_init</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function to create and initialise the vote results record. If the voterecord table is empty, then create the (single record) in the voterecord table </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="72" column="8" bodyfile="vote.hpp" bodystart="21" bodyend="29" declfile="freeosgov.hpp" declline="72" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="group__vote_1ga4fe9414be443e02b8bebf467239029bb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::vote_reset</definition>
+        <argsstring>()</argsstring>
+        <name>vote_reset</name>
+        <qualifiedname>freedao::vote_reset</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function to reset the vote record at the beginning of a new iteration </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="73" column="8" bodyfile="vote.hpp" bodystart="35" bodyend="64" declfile="freeosgov.hpp" declline="73" declcolumn="8"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>These Actions and functions are related to processing user voting. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

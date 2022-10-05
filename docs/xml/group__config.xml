@@ -1,0 +1,601 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="group__config" kind="group">
+    <compoundname>config</compoundname>
+    <title>Configuration</title>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__config_1ga852fcc49c92b61339f7cc58a822b5b2e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string freeosgov::get_parameter</definition>
+        <argsstring>(name parameter)</argsstring>
+        <name>get_parameter</name>
+        <qualifiedname>freedao::get_parameter</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>parameter</declname>
+          <defname>paramname</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>It returns the string value of a parameter from the parameters table</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>paramname</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The name of the parameter record to retrieve from the parameters table.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The string value of the parameter. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="59" column="10" bodyfile="config.hpp" bodystart="23" bodyend="31" declfile="freeosgov.hpp" declline="59" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1gad25bb1f207ca4ad3011c40107ac50908" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int freeosgov::get_iparameter</definition>
+        <argsstring>(name parameter)</argsstring>
+        <name>get_iparameter</name>
+        <qualifiedname>freedao::get_iparameter</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>parameter</declname>
+          <defname>paramname</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>It gets the integer value of a parameter from the parameters table</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>paramname</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The name of the parameter record to get from the parameters table.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The integer value of the parameter. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="61" column="7" bodyfile="config.hpp" bodystart="40" bodyend="48" declfile="freeosgov.hpp" declline="61" declcolumn="7"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1ga4b5e6e573da276f6e662735cc4caaedc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double freeosgov::get_dparameter</definition>
+        <argsstring>(name parameter)</argsstring>
+        <name>get_dparameter</name>
+        <qualifiedname>freedao::get_dparameter</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>parameter</declname>
+          <defname>paramname</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>It gets the double value of a parameter from the dparameters (double parameters) table</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>paramname</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The name of the parameter record to get from the dparameters table.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The double value of the parameter. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="60" column="10" bodyfile="config.hpp" bodystart="57" bodyend="65" declfile="freeosgov.hpp" declline="60" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1ga90b74b907922af79c6c2ee5932da5f5b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::paramupsert</definition>
+        <argsstring>(name paramname, std::string value)</argsstring>
+        <name>paramupsert</name>
+        <qualifiedname>freedao::paramupsert</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>paramname</declname>
+        </param>
+        <param>
+          <type>std::string</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action takes a parameter name and a value, and either inserts the parameter into the parameters table if it doesn&apos;t exist, or updates the parameter if it does exist</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>paramname</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The name of the parameter. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The string value of the parameter. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="44" column="9" bodyfile="config.hpp" bodystart="76" bodyend="96" declfile="freeosgov.hpp" declline="44" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1gab2307e8b713257e1fefb97d164534d31" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::paramerase</definition>
+        <argsstring>(name paramname)</argsstring>
+        <name>paramerase</name>
+        <qualifiedname>freedao::paramerase</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>paramname</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action deletes a parameter from the parameters table</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>paramname</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The name of the parameter to be deleted. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="45" column="9" bodyfile="config.hpp" bodystart="104" bodyend="116" declfile="freeosgov.hpp" declline="45" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1ga481cd68c05350546c301b5a0fef872d7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::dparamupsert</definition>
+        <argsstring>(name paramname, double value)</argsstring>
+        <name>dparamupsert</name>
+        <qualifiedname>freedao::dparamupsert</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>paramname</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>value</declname>
+          <defname>dvalue</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action either inserts a new double parameter into the table or updates an existing double parameter in the table</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>paramname</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the name of the parameter in the dparameters table </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>the</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>double value of the parameter </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="46" column="9" bodyfile="config.hpp" bodystart="126" bodyend="146" declfile="freeosgov.hpp" declline="46" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1gaa05e731f1bc56f4300267e3f44a39446" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::dparamerase</definition>
+        <argsstring>(name paramname)</argsstring>
+        <name>dparamerase</name>
+        <qualifiedname>freedao::dparamerase</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>paramname</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action deletes a double parameter from the dparameters table</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>paramname</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The name of the parameter to be deleted. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="47" column="9" bodyfile="config.hpp" bodystart="154" bodyend="166" declfile="freeosgov.hpp" declline="47" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1gabf91178328cbca5af4f83d113acc75ae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::transfadd</definition>
+        <argsstring>(name account)</argsstring>
+        <name>transfadd</name>
+        <qualifiedname>freedao::transfadd</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>account</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action adds an account to the transferers table: list of accounts that can transfer (allocate) POINT tokens</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>account</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The account that will be able to transfer POINT tokens. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="48" column="9" bodyfile="config.hpp" bodystart="174" bodyend="180" declfile="freeosgov.hpp" declline="48" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1gaac61a2c48cd5a5e8d46cbe04b8364f6d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::transferase</definition>
+        <argsstring>(name account)</argsstring>
+        <name>transferase</name>
+        <qualifiedname>freedao::transferase</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>account</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action removes an account from the transferers table</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>account</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account to be removed from the table </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="49" column="9" bodyfile="config.hpp" bodystart="188" bodyend="200" declfile="freeosgov.hpp" declline="49" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1gaaa7dceccdf12a61c041c0dc97e073f0d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::minteradd</definition>
+        <argsstring>(name account)</argsstring>
+        <name>minteradd</name>
+        <qualifiedname>freedao::minteradd</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>account</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action adds a new account to the minters table: list of accounts that can issue POINT tokens.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>account</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The account that will be able to mint (issue) tokens. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="50" column="9" bodyfile="config.hpp" bodystart="208" bodyend="213" declfile="freeosgov.hpp" declline="50" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1ga368f805fd75cb0b281b73f7041860f37" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::mintererase</definition>
+        <argsstring>(name account)</argsstring>
+        <name>mintererase</name>
+        <qualifiedname>freedao::mintererase</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>account</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action removes an account from the minters table</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>account</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account to be removed from the minters table </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="51" column="9" bodyfile="config.hpp" bodystart="221" bodyend="233" declfile="freeosgov.hpp" declline="51" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1ga46cd6550e8bf3cf28d1888c89d34189c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::burneradd</definition>
+        <argsstring>(name account)</argsstring>
+        <name>burneradd</name>
+        <qualifiedname>freedao::burneradd</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>account</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action adds an account to the burners table: people who can burn (retire) POINT tokens</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>account</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The account that will be added to the burners table. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="52" column="9" bodyfile="config.hpp" bodystart="241" bodyend="246" declfile="freeosgov.hpp" declline="52" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1ga5f4e48755025617a3b8a4e81225142c3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::burnererase</definition>
+        <argsstring>(name account)</argsstring>
+        <name>burnererase</name>
+        <qualifiedname>freedao::burnererase</qualifiedname>
+        <param>
+          <type>name</type>
+          <declname>account</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action deletes an account from the burners table</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>account</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the account to be removed from the burners table </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="53" column="9" bodyfile="config.hpp" bodystart="254" bodyend="266" declfile="freeosgov.hpp" declline="53" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1ga0387236f6ea9c5209c3cee5fec92fb18" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::currentrate</definition>
+        <argsstring>(double price)</argsstring>
+        <name>currentrate</name>
+        <qualifiedname>freedao::currentrate</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>price</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action sets the current FREEOS usd price in the exchangerate table</para>
+<para><simplesect kind="pre"><para>Must be run under the authority of the contract or the account defined by the &apos;exchangeacc&apos; parameter</para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>double</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>price The current price of the token which must have a positive value </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="54" column="9" bodyfile="config.hpp" bodystart="276" bodyend="302" declfile="freeosgov.hpp" declline="54" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1ga3e37798342a62cfc59e77adb4304bb74" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::targetrate</definition>
+        <argsstring>(double price)</argsstring>
+        <name>targetrate</name>
+        <qualifiedname>freedao::targetrate</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>price</declname>
+          <defname>exchangerate</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action sets the target FREEOS usd price in the exchangerate table</para>
+<para><simplesect kind="pre"><para>Must be run under the authority of the contract</para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>double</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>price The target price of the token which must have a positive value </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="55" column="9" bodyfile="config.hpp" bodystart="311" bodyend="339" declfile="freeosgov.hpp" declline="55" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1ga907262ceb0bc9c12a5626036c5e33ed9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::currupsert</definition>
+        <argsstring>(symbol symbol, name contract)</argsstring>
+        <name>currupsert</name>
+        <qualifiedname>freedao::currupsert</qualifiedname>
+        <param>
+          <type>symbol</type>
+          <declname>symbol</declname>
+        </param>
+        <param>
+          <type>name</type>
+          <declname>contract</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action takes a symbol and a contract name as arguments, and then either creates a new currency entry in the currencies table or updates an existing one</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>symbol</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The symbol of the currency you want to add. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>contract</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The contract that manages the token ledger. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="56" column="9" bodyfile="config.hpp" bodystart="349" bodyend="368" declfile="freeosgov.hpp" declline="56" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1gaa856d46a2c18513dc05d0ce7da17b3a5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::currsetrate</definition>
+        <argsstring>(symbol symbol, double usdrate)</argsstring>
+        <name>currsetrate</name>
+        <qualifiedname>freedao::currsetrate</qualifiedname>
+        <param>
+          <type>symbol</type>
+          <declname>symbol</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>usdrate</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action sets the USD rate for a given token currency</para>
+<para><simplesect kind="pre"><para>Must be run under the authority of the contract or the account defined by the &apos;exchangeacc&apos; parameter</para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>symbol</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the symbol of the currency to set the rate for </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>usdrate</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The USD rate of the currency. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="58" column="9" bodyfile="config.hpp" bodystart="379" bodyend="399" declfile="freeosgov.hpp" declline="58" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__config_1ga856faa93c22297dba2ee1466e810f418" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void freeosgov::currerase</definition>
+        <argsstring>(symbol symbol)</argsstring>
+        <name>currerase</name>
+        <qualifiedname>freedao::currerase</qualifiedname>
+        <param>
+          <type>symbol</type>
+          <declname>symbol</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Action erases a token currency from the currencies table</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>symbol</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The symbol of the currency to be erased. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="freeosgov.hpp" line="57" column="9" bodyfile="config.hpp" bodystart="407" bodyend="417" declfile="freeosgov.hpp" declline="57" declcolumn="9"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>These Actions and functions are related to configuring the dApp. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="structeosio_1_1eosioproton_1_1kyc__providers__list" kind="struct" language="C++" prot="private">
+    <compoundname>eosio::eosioproton::kyc_providers_list</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1kyc__providers__list_1a71f42a0b7f04f0762b403101b37ded0b" prot="public" static="no" mutable="no">
+        <type>name</type>
+        <definition>name eosio::eosioproton::kyc_providers_list::kyc_provider</definition>
+        <argsstring></argsstring>
+        <name>kyc_provider</name>
+        <qualifiedname>eosio::eosioproton::kyc_providers_list::kyc_provider</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="349" column="17" bodyfile="eosio.proton.hpp" bodystart="349" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1kyc__providers__list_1ad5c2c1f9f1f93d958616a6bde7e58ea9" prot="public" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string eosio::eosioproton::kyc_providers_list::desc</definition>
+        <argsstring></argsstring>
+        <name>desc</name>
+        <qualifiedname>eosio::eosioproton::kyc_providers_list::desc</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="350" column="17" bodyfile="eosio.proton.hpp" bodystart="350" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1kyc__providers__list_1a1d8d96bfb01512f93c6cce610deea57b" prot="public" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string eosio::eosioproton::kyc_providers_list::url</definition>
+        <argsstring></argsstring>
+        <name>url</name>
+        <qualifiedname>eosio::eosioproton::kyc_providers_list::url</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="351" column="17" bodyfile="eosio.proton.hpp" bodystart="351" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1kyc__providers__list_1a005fa112ac5090cd2e2f44d2961c5ec4" prot="public" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string eosio::eosioproton::kyc_providers_list::iconurl</definition>
+        <argsstring></argsstring>
+        <name>iconurl</name>
+        <qualifiedname>eosio::eosioproton::kyc_providers_list::iconurl</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="352" column="17" bodyfile="eosio.proton.hpp" bodystart="352" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1kyc__providers__list_1a21c2094c189b971e1f7aab6aae3bd3fb" prot="public" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string eosio::eosioproton::kyc_providers_list::name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <qualifiedname>eosio::eosioproton::kyc_providers_list::name</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="353" column="17" bodyfile="eosio.proton.hpp" bodystart="353" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1kyc__providers__list_1a74c93b066c591368d74ac397642ebc5f" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool eosio::eosioproton::kyc_providers_list::blisted</definition>
+        <argsstring></argsstring>
+        <name>blisted</name>
+        <qualifiedname>eosio::eosioproton::kyc_providers_list::blisted</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="354" column="17" bodyfile="eosio.proton.hpp" bodystart="354" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structeosio_1_1eosioproton_1_1kyc__providers__list_1a1aba3b7cef01a6a4a4d4be320b69ed14" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>uint64_t</type>
+        <definition>uint64_t eosio::eosioproton::kyc_providers_list::primary_key</definition>
+        <argsstring>() const</argsstring>
+        <name>primary_key</name>
+        <qualifiedname>eosio::eosioproton::kyc_providers_list::primary_key</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="356" column="10" bodyfile="eosio.proton.hpp" bodystart="356" bodyend="356"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="eosio.proton.hpp" line="347" column="1" bodyfile="eosio.proton.hpp" bodystart="347" bodyend="357"/>
+    <listofallmembers>
+      <member refid="structeosio_1_1eosioproton_1_1kyc__providers__list_1a74c93b066c591368d74ac397642ebc5f" prot="public" virt="non-virtual"><scope>eosio::eosioproton::kyc_providers_list</scope><name>blisted</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1kyc__providers__list_1ad5c2c1f9f1f93d958616a6bde7e58ea9" prot="public" virt="non-virtual"><scope>eosio::eosioproton::kyc_providers_list</scope><name>desc</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1kyc__providers__list_1a005fa112ac5090cd2e2f44d2961c5ec4" prot="public" virt="non-virtual"><scope>eosio::eosioproton::kyc_providers_list</scope><name>iconurl</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1kyc__providers__list_1a71f42a0b7f04f0762b403101b37ded0b" prot="public" virt="non-virtual"><scope>eosio::eosioproton::kyc_providers_list</scope><name>kyc_provider</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1kyc__providers__list_1a21c2094c189b971e1f7aab6aae3bd3fb" prot="public" virt="non-virtual"><scope>eosio::eosioproton::kyc_providers_list</scope><name>name</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1kyc__providers__list_1a1aba3b7cef01a6a4a4d4be320b69ed14" prot="public" virt="non-virtual"><scope>eosio::eosioproton::kyc_providers_list</scope><name>primary_key</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1kyc__providers__list_1a1d8d96bfb01512f93c6cce610deea57b" prot="public" virt="non-virtual"><scope>eosio::eosioproton::kyc_providers_list</scope><name>url</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

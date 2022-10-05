@@ -1,0 +1,406 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="survey_8hpp" kind="file" language="C++">
+    <compoundname>survey.hpp</compoundname>
+    <includes local="no">eosio/eosio.hpp</includes>
+    <includes local="no">eosio/system.hpp</includes>
+    <includes refid="freeosgov_8hpp" local="yes">freeosgov.hpp</includes>
+    <includes refid="tables_8hpp" local="yes">tables.hpp</includes>
+    <includedby refid="freeosgov_8cpp" local="yes">freeosgov.cpp</includedby>
+    <incdepgraph>
+      <node id="7">
+        <label>eosio.proton.hpp</label>
+        <link refid="eosio_8proton_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>freeosgov.hpp</label>
+        <link refid="freeosgov_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>survey.hpp</label>
+        <link refid="survey_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>tables.hpp</label>
+        <link refid="tables_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>eosio/asset.hpp</label>
+      </node>
+      <node id="2">
+        <label>eosio/eosio.hpp</label>
+      </node>
+      <node id="8">
+        <label>eosio/singleton.hpp</label>
+      </node>
+      <node id="3">
+        <label>eosio/system.hpp</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>freeosgov.cpp</label>
+        <link refid="freeosgov_8cpp"/>
+      </node>
+      <node id="1">
+        <label>survey.hpp</label>
+        <link refid="survey_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__survey_1ga491ed1aa6d59db88f7078a4c02abb1f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>vector&lt; string &gt;</type>
+        <definition>vector&lt; string &gt; split</definition>
+        <argsstring>(string s, string delimiter)</argsstring>
+        <name>split</name>
+        <param>
+          <type>string</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>delimiter</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Utility function to split a string into a vector of strings, using a delimiter. This function is used by <ref refid="group__survey_1ga8d9eebb128306c0bc88b84bf66e9e005" kindref="member">parse_survey_ranges()</ref> to interpret the surveyranges parameter.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>s</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The string to be split </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>delimiter</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The delimiter to use to split the string.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A vector of strings. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="survey.hpp" line="25" column="8" bodyfile="survey.hpp" bodystart="25" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="group__survey_1ga8d9eebb128306c0bc88b84bf66e9e005" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::vector&lt; int &gt;</type>
+        <definition>std::vector&lt; int &gt; parse_survey_ranges</definition>
+        <argsstring>(string surveyranges)</argsstring>
+        <name>parse_survey_ranges</name>
+        <param>
+          <type>string</type>
+          <declname>surveyranges</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>This function parses the ranges in the surveyranges parameter. It takes a string like &quot;q2:1-48,q4:1-36&quot; and returns a vector of integers like [1, 48, 1, 36]</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>surveyranges</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a string that looks like this: q2:1-48,q4:1-48</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A vector of integers. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="survey.hpp" line="49" column="13" bodyfile="survey.hpp" bodystart="49" bodyend="68"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;eosio/eosio.hpp&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;eosio/system.hpp&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="freeosgov_8hpp" kindref="compound">freeosgov.hpp</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="tables_8hpp" kindref="compound">tables.hpp</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="keyword">using<sp/>namespace<sp/></highlight><highlight class="normal"><ref refid="namespaceeosio" kindref="compound">eosio</ref>;</highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="keyword">using<sp/>namespace<sp/></highlight><highlight class="normal"><ref refid="namespacefreedao" kindref="compound">freedao</ref>;</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="keyword">using<sp/>namespace<sp/></highlight><highlight class="normal">std;</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="25" refid="group__survey_1ga491ed1aa6d59db88f7078a4c02abb1f9" refkind="member"><highlight class="normal">vector&lt;string&gt;<sp/><ref refid="group__survey_1ga491ed1aa6d59db88f7078a4c02abb1f9" kindref="member">split</ref><sp/>(</highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>s,<sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>delimiter)<sp/>{</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>pos_start<sp/>=<sp/>0,<sp/>pos_end,<sp/>delim_len<sp/>=<sp/>delimiter.length();</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>token;</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/>vector&lt;string&gt;<sp/>res;</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>((pos_end<sp/>=<sp/>s.find<sp/>(delimiter,<sp/>pos_start))<sp/>!=<sp/>string::npos)<sp/>{</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>token<sp/>=<sp/>s.substr<sp/>(pos_start,<sp/>pos_end<sp/>-<sp/>pos_start);</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>pos_start<sp/>=<sp/>pos_end<sp/>+<sp/>delim_len;</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>res.push_back<sp/>(token);</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/>res.push_back<sp/>(s.substr<sp/>(pos_start));</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>res;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="group__survey_1ga8d9eebb128306c0bc88b84bf66e9e005" refkind="member"><highlight class="normal">std::vector&lt;int&gt;<sp/><ref refid="group__survey_1ga8d9eebb128306c0bc88b84bf66e9e005" kindref="member">parse_survey_ranges</ref>(</highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>surveyranges)<sp/>{</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>the<sp/>surveyranges<sp/>string<sp/>looks<sp/>like<sp/>this:<sp/>q2:1-48,q4:1-48</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/>std::vector&lt;int&gt;<sp/>limits;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/>std::vector&lt;std::string&gt;<sp/>tokenlist<sp/>=<sp/><ref refid="group__survey_1ga491ed1aa6d59db88f7078a4c02abb1f9" kindref="member">split</ref>(surveyranges,<sp/></highlight><highlight class="stringliteral">&quot;,&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/>std::vector<sp/>q1_2_param<sp/>=<sp/><ref refid="group__survey_1ga491ed1aa6d59db88f7078a4c02abb1f9" kindref="member">split</ref>(tokenlist[0],<sp/></highlight><highlight class="stringliteral">&quot;:&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/>std::vector<sp/>q2_2_param<sp/>=<sp/><ref refid="group__survey_1ga491ed1aa6d59db88f7078a4c02abb1f9" kindref="member">split</ref>(tokenlist[1],<sp/></highlight><highlight class="stringliteral">&quot;:&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/>std::vector<sp/>q1_minmax<sp/>=<sp/><ref refid="group__survey_1ga491ed1aa6d59db88f7078a4c02abb1f9" kindref="member">split</ref>(q1_2_param[1],<sp/></highlight><highlight class="stringliteral">&quot;-&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/>std::vector<sp/>q2_minmax<sp/>=<sp/><ref refid="group__survey_1ga491ed1aa6d59db88f7078a4c02abb1f9" kindref="member">split</ref>(q2_2_param[1],<sp/></highlight><highlight class="stringliteral">&quot;-&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/>limits.push_back<sp/>(stoi(q1_minmax[0]));</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/>limits.push_back<sp/>(stoi(q1_minmax[1]));</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/>limits.push_back<sp/>(stoi(q2_minmax[0]));</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/>limits.push_back<sp/>(stoi(q2_minmax[1]));</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>limits;</highlight></codeline>
+<codeline lineno="68"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="group__survey_1gab32cdc96c25d307ac99ac3570cf06116" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>freeosgov::survey_init()<sp/>{</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1a44bdf1b3ea8167a2f17e93daf2f06aaa" kindref="member">survey_index</ref><sp/>survey_table(get_self(),<sp/>get_self().<ref refid="namespacefreedao_1a4b32c29077d5af600a57e7b5414c16e9" kindref="member">value</ref>);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>survey_iterator<sp/>=<sp/>survey_table.begin();</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(survey_iterator<sp/>==<sp/>survey_table.end())<sp/>{</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>emplace</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>survey_table.emplace(get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;s)<sp/>{<sp/>s.iteration<sp/>=<sp/><ref refid="group__core_1ga227e0705813c5a3ab9dfcdc438d667b2" kindref="member">current_iteration</ref>();<sp/>});</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="83"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89" refid="group__survey_1ga67cd0c5406f70216896a4570c18f7b1c" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>freeosgov::survey_reset()<sp/>{</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1a44bdf1b3ea8167a2f17e93daf2f06aaa" kindref="member">survey_index</ref><sp/>survey_table(get_self(),<sp/>get_self().<ref refid="namespacefreedao_1a4b32c29077d5af600a57e7b5414c16e9" kindref="member">value</ref>);</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>survey_iterator<sp/>=<sp/>survey_table.begin();</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(survey_iterator<sp/>!=<sp/>survey_table.end())<sp/>{</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>survey_table.modify(survey_iterator,<sp/>get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;<ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.iteration<sp/>=<sp/><ref refid="group__core_1ga227e0705813c5a3ab9dfcdc438d667b2" kindref="member">current_iteration</ref>();</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.participants<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q1choice1<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q1choice2<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q1choice3<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q2average<sp/>=<sp/>0.0;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q3choice1<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q3choice2<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q3choice3<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q4average<sp/>=<sp/>0.0;</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q5choice1<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q5choice2<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q5choice3<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q5choice4<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q5choice5<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q5choice6<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q5choice7<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q5choice8<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="115"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="130" refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>freeosgov::survey(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user,<sp/>uint8_t<sp/>q1response,<sp/>uint8_t<sp/>q2response,<sp/>uint8_t<sp/>q3response,<sp/>uint8_t<sp/>q4response,<sp/>uint8_t<sp/><ref refid="namespacefreedao_1a0a8fc98626b8c79fabf6348096708a04" kindref="member">q5choice1</ref>,<sp/>uint8_t<sp/><ref refid="namespacefreedao_1a23e751262cd60c9c0cbd195efe014fec" kindref="member">q5choice2</ref>,<sp/>uint8_t<sp/><ref refid="namespacefreedao_1ac9126508a02b4c3ce4bb7e0d74cb481e" kindref="member">q5choice3</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/>require_auth(user);</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>check<sp/>that<sp/>system<sp/>is<sp/>operational<sp/>(masterswitch<sp/>parameter<sp/>set<sp/>to<sp/>&quot;1&quot;)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/>check(<ref refid="group__core_1ga51aa050f2ae06745744b56cd04184c96" kindref="member">check_master_switch</ref>(),<sp/><ref refid="constants_8hpp_1ae275e78329194567be33e687db0f4a55" kindref="member">MSG_FREEOS_SYSTEM_NOT_AVAILABLE</ref>);</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__core_1ga707783d4644c3b79cedf5e6f037ebbd4" kindref="member">tick</ref>();</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>is<sp/>the<sp/>user<sp/>registered?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/>check(<ref refid="group__identity_1gae606cca008a6d2f91a5b158dcd86ee46" kindref="member">is_registered</ref>(user),<sp/></highlight><highlight class="stringliteral">&quot;survey<sp/>is<sp/>not<sp/>open<sp/>to<sp/>unregistered<sp/>users&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>is<sp/>the<sp/>user<sp/>verified?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/>check(<ref refid="group__identity_1ga3958d16d2ce524d53eb907e7826f5046" kindref="member">is_user_verified</ref>(user),<sp/></highlight><highlight class="stringliteral">&quot;survey<sp/>is<sp/>not<sp/>open<sp/>to<sp/>unverified<sp/>users&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>is<sp/>the<sp/>system<sp/>operational?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/>this_iteration<sp/>=<sp/><ref refid="group__core_1ga227e0705813c5a3ab9dfcdc438d667b2" kindref="member">current_iteration</ref>();</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/>check(this_iteration<sp/>!=<sp/>0,<sp/></highlight><highlight class="stringliteral">&quot;The<sp/>freeos<sp/>system<sp/>is<sp/>not<sp/>available<sp/>at<sp/>this<sp/>time&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>is<sp/>the<sp/>user<sp/>alive</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/>check(<ref refid="group__identity_1ga4210ea712d659c25ea75383f2542bff1" kindref="member">is_user_alive</ref>(user),<sp/></highlight><highlight class="stringliteral">&quot;user<sp/>has<sp/>exceeded<sp/>the<sp/>maximum<sp/>number<sp/>of<sp/>iterations&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>are<sp/>we<sp/>in<sp/>the<sp/>survey<sp/>period?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/>check(<ref refid="group__core_1ga8848c723d286f37e8ca7930753bab5f0" kindref="member">is_action_period</ref>(</highlight><highlight class="stringliteral">&quot;survey&quot;</highlight><highlight class="normal">),<sp/></highlight><highlight class="stringliteral">&quot;It<sp/>is<sp/>outside<sp/>of<sp/>the<sp/>survey<sp/>period&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>has<sp/>the<sp/>user<sp/>already<sp/>completed<sp/>the<sp/>survey?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1a363d235ed74e4ea72f90826f3ba236b5" kindref="member">svr_index</ref><sp/>svrs_table(get_self(),<sp/>user.value);</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>svr_iterator<sp/>=<sp/>svrs_table.begin();</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>if<sp/>there<sp/>is<sp/>no<sp/>svr<sp/>record<sp/>for<sp/>the<sp/>user<sp/>then<sp/>create<sp/>it<sp/>-<sp/>we<sp/>will<sp/>update<sp/>it<sp/>at<sp/>the<sp/>end<sp/>of<sp/>the<sp/>action</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(svr_iterator<sp/>==<sp/>svrs_table.end())<sp/>{</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>emplace</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svrs_table.emplace(get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;svr)<sp/>{<sp/>;<sp/>});</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator<sp/>=<sp/>svrs_table.begin();</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>check(svr_iterator-&gt;survey0<sp/>!=<sp/>this_iteration<sp/>&amp;&amp;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;survey1<sp/>!=<sp/>this_iteration<sp/>&amp;&amp;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;survey2<sp/>!=<sp/>this_iteration<sp/>&amp;&amp;</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;survey3<sp/>!=<sp/>this_iteration<sp/>&amp;&amp;</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;survey4<sp/>!=<sp/>this_iteration,</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;user<sp/>has<sp/>already<sp/>completed<sp/>the<sp/>survey&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>parameter<sp/>checking</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>get<sp/>and<sp/>parse<sp/>the<sp/>survey<sp/>slider<sp/>ranges</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>surveyranges<sp/>=<sp/><ref refid="group__config_1ga852fcc49c92b61339f7cc58a822b5b2e" kindref="member">get_parameter</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref>(</highlight><highlight class="stringliteral">&quot;surveyranges&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/>std::vector&lt;int&gt;<sp/>range_values<sp/>=<sp/><ref refid="group__survey_1ga8d9eebb128306c0bc88b84bf66e9e005" kindref="member">parse_survey_ranges</ref>(surveyranges);</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>responses<sp/>1<sp/>to<sp/>4<sp/>-<sp/>must<sp/>be<sp/>an<sp/>integer<sp/>between<sp/>bounds</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/>check(q1response<sp/>&gt;=<sp/>1<sp/>&amp;&amp;<sp/>q1response<sp/>&lt;=<sp/>3,<sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;Response<sp/>1<sp/>must<sp/>be<sp/>a<sp/>number<sp/>between<sp/>1<sp/>and<sp/>3&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/>check(q2response<sp/>&gt;=<sp/>range_values[0]<sp/>&amp;&amp;<sp/>q2response<sp/>&lt;=<sp/>range_values[1],<sp/><sp/></highlight><highlight class="stringliteral">&quot;Response<sp/>2<sp/>is<sp/>out<sp/>of<sp/>range&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/>check(q3response<sp/>&gt;=<sp/>1<sp/>&amp;&amp;<sp/>q3response<sp/>&lt;=<sp/>3,<sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;Response<sp/>3<sp/>must<sp/>be<sp/>a<sp/>number<sp/>between<sp/>1<sp/>and<sp/>3&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/>check(q4response<sp/>&gt;=<sp/>range_values[2]<sp/>&amp;&amp;<sp/>q4response<sp/>&lt;=<sp/>range_values[3],<sp/><sp/></highlight><highlight class="stringliteral">&quot;Response<sp/>4<sp/>is<sp/>out<sp/>of<sp/>range&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/>check(<ref refid="namespacefreedao_1a0a8fc98626b8c79fabf6348096708a04" kindref="member">q5choice1</ref><sp/>&gt;=<sp/>1<sp/>&amp;&amp;<sp/><ref refid="namespacefreedao_1a0a8fc98626b8c79fabf6348096708a04" kindref="member">q5choice1</ref><sp/>&lt;=<sp/>6,<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;Response<sp/>5<sp/>choice<sp/>1<sp/>must<sp/>be<sp/>a<sp/>number<sp/>between<sp/>1<sp/>and<sp/>6&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/>check(<ref refid="namespacefreedao_1a23e751262cd60c9c0cbd195efe014fec" kindref="member">q5choice2</ref><sp/>&gt;=<sp/>1<sp/>&amp;&amp;<sp/><ref refid="namespacefreedao_1a23e751262cd60c9c0cbd195efe014fec" kindref="member">q5choice2</ref><sp/>&lt;=<sp/>6,<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;Response<sp/>5<sp/>choice<sp/>2<sp/>must<sp/>be<sp/>a<sp/>number<sp/>between<sp/>1<sp/>and<sp/>6&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/>check(<ref refid="namespacefreedao_1ac9126508a02b4c3ce4bb7e0d74cb481e" kindref="member">q5choice3</ref><sp/>&gt;=<sp/>1<sp/>&amp;&amp;<sp/><ref refid="namespacefreedao_1ac9126508a02b4c3ce4bb7e0d74cb481e" kindref="member">q5choice3</ref><sp/>&lt;=<sp/>6,<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;Response<sp/>5<sp/>choice<sp/>3<sp/>must<sp/>be<sp/>a<sp/>number<sp/>between<sp/>1<sp/>and<sp/>6&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>response<sp/>5<sp/>-<sp/>the<sp/>3<sp/>choices<sp/>must<sp/>not<sp/>contain<sp/>duplicates</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/>check((<ref refid="namespacefreedao_1a0a8fc98626b8c79fabf6348096708a04" kindref="member">q5choice1</ref><sp/>!=<sp/><ref refid="namespacefreedao_1a23e751262cd60c9c0cbd195efe014fec" kindref="member">q5choice2</ref>)<sp/>&amp;&amp;<sp/>(<ref refid="namespacefreedao_1a23e751262cd60c9c0cbd195efe014fec" kindref="member">q5choice2</ref><sp/>!=<sp/><ref refid="namespacefreedao_1ac9126508a02b4c3ce4bb7e0d74cb481e" kindref="member">q5choice3</ref>)<sp/>&amp;&amp;<sp/>(<ref refid="namespacefreedao_1ac9126508a02b4c3ce4bb7e0d74cb481e" kindref="member">q5choice3</ref><sp/>!=<sp/><ref refid="namespacefreedao_1a0a8fc98626b8c79fabf6348096708a04" kindref="member">q5choice1</ref>),<sp/></highlight><highlight class="stringliteral">&quot;Response<sp/>5<sp/>has<sp/>duplicate<sp/>values&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>store<sp/>the<sp/>responses</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1a44bdf1b3ea8167a2f17e93daf2f06aaa" kindref="member">survey_index</ref><sp/>survey_table(get_self(),<sp/>get_self().<ref refid="namespacefreedao_1a4b32c29077d5af600a57e7b5414c16e9" kindref="member">value</ref>);</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>survey_iterator<sp/>=<sp/>survey_table.begin();</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/>check(survey_iterator<sp/>!=<sp/>survey_table.end(),<sp/></highlight><highlight class="stringliteral">&quot;survey<sp/>record<sp/>is<sp/>not<sp/>defined&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"></highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>process<sp/>the<sp/>responses<sp/>from<sp/>the<sp/>user</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>for<sp/>multiple<sp/>choice<sp/>options,<sp/>increment<sp/>to<sp/>add<sp/>the<sp/>user&apos;s<sp/>selection</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>for<sp/>running<sp/>averages,<sp/>compute<sp/>new<sp/>running<sp/>average</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/>survey_table.modify(survey_iterator,<sp/>get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;<ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>question<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal">(q1response)<sp/>{</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>1:</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q1choice1++;</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>2:</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q1choice2++;</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>3:</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q1choice3++;</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"></highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>question<sp/>2<sp/>-<sp/>running<sp/>average</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q2average<sp/>=<sp/>((<ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q2average<sp/>*<sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.participants)<sp/>+<sp/>q2response)<sp/>/<sp/>(<ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.participants<sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"></highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>question<sp/>3</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal">(q3response)<sp/>{</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>1:</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q3choice1++;</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>2:</highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q3choice2++;</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>3:</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q3choice3++;</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>question<sp/>4<sp/>-<sp/>running<sp/>average</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q4average<sp/>=<sp/>((<ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q4average<sp/>*<sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.participants)<sp/>+<sp/>q4response)<sp/>/<sp/>(<ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.participants<sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="231"><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>question<sp/>5<sp/>-<sp/>need<sp/>to<sp/>iterate<sp/>the<sp/>list<sp/>of<sp/>choices</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="233"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>q5choices[3]<sp/>=<sp/>{<sp/><ref refid="namespacefreedao_1a0a8fc98626b8c79fabf6348096708a04" kindref="member">q5choice1</ref>,<sp/><ref refid="namespacefreedao_1a23e751262cd60c9c0cbd195efe014fec" kindref="member">q5choice2</ref>,<sp/><ref refid="namespacefreedao_1ac9126508a02b4c3ce4bb7e0d74cb481e" kindref="member">q5choice3</ref><sp/>};</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>points[3]<sp/>=<sp/>{<sp/>3,2,1<sp/>};<sp/><sp/></highlight><highlight class="comment">//<sp/>points<sp/>to<sp/>distribute<sp/>for<sp/>1st,<sp/>2nd,<sp/>3rd<sp/>priorities</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(q5choices);<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal">(q5choices[i])<sp/>{</highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>1:</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q5choice1<sp/>+=<sp/>points[i];</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>2:</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q5choice2<sp/>+=<sp/>points[i];</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>3:</highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q5choice3<sp/>+=<sp/>points[i];</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>4:</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q5choice4<sp/>+=<sp/>points[i];</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>5:</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q5choice5<sp/>+=<sp/>points[i];</highlight></codeline>
+<codeline lineno="251"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="252"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>6:</highlight></codeline>
+<codeline lineno="253"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.q5choice6<sp/>+=<sp/>points[i];</highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="255"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="257"><highlight class="normal"></highlight></codeline>
+<codeline lineno="258"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>update<sp/>the<sp/>number<sp/>of<sp/>participants</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="259"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__survey_1ga05581b10c9a65fedbd2b6830a703da01" kindref="member">survey</ref>.participants<sp/>+=<sp/>1;</highlight></codeline>
+<codeline lineno="260"><highlight class="normal"></highlight></codeline>
+<codeline lineno="261"><highlight class="normal"><sp/><sp/><sp/><sp/>});<sp/></highlight><highlight class="comment">//<sp/>end<sp/>of<sp/>modify</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="262"><highlight class="normal"></highlight></codeline>
+<codeline lineno="263"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>record<sp/>that<sp/>the<sp/>user<sp/>has<sp/>responded<sp/>to<sp/>this<sp/>iteration&apos;s<sp/>vote</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="264"><highlight class="normal"><sp/><sp/><sp/><sp/>svrs_table.modify(svr_iterator,<sp/>get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;svr)<sp/>{</highlight></codeline>
+<codeline lineno="265"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(this_iteration<sp/>%<sp/>5)<sp/>{</highlight></codeline>
+<codeline lineno="266"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0:<sp/>svr.survey0<sp/>=<sp/>this_iteration;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="267"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>1:<sp/>svr.survey1<sp/>=<sp/>this_iteration;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>2:<sp/>svr.survey2<sp/>=<sp/>this_iteration;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="269"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>3:<sp/>svr.survey3<sp/>=<sp/>this_iteration;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="270"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>4:<sp/>svr.survey4<sp/>=<sp/>this_iteration;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="271"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="272"><highlight class="normal"><sp/><sp/><sp/><sp/>});<sp/></highlight><highlight class="comment">//<sp/>end<sp/>of<sp/>modify</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="273"><highlight class="normal"></highlight></codeline>
+<codeline lineno="274"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>increment<sp/>the<sp/>number<sp/>of<sp/>participants<sp/>in<sp/>this<sp/>iteration</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="275"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1af856d8ec4e25c214e10d3e1a6f961bc8" kindref="member">system_index</ref><sp/>system_table(get_self(),<sp/>get_self().<ref refid="namespacefreedao_1a4b32c29077d5af600a57e7b5414c16e9" kindref="member">value</ref>);</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>system_iterator<sp/>=<sp/>system_table.begin();</highlight></codeline>
+<codeline lineno="277"><highlight class="normal"><sp/><sp/><sp/><sp/>check(system_iterator<sp/>!=<sp/>system_table.end(),<sp/></highlight><highlight class="stringliteral">&quot;system<sp/>record<sp/>is<sp/>undefined&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/><sp/><sp/>system_table.modify(system_iterator,<sp/>get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;s)<sp/>{</highlight></codeline>
+<codeline lineno="279"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>s.participants<sp/>+=<sp/>1;</highlight></codeline>
+<codeline lineno="280"><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline lineno="281"><highlight class="normal"></highlight></codeline>
+<codeline lineno="282"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>update<sp/>the<sp/>surveys<sp/>counter<sp/>in<sp/>the<sp/>user&apos;s<sp/>participant<sp/>record</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="283"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1ad361703972a83924b6fe1c21ea2d5fc5" kindref="member">participants_index</ref><sp/>participants_table(get_self(),<sp/>user.value);</highlight></codeline>
+<codeline lineno="284"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>participant_iterator<sp/>=<sp/>participants_table.begin();</highlight></codeline>
+<codeline lineno="285"><highlight class="normal"><sp/><sp/><sp/><sp/>check(participant_iterator<sp/>!=<sp/>participants_table.end(),<sp/></highlight><highlight class="stringliteral">&quot;participant<sp/>record<sp/>not<sp/>found&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="286"><highlight class="normal"><sp/><sp/><sp/><sp/>participants_table.modify(participant_iterator,<sp/>get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;p)<sp/>{</highlight></codeline>
+<codeline lineno="287"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>p.surveys<sp/>+=<sp/>1;</highlight></codeline>
+<codeline lineno="288"><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline lineno="289"><highlight class="normal"></highlight></codeline>
+<codeline lineno="290"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="291"><highlight class="normal"><sp/></highlight><highlight class="comment">//<sp/>end<sp/>of<sp/>survey<sp/>group</highlight></codeline>
+    </programlisting>
+    <location file="survey.hpp"/>
+  </compounddef>
+</doxygen>

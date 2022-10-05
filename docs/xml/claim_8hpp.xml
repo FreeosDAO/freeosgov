@@ -1,0 +1,328 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="claim_8hpp" kind="file" language="C++">
+    <compoundname>claim.hpp</compoundname>
+    <includes local="no">eosio/eosio.hpp</includes>
+    <includes local="no">eosio/system.hpp</includes>
+    <includes refid="freeosgov_8hpp" local="yes">freeosgov.hpp</includes>
+    <includes refid="tables_8hpp" local="yes">tables.hpp</includes>
+    <includes refid="constants_8hpp" local="yes">constants.hpp</includes>
+    <includedby refid="freeosgov_8cpp" local="yes">freeosgov.cpp</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>claim.hpp</label>
+        <link refid="claim_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>constants.hpp</label>
+        <link refid="constants_8hpp"/>
+      </node>
+      <node id="7">
+        <label>eosio.proton.hpp</label>
+        <link refid="eosio_8proton_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>freeosgov.hpp</label>
+        <link refid="freeosgov_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>tables.hpp</label>
+        <link refid="tables_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>eosio/asset.hpp</label>
+      </node>
+      <node id="2">
+        <label>eosio/eosio.hpp</label>
+      </node>
+      <node id="8">
+        <label>eosio/singleton.hpp</label>
+      </node>
+      <node id="3">
+        <label>eosio/system.hpp</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>claim.hpp</label>
+        <link refid="claim_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>freeosgov.cpp</label>
+        <link refid="freeosgov_8cpp"/>
+      </node>
+    </invincdepgraph>
+    <innernamespace refid="namespacestd">std</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;eosio/eosio.hpp&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;eosio/system.hpp&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="freeosgov_8hpp" kindref="compound">freeosgov.hpp</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="tables_8hpp" kindref="compound">tables.hpp</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="constants_8hpp" kindref="compound">constants.hpp</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="keyword">using<sp/>namespace<sp/></highlight><highlight class="normal"><ref refid="namespaceeosio" kindref="compound">eosio</ref>;</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="keyword">using<sp/>namespace<sp/></highlight><highlight class="normal"><ref refid="namespacefreedao" kindref="compound">freedao</ref>;</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="keyword">using<sp/>namespace<sp/></highlight><highlight class="normal">std;</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24" refid="group__claim_1ga79bfb41affbdeac466e2ab03c5270d80" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>freeosgov::claim(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>user)<sp/>{</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/>require_auth(user);</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>check<sp/>that<sp/>system<sp/>is<sp/>operational<sp/>(masterswitch<sp/>parameter<sp/>set<sp/>to<sp/>&quot;1&quot;)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/>check(<ref refid="group__core_1ga51aa050f2ae06745744b56cd04184c96" kindref="member">check_master_switch</ref>(),<sp/><ref refid="constants_8hpp_1ae275e78329194567be33e687db0f4a55" kindref="member">MSG_FREEOS_SYSTEM_NOT_AVAILABLE</ref>);</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__core_1ga707783d4644c3b79cedf5e6f037ebbd4" kindref="member">tick</ref>();</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/>this_iteration<sp/>=<sp/><ref refid="group__core_1ga227e0705813c5a3ab9dfcdc438d667b2" kindref="member">current_iteration</ref>();</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>is<sp/>the<sp/>system<sp/>operational?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/>check(this_iteration<sp/>!=<sp/>0,<sp/></highlight><highlight class="stringliteral">&quot;The<sp/>freeos<sp/>system<sp/>is<sp/>not<sp/>available<sp/>at<sp/>this<sp/>time&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>find<sp/>the<sp/>participant&apos;s<sp/>last<sp/>claim</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1ad361703972a83924b6fe1c21ea2d5fc5" kindref="member">participants_index</ref><sp/>participants_table(get_self(),<sp/>user.value);</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>participant_iterator<sp/>=<sp/>participants_table.begin();</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>check(participant_iterator<sp/>!=<sp/>participants_table.end(),<sp/></highlight><highlight class="stringliteral">&quot;user<sp/>registration<sp/>record<sp/>is<sp/>undefined&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><ref refid="namespacefreedao_1a6012c1091d3f5d00746751a755020c97" kindref="member">last_claim</ref><sp/>=<sp/>participant_iterator-&gt;last_claim;</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>find<sp/>the<sp/>user&apos;s<sp/>svr<sp/>record</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1a363d235ed74e4ea72f90826f3ba236b5" kindref="member">svr_index</ref><sp/>svr_table(get_self(),<sp/>user.value);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>svr_iterator<sp/>=<sp/>svr_table.begin();</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/>check(svr_iterator<sp/>!=<sp/>svr_table.end(),<sp/></highlight><highlight class="stringliteral">&quot;user<sp/>has<sp/>not<sp/>completed<sp/>any<sp/>votes<sp/>or<sp/>surveys&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>check<sp/>if<sp/>user<sp/>has<sp/>already<sp/>claimed<sp/>in<sp/>this<sp/>iteration</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/>check(this_iteration<sp/>!=<sp/><ref refid="namespacefreedao_1a6012c1091d3f5d00746751a755020c97" kindref="member">last_claim</ref>,<sp/></highlight><highlight class="stringliteral">&quot;you<sp/>cannot<sp/>claim<sp/>more<sp/>than<sp/>once<sp/>in<sp/>an<sp/>iteration&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>check<sp/>that<sp/>we<sp/>are<sp/>not<sp/>in<sp/>iteration<sp/>1<sp/>-<sp/>payments<sp/>can<sp/>only<sp/>be<sp/>made<sp/>retrospectively</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/>check(this_iteration<sp/>&gt;<sp/>1,<sp/></highlight><highlight class="stringliteral">&quot;claims<sp/>are<sp/>for<sp/>previous<sp/>iterations<sp/>only&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>get<sp/>the<sp/>current<sp/>proportion<sp/>of<sp/>locked<sp/>POINTs</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>locked_proportion<sp/>=<sp/><ref refid="group__core_1ga1edb9084f1478955ad9cc01d63cc4593" kindref="member">get_locked_proportion</ref>();</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>determine<sp/>which<sp/>range<sp/>of<sp/>iterations<sp/>we<sp/>are<sp/>paying<sp/>for</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/>earliest_payment_iteration<sp/>=<sp/>this_iteration<sp/>&gt;<sp/>4<sp/>?<sp/>this_iteration<sp/>-<sp/>4<sp/>:<sp/>1;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/>latest_payment_iteration<sp/>=<sp/>this_iteration<sp/>-<sp/>1;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>open<sp/>the<sp/>rewards<sp/>table</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1a8b665c22546d9228bf05392a7fcf2834" kindref="member">rewards_index</ref><sp/>rewards_table(get_self(),<sp/>get_self().<ref refid="namespacefreedao_1a4b32c29077d5af600a57e7b5414c16e9" kindref="member">value</ref>);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>get<sp/>the<sp/>S,V,R<sp/>share<sp/>values</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>survey_share<sp/>=<sp/><ref refid="group__config_1ga4b5e6e573da276f6e662735cc4caaedc" kindref="member">get_dparameter</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref>(</highlight><highlight class="stringliteral">&quot;surveyshare&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>vote_share<sp/>=<sp/><ref refid="group__config_1ga4b5e6e573da276f6e662735cc4caaedc" kindref="member">get_dparameter</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref>(</highlight><highlight class="stringliteral">&quot;voteshare&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>ratify_share<sp/>=<sp/><ref refid="group__config_1ga4b5e6e573da276f6e662735cc4caaedc" kindref="member">get_dparameter</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref>(</highlight><highlight class="stringliteral">&quot;ratifyshare&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>freedaoshare<sp/>=<sp/><ref refid="group__config_1ga4b5e6e573da276f6e662735cc4caaedc" kindref="member">get_dparameter</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref>(</highlight><highlight class="stringliteral">&quot;freedaoshare&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>partnershare<sp/>=<sp/><ref refid="group__config_1ga4b5e6e573da276f6e662735cc4caaedc" kindref="member">get_dparameter</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref>(</highlight><highlight class="stringliteral">&quot;partnershare&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>get<sp/>the<sp/>freeosdiv<sp/>and<sp/>partners<sp/>accounts</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>freeosdiv_acct<sp/>=<sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref>(<ref refid="group__config_1ga852fcc49c92b61339f7cc58a822b5b2e" kindref="member">get_parameter</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref>(</highlight><highlight class="stringliteral">&quot;freedaoacct&quot;</highlight><highlight class="normal">)));</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref><sp/>partners_acct<sp/>=<sp/><ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref>(<ref refid="group__config_1ga852fcc49c92b61339f7cc58a822b5b2e" kindref="member">get_parameter</ref>(<ref refid="namespacefreedao_1a99c937e2fdd8ecb5012ea530cdae62b6" kindref="member">name</ref>(</highlight><highlight class="stringliteral">&quot;partnersacct&quot;</highlight><highlight class="normal">)));</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>keep<sp/>some<sp/>counters</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>asset<sp/><sp/><sp/>total_user_payment<sp/>=<sp/>asset(0,<sp/><ref refid="constants_8hpp_1a11630f45663213dbea3d8606df790e94" kindref="member">POINT_CURRENCY_SYMBOL</ref>);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/>asset<sp/><sp/><sp/>grand_total_iterations_payments<sp/>=<sp/>asset(0,<sp/><ref refid="constants_8hpp_1a11630f45663213dbea3d8606df790e94" kindref="member">POINT_CURRENCY_SYMBOL</ref>);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>total_issuances<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>determine<sp/>each<sp/>iteration&apos;s<sp/>payments</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(uint32_t<sp/>iter<sp/>=<sp/>earliest_payment_iteration;<sp/>iter<sp/>&lt;=<sp/>latest_payment_iteration;<sp/>iter++)<sp/>{</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>has<sp/>the<sp/>user<sp/>already<sp/>claimed<sp/>for<sp/>this<sp/>iteration?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>developer<sp/>note:<sp/>this<sp/>next<sp/>statement<sp/>could<sp/>be<sp/>incorporated<sp/>into<sp/>the<sp/>for<sp/>loop,<sp/>but<sp/>implementing<sp/>this<sp/>way<sp/>for<sp/>clarity</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(iter<sp/>&lt;=<sp/><ref refid="namespacefreedao_1a6012c1091d3f5d00746751a755020c97" kindref="member">last_claim</ref>)<sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>get<sp/>the<sp/>reward<sp/>record<sp/>for<sp/>the<sp/>iteration</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>reward_iterator<sp/>=<sp/>rewards_table.find(iter);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(reward_iterator<sp/>==<sp/>rewards_table.end())<sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;<sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>no<sp/>reward<sp/>record<sp/>so<sp/>continue<sp/>to<sp/>next<sp/>iteration</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>check<sp/>if<sp/>the<sp/>vote<sp/>was<sp/>ratified,<sp/>otherwise<sp/>no<sp/>payment<sp/>to<sp/>be<sp/>made<sp/>for<sp/>that<sp/>iteration</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(reward_iterator-&gt;ratified<sp/>==<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">)<sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>running<sp/>total<sp/>of<sp/>user<sp/>payments<sp/>amounts</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint64_t<sp/>user_payment_amount<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>initialise<sp/>the<sp/>memo</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>transfer_memo<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;Claim<sp/>for<sp/>week<sp/>&quot;</highlight><highlight class="normal"><sp/>+<sp/>to_string(iter)<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;:<sp/>&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>determine<sp/>the<sp/>total<sp/>user<sp/>payout<sp/>for<sp/>the<sp/>iteration</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint64_t<sp/>iteration_reward_amount<sp/>=<sp/>reward_iterator-&gt;participant_issuance.amount;</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>split<sp/>the<sp/>total<sp/>user<sp/>payout<sp/>according<sp/>to<sp/>whether<sp/>S,<sp/>V<sp/>or<sp/>R<sp/>completed</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint64_t<sp/>payment_survey_amount<sp/>=<sp/>iteration_reward_amount<sp/>*<sp/>survey_share;</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint64_t<sp/>payment_vote_amount<sp/>=<sp/>iteration_reward_amount<sp/>*<sp/>vote_share;</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint64_t<sp/>payment_ratify_amount<sp/>=<sp/>iteration_reward_amount<sp/>*<sp/>ratify_share;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>check<sp/>if<sp/>survey<sp/>completed<sp/>for<sp/>this<sp/>iteration</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>transfer_memo<sp/>+=<sp/></highlight><highlight class="stringliteral">&quot;Survey<sp/>[&quot;</highlight><highlight class="normal"><sp/>+<sp/>to_string((</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)(survey_share<sp/>*<sp/>100))<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;%]:<sp/>&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(svr_iterator-&gt;survey0<sp/>==<sp/>iter<sp/>||</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;survey1<sp/>==<sp/>iter<sp/>||</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;survey2<sp/>==<sp/>iter<sp/>||</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;survey3<sp/>==<sp/>iter<sp/>||</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;survey4<sp/>==<sp/>iter)<sp/>{</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>user_payment_amount<sp/>+=<sp/>payment_survey_amount;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>transfer_memo<sp/>+=<sp/></highlight><highlight class="stringliteral">&quot;(&quot;</highlight><highlight class="normal"><sp/>+<sp/>asset(payment_survey_amount,<sp/><ref refid="constants_8hpp_1a11630f45663213dbea3d8606df790e94" kindref="member">POINT_CURRENCY_SYMBOL</ref>).to_string()<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;)&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>transfer_memo<sp/>+=<sp/></highlight><highlight class="stringliteral">&quot;(not<sp/>completed)&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>check<sp/>if<sp/>vote<sp/>completed<sp/>for<sp/>this<sp/>iteration</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>transfer_memo<sp/>+=<sp/></highlight><highlight class="stringliteral">&quot;,<sp/>Vote<sp/>[&quot;</highlight><highlight class="normal"><sp/>+<sp/>to_string((</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)(vote_share<sp/>*<sp/>100))<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;%]:<sp/>&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(svr_iterator-&gt;vote0<sp/>==<sp/>iter<sp/>||</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;vote1<sp/>==<sp/>iter<sp/>||</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;vote2<sp/>==<sp/>iter<sp/>||</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;vote3<sp/>==<sp/>iter<sp/>||</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;vote4<sp/>==<sp/>iter)<sp/>{</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>user_payment_amount<sp/>+=<sp/>payment_vote_amount;</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>transfer_memo<sp/>+=<sp/></highlight><highlight class="stringliteral">&quot;(&quot;</highlight><highlight class="normal"><sp/>+<sp/>asset(payment_vote_amount,<sp/><ref refid="constants_8hpp_1a11630f45663213dbea3d8606df790e94" kindref="member">POINT_CURRENCY_SYMBOL</ref>).to_string()<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;)&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>transfer_memo<sp/>+=<sp/></highlight><highlight class="stringliteral">&quot;(not<sp/>completed)&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>check<sp/>if<sp/>ratify<sp/>completed<sp/>for<sp/>this<sp/>iteration</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>transfer_memo<sp/>+=<sp/></highlight><highlight class="stringliteral">&quot;,<sp/>Ratify<sp/>[&quot;</highlight><highlight class="normal"><sp/>+<sp/>to_string((</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)(ratify_share<sp/>*<sp/>100))<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;%]:<sp/>&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(svr_iterator-&gt;ratify0<sp/>==<sp/>iter<sp/>||</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;ratify1<sp/>==<sp/>iter<sp/>||</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;ratify2<sp/>==<sp/>iter<sp/>||</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;ratify3<sp/>==<sp/>iter<sp/>||</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>svr_iterator-&gt;ratify4<sp/>==<sp/>iter)<sp/>{</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>user_payment_amount<sp/>+=<sp/>payment_ratify_amount;</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>transfer_memo<sp/>+=<sp/></highlight><highlight class="stringliteral">&quot;(&quot;</highlight><highlight class="normal"><sp/>+<sp/>asset(payment_ratify_amount,<sp/><ref refid="constants_8hpp_1a11630f45663213dbea3d8606df790e94" kindref="member">POINT_CURRENCY_SYMBOL</ref>).to_string()<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;)&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>transfer_memo<sp/>+=<sp/></highlight><highlight class="stringliteral">&quot;(not<sp/>completed)&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>make<sp/>the<sp/>payment,<sp/>if<sp/>any</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(user_payment_amount<sp/>&gt;<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>total_issuances++;</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint64_t<sp/>user_locked_amount<sp/>=<sp/>user_payment_amount<sp/>*<sp/>locked_proportion;</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint64_t<sp/>user_liquid_amount<sp/>=<sp/>user_payment_amount<sp/>-<sp/>user_locked_amount;</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>get<sp/>the<sp/>partner<sp/>and<sp/>freedao<sp/>shares</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint64_t<sp/>freedao_payment_amount<sp/>=<sp/>user_payment_amount<sp/>*<sp/>freedaoshare;</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint64_t<sp/>partners_payment_amount<sp/>=<sp/>user_payment_amount<sp/>*<sp/>partnershare;</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>calculate<sp/>the<sp/>payments<sp/>as<sp/>assets</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>asset<sp/>user_payment<sp/>=<sp/>asset(user_payment_amount,<sp/><ref refid="constants_8hpp_1a11630f45663213dbea3d8606df790e94" kindref="member">POINT_CURRENCY_SYMBOL</ref>);</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>asset<sp/>user_liquid_payment<sp/>=<sp/>asset(user_liquid_amount,<sp/><ref refid="constants_8hpp_1a11630f45663213dbea3d8606df790e94" kindref="member">POINT_CURRENCY_SYMBOL</ref>);</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>asset<sp/>user_locked_payment<sp/>=<sp/>asset(user_locked_amount,<sp/><ref refid="constants_8hpp_1a11630f45663213dbea3d8606df790e94" kindref="member">POINT_CURRENCY_SYMBOL</ref>);</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>asset<sp/>freedao_payment<sp/>=<sp/>asset(freedao_payment_amount,<sp/><ref refid="constants_8hpp_1a11630f45663213dbea3d8606df790e94" kindref="member">POINT_CURRENCY_SYMBOL</ref>);</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>asset<sp/>partners_payment<sp/>=<sp/>asset(partners_payment_amount,<sp/><ref refid="constants_8hpp_1a11630f45663213dbea3d8606df790e94" kindref="member">POINT_CURRENCY_SYMBOL</ref>);</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>total_user_payment<sp/>+=<sp/>user_payment;</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>mint<sp/>the<sp/>total<sp/>amount</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>asset<sp/>iteration_all_payments<sp/>=<sp/>user_payment<sp/>+<sp/>freedao_payment<sp/>+<sp/>partners_payment;</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>grand_total_iterations_payments<sp/>+=<sp/>iteration_all_payments;</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>issue_memo<sp/>=<sp/>string(</highlight><highlight class="stringliteral">&quot;claim<sp/>by<sp/>&quot;</highlight><highlight class="normal">)<sp/>+<sp/>user.to_string()<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;<sp/>for<sp/>week<sp/>&quot;</highlight><highlight class="normal"><sp/>+<sp/>to_string(iter);</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>issue<sp/>all<sp/>POINTs</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>action<sp/>issue_action<sp/>=<sp/>action(</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>permission_level{get_self(),<sp/></highlight><highlight class="stringliteral">&quot;active&quot;</highlight><highlight class="normal">_n},<sp/>get_self(),</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;mint&quot;</highlight><highlight class="normal">_n,<sp/>std::make_tuple(get_self(),<sp/>get_self(),<sp/>iteration_all_payments,<sp/>issue_memo));</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>issue_action.send();</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>explain<sp/>the<sp/>unlocked/locked<sp/>amounts<sp/>in<sp/>the<sp/>memo</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>transfer_memo<sp/>+=<sp/></highlight><highlight class="stringliteral">&quot;<sp/>-<sp/>payment<sp/>(unlocked/locked)<sp/>=<sp/>&quot;</highlight><highlight class="normal"><sp/>+<sp/>user_liquid_payment.to_string()<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;/&quot;</highlight><highlight class="normal"><sp/>+<sp/>user_locked_payment.to_string();</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>transfer<sp/>liquid<sp/>POINTs<sp/>to<sp/>the<sp/>user<sp/>account</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>action<sp/>user_transfer_action<sp/>=<sp/>action(</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>permission_level{get_self(),<sp/></highlight><highlight class="stringliteral">&quot;active&quot;</highlight><highlight class="normal">_n},<sp/>get_self(),</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;allocate&quot;</highlight><highlight class="normal">_n,</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::make_tuple(get_self(),<sp/>user,<sp/>user_liquid_payment,<sp/>transfer_memo));</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>user_transfer_action.send();</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>increase<sp/>the<sp/>user&apos;s<sp/>locked<sp/>balance</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(user_locked_amount<sp/>&gt;<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1ab8b3032b5445fb0374789bd51ca4b2b5" kindref="member">lockaccounts</ref><sp/>lock_accounts(get_self(),<sp/>user.value);</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>acct_iterator<sp/>=<sp/>lock_accounts.find(user_locked_payment.symbol.code().raw());</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(acct_iterator<sp/>==<sp/>lock_accounts.end())<sp/>{</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lock_accounts.emplace(get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;a)<sp/>{<sp/>a.balance<sp/>=<sp/>user_locked_payment;<sp/>});</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lock_accounts.modify(acct_iterator,<sp/>get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;a)<sp/>{<sp/>a.balance<sp/>+=<sp/>user_locked_payment;<sp/>});</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"></highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>memo<sp/>for<sp/>freedao<sp/>and<sp/>partners<sp/>shares</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/>shares_memo<sp/>=<sp/>string(</highlight><highlight class="stringliteral">&quot;share<sp/>of<sp/>claim<sp/>by<sp/>&quot;</highlight><highlight class="normal">)<sp/>+<sp/>user.to_string()<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;<sp/>for<sp/>week<sp/>&quot;</highlight><highlight class="normal"><sp/>+<sp/>to_string(iter);</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"></highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>transfer<sp/>POINTs<sp/>to<sp/>the<sp/>freedao<sp/>account</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>first,<sp/>record<sp/>the<sp/>deposit<sp/>to<sp/>the<sp/>freedao<sp/>account</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__points_1ga3ac52570ababa28e48939c418b6fb38e" kindref="member">record_deposit</ref>(this_iteration,<sp/>freedao_payment);</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(freedao_payment_amount<sp/>&gt;<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>action<sp/>freedao_transfer_action<sp/>=<sp/>action(</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>permission_level{get_self(),<sp/></highlight><highlight class="stringliteral">&quot;active&quot;</highlight><highlight class="normal">_n},<sp/>get_self(),</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;allocate&quot;</highlight><highlight class="normal">_n,</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::make_tuple(get_self(),<sp/>freeosdiv_acct,<sp/>freedao_payment,<sp/>shares_memo));</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>freedao_transfer_action.send();</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>transfer<sp/>POINTs<sp/>to<sp/>the<sp/>partners<sp/>account</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(partners_payment_amount<sp/>&gt;<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>action<sp/>partners_transfer_action<sp/>=<sp/>action(</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>permission_level{get_self(),<sp/></highlight><highlight class="stringliteral">&quot;active&quot;</highlight><highlight class="normal">_n},<sp/>get_self(),</highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;allocate&quot;</highlight><highlight class="normal">_n,</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::make_tuple(get_self(),<sp/>partners_acct,<sp/>partners_payment,<sp/>shares_memo));</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>partners_transfer_action.send();</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>update<sp/>the<sp/>participant<sp/>record<sp/>issuance<sp/>values</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"><sp/><sp/><sp/><sp/>participants_table.modify(participant_iterator,<sp/>get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;participant)<sp/>{</highlight></codeline>
+<codeline lineno="231"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>participant.last_claim<sp/>=<sp/>latest_payment_iteration;<sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>i.e.<sp/>paid<sp/>up<sp/>to<sp/>this<sp/>iteration</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>participant.total_issuance_amount<sp/>+=<sp/>total_user_payment;</highlight></codeline>
+<codeline lineno="233"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>participant.issuances<sp/>+=<sp/>total_issuances;</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="236"><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>update<sp/>the<sp/>number<sp/>of<sp/>claimevents<sp/>in<sp/>the<sp/>system<sp/>record<sp/>and<sp/>reduce<sp/>CLS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(total_issuances<sp/>&gt;<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespacefreedao_1af856d8ec4e25c214e10d3e1a6f961bc8" kindref="member">system_index</ref><sp/>system_table(get_self(),<sp/>get_self().<ref refid="namespacefreedao_1a4b32c29077d5af600a57e7b5414c16e9" kindref="member">value</ref>);</highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>system_iterator<sp/>=<sp/>system_table.begin();</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>check(system_iterator<sp/>!=<sp/>system_table.end(),<sp/></highlight><highlight class="stringliteral">&quot;system<sp/>record<sp/>is<sp/>undefined&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>system_table.modify(system_iterator,<sp/>get_self(),<sp/>[&amp;](</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>&amp;s)<sp/>{</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>s.claimevents<sp/>+=<sp/>total_issuances;</highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>s.cls<sp/>-=<sp/>grand_total_iterations_payments;<sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>reduce<sp/>CLS<sp/>by<sp/>total<sp/>number<sp/>of<sp/>points<sp/>issued</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="245"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="248"><highlight class="normal"></highlight></codeline>
+<codeline lineno="249"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"><sp/></highlight><highlight class="comment">//<sp/>end<sp/>of<sp/>claim<sp/>group</highlight></codeline>
+    </programlisting>
+    <location file="claim.hpp"/>
+  </compounddef>
+</doxygen>

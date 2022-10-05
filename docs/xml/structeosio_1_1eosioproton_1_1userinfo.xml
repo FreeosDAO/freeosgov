@@ -1,0 +1,197 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="structeosio_1_1eosioproton_1_1userinfo" kind="struct" language="C++" prot="private">
+    <compoundname>eosio::eosioproton::userinfo</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1userinfo_1a6a2f73b8deb2541f52b0cc52869b0db9" prot="public" static="no" mutable="no">
+        <type>name</type>
+        <definition>name eosio::eosioproton::userinfo::acc</definition>
+        <argsstring></argsstring>
+        <name>acc</name>
+        <qualifiedname>eosio::eosioproton::userinfo::acc</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="328" column="42" bodyfile="eosio.proton.hpp" bodystart="328" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1userinfo_1a137f09ea4a57b0c447564c766b1b5fa9" prot="public" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string eosio::eosioproton::userinfo::name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <qualifiedname>eosio::eosioproton::userinfo::name</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="329" column="42" bodyfile="eosio.proton.hpp" bodystart="329" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1userinfo_1a397791d06acd0a5dae7f228b24f4060a" prot="public" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string eosio::eosioproton::userinfo::avatar</definition>
+        <argsstring></argsstring>
+        <name>avatar</name>
+        <qualifiedname>eosio::eosioproton::userinfo::avatar</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="330" column="42" bodyfile="eosio.proton.hpp" bodystart="330" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1userinfo_1ae5760dd28ce5d04df89955e0d96400a0" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool eosio::eosioproton::userinfo::verified</definition>
+        <argsstring></argsstring>
+        <name>verified</name>
+        <qualifiedname>eosio::eosioproton::userinfo::verified</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="331" column="42" bodyfile="eosio.proton.hpp" bodystart="331" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1userinfo_1aebffd4fb49242e0555d19958245909eb" prot="public" static="no" mutable="no">
+        <type>uint64_t</type>
+        <definition>uint64_t eosio::eosioproton::userinfo::date</definition>
+        <argsstring></argsstring>
+        <name>date</name>
+        <qualifiedname>eosio::eosioproton::userinfo::date</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="332" column="42" bodyfile="eosio.proton.hpp" bodystart="332" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1userinfo_1a03fc7ed11b42844e97f4e21cecc1c861" prot="public" static="no" mutable="no">
+        <type>uint64_t</type>
+        <definition>uint64_t eosio::eosioproton::userinfo::verifiedon</definition>
+        <argsstring></argsstring>
+        <name>verifiedon</name>
+        <qualifiedname>eosio::eosioproton::userinfo::verifiedon</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="333" column="42" bodyfile="eosio.proton.hpp" bodystart="333" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1userinfo_1a2867bce672a1c8ee1c0f4c14cd4e001e" prot="public" static="no" mutable="no">
+        <type>eosio::name</type>
+        <definition>eosio::name eosio::eosioproton::userinfo::verifier</definition>
+        <argsstring></argsstring>
+        <name>verifier</name>
+        <qualifiedname>eosio::eosioproton::userinfo::verifier</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="334" column="42" bodyfile="eosio.proton.hpp" bodystart="334" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1userinfo_1a40a2861f49b7cca130c2f5ab921e389f" prot="public" static="no" mutable="no">
+        <type>vector&lt; eosio::name &gt;</type>
+        <definition>vector&lt;eosio::name&gt; eosio::eosioproton::userinfo::raccs</definition>
+        <argsstring></argsstring>
+        <name>raccs</name>
+        <qualifiedname>eosio::eosioproton::userinfo::raccs</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="336" column="29" bodyfile="eosio.proton.hpp" bodystart="336" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1userinfo_1a0ece24fac4c69698231b9cbd1413dd1c" prot="public" static="no" mutable="no">
+        <type>vector&lt; tuple&lt; eosio::name, eosio::name &gt; &gt;</type>
+        <definition>vector&lt;tuple&lt;eosio::name, eosio::name&gt; &gt; eosio::eosioproton::userinfo::aacts</definition>
+        <argsstring></argsstring>
+        <name>aacts</name>
+        <qualifiedname>eosio::eosioproton::userinfo::aacts</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="337" column="9" bodyfile="eosio.proton.hpp" bodystart="337" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1userinfo_1af6849d19d7df97037c93816d9b69f59a" prot="public" static="no" mutable="no">
+        <type>vector&lt; tuple&lt; eosio::name, string &gt; &gt;</type>
+        <definition>vector&lt;tuple&lt;eosio::name, string&gt; &gt; eosio::eosioproton::userinfo::ac</definition>
+        <argsstring></argsstring>
+        <name>ac</name>
+        <qualifiedname>eosio::eosioproton::userinfo::ac</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="338" column="14" bodyfile="eosio.proton.hpp" bodystart="338" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1userinfo_1aebba2ccec6678935db5015d23b3a0d44" prot="public" static="no" mutable="no">
+        <type>vector&lt; <ref refid="structkyc__prov" kindref="compound">kyc_prov</ref> &gt;</type>
+        <definition>vector&lt;kyc_prov&gt; eosio::eosioproton::userinfo::kyc</definition>
+        <argsstring></argsstring>
+        <name>kyc</name>
+        <qualifiedname>eosio::eosioproton::userinfo::kyc</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="340" column="32" bodyfile="eosio.proton.hpp" bodystart="340" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structeosio_1_1eosioproton_1_1userinfo_1af1c2ffae02d6687638d3d8d66c6383c6" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>uint64_t</type>
+        <definition>uint64_t eosio::eosioproton::userinfo::primary_key</definition>
+        <argsstring>() const</argsstring>
+        <name>primary_key</name>
+        <qualifiedname>eosio::eosioproton::userinfo::primary_key</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="342" column="10" bodyfile="eosio.proton.hpp" bodystart="342" bodyend="342"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="eosio.proton.hpp" line="327" column="1" bodyfile="eosio.proton.hpp" bodystart="327" bodyend="343"/>
+    <listofallmembers>
+      <member refid="structeosio_1_1eosioproton_1_1userinfo_1a0ece24fac4c69698231b9cbd1413dd1c" prot="public" virt="non-virtual"><scope>eosio::eosioproton::userinfo</scope><name>aacts</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1userinfo_1af6849d19d7df97037c93816d9b69f59a" prot="public" virt="non-virtual"><scope>eosio::eosioproton::userinfo</scope><name>ac</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1userinfo_1a6a2f73b8deb2541f52b0cc52869b0db9" prot="public" virt="non-virtual"><scope>eosio::eosioproton::userinfo</scope><name>acc</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1userinfo_1a397791d06acd0a5dae7f228b24f4060a" prot="public" virt="non-virtual"><scope>eosio::eosioproton::userinfo</scope><name>avatar</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1userinfo_1aebffd4fb49242e0555d19958245909eb" prot="public" virt="non-virtual"><scope>eosio::eosioproton::userinfo</scope><name>date</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1userinfo_1aebba2ccec6678935db5015d23b3a0d44" prot="public" virt="non-virtual"><scope>eosio::eosioproton::userinfo</scope><name>kyc</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1userinfo_1a137f09ea4a57b0c447564c766b1b5fa9" prot="public" virt="non-virtual"><scope>eosio::eosioproton::userinfo</scope><name>name</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1userinfo_1af1c2ffae02d6687638d3d8d66c6383c6" prot="public" virt="non-virtual"><scope>eosio::eosioproton::userinfo</scope><name>primary_key</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1userinfo_1a40a2861f49b7cca130c2f5ab921e389f" prot="public" virt="non-virtual"><scope>eosio::eosioproton::userinfo</scope><name>raccs</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1userinfo_1ae5760dd28ce5d04df89955e0d96400a0" prot="public" virt="non-virtual"><scope>eosio::eosioproton::userinfo</scope><name>verified</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1userinfo_1a03fc7ed11b42844e97f4e21cecc1c861" prot="public" virt="non-virtual"><scope>eosio::eosioproton::userinfo</scope><name>verifiedon</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1userinfo_1a2867bce672a1c8ee1c0f4c14cd4e001e" prot="public" virt="non-virtual"><scope>eosio::eosioproton::userinfo</scope><name>verifier</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

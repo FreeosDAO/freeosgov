@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+  <compounddef id="structeosio_1_1eosioproton_1_1permission" kind="struct" language="C++" prot="private">
+    <compoundname>eosio::eosioproton::permission</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1permission_1a19d01001ce8349ded2385b0c47415437" prot="public" static="no" mutable="no">
+        <type>name</type>
+        <definition>name eosio::eosioproton::permission::acc</definition>
+        <argsstring></argsstring>
+        <name>acc</name>
+        <qualifiedname>eosio::eosioproton::permission::acc</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="306" column="5" bodyfile="eosio.proton.hpp" bodystart="306" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1permission_1ac082aa11fc5421a6160ada20fd474b95" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t eosio::eosioproton::permission::createacc</definition>
+        <argsstring></argsstring>
+        <name>createacc</name>
+        <qualifiedname>eosio::eosioproton::permission::createacc</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="307" column="8" bodyfile="eosio.proton.hpp" bodystart="307" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1permission_1af61de6634407d2bd5ce1ad013a5b289e" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t eosio::eosioproton::permission::vote</definition>
+        <argsstring></argsstring>
+        <name>vote</name>
+        <qualifiedname>eosio::eosioproton::permission::vote</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="308" column="8" bodyfile="eosio.proton.hpp" bodystart="308" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1permission_1a5747cf76509562a5b1182f7b39fc46e3" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t eosio::eosioproton::permission::regprod</definition>
+        <argsstring></argsstring>
+        <name>regprod</name>
+        <qualifiedname>eosio::eosioproton::permission::regprod</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="309" column="8" bodyfile="eosio.proton.hpp" bodystart="309" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1permission_1a34b3dd632029f0b145731dd2d7b3edca" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t eosio::eosioproton::permission::regproxy</definition>
+        <argsstring></argsstring>
+        <name>regproxy</name>
+        <qualifiedname>eosio::eosioproton::permission::regproxy</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="310" column="8" bodyfile="eosio.proton.hpp" bodystart="310" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1permission_1a7514baaf9debe28e99840807968c8b67" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t eosio::eosioproton::permission::setcontract</definition>
+        <argsstring></argsstring>
+        <name>setcontract</name>
+        <qualifiedname>eosio::eosioproton::permission::setcontract</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="311" column="8" bodyfile="eosio.proton.hpp" bodystart="311" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1permission_1a269bf855865d3cb08f17eb72f0fa9f48" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t eosio::eosioproton::permission::namebids</definition>
+        <argsstring></argsstring>
+        <name>namebids</name>
+        <qualifiedname>eosio::eosioproton::permission::namebids</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="312" column="8" bodyfile="eosio.proton.hpp" bodystart="312" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1permission_1a789cb77bac326fa88092dfd808feecb4" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t eosio::eosioproton::permission::rex</definition>
+        <argsstring></argsstring>
+        <name>rex</name>
+        <qualifiedname>eosio::eosioproton::permission::rex</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="313" column="8" bodyfile="eosio.proton.hpp" bodystart="313" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1permission_1ac26b58d11905cf3889bb27018cbe31e8" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t eosio::eosioproton::permission::delegate</definition>
+        <argsstring></argsstring>
+        <name>delegate</name>
+        <qualifiedname>eosio::eosioproton::permission::delegate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="314" column="8" bodyfile="eosio.proton.hpp" bodystart="314" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1permission_1af4f3b0fae1ff07bea9891114955ee3c0" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t eosio::eosioproton::permission::undelegate</definition>
+        <argsstring></argsstring>
+        <name>undelegate</name>
+        <qualifiedname>eosio::eosioproton::permission::undelegate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="315" column="8" bodyfile="eosio.proton.hpp" bodystart="315" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1permission_1aa60109cdc32f4c369ad7b6afb9cd413c" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t eosio::eosioproton::permission::sellram</definition>
+        <argsstring></argsstring>
+        <name>sellram</name>
+        <qualifiedname>eosio::eosioproton::permission::sellram</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="316" column="8" bodyfile="eosio.proton.hpp" bodystart="316" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structeosio_1_1eosioproton_1_1permission_1a31f74a8d2a919e6e3299def49b444cea" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t eosio::eosioproton::permission::buyram</definition>
+        <argsstring></argsstring>
+        <name>buyram</name>
+        <qualifiedname>eosio::eosioproton::permission::buyram</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="317" column="8" bodyfile="eosio.proton.hpp" bodystart="317" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structeosio_1_1eosioproton_1_1permission_1a7fb735f80cfd2e25e54b8983f3036d2d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>uint64_t</type>
+        <definition>uint64_t eosio::eosioproton::permission::primary_key</definition>
+        <argsstring>() const</argsstring>
+        <name>primary_key</name>
+        <qualifiedname>eosio::eosioproton::permission::primary_key</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="eosio.proton.hpp" line="319" column="10" bodyfile="eosio.proton.hpp" bodystart="319" bodyend="319"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="eosio.proton.hpp" line="305" column="1" bodyfile="eosio.proton.hpp" bodystart="305" bodyend="320"/>
+    <listofallmembers>
+      <member refid="structeosio_1_1eosioproton_1_1permission_1a19d01001ce8349ded2385b0c47415437" prot="public" virt="non-virtual"><scope>eosio::eosioproton::permission</scope><name>acc</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1permission_1a31f74a8d2a919e6e3299def49b444cea" prot="public" virt="non-virtual"><scope>eosio::eosioproton::permission</scope><name>buyram</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1permission_1ac082aa11fc5421a6160ada20fd474b95" prot="public" virt="non-virtual"><scope>eosio::eosioproton::permission</scope><name>createacc</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1permission_1ac26b58d11905cf3889bb27018cbe31e8" prot="public" virt="non-virtual"><scope>eosio::eosioproton::permission</scope><name>delegate</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1permission_1a269bf855865d3cb08f17eb72f0fa9f48" prot="public" virt="non-virtual"><scope>eosio::eosioproton::permission</scope><name>namebids</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1permission_1a7fb735f80cfd2e25e54b8983f3036d2d" prot="public" virt="non-virtual"><scope>eosio::eosioproton::permission</scope><name>primary_key</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1permission_1a5747cf76509562a5b1182f7b39fc46e3" prot="public" virt="non-virtual"><scope>eosio::eosioproton::permission</scope><name>regprod</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1permission_1a34b3dd632029f0b145731dd2d7b3edca" prot="public" virt="non-virtual"><scope>eosio::eosioproton::permission</scope><name>regproxy</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1permission_1a789cb77bac326fa88092dfd808feecb4" prot="public" virt="non-virtual"><scope>eosio::eosioproton::permission</scope><name>rex</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1permission_1aa60109cdc32f4c369ad7b6afb9cd413c" prot="public" virt="non-virtual"><scope>eosio::eosioproton::permission</scope><name>sellram</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1permission_1a7514baaf9debe28e99840807968c8b67" prot="public" virt="non-virtual"><scope>eosio::eosioproton::permission</scope><name>setcontract</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1permission_1af4f3b0fae1ff07bea9891114955ee3c0" prot="public" virt="non-virtual"><scope>eosio::eosioproton::permission</scope><name>undelegate</name></member>
+      <member refid="structeosio_1_1eosioproton_1_1permission_1af61de6634407d2bd5ce1ad013a5b289e" prot="public" virt="non-virtual"><scope>eosio::eosioproton::permission</scope><name>vote</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
