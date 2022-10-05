@@ -528,6 +528,16 @@
             ]
         },
         {
+            "name": "prereguser",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "price",
             "base": "",
             "fields": [
@@ -1252,6 +1262,11 @@
         {
             "name": "paramupsert",
             "type": "paramupsert",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "prereguser",
+            "type": "prereguser",
             "ricardian_contract": ""
         },
         {

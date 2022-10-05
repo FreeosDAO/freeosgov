@@ -10,6 +10,117 @@ using namespace std;
 
 // TODO: Remove all of the code in this module in production version
 
+void freeosgov::prereguser(name user) {  // TODO: detect if the user has an existing record from the airclaim
+
+  require_auth(get_self());
+
+  // check that system is operational (masterswitch parameter set to "1")
+  check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
+
+  // get the current iteration
+  // uint32_t iteration = current_iteration();
+  uint32_t iteration = 1;
+
+  // check(iteration != 0, "The freeos system is not yet available");
+
+  // is the user already registered?
+  // find the account in the participants table
+  participants_index participants_table(get_self(), user.value);
+  auto participant_iterator = participants_table.begin();
+
+  check(participant_iterator == participants_table.end(), "user is already registered");
+
+  // determine account type
+  string account_type = get_account_type(user);
+  check(account_type == "v" || account_type == "b" || account_type == "c", "please complete kyc before registering");
+
+  // capture the user's POINTs balance - as these POINTs will be mint-fee-free
+  asset liquid_points = asset(0, POINT_CURRENCY_SYMBOL);  // default=0 if POINTs balance record not found
+  accounts accounts_table(get_self(), user.value);
+  auto points_iterator = accounts_table.find(symbol_code(POINT_CURRENCY_CODE).raw());
+  if (points_iterator != accounts_table.end()) {
+    liquid_points = points_iterator->balance;
+  }
+
+  // also include the locked POINTs balance
+  asset locked_points = asset(0, POINT_CURRENCY_SYMBOL); // default=0 if locked POINTs balance record not found
+  lockaccounts locked_accounts_table(get_self(), user.value);
+  auto locked_points_iterator = locked_accounts_table.find(symbol_code(POINT_CURRENCY_CODE).raw());
+  if (locked_points_iterator != locked_accounts_table.end()) {
+    locked_points = locked_points_iterator->balance;
+  }
+
+  // determine if the user has an AIRKEY
+  asset airkey_allowance = asset(0, POINT_CURRENCY_SYMBOL); // default=0 if no AIRKEY
+  auto airkey_iterator = accounts_table.find(symbol_code(AIRKEY_CURRENCY_CODE).raw());
+  if (airkey_iterator != accounts_table.end()) {
+    airkey_allowance = asset(AIRKEY_MINT_FEE_FREE_ALLOWANCE * 10000, POINT_CURRENCY_SYMBOL);
+  }
+
+  asset mintfeefree_allowance = liquid_points + locked_points + airkey_allowance;
+
+  // store the mint-fee-free allowance
+  if (mintfeefree_allowance.amount > 0) {   
+
+      // store in the mint_fee_free table
+      mintfeefree_index mintfeefree_table(get_self(), user.value); 
+      auto mintfeefree_iterator = mintfeefree_table.begin();
+
+      if (mintfeefree_iterator == mintfeefree_table.end()) {
+        // emplace
+        mintfeefree_table.emplace(get_self(), [&](auto &m) {
+          m.balance = mintfeefree_allowance;
+        });
+      } else {
+        // modify - should not be necessary to modify, but include this code in the event of migrations, etc
+        mintfeefree_table.modify(mintfeefree_iterator, get_self(), [&](auto &m) {
+          m.balance = mintfeefree_allowance;
+        });
+      } 
+  }
+
+  // add record to the participants table
+  participants_table.emplace(get_self(), [&](auto &participant) {
+    participant.account_type = account_type;
+    participant.registered_iteration = iteration;
+    participant.total_issuance_amount = asset(0, POINT_CURRENCY_SYMBOL);
+  });
+
+  // update the system record - number of users and CLS
+  asset ucls = calculate_user_cls_addition();
+
+  system_index system_table(get_self(), get_self().value);
+  auto system_iterator = system_table.begin();
+  if (system_iterator == system_table.end()) {
+    // emplace
+    system_table.emplace(
+        get_self(), [&](auto &sys) {
+          sys.usercount = 1;
+
+          // update the CLS if a verified user
+          if (is_user_verified(user)) {
+            sys.cls = ucls;
+          }
+          
+        });
+  } else {
+    // modify
+    system_table.modify(system_iterator, get_self(), [&](auto &sys) {
+      sys.usercount += 1;
+
+      // update the CLS if a verified user
+      if (is_user_verified(user)) {
+        sys.cls += ucls;
+      }
+    });
+  }
+
+  // TODO: delete the record from the old users table if they are already registered with the AirClaim
+  // TODO: gov 'users' table to be renamed 'register'
+
+}
+
+
 void freeosgov::calcfee(const name &from, const asset& transfer_quantity)
 {
    asset fee = asset(0, symbol(FREEBI_CURRENCY_CODE, 4));   // default value

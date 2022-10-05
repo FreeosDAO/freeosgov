@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.57";
+const std::string VERSION = "0.9.58";
 
 /** @defgroup core Core Functions
  *  These Actions and functions are related to core functionality.
@@ -108,8 +108,8 @@ void freeosgov::init(time_point iterations_start, double issuance_rate, double m
       rwd.participant_issuance = asset(0, POINT_CURRENCY_SYMBOL);
       rwd.issuance_rate = issuance_rate;
       rwd.mint_fee_percent = mint_fee_percent_freeos;
-      rwd.mint_fee_percent = mint_fee_percent_xpr;
-      rwd.mint_fee_percent = mint_fee_percent_xusdc;
+      rwd.mint_fee_percent_xpr = mint_fee_percent_xpr;
+      rwd.mint_fee_percent_xusdc = mint_fee_percent_xusdc;
       rwd.locking_threshold = locking_threshold;
       rwd.pool = pool;
       rwd.burn = !pool;

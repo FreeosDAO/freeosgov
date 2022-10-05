@@ -26,6 +26,7 @@ public:
   bool check_master_switch();
 
   // maintain actions TODO: remove in production version
+  [[eosio::action]] void prereguser(name user);
   [[eosio::action]] void calcfee(const name &from, const asset& transfer_quantity);
   [[eosio::action]] void maintain(string action, name user);
   [[eosio::action]] void setmff(name user, asset amount);
@@ -39,6 +40,7 @@ public:
   [[eosio::action]] void reregister(name user);
   bool is_user_verified(name user);
   bool has_nft(name user);
+  string get_account_type(name user);
 
   // config actions
   [[eosio::action]] void paramupsert(name paramname, std::string value);

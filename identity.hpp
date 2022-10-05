@@ -93,17 +93,17 @@ bool freeosgov::is_user_alive(name user) {
  * 
  * @return The account type of the user.
  */
-string get_account_type(name user) {
+string freeosgov::get_account_type(name user) {
   // default result
   string user_account_type = "e";
 
   // first determine which contract we consult - if we have set an alternative
   // contract then use that one
-  name verification_contract = VERIFICATION_CONTRACT;
+  name verification_contract = name(get_parameter(name("verifyacct")));
 
   // access the verification table
-  usersinfo verification_table(name(verification_contract),
-                               name(verification_contract).value);
+  usersinfo verification_table(verification_contract,
+                               verification_contract.value);
   auto verification_iterator = verification_table.find(user.value);
 
   if (verification_iterator != verification_table.end()) {
@@ -195,7 +195,7 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
   // get the current iteration
   uint32_t iteration = current_iteration();
 
-  check(iteration != 0, "The freeos system is not yet available");
+  // check(iteration != 0, "The freeos system is not yet available");
 
   // is the user already registered?
   // find the account in the participants table

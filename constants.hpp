@@ -26,24 +26,15 @@ const string AIRKEY_CURRENCY_CODE = "AIRKEY";
 const uint8_t AIRKEY_CURRENCY_PRECISION = 0;
 const symbol AIRKEY_CURRENCY_SYMBOL = symbol(AIRKEY_CURRENCY_CODE, AIRKEY_CURRENCY_PRECISION);
 
-const string FREEBI_CURRENCY_CODE = "FREEBI";
+const string FREEBI_CURRENCY_CODE = "BEEBI";
 const uint8_t FREEBI_CURRENCY_PRECISION = 4;
 const symbol FREEBI_CURRENCY_SYMBOL = symbol(FREEBI_CURRENCY_CODE, FREEBI_CURRENCY_PRECISION);
 
-const string FREEOS_CURRENCY_CODE = "FREEOS";
+const string FREEOS_CURRENCY_CODE = "BETA";
 const uint8_t FREEOS_CURRENCY_PRECISION = 4;
 const symbol FREEOS_CURRENCY_SYMBOL = symbol(FREEOS_CURRENCY_CODE, FREEOS_CURRENCY_PRECISION);
 
-
-const name AIRCLAIM_CONTRACT = name("freeos5");     // TODO: we should not need for production as we are overwriting contract
-
 const string MSG_FREEOS_SYSTEM_NOT_AVAILABLE = "Freeos system is not currently operating. Please try later";
-
-#ifdef PRODUCTION
-const name VERIFICATION_CONTRACT = name("eosio.proton");
-#else
-const name VERIFICATION_CONTRACT = name("freeosconfig");
-#endif
 
 const double HARD_EXCHANGE_RATE_FLOOR = 0.0167;
 

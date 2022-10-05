@@ -1,1 +1,1 @@
-eosio-cpp -o freebi.wasm freebi.cpp -DFREEOSGOV="\"freeosgov2\"" --abigen
+eosio-cpp -o freebi.wasm freebi.cpp -DFREEOSGOV="\"alphaclaim\"" --abigen
