@@ -1,11 +1,10 @@
 #include "freebi.hpp"
 #include "../tables.hpp"
 #include "../constants.hpp"
-#include "../identity.hpp"
 
 namespace eosio {
 
-   const std::string VERSION = "1.1.3";
+   const std::string VERSION = "1.1.4";
 
 // ACTION
 void token::version() {
@@ -14,6 +13,31 @@ void token::version() {
 
   check(false, version_message);
 }
+
+/**
+ * Function checks the `nft_table` in the `dividend` contract to see if the user has an active (unlocked) NFT
+ * 
+ * @param user the account name of the user
+ * 
+ * @return A boolean value indicating whether the user has an active NFT
+ */
+bool has_nft(name user) {
+  bool nft_status = false;
+
+  // check the dividend contract
+  name dividend_contract = name(dividend_acct);
+
+  freedao::nft_table nfts(dividend_contract, dividend_contract.value);
+  auto account_index = nfts.get_index<"active"_n>();
+  auto nft_iterator = account_index.find(user.value);
+
+  if (nft_iterator != account_index.end()) {  // if NFT record found
+    nft_status = true;
+  }
+
+  return nft_status;
+}
+
 
 void token::create( const name&   issuer,
                     const asset&  maximum_supply )
@@ -151,7 +175,7 @@ void token::transfer( const name&    from,
       freedao::participants_index users_table(name(freeosgov_acct), to.value);
       auto user_iterator = users_table.begin();
       check(user_iterator != users_table.end(), "the recipient must be a registered Freeos user");
-      check(user_iterator->account_type == "v" || user_iterator->account_type == "b" || user_iterator->account_type == "c" || has_nft(from), "the recipient must be a verified Freeos user");
+      check(user_iterator->account_type == "v" || user_iterator->account_type == "b" || user_iterator->account_type == "c" || has_nft(to), "the recipient must be a verified Freeos user");
     }
 
     auto sym = quantity.symbol.code();
