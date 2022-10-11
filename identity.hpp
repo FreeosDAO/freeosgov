@@ -206,7 +206,7 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
 
   // determine account type
   string account_type = get_account_type(user);
-  check(account_type == "v" || account_type == "b" || account_type == "c", "please complete kyc before registering");
+  check(account_type == "v" || account_type == "b" || account_type == "c" || has_nft(user), "please complete kyc before registering");
 
   // capture the user's POINTs balance - as these POINTs will be mint-fee-free
   asset liquid_points = asset(0, POINT_CURRENCY_SYMBOL);  // default=0 if POINTs balance record not found

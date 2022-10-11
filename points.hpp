@@ -378,13 +378,13 @@ void freeosgov::mintfreebi(const name &owner, const asset &quantity) {
 
   // check that the user has the appropriate balance to mint from
   // get POINT balance
-  auto points_balance_amount = 0;  // default value
+  asset points_balance = asset(0, POINT_CURRENCY_SYMBOL);  // default value of 0 POINTs
   accounts points_accounts_table(get_self(), owner.value);
   auto points_iterator = points_accounts_table.find(POINT_CURRENCY_SYMBOL.code().raw());
   if (points_iterator != points_accounts_table.end()) {
-    points_balance_amount = points_iterator->balance.amount;
+    points_balance = points_iterator->balance;
   }
-  check(points_balance_amount >= quantity.amount, "user has insufficient POINTs balance");
+  check(points_balance.amount >= quantity.amount, "user has insufficient POINTs balance");
 
   stats statstable(get_self(), sym.code().raw());
   auto existing = statstable.find(sym.code().raw());
@@ -686,14 +686,14 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
   // We don't need to do this for minting from FREEBI because the FREEBI is sent as a transfer credit
   if (input_quantity.symbol == POINT_CURRENCY_SYMBOL) {
     // get POINT balance
-    auto points_balance_amount = 0;  // default value
+    asset points_balance = asset(0, POINT_CURRENCY_SYMBOL);  // default value of 0 POINTs
     accounts points_accounts_table(get_self(), user.value);
     auto points_iterator = points_accounts_table.find(POINT_CURRENCY_SYMBOL.code().raw());
     if (points_iterator != points_accounts_table.end()) {
-      points_balance_amount = points_iterator->balance.amount;
+      points_balance = points_iterator->balance;
     }
 
-    check(points_balance_amount >= input_quantity.amount, "user has insufficient POINTs balance");
+    check(points_balance.amount >= input_quantity.amount, "user has insufficient POINTs balance");
   }
 
   if (use_airclaim_points == false) {

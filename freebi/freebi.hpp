@@ -12,7 +12,8 @@ namespace eosiosystem {
 #define _STRINGIZE(x) #x
 #define STRINGIZE(x) _STRINGIZE(x)
 
-std::string freeosgov_acct = STRINGIZE(FREEOSGOV);
+std::string freeosgov_acct = STRINGIZE(FREEOSGOV);    // for integration with freeosgov contract
+std::string dividend_acct = STRINGIZE(DIVIDEND);      // for integration with dividend contract (has_nft function)
 
 namespace eosio {
 

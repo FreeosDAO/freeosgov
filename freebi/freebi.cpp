@@ -1,5 +1,7 @@
 #include "freebi.hpp"
 #include "../tables.hpp"
+#include "../constants.hpp"
+#include "../identity.hpp"
 
 namespace eosio {
 
@@ -115,7 +117,7 @@ void token::burn( const asset& quantity, const string& memo )
 
 asset token::calculate_fee(const name &from, const asset& transfer_quantity)
 {
-   asset fee = asset(0, symbol("FREEBI", 4));   // default value
+   asset fee = asset(0, FREEBI_CURRENCY_SYMBOL);   // default value
    
    name freeoscontract = name(freeosgov_acct);
 
@@ -129,7 +131,7 @@ asset token::calculate_fee(const name &from, const asset& transfer_quantity)
       double fee_percent = dparameter_iterator->value;
 
       int64_t fee_units = transfer_quantity.amount * (fee_percent / 100.0);
-      fee = asset(fee_units, symbol("FREEBI", 4));
+      fee = asset(fee_units, FREEBI_CURRENCY_SYMBOL);
    }   
    
    return fee;
@@ -149,7 +151,7 @@ void token::transfer( const name&    from,
       freedao::participants_index users_table(name(freeosgov_acct), to.value);
       auto user_iterator = users_table.begin();
       check(user_iterator != users_table.end(), "the recipient must be a registered Freeos user");
-      check(user_iterator->account_type == "v" || user_iterator->account_type == "b" || user_iterator->account_type == "c", "the recipent must be a verified Freeos user");
+      check(user_iterator->account_type == "v" || user_iterator->account_type == "b" || user_iterator->account_type == "c" || has_nft(from), "the recipient must be a verified Freeos user");
     }
 
     auto sym = quantity.symbol.code();

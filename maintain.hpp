@@ -1104,13 +1104,12 @@ void freeosgov::maintain(string action, name user) {
     });
   }
 
-  if (action == "restore freeosgov2 stat") {
+  if (action == "restore alphaclaim stat") {
 
     stats statstable(get_self(), POINT_CURRENCY_SYMBOL.code().raw());
-    statstable.emplace(get_self(), [&](auto &s) {
-      s.supply = asset(10077528598, POINT_CURRENCY_SYMBOL);
-      s.max_supply = asset(3500000000000000000, POINT_CURRENCY_SYMBOL);
-      s.issuer = name("freeosgov2");
+    auto point_iterator = statstable.begin();
+    statstable.modify(point_iterator, get_self(), [&](auto &s) {
+      s.issuer = name("alphaclaim");
     });
   }
 
