@@ -1,1 +1,1 @@
-eosio-cpp -o freebi.wasm freebi.cpp -DFREEOSGOV="\"alphaclaim\"" -DDIVIDEND="\"alphadivide\"" --abigen
+eosio-cpp -o freebi.wasm freebi.cpp -DFREEOSGOV="\"betaclaim\"" -DDIVIDEND="\"betadivide\"" --abigen
