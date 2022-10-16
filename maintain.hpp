@@ -796,6 +796,7 @@ void freeosgov::maintain(string action, name user) {
 
   }
 
+  /*
   if (action == "migrate") {
     // old users record
     old_users_index old_users_table(get_self(), user.value);
@@ -814,6 +815,7 @@ void freeosgov::maintain(string action, name user) {
           p.last_claim = old_user_iterator->last_claim;
         });
   }
+  */
   
   if (action == "restore participants") {
     createuser("bigvern", "v", 460614, 3, 6, 4, 3, 460691, asset(122788996, POINT_CURRENCY_SYMBOL));
