@@ -423,7 +423,7 @@
                 },
                 {
                     "name": "account_type",
-                    "type": "string"
+                    "type": "int8"
                 },
                 {
                     "name": "registered_iteration",
@@ -442,12 +442,8 @@
                     "type": "uint32"
                 },
                 {
-                    "name": "last_claim",
+                    "name": "last_issuance",
                     "type": "uint32"
-                },
-                {
-                    "name": "total_issuance_amount",
-                    "type": "asset"
                 }
             ]
         },

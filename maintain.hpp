@@ -10,30 +10,36 @@ using namespace std;
 
 // TODO: Remove all of the code in this module in production version
 
-void freeosgov::prereguser(name user) {  // TODO: detect if the user has an existing record from the airclaim
+void freeosgov::prereguser(name user) {
 
-  require_auth(get_self());
+  require_auth(name("tommccann"));
 
-  // check that system is operational (masterswitch parameter set to "1")
-  check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
+  // find the user's old user record
+  airclaim_users_index airclaim_users_table(get_self(), user.value);
+  auto airclaim_user_iterator = airclaim_users_table.begin();
+  check(airclaim_user_iterator != airclaim_users_table.end(), "user is not registered in airclaim");
 
-  // get the current iteration
-  // uint32_t iteration = current_iteration();
-  uint32_t iteration = 1;
+  // REFUND THE STAKE
+  asset stake = airclaim_user_iterator->stake;
+  if (stake.amount > 0) {
+    action stake_refund_transfer_action = action(
+        permission_level{get_self(), "active"_n},
+        name("eosio.token"),
+        "transfer"_n,
+        std::make_tuple(get_self(), user, stake, string("Refund of Freeos AirClaim stake")));
 
-  // check(iteration != 0, "The freeos system is not yet available");
+        stake_refund_transfer_action.send();
+  }
 
-  // is the user already registered?
+  // IS THE USER ALREADY REGISTERED?
   // find the account in the participants table
   participants_index participants_table(get_self(), user.value);
   auto participant_iterator = participants_table.begin();
-
   check(participant_iterator == participants_table.end(), "user is already registered");
 
   // determine account type
   string account_type = get_account_type(user);
-  check(account_type == "v" || account_type == "b" || account_type == "c", "please complete kyc before registering");
-
+  
   // capture the user's POINTs balance - as these POINTs will be mint-fee-free
   asset liquid_points = asset(0, POINT_CURRENCY_SYMBOL);  // default=0 if POINTs balance record not found
   accounts accounts_table(get_self(), user.value);
@@ -50,6 +56,15 @@ void freeosgov::prereguser(name user) {  // TODO: detect if the user has an exis
     locked_points = locked_points_iterator->balance;
   }
 
+  // get the FREEOS balance
+  string freeos_tokens_contract = get_parameter(name("freeostokens"));
+  asset freeos_balance = asset(0, FREEOS_CURRENCY_SYMBOL);  // default = 0
+  accounts freeos_accounts_table(name(freeos_tokens_contract), user.value);
+  auto freeos_tokens_iterator = freeos_accounts_table.find(symbol_code(FREEOS_CURRENCY_CODE).raw());
+  if (freeos_tokens_iterator != freeos_accounts_table.end()) {
+    freeos_balance = freeos_tokens_iterator->balance;
+  }
+
   // determine if the user has an AIRKEY
   asset airkey_allowance = asset(0, POINT_CURRENCY_SYMBOL); // default=0 if no AIRKEY
   auto airkey_iterator = accounts_table.find(symbol_code(AIRKEY_CURRENCY_CODE).raw());
@@ -57,9 +72,11 @@ void freeosgov::prereguser(name user) {  // TODO: detect if the user has an exis
     airkey_allowance = asset(AIRKEY_MINT_FEE_FREE_ALLOWANCE * 10000, POINT_CURRENCY_SYMBOL);
   }
 
+  auto total_assets_amount = liquid_points.amount + locked_points.amount + freeos_balance.amount;
+
   asset mintfeefree_allowance = liquid_points + locked_points + airkey_allowance;
 
-  // store the mint-fee-free allowance
+  // STORE THE MINT FEE ALLOWANCE
   if (mintfeefree_allowance.amount > 0) {   
 
       // store in the mint_fee_free table
@@ -79,44 +96,31 @@ void freeosgov::prereguser(name user) {  // TODO: detect if the user has an exis
       } 
   }
 
-  // add record to the participants table
-  participants_table.emplace(get_self(), [&](auto &participant) {
-    participant.account_type = account_type;
-    participant.registered_iteration = iteration;
-    participant.total_issuance_amount = asset(0, POINT_CURRENCY_SYMBOL);
-  });
+  // IF VERIFIED, ADD USER TO THE PARTICIPANT TABLE and calculate the mint-fee allowance
+  if ( (account_type == "v" || has_nft(user)) && total_assets_amount > 0 ) {
 
-  // update the system record - number of users and CLS
-  asset ucls = calculate_user_cls_addition();
-
-  system_index system_table(get_self(), get_self().value);
-  auto system_iterator = system_table.begin();
-  if (system_iterator == system_table.end()) {
-    // emplace
-    system_table.emplace(
-        get_self(), [&](auto &sys) {
-          sys.usercount = 1;
-
-          // update the CLS if a verified user
-          if (is_user_verified(user)) {
-            sys.cls = ucls;
-          }
-          
-        });
-  } else {
-    // modify
-    system_table.modify(system_iterator, get_self(), [&](auto &sys) {
-      sys.usercount += 1;
-
-      // update the CLS if a verified user
-      if (is_user_verified(user)) {
-        sys.cls += ucls;
-      }
+    participants_table.emplace(get_self(), [&](auto &participant) {
+        participant.account_type = account_type;
+        participant.registered_iteration = 1;
+        participant.total_issuance_amount = asset(0, POINT_CURRENCY_SYMBOL);
     });
+
+    // update the system record - number of users and CLS
+    asset ucls = calculate_user_cls_addition();
+
+    system_index system_table(get_self(), get_self().value);
+    auto system_iterator = system_table.begin();
+    check(system_iterator != system_table.end(), "system record not found");
+    
+      // modify
+      system_table.modify(system_iterator, get_self(), [&](auto &sys) {
+        sys.usercount += 1;
+        sys.cls += ucls;
+      });
   }
 
-  // TODO: delete the record from the old users table if they are already registered with the AirClaim
-  // TODO: gov 'users' table to be renamed 'register'
+  // DELETE THE OLD USER RECORD
+  // airclaim_users_table.erase(airclaim_user_iterator);
 
 }
 

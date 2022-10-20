@@ -434,7 +434,7 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
 
   asset mintfee;
   double mint_fee_percent;
-  
+
   double mintfee_amount = 0;    // amount of currency, e.g. 123.4567 represents 123.4567 FREEOS
   int64_t mintfee_units = 0;    // units of currency, e.g. 1234567 represents 123.4567 FREEOS
 
@@ -446,11 +446,11 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
   check(reward_iterator != rewards_table.rend(), "latest reward record not found");
 
   // get the latest voted mint fee percent - depending on which currency user is paying with
-  if (mint_fee_currency ==  symbol(FREEOS_CURRENCY_CODE, 4)) {
+  if (mint_fee_currency ==  symbol(FREEOS_CURRENCY_CODE, FREEOS_CURRENCY_PRECISION)) {
     mint_fee_percent = reward_iterator->mint_fee_percent;
-  } else if (mint_fee_currency ==  symbol(XPR_CURRENCY_CODE, 4)) {
+  } else if (mint_fee_currency ==  symbol(XPR_CURRENCY_CODE, XPR_CURRENCY_PRECISION)) {
     mint_fee_percent = reward_iterator->mint_fee_percent_xpr;
-  } else if (mint_fee_currency ==  symbol(XUSDC_CURRENCY_CODE, 6)) {
+  } else if (mint_fee_currency ==  symbol(XUSDC_CURRENCY_CODE, XUSDC_CURRENCY_PRECISION)) {
     mint_fee_percent = reward_iterator->mint_fee_percent_xusdc;
   }
 
@@ -465,36 +465,36 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
   }
 
   // apply the currency conversion if necessary
-  if (mint_fee_currency == symbol(FREEOS_CURRENCY_CODE, 4)) {
-    mintfee_units = mintfee_in_freeos * 10000;
+  if (mint_fee_currency == symbol(FREEOS_CURRENCY_CODE, FREEOS_CURRENCY_PRECISION)) {
+    mintfee_units = mintfee_in_freeos * FREEOS_UNIT_MULTIPLIER;
   } else {
     // conversion required
 
     // get the FREEOS exchange rate
     currencies_index currencies_table(get_self(), get_self().value);
-    auto freeos_iterator = currencies_table.find(symbol(FREEOS_CURRENCY_CODE, 4).raw());
+    auto freeos_iterator = currencies_table.find(symbol(FREEOS_CURRENCY_CODE, FREEOS_CURRENCY_PRECISION).raw());
     check(freeos_iterator != currencies_table.end(), "FREEOS currency record not defined");
     double freeos_rate = freeos_iterator->usdrate;
 
-    if (mint_fee_currency == symbol(XPR_CURRENCY_CODE, 4)) {
+    if (mint_fee_currency == symbol(XPR_CURRENCY_CODE, XPR_CURRENCY_PRECISION)) {
       // get the XPR exchange rate
-      auto xpr_iterator = currencies_table.find(symbol(XPR_CURRENCY_CODE, 4).raw());
+      auto xpr_iterator = currencies_table.find(symbol(XPR_CURRENCY_CODE, XPR_CURRENCY_PRECISION).raw());
       check(xpr_iterator != currencies_table.end(), "XPR currency record not defined");
       double xpr_rate = xpr_iterator->usdrate;
 
       // do the conversion
-      mintfee_amount = round(mintfee_in_freeos * freeos_rate / xpr_rate * 10000);
+      mintfee_amount = round(mintfee_in_freeos * freeos_rate / xpr_rate * XPR_UNIT_MULTIPLIER);
       mintfee_units = (int64_t) mintfee_amount;
     }
 
-    if (mint_fee_currency == symbol(XUSDC_CURRENCY_CODE, 6)) {
+    if (mint_fee_currency == symbol(XUSDC_CURRENCY_CODE, XUSDC_CURRENCY_PRECISION)) {
       // get the XUSDC exchange rate
-      auto xusdc_iterator = currencies_table.find(symbol(XUSDC_CURRENCY_CODE, 6).raw());
+      auto xusdc_iterator = currencies_table.find(symbol(XUSDC_CURRENCY_CODE, XUSDC_CURRENCY_PRECISION).raw());
       check(xusdc_iterator != currencies_table.end(), "XUSDC currency record not defined");
       double xusdc_rate = xusdc_iterator->usdrate;
 
       // do the conversion
-      mintfee_amount = round(mintfee_in_freeos * freeos_rate / xusdc_rate * 1000000);
+      mintfee_amount = round(mintfee_in_freeos * freeos_rate / xusdc_rate * XUSDC_UNIT_MULTIPLIER);
       mintfee_units = (int64_t) mintfee_amount;
     }
     
@@ -582,18 +582,24 @@ bool freeosgov::process_mint_fee(name user, asset mint_quantity, symbol mint_fee
     user_credit = credit_iterator->balance;
   }
 
-  // Check if the mint-fee paid is the right amount
-  if (mintfee == user_credit) {
+  // Check if the mint-fee paid is the right amount - to within 1 smallest unit (to cope with rounding)
+  // if (mintfee == user_credit) {
+  if (abs(mintfee.amount - user_credit.amount) <= 1) {
     // correct amount
+
     // erase the credit record (if paid)
     if (credit_iterator != credit_table.end()) {
       credit_table.erase(credit_iterator);
     }
     
     mintfee_status = true;
+
   } else {
     // incorrect amount - refund the incorrect mint fee
-    refund_mintfee(user, mint_fee_currency);
+
+    // DIAG 
+    // check(false, "incorrect mint fee paid. mint fee required = " + mintfee.to_string() + ", mint fee received = " + user_credit.to_string());
+    
     mintfee_status = false;
   }
 
@@ -675,7 +681,7 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
   check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
 
   uint32_t this_iteration = current_iteration();
-    
+
   // is the system operational?
   check(this_iteration != 0, "The freeos system is not available at this time");
 
@@ -702,8 +708,9 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
       // check whether user has paid correct mint fee, whether they have a credit record, adjust their mintfeefree allowance
       check(process_mint_fee(user, input_quantity, mint_fee_currency) == true, "incorrect mint fee has been paid");
     }
-    
+ 
   } else {
+    
     // check mff balance, then decrease by the appropriate amount of POINTs minted
 
     // get the user's mff balance
@@ -751,6 +758,7 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
       std::make_tuple(get_self(), user, exchangeable_amount, memo));
 
   transfer_action.send();
+
 }
 
 
