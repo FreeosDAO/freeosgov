@@ -148,8 +148,8 @@ namespace eosio {
          typedef eosio::multi_index< "stat"_n, currency_stats > stats;
 
          void burn( const asset& quantity, const string& memo );
-         asset calculate_fee(const name &from, const asset& transfer_quantity);
-         void sub_balance( const name& owner, const asset& value );
+         asset calculate_fee(const name &from, const name &to, const asset& quantity);
+         void sub_balance( const string &path, const name& owner, const asset& value );
          void add_balance( const name& owner, const asset& value, const name& ram_payer );
    };
 

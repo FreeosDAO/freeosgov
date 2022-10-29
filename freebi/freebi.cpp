@@ -4,7 +4,7 @@
 
 namespace eosio {
 
-   const std::string VERSION = "1.1.4";
+   const std::string VERSION = "1.1.5";
 
 // ACTION
 void token::version() {
@@ -111,7 +111,7 @@ void token::retire( const asset& quantity, const string& memo )
        s.supply -= quantity;
     });
 
-    sub_balance( st.issuer, quantity );
+    sub_balance( string("retire"), st.issuer, quantity );
 }
 
 // burn is a copy of retire without requiring the authority of token issuer
@@ -136,17 +136,17 @@ void token::burn( const asset& quantity, const string& memo )
        s.supply -= quantity;
     });
 
-    sub_balance( st.issuer, quantity );
+    sub_balance( string("burn"), st.issuer, quantity );
 }
 
-asset token::calculate_fee(const name &from, const asset& transfer_quantity)
+asset token::calculate_fee(const name &from, const name &to, const asset& quantity)
 {
    asset fee = asset(0, FREEBI_CURRENCY_SYMBOL);   // default value
    
    name freeoscontract = name(freeosgov_acct);
 
-   // the transfer fee is only charged for user-to-user transfers - do not charge if the transfer is from a contract
-   if (from != freeoscontract && from != get_self()) {
+   // the transfer fee is only charged for user-to-user transfers - do not charge if the transfer is to or from a contract
+   if (from != freeoscontract && from != get_self() && to != freeoscontract && to != get_self()) {
       name fee_parameter = name("freebixfee");
    
       freedao::dparameters_index dparameters_table(freeoscontract, freeoscontract.value);
@@ -154,7 +154,7 @@ asset token::calculate_fee(const name &from, const asset& transfer_quantity)
       check(dparameter_iterator != dparameters_table.end(), fee_parameter.to_string() + " is not defined");
       double fee_percent = dparameter_iterator->value;
 
-      int64_t fee_units = transfer_quantity.amount * (fee_percent / 100.0);
+      int64_t fee_units = quantity.amount * (fee_percent / 100.0);
       fee = asset(fee_units, FREEBI_CURRENCY_SYMBOL);
    }   
    
@@ -190,19 +190,23 @@ void token::transfer( const name&    from,
     check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
     check( memo.size() <= 256, "memo has more than 256 bytes" );
 
-    // calculate the transfer fee amount to burn
-    asset fee_quantity = calculate_fee(from, quantity);
-
+    // FREEBI transfer fee - only charged on user-to-user transfers
+    // calculate the transfer fee amount
+    asset fee_quantity = calculate_fee(from, to, quantity);
+    
+    // the remainder, the amount to transfer to user after fee has been taken off
     asset transfer_quantity = quantity - fee_quantity;
     
     auto payer = has_auth( to ) ? to : from;
 
-    sub_balance( from, transfer_quantity );
+    // transfer the taxed amount from the user to the recipient
+    sub_balance( string("transfer after fee"), from, transfer_quantity );
     add_balance( to, transfer_quantity, payer );
 
+    // burn the fee
     if (fee_quantity.amount > 0) {
       // transfer the fee to the issuer account and then burn it
-      sub_balance( from, fee_quantity );
+      sub_balance( string("transfer fee burn"), from, fee_quantity );
       add_balance( name(freeosgov_acct), fee_quantity, payer );
 
       burn(fee_quantity, "FREEBI transfer fee");
@@ -210,11 +214,12 @@ void token::transfer( const name&    from,
     
 }
 
-void token::sub_balance( const name& owner, const asset& value ) {
+void token::sub_balance( const string &path, const name& owner, const asset& value ) {
    accounts from_acnts( get_self(), owner.value );
 
    const auto& from = from_acnts.get( value.symbol.code().raw(), "no balance object found" );
-   check( from.balance.amount >= value.amount, "overdrawn balance" );
+   // DIAG
+   check( from.balance.amount >= value.amount, get_self().to_string() + ": overdrawn balance while " + path + " is decrementing " + value.to_string());
 
    from_acnts.modify( from, owner, [&]( auto& a ) {
          a.balance -= value;

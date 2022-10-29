@@ -654,6 +654,8 @@ void freeosgov::adjust_balances_from_freebi(const name user, const asset &input_
   // delete the FREEBI credit record
   credits_table.erase(credit_iterator);
 
+  // DIAG
+  //if (user != name("tommccann")) {
   // burn the FREEBI amount
   string freebi_tokens_contract = get_parameter(name("freebitokens"));
   action retire_freebi_action = action(
@@ -661,6 +663,8 @@ void freeosgov::adjust_balances_from_freebi(const name user, const asset &input_
     "retire"_n, std::make_tuple(input_quantity, string("burning FREEBI to mint FREEOS")));
 
   retire_freebi_action.send();
+  //}
+  
 }
 
 
