@@ -4,12 +4,12 @@
 
 namespace eosio {
 
-   const std::string VERSION = "1.1.5";
+   const std::string VERSION = "1.1.6";
 
 // ACTION
 void token::version() {
 
-  std::string version_message = "version: " + VERSION + ", freeosgov account: " + freeosgov_acct;
+  std::string version_message = "version: " + VERSION + ", freeosgov account: " + freeosgov_acct + ", dividend account: " + dividend_acct;
 
   check(false, version_message);
 }
