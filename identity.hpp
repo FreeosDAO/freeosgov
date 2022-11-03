@@ -169,7 +169,7 @@ asset freeosgov::calculate_user_cls_addition() {
 
   // calculate the total asset for user CLS
   int64_t user_cls_amount = uclsamount * (1.0 + daoshare + partnershare);
-  asset ucls = asset(user_cls_amount * 10000, POINT_CURRENCY_SYMBOL);
+  asset ucls = asset(user_cls_amount * POINT_UNIT_MULTIPLIER, POINT_CURRENCY_SYMBOL);
 
   return ucls;
 }
@@ -228,7 +228,7 @@ void freeosgov::reguser(name user) {  // TODO: detect if the user has an existin
   asset airkey_allowance = asset(0, POINT_CURRENCY_SYMBOL); // default=0 if no AIRKEY
   auto airkey_iterator = accounts_table.find(symbol_code(AIRKEY_CURRENCY_CODE).raw());
   if (airkey_iterator != accounts_table.end()) {
-    airkey_allowance = asset(AIRKEY_MINT_FEE_FREE_ALLOWANCE * 10000, POINT_CURRENCY_SYMBOL);
+    airkey_allowance = asset(AIRKEY_MINT_FEE_FREE_ALLOWANCE * POINT_UNIT_MULTIPLIER, POINT_CURRENCY_SYMBOL);
   }
 
   asset mintfeefree_allowance = liquid_points + locked_points + airkey_allowance;

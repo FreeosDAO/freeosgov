@@ -69,7 +69,7 @@ void freeosgov::prereguser(name user) {
   asset airkey_allowance = asset(0, POINT_CURRENCY_SYMBOL); // default=0 if no AIRKEY
   auto airkey_iterator = accounts_table.find(symbol_code(AIRKEY_CURRENCY_CODE).raw());
   if (airkey_iterator != accounts_table.end()) {
-    airkey_allowance = asset(AIRKEY_MINT_FEE_FREE_ALLOWANCE * 10000, POINT_CURRENCY_SYMBOL);
+    airkey_allowance = asset(AIRKEY_MINT_FEE_FREE_ALLOWANCE * POINT_UNIT_MULTIPLIER, POINT_CURRENCY_SYMBOL);
   }
 
   auto total_assets_amount = liquid_points.amount + locked_points.amount + freeos_balance.amount;
@@ -222,6 +222,18 @@ void freeosgov::refund_function(name user) {
 void freeosgov::maintain(string action, name user) {
 
   require_auth(get_self());
+
+  if (action == "constants") {
+  
+  symbol sym = POINT_CURRENCY_SYMBOL;
+
+  stats statstable(get_self(), sym.code().raw());
+  auto existing = statstable.find(sym.code().raw());
+  check(existing != statstable.end(), "token with symbol does not exist");
+  const auto &st = *existing;
+
+  check(false, "POINT supply = " + to_string(st.supply.amount));
+  }
 
   if (action == "clear rewards") {
     rewards_index rewards_table(get_self(), get_self().value);

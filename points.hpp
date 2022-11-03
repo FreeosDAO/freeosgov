@@ -147,11 +147,8 @@ void freeosgov::allocate(const name &from, const name &to, const asset &quantity
 void freeosgov::unlock(const name &user) {
   require_auth(user);
 
-  // user-activity-driven background process
+  // user-activity-driven background process. Note that tick() checks the masterswitch
   tick();
-
-  // check that system is operational masterswitch parameter set to "1")
-  check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
 
   // get the current iteration
   uint32_t this_iteration = current_iteration();
@@ -197,10 +194,10 @@ void freeosgov::unlock(const name &user) {
   // be thoroughly tested.
 
   double percentage = unlock_percent / 100.0;
-  double locked_amount = locked_balance.amount / 10000.0;
+  double locked_amount = locked_balance.amount / ((double) POINT_UNIT_MULTIPLIER);
   double percentage_applied = locked_amount * percentage;
   double adjusted_amount = ceil(percentage_applied); // rounding up to whole units
-  uint64_t adjusted_units = adjusted_amount * 10000;
+  uint64_t adjusted_units = adjusted_amount * POINT_UNIT_MULTIPLIER;
 
   // to prevent rounding up to more than the locked point balance, apply this adjustment
   // this will bring the locked balance to zero
@@ -394,6 +391,8 @@ void freeosgov::mintfreebi(const name &owner, const asset &quantity) {
   check(quantity.is_valid(), "invalid quantity");
   check(quantity.amount > 0, "must convert positive quantity");
 
+  // decrease the supply
+  check(st.supply.amount >= quantity.amount, "mintfreebi: there are insufficient POINTs to burn");
   statstable.modify(st, same_payer, [&](auto &s) {
     s.supply -= quantity;
   });
@@ -426,11 +425,10 @@ void freeosgov::mintfreebi(const name &owner, const asset &quantity) {
 /**
  * The function calculates the mint fee in the currency that the user is paying with.
  * 
- * @param user the account name of the user who is minting
  * @param mint_quantity the amount of tokens to be exchanged for FREEOS
  * @param mint_fee_currency symbol: the currency the user is paying the mint fee with
  */
-asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol mint_fee_currency) {
+asset freeosgov::calculate_mint_fee(asset &mint_quantity, symbol mint_fee_currency) {
 
   asset mintfee;
   double mint_fee_percent;
@@ -455,7 +453,7 @@ asset freeosgov::calculate_mint_fee(name &user, asset &mint_quantity, symbol min
   }
 
   // we have to work in double rather asset for accuracy in division and because currencies (e.g. FREEOS, XPR and XUSDC) have different precisions
-  double amount_in_units = mint_quantity.amount / 10000.0;
+  double amount_in_units = mint_quantity.amount / ((double) POINT_UNIT_MULTIPLIER);
   double mintfee_in_freeos = amount_in_units * (mint_fee_percent / 100.0);
 
   // apply the minimum fee
@@ -566,44 +564,26 @@ void freeosgov::refund_mintfee(name user, symbol mint_fee_currency) {
  * 
  * @return A boolean value to indicate success or failure
  */
-bool freeosgov::process_mint_fee(name user, asset mint_quantity, symbol mint_fee_currency) {
-
-  bool mintfee_status;  // will be set to true if correct mint fee has been paid
+void freeosgov::process_mint_fee(name user, asset mint_quantity, symbol mint_fee_currency) {
 
   // calculate the mint fee
-  asset mintfee = calculate_mint_fee(user, mint_quantity, mint_fee_currency);
+  asset mintfee = calculate_mint_fee(mint_quantity, mint_fee_currency);
 
   // has the user paid the mint fee, i.e. got credit?
-  asset user_credit = asset(0, mint_fee_currency);  // default
   credit_index credit_table(get_self(), user.value);
   auto credit_iterator = credit_table.find(mint_fee_currency.code().raw());
 
-  if (credit_iterator != credit_table.end()) {
-    user_credit = credit_iterator->balance;
-  }
+  // check that mint fee credit record exists
+  check(credit_iterator != credit_table.end(), "mint fee has not been paid");
 
-  // Check if the mint-fee paid is the right amount - to within 1 smallest unit (to cope with rounding)
-  // if (mintfee == user_credit) {
-  if (abs(mintfee.amount - user_credit.amount) <= 1) {
-    // correct amount
+  asset user_credit = credit_iterator->balance;
 
-    // erase the credit record (if paid)
-    if (credit_iterator != credit_table.end()) {
-      credit_table.erase(credit_iterator);
-    }
-    
-    mintfee_status = true;
+  // Check if the required mint-fee paid is the right amount - to within 1 smallest unit (to cope with rounding)
+  check(abs(mintfee.amount - user_credit.amount) <= 1, "mint fee paid is incorrect, expected " + mintfee.to_string() + ", received " + user_credit.to_string());
+  
+  // erase the credit record
+  credit_table.erase(credit_iterator);
 
-  } else {
-    // incorrect amount - refund the incorrect mint fee
-
-    // DIAG 
-    // check(false, "incorrect mint fee paid. mint fee required = " + mintfee.to_string() + ", mint fee received = " + user_credit.to_string());
-    
-    mintfee_status = false;
-  }
-
-  return mintfee_status;
 }
 
 
@@ -625,6 +605,7 @@ void freeosgov::adjust_balances_from_points(const name user, const asset &input_
   sub_balance(user, input_quantity);
 
   // burn the points
+  check(st.supply.amount >= input_quantity.amount, "there are insufficient POINTs to burn");
   statstable.modify(st, same_payer, [&](auto &s) {
       s.supply -= input_quantity;
     });
@@ -654,8 +635,6 @@ void freeosgov::adjust_balances_from_freebi(const name user, const asset &input_
   // delete the FREEBI credit record
   credits_table.erase(credit_iterator);
 
-  // DIAG
-  //if (user != name("tommccann")) {
   // burn the FREEBI amount
   string freebi_tokens_contract = get_parameter(name("freebitokens"));
   action retire_freebi_action = action(
@@ -663,7 +642,6 @@ void freeosgov::adjust_balances_from_freebi(const name user, const asset &input_
     "retire"_n, std::make_tuple(input_quantity, string("burning FREEBI to mint FREEOS")));
 
   retire_freebi_action.send();
-  //}
   
 }
 
@@ -710,11 +688,11 @@ void freeosgov::mintfreeos(name user, const asset &input_quantity, symbol &mint_
 
     if (has_nft(user) == false) {   // users with an active NFT do not pay the mint fee
       // check whether user has paid correct mint fee, whether they have a credit record, adjust their mintfeefree allowance
-      check(process_mint_fee(user, input_quantity, mint_fee_currency) == true, "incorrect mint fee has been paid");
+      process_mint_fee(user, input_quantity, mint_fee_currency);
     }
  
   } else {
-    
+    // using airclaim mint-fee-free allowance
     // check mff balance, then decrease by the appropriate amount of POINTs minted
 
     // get the user's mff balance
@@ -834,7 +812,7 @@ void freeosgov::withdraw(const name user) {
  * @param iteration_number The iteration number of the deposit.
  * @param amount The amount of the deposit
  */
-void freeosgov::record_deposit(uint64_t iteration_number, asset amount) {
+void freeosgov::record_deposit(uint32_t iteration_number, asset amount) {
   deposits_index deposits_table(get_self(), get_self().value);
 
   // find the record for the iteration
@@ -922,6 +900,7 @@ void freeosgov::mintfee(name user, name to, asset quantity, std::string memo) {
 
   }
 
+  /* DIAG - unused
   if (memo == "mint freebi to freeos") {
     if (user == get_self()) {
       return;
@@ -946,7 +925,8 @@ void freeosgov::mintfee(name user, name to, asset quantity, std::string memo) {
     credit_table.emplace(get_self(), [&](auto &c) {
       c.balance = quantity;
     });
-  }
+  } */
+
 }
 
 /** @} */ // end of points group

@@ -111,7 +111,7 @@ void token::retire( const asset& quantity, const string& memo )
        s.supply -= quantity;
     });
 
-    sub_balance( string("retire"), st.issuer, quantity );
+    sub_balance( st.issuer, quantity );
 }
 
 // burn is a copy of retire without requiring the authority of token issuer
@@ -136,7 +136,7 @@ void token::burn( const asset& quantity, const string& memo )
        s.supply -= quantity;
     });
 
-    sub_balance( string("burn"), st.issuer, quantity );
+    sub_balance( st.issuer, quantity );
 }
 
 asset token::calculate_fee(const name &from, const name &to, const asset& quantity)
@@ -200,13 +200,13 @@ void token::transfer( const name&    from,
     auto payer = has_auth( to ) ? to : from;
 
     // transfer the taxed amount from the user to the recipient
-    sub_balance( string("transfer after fee"), from, transfer_quantity );
+    sub_balance( from, transfer_quantity );
     add_balance( to, transfer_quantity, payer );
 
     // burn the fee
     if (fee_quantity.amount > 0) {
       // transfer the fee to the issuer account and then burn it
-      sub_balance( string("transfer fee burn"), from, fee_quantity );
+      sub_balance( from, fee_quantity );
       add_balance( name(freeosgov_acct), fee_quantity, payer );
 
       burn(fee_quantity, "FREEBI transfer fee");
@@ -214,12 +214,12 @@ void token::transfer( const name&    from,
     
 }
 
-void token::sub_balance( const string &path, const name& owner, const asset& value ) {
+void token::sub_balance( const name& owner, const asset& value ) {
    accounts from_acnts( get_self(), owner.value );
 
    const auto& from = from_acnts.get( value.symbol.code().raw(), "no balance object found" );
-   // DIAG
-   check( from.balance.amount >= value.amount, get_self().to_string() + ": overdrawn balance while " + path + " is decrementing " + value.to_string());
+
+   check( from.balance.amount >= value.amount, "overdrawn balance while decrementing " + value.to_string());
 
    from_acnts.modify( from, owner, [&]( auto& a ) {
          a.balance -= value;

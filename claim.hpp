@@ -171,7 +171,7 @@ void freeosgov::claim(name user) {
             asset iteration_all_payments = user_payment + freedao_payment + partners_payment;
             grand_total_iterations_payments += iteration_all_payments;
 
-            string issue_memo = string("claim by ") + user.to_string() + " for week " + to_string(iter);
+            string issue_memo = "claim by " + user.to_string() + " for week " + to_string(iter);
             
             // issue all POINTs
             action issue_action = action(

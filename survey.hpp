@@ -131,9 +131,7 @@ void freeosgov::survey(name user, uint8_t q1response, uint8_t q2response, uint8_
     
     require_auth(user);
 
-    // check that system is operational (masterswitch parameter set to "1")
-    check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
-
+    // note that tick() checks that system is operational (masterswitch parameter set to "1")
     tick();
 
     // is the user registered?

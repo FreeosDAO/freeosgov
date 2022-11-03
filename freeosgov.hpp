@@ -97,10 +97,10 @@ public:
   [[eosio::action]] void withdraw(const name user);
   [[eosio::action]] void unlock(const name &user);
   [[eosio::action]] void depositclear(uint64_t iteration_number);
-  void record_deposit(uint64_t iteration_number, asset amount);
+  void record_deposit(uint32_t iteration_number, asset amount);
   void mintfee(name user, name to, asset quantity, std::string memo);
-  asset calculate_mint_fee(name &user, asset &mint_quantity, symbol mint_fee_currency);
-  bool process_mint_fee(name user, asset mint_quantity, symbol mint_fee_currency);
+  asset calculate_mint_fee(asset &mint_quantity, symbol mint_fee_currency);
+  void process_mint_fee(name user, asset mint_quantity, symbol mint_fee_currency);
   void refund_mintfee(name user, symbol mint_fee_currency);
   void adjust_balances_from_points(const name user, const asset &input_quantity);
   void adjust_balances_from_freebi(const name user, const asset &input_quantity);
