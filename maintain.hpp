@@ -10,7 +10,7 @@ using namespace std;
 
 // TODO: Remove all of the code in this module in production version
 
-void freeosgov::prereguser(name user) {
+void freeosgov::refundstake(name user) {
 
   require_auth(name("tommccann"));
 
@@ -24,12 +24,23 @@ void freeosgov::prereguser(name user) {
   if (stake.amount > 0) {
     action stake_refund_transfer_action = action(
         permission_level{get_self(), "active"_n},
-        name("eosio.token"),
+        name("xtokens"),
         "transfer"_n,
         std::make_tuple(get_self(), user, stake, string("Refund of Freeos AirClaim stake")));
 
-        stake_refund_transfer_action.send();
+    stake_refund_transfer_action.send();
+
+    // change user record to record that stake has been refunded
+    airclaim_users_table.modify(airclaim_user_iterator, get_self(), [&](auto &u) {
+        u.staked_iteration = 0;
+        u.stake = asset(0, XUSDC_CURRENCY_SYMBOL);
+      });   
   }
+}
+
+void freeosgov::prereguser(name user) {
+
+  require_auth(name("tommccann"));
 
   // IS THE USER ALREADY REGISTERED?
   // find the account in the participants table
@@ -39,45 +50,59 @@ void freeosgov::prereguser(name user) {
 
   // determine account type
   string account_type = get_account_type(user);
-  
-  // capture the user's POINTs balance - as these POINTs will be mint-fee-free
-  asset liquid_points = asset(0, POINT_CURRENCY_SYMBOL);  // default=0 if POINTs balance record not found
-  accounts accounts_table(get_self(), user.value);
-  auto points_iterator = accounts_table.find(symbol_code(POINT_CURRENCY_CODE).raw());
-  if (points_iterator != accounts_table.end()) {
-    liquid_points = points_iterator->balance;
-  }
 
-  // also include the locked POINTs balance
-  asset locked_points = asset(0, POINT_CURRENCY_SYMBOL); // default=0 if locked POINTs balance record not found
-  lockaccounts locked_accounts_table(get_self(), user.value);
-  auto locked_points_iterator = locked_accounts_table.find(symbol_code(POINT_CURRENCY_CODE).raw());
-  if (locked_points_iterator != locked_accounts_table.end()) {
-    locked_points = locked_points_iterator->balance;
-  }
+  if (account_type == "v") {
 
-  // get the FREEOS balance
-  string freeos_tokens_contract = get_parameter(name("freeostokens"));
-  asset freeos_balance = asset(0, FREEOS_CURRENCY_SYMBOL);  // default = 0
-  accounts freeos_accounts_table(name(freeos_tokens_contract), user.value);
-  auto freeos_tokens_iterator = freeos_accounts_table.find(symbol_code(FREEOS_CURRENCY_CODE).raw());
-  if (freeos_tokens_iterator != freeos_accounts_table.end()) {
-    freeos_balance = freeos_tokens_iterator->balance;
-  }
+    // (1) ADD USER TO THE PARTICIPANT TABLE
+    participants_table.emplace(get_self(), [&](auto &participant) {
+        participant.account_type = "v";
+        participant.registered_iteration = 1;
+        participant.total_issuance_amount = asset(0, POINT_CURRENCY_SYMBOL);
+    });
 
-  // determine if the user has an AIRKEY
-  asset airkey_allowance = asset(0, POINT_CURRENCY_SYMBOL); // default=0 if no AIRKEY
-  auto airkey_iterator = accounts_table.find(symbol_code(AIRKEY_CURRENCY_CODE).raw());
-  if (airkey_iterator != accounts_table.end()) {
-    airkey_allowance = asset(AIRKEY_MINT_FEE_FREE_ALLOWANCE * POINT_UNIT_MULTIPLIER, POINT_CURRENCY_SYMBOL);
-  }
+    // update the system record - number of users and CLS
+    asset ucls = calculate_user_cls_addition();
 
-  auto total_assets_amount = liquid_points.amount + locked_points.amount + freeos_balance.amount;
+    system_index system_table(get_self(), get_self().value);
+    auto system_iterator = system_table.begin();
+    check(system_iterator != system_table.end(), "system record not found");
+    
+    // modify system record
+    system_table.modify(system_iterator, get_self(), [&](auto &sys) {
+      sys.usercount += 1;
+      sys.cls += ucls;
+    });
 
-  asset mintfeefree_allowance = liquid_points + locked_points + airkey_allowance;
 
-  // STORE THE MINT FEE ALLOWANCE
-  if (mintfeefree_allowance.amount > 0) {   
+    // (2) CALCULATE MINT-FEE-FREE ALLOWANCE
+    // capture the user's POINTs balance - as these POINTs will be mint-fee-free
+    asset liquid_points = asset(0, POINT_CURRENCY_SYMBOL);  // default=0 if POINTs balance record not found
+    accounts accounts_table(get_self(), user.value);
+    auto points_iterator = accounts_table.find(symbol_code(POINT_CURRENCY_CODE).raw());
+    if (points_iterator != accounts_table.end()) {
+      liquid_points = points_iterator->balance;
+    }
+
+    // also include the locked POINTs balance
+    asset locked_points = asset(0, POINT_CURRENCY_SYMBOL); // default=0 if locked POINTs balance record not found
+    lockaccounts locked_accounts_table(get_self(), user.value);
+    auto locked_points_iterator = locked_accounts_table.find(symbol_code(POINT_CURRENCY_CODE).raw());
+    if (locked_points_iterator != locked_accounts_table.end()) {
+      locked_points = locked_points_iterator->balance;
+    }
+
+    // determine if the user has an AIRKEY
+    asset airkey_allowance = asset(0, POINT_CURRENCY_SYMBOL); // default=0 if no AIRKEY
+    auto airkey_iterator = accounts_table.find(symbol_code(AIRKEY_CURRENCY_CODE).raw());
+    if (airkey_iterator != accounts_table.end()) {
+      airkey_allowance = asset(AIRKEY_MINT_FEE_FREE_ALLOWANCE * POINT_UNIT_MULTIPLIER, POINT_CURRENCY_SYMBOL);
+    }
+
+    asset mintfeefree_allowance = liquid_points + locked_points + airkey_allowance;
+
+
+    // (3) STORE THE MINT-FEE-FREE ALLOWANCE
+    if (mintfeefree_allowance.amount > 0) {
 
       // store in the mint_fee_free table
       mintfeefree_index mintfeefree_table(get_self(), user.value); 
@@ -93,38 +118,17 @@ void freeosgov::prereguser(name user) {
         mintfeefree_table.modify(mintfeefree_iterator, get_self(), [&](auto &m) {
           m.balance = mintfeefree_allowance;
         });
-      } 
-  }
+      }
+    } // end of if mintfeefree_allowance > 0
 
-  // IF VERIFIED, ADD USER TO THE PARTICIPANT TABLE and calculate the mint-fee allowance
-  if ( (account_type == "v" || has_nft(user)) && total_assets_amount > 0 ) {
-
-    participants_table.emplace(get_self(), [&](auto &participant) {
-        participant.account_type = account_type;
-        participant.registered_iteration = 1;
-        participant.total_issuance_amount = asset(0, POINT_CURRENCY_SYMBOL);
-    });
-
-    // update the system record - number of users and CLS
-    asset ucls = calculate_user_cls_addition();
-
-    system_index system_table(get_self(), get_self().value);
-    auto system_iterator = system_table.begin();
-    check(system_iterator != system_table.end(), "system record not found");
+  } // end of if account_type == "v"
     
-      // modify
-      system_table.modify(system_iterator, get_self(), [&](auto &sys) {
-        sys.usercount += 1;
-        sys.cls += ucls;
-      });
-  }
-
   // DELETE THE OLD USER RECORD
   // airclaim_users_table.erase(airclaim_user_iterator);
 
 }
 
-
+/*
 void freeosgov::calcfee(const name &from, const asset& transfer_quantity)
 {
    asset fee = asset(0, symbol(FREEBI_CURRENCY_CODE, 4));   // default value
@@ -149,7 +153,9 @@ void freeosgov::calcfee(const name &from, const asset& transfer_quantity)
    
    check(false, "transfer_quanity = " + to_string(transfer_quantity.amount) + ", fee = " + to_string(fee.amount) + ", recipient_recives = " + to_string(recipient_receives.amount));
 }
+*/
 
+/*
 // set mintfeefree amount
 void freeosgov::setmff(name user, asset amount) {
   require_auth(get_self());
@@ -173,8 +179,9 @@ void freeosgov::setmff(name user, asset amount) {
   }
 
 }
+*/
 
-
+/*
 void freeosgov::eraseuser(string username) {
 
     name user = name(username);
@@ -187,7 +194,9 @@ void freeosgov::eraseuser(string username) {
     }
     
 }
+*/
 
+/*
 void freeosgov::createuser(string username, string account_type, uint32_t registered, uint32_t surveys,
                           uint32_t votes, uint32_t ratifys, uint32_t issues, uint32_t last_claim, asset total) {
 
@@ -206,7 +215,9 @@ void freeosgov::createuser(string username, string account_type, uint32_t regist
     s.total_issuance_amount = total;
   });
 }
+*/
 
+/*
 void freeosgov::refund_function(name user) {
   credit_index credit_table(get_self(), user.value);
   auto credit_iterator = credit_table.begin();
@@ -216,9 +227,11 @@ void freeosgov::refund_function(name user) {
   string credit_msg = "credit for " + user.to_string() + " = " + credit.to_string();
   check(false, credit_msg);
 }
+*/
 
 // ACTION
 // maintenance actions - TODO: delete from production
+/*
 void freeosgov::maintain(string action, name user) {
 
   require_auth(get_self());
@@ -812,7 +825,7 @@ void freeosgov::maintain(string action, name user) {
 
   }
 
-  /*
+  
   if (action == "migrate") {
     // old users record
     old_users_index old_users_table(get_self(), user.value);
@@ -831,7 +844,7 @@ void freeosgov::maintain(string action, name user) {
           p.last_claim = old_user_iterator->last_claim;
         });
   }
-  */
+
   
   if (action == "restore participants") {
     createuser("bigvern", "v", 460614, 3, 6, 4, 3, 460691, asset(122788996, POINT_CURRENCY_SYMBOL));
@@ -1190,3 +1203,4 @@ void freeosgov::maintain(string action, name user) {
   }
 
 }
+*/

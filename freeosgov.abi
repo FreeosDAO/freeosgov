@@ -84,20 +84,6 @@
             ]
         },
         {
-            "name": "calcfee",
-            "base": "",
-            "fields": [
-                {
-                    "name": "from",
-                    "type": "name"
-                },
-                {
-                    "name": "transfer_quantity",
-                    "type": "asset"
-                }
-            ]
-        },
-        {
             "name": "claim",
             "base": "",
             "fields": [
@@ -308,20 +294,6 @@
                 {
                     "name": "pool",
                     "type": "bool"
-                }
-            ]
-        },
-        {
-            "name": "maintain",
-            "base": "",
-            "fields": [
-                {
-                    "name": "action",
-                    "type": "string"
-                },
-                {
-                    "name": "user",
-                    "type": "name"
                 }
             ]
         },
@@ -580,6 +552,16 @@
             ]
         },
         {
+            "name": "refundstake",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "reguser",
             "base": "",
             "fields": [
@@ -670,20 +652,6 @@
                 {
                     "name": "burn_to_boost",
                     "type": "bool"
-                }
-            ]
-        },
-        {
-            "name": "setmff",
-            "base": "",
-            "fields": [
-                {
-                    "name": "user",
-                    "type": "name"
-                },
-                {
-                    "name": "amount",
-                    "type": "asset"
                 }
             ]
         },
@@ -1166,11 +1134,6 @@
             "ricardian_contract": ""
         },
         {
-            "name": "calcfee",
-            "type": "calcfee",
-            "ricardian_contract": ""
-        },
-        {
             "name": "claim",
             "type": "claim",
             "ricardian_contract": ""
@@ -1221,11 +1184,6 @@
             "ricardian_contract": ""
         },
         {
-            "name": "maintain",
-            "type": "maintain",
-            "ricardian_contract": ""
-        },
-        {
             "name": "mint",
             "type": "mint",
             "ricardian_contract": ""
@@ -1271,6 +1229,11 @@
             "ricardian_contract": ""
         },
         {
+            "name": "refundstake",
+            "type": "refundstake",
+            "ricardian_contract": ""
+        },
+        {
             "name": "reguser",
             "type": "reguser",
             "ricardian_contract": ""
@@ -1278,11 +1241,6 @@
         {
             "name": "reregister",
             "type": "reregister",
-            "ricardian_contract": ""
-        },
-        {
-            "name": "setmff",
-            "type": "setmff",
             "ricardian_contract": ""
         },
         {
