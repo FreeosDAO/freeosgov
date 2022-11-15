@@ -298,6 +298,20 @@
             ]
         },
         {
+            "name": "maintain",
+            "base": "",
+            "fields": [
+                {
+                    "name": "action",
+                    "type": "string"
+                },
+                {
+                    "name": "user",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "mint",
             "base": "",
             "fields": [
@@ -1191,6 +1205,11 @@
         {
             "name": "init",
             "type": "init",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "maintain",
+            "type": "maintain",
             "ricardian_contract": ""
         },
         {

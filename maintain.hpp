@@ -284,11 +284,46 @@ void freeosgov::refund_function(name user) {
 
 // ACTION
 // maintenance actions - TODO: delete from production
-/*
 void freeosgov::maintain(string action, name user) {
 
   require_auth(get_self());
 
+  if (action == "adjust failsafe") {
+    // get the system record
+    system_index system_table(get_self(), get_self().value);
+    auto system_iterator = system_table.begin();
+    check(system_iterator != system_table.end(), "statistics record is not found");
+
+    // get the unlock failsafe frequency - default is 24
+    uint8_t failsafe_frequency = 24;
+
+    // read the frequency from the freeosconfig 'parameters' table
+    parameters_index parameters_table(get_self(), get_self().value);
+    auto parameter_iterator = parameters_table.find(name("failsafefreq").value);
+
+    if (parameter_iterator != parameters_table.end()) {
+      failsafe_frequency = stoi(parameter_iterator->value);
+    }
+
+    /*
+    check(false,
+          "failsafe_frequency = " + to_string(failsafe_frequency) +
+          ", unlockpercent = " + to_string(system_iterator->unlockpercent) +
+          ", unlockpercentiteration = " + to_string(system_iterator->unlockpercentiteration) +
+          ", failsafecounter = " + to_string(system_iterator->failsafecounter)
+          );
+    */
+
+   uint32_t failsafe_counter = failsafe_frequency;
+
+   system_table.modify(system_iterator, get_self(), [&](auto &sys) {
+      sys.failsafecounter = failsafe_counter % failsafe_frequency;
+      sys.unlockpercent = (failsafe_counter == failsafe_frequency ? 15 : 0);
+      sys.unlockpercentiteration = current_iteration();
+    });
+  }
+
+  /*
   if (action == "constants") {
   
   symbol sym = POINT_CURRENCY_SYMBOL;
@@ -1253,7 +1288,6 @@ void freeosgov::maintain(string action, name user) {
 
     string debug_msg = "now_secs = " + to_string(now_secs) + ", init_secs = " + to_string(init_secs) + ", Iternation Length (seconds) = " + to_string(iteration_length_secs) + ", calculated iteration = " + to_string(iteration);
     check(false, debug_msg);
-  }
+  } */
 
 }
-*/
