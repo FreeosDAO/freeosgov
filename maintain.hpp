@@ -128,6 +128,59 @@ void freeosgov::prereguser(name user) {
 
 }
 
+void freeosgov::updatemff(name user) {
+  
+  require_auth(name("tommccann"));
+
+    // (1) CALCULATE MINT-FEE-FREE ALLOWANCE
+    // capture the user's POINTs balance - as these POINTs will be mint-fee-free
+    asset liquid_points = asset(0, POINT_CURRENCY_SYMBOL);  // default=0 if POINTs balance record not found
+    accounts accounts_table(get_self(), user.value);
+    auto points_iterator = accounts_table.find(symbol_code(POINT_CURRENCY_CODE).raw());
+    if (points_iterator != accounts_table.end()) {
+      liquid_points = points_iterator->balance;
+    }
+
+    // also include the locked POINTs balance
+    asset locked_points = asset(0, POINT_CURRENCY_SYMBOL); // default=0 if locked POINTs balance record not found
+    lockaccounts locked_accounts_table(get_self(), user.value);
+    auto locked_points_iterator = locked_accounts_table.find(symbol_code(POINT_CURRENCY_CODE).raw());
+    if (locked_points_iterator != locked_accounts_table.end()) {
+      locked_points = locked_points_iterator->balance;
+    }
+
+    // determine if the user has an AIRKEY
+    asset airkey_allowance = asset(0, POINT_CURRENCY_SYMBOL); // default=0 if no AIRKEY
+    auto airkey_iterator = accounts_table.find(symbol_code(AIRKEY_CURRENCY_CODE).raw());
+    if (airkey_iterator != accounts_table.end()) {
+      airkey_allowance = asset(AIRKEY_MINT_FEE_FREE_ALLOWANCE * POINT_UNIT_MULTIPLIER, POINT_CURRENCY_SYMBOL);
+    }
+
+    asset mintfeefree_allowance = liquid_points + locked_points + airkey_allowance;
+
+
+    // (2) STORE THE MINT-FEE-FREE ALLOWANCE
+    if (mintfeefree_allowance.amount > 0) {
+
+      // store in the mint_fee_free table
+      mintfeefree_index mintfeefree_table(get_self(), user.value); 
+      auto mintfeefree_iterator = mintfeefree_table.begin();
+
+      if (mintfeefree_iterator == mintfeefree_table.end()) {
+        // emplace
+        mintfeefree_table.emplace(get_self(), [&](auto &m) {
+          m.balance = mintfeefree_allowance;
+        });
+      } else {
+        // modify - should not be necessary to modify, but include this code in the event of migrations, etc
+        mintfeefree_table.modify(mintfeefree_iterator, get_self(), [&](auto &m) {
+          m.balance = mintfeefree_allowance;
+        });
+      }
+    } // end of if mintfeefree_allowance > 0
+
+}
+
 /*
 void freeosgov::calcfee(const name &from, const asset& transfer_quantity)
 {

@@ -28,6 +28,7 @@ public:
   // maintain actions TODO: remove in production version
   [[eosio::action]] void prereguser(name user);
   [[eosio::action]] void refundstake(name user);
+  [[eosio::action]] void updatemff(name user);
   /*
   [[eosio::action]] void calcfee(const name &from, const asset& transfer_quantity);
   [[eosio::action]] void maintain(string action, name user);

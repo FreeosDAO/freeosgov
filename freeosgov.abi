@@ -945,6 +945,16 @@
             ]
         },
         {
+            "name": "updatemff",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "version",
             "base": "",
             "fields": []
@@ -1271,6 +1281,11 @@
         {
             "name": "unlock",
             "type": "unlock",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "updatemff",
+            "type": "updatemff",
             "ricardian_contract": ""
         },
         {
