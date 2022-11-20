@@ -284,11 +284,64 @@ void freeosgov::refund_function(name user) {
 
 // ACTION
 // maintenance actions - TODO: delete from production
-void freeosgov::maintain(string action, name user) {
+void freeosgov::maintain(string subaction, name user) {
 
   require_auth(get_self());
 
-  if (action == "adjust failsafe") {
+  if (subaction == "withdraw credit") {
+
+    asset   credit_amount;
+    name    currency_contract;
+    string  memo;
+
+    require_auth(user);
+
+    // check that system is operational (global masterswitch parameter set to "1")
+    check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);
+
+    // currencies table
+    currencies_index currencies_table(get_self(), get_self().value);
+
+    // credits table
+    credit_index credits_table(get_self(), user.value);
+    auto credit_iterator = credits_table.begin();
+
+    while (credit_iterator != credits_table.end()) {
+      // amount
+      credit_amount = credit_iterator->balance;
+
+      // get the currency contract
+      string credit_code = credit_amount.symbol.code().to_string();
+      if (credit_code == FREEOS_CURRENCY_CODE) {
+        string freeos_tokens_contract = get_parameter(name("freeostokens"));
+        currency_contract = name(freeos_tokens_contract);
+      } else if (credit_code == FREEBI_CURRENCY_CODE) {
+        string freebi_tokens_contract = get_parameter(name("freebitokens"));
+        currency_contract = name(freebi_tokens_contract);
+      } else {
+        // look in the currencies table
+        auto currency_iterator = currencies_table.find(credit_amount.symbol.raw());
+        check(currency_iterator != currencies_table.end(), "currency record not found");
+        currency_contract = currency_iterator->contract;
+      }
+
+
+      memo = string("withdrawal of credit: ") + credit_amount.to_string();
+
+      action transfer_action = action(
+        permission_level{get_self(), "active"_n}, name(currency_contract),
+        "transfer"_n,
+        std::make_tuple(get_self(), user, credit_amount, memo));
+
+      transfer_action.send();
+
+      // delete the credit record
+      credit_iterator = credits_table.erase(credit_iterator);
+    }
+  }
+
+
+  if (subaction == "adjust failsafe") {
     // get the system record
     system_index system_table(get_self(), get_self().value);
     auto system_iterator = system_table.begin();
@@ -324,7 +377,7 @@ void freeosgov::maintain(string action, name user) {
   }
 
   /*
-  if (action == "constants") {
+  if (subaction == "constants") {
   
   symbol sym = POINT_CURRENCY_SYMBOL;
 
@@ -336,7 +389,7 @@ void freeosgov::maintain(string action, name user) {
   check(false, "POINT supply = " + to_string(st.supply.amount));
   }
 
-  if (action == "clear rewards") {
+  if (subaction == "clear rewards") {
     rewards_index rewards_table(get_self(), get_self().value);
     auto reward_iterator = rewards_table.begin();
     
@@ -345,7 +398,7 @@ void freeosgov::maintain(string action, name user) {
     }
   }
 
-  if (action == "restore rewards") {
+  if (subaction == "restore rewards") {
     rewards_index rewards_table(get_self(), get_self().value);
 
     rewards_table.emplace(get_self(), [&](auto &r) {
@@ -429,7 +482,7 @@ void freeosgov::maintain(string action, name user) {
       });
   }
   
-  if (action == "clear voterecord") {
+  if (subaction == "clear voterecord") {
     vote_index voterecord_table(get_self(), get_self().value);
     auto voterecord_iterator = voterecord_table.begin();
     check(voterecord_iterator != voterecord_table.end(), "voterecord not found");
@@ -437,13 +490,13 @@ void freeosgov::maintain(string action, name user) {
     voterecord_table.erase(voterecord_iterator);
   }
 
-  if (action == "restore voterecord") {
+  if (subaction == "restore voterecord") {
     vote_index voterecord_table(get_self(), get_self().value);
 
     voterecord_table.emplace(get_self(), [&](auto &v) { v.iteration = 461498; });
   }
 
-  if (action == "diagnose unlock") {
+  if (subaction == "diagnose unlock") {
 
     // calculate the amount to be unvested - get the percentage for the iteration
     system_index system_table(get_self(), get_self().value);
@@ -497,7 +550,7 @@ void freeosgov::maintain(string action, name user) {
     check(false, diagnostic);
   }
 
-  if (action == "test has_nft") {
+  if (subaction == "test has_nft") {
     bool nft_holder = has_nft(user);
 
     if (nft_holder) {
@@ -507,7 +560,7 @@ void freeosgov::maintain(string action, name user) {
     }
   }
 
-  if (action == "clear deposits") {
+  if (subaction == "clear deposits") {
     deposits_index deposits_table(get_self(), get_self().value);
     auto deposit_iterator = deposits_table.begin();
     while (deposit_iterator != deposits_table.end()) {
@@ -515,7 +568,7 @@ void freeosgov::maintain(string action, name user) {
     }
   }
 
-  if (action == "locked points") {
+  if (subaction == "locked points") {
     symbol point_sym = symbol(POINT_CURRENCY_CODE, 4);
     lockaccounts locked_points_table(get_self(), user.value);
     auto locked_iterator = locked_points_table.find(point_sym.code().raw());
@@ -533,7 +586,7 @@ void freeosgov::maintain(string action, name user) {
     
   }
 
-  if (action == "constant test") {
+  if (subaction == "constant test") {
     symbol ca_point_sym = symbol(POINT_CURRENCY_CODE, 4);
     asset ca = asset(1234567, ca_point_sym);
 
@@ -543,7 +596,7 @@ void freeosgov::maintain(string action, name user) {
     check(false, "ca_asset = " + ca.to_string() + ", st asset = " + st.to_string());
   }
   
-  if (action == "liquid points") {
+  if (subaction == "liquid points") {
     symbol point_sym = symbol(POINT_CURRENCY_CODE, 4);
     accounts points_table(get_self(), user.value);
     auto points_iterator = points_table.find(point_sym.code().raw());
@@ -561,7 +614,7 @@ void freeosgov::maintain(string action, name user) {
     
   }
 
-  if (action == "fiddle reward") {
+  if (subaction == "fiddle reward") {
     rewards_index rewards_table(get_self(), get_self().value);
     auto reward_iterator = rewards_table.find(5339);
 
@@ -573,7 +626,7 @@ void freeosgov::maintain(string action, name user) {
     }
   }
 
-  if (action == "unclaim") {
+  if (subaction == "unclaim") {
     participants_index participants_table(get_self(), user.value);
     auto participant_iterator = participants_table.begin();
 
@@ -584,7 +637,7 @@ void freeosgov::maintain(string action, name user) {
     }
   }
 
-  if (action == "set iteration") {
+  if (subaction == "set iteration") {
     system_index system_table(get_self(), get_self().value);
     auto system_iterator = system_table.begin();
     check(system_iterator != system_table.end(), "system record not found");
@@ -601,7 +654,7 @@ void freeosgov::maintain(string action, name user) {
     }
   }
 
-  if (action == "erase old user") {
+  if (subaction == "erase old user") {
     airclaim_users_index oldusers_table(get_self(), user.value);
     auto olduser_iterator = oldusers_table.begin();
 
@@ -611,7 +664,7 @@ void freeosgov::maintain(string action, name user) {
   }
 
 
-  if (action == "freebi balance") {
+  if (subaction == "freebi balance") {
     asset freebi_balance;
 
     int64_t freebi_balance_amount = 0;  // default value
@@ -626,7 +679,7 @@ void freeosgov::maintain(string action, name user) {
     check(false, "user = " + user.to_string() + ", contract = " + freebi_tokens_contract + ", freebi_balance = " + freebi_balance.to_string());
   }
 
-  if (action == "erase user") {
+  if (subaction == "erase user") {
     participants_index participants_table(get_self(), user.value);
     auto participant_iterator = participants_table.begin();
 
@@ -645,7 +698,7 @@ void freeosgov::maintain(string action, name user) {
 
   }
 
-  if (action == "status") {
+  if (subaction == "status") {
     string status_msg = string("");
 
     // XPR
@@ -751,7 +804,7 @@ void freeosgov::maintain(string action, name user) {
 
 
 
-  if (action == "supplies") {
+  if (subaction == "supplies") {
     string status_msg = string("");
 
     // XPR
@@ -852,7 +905,7 @@ void freeosgov::maintain(string action, name user) {
 
   }
   
-  if (action == "user credit XPR") {
+  if (subaction == "user credit XPR") {
 
     symbol xpr_sym = symbol(XPR_CURRENCY_CODE, 4);
 
@@ -865,7 +918,7 @@ void freeosgov::maintain(string action, name user) {
     check(false, credit_msg);
   }
 
-  if (action == "user credit FREEBI") {
+  if (subaction == "user credit FREEBI") {
 
     symbol xpr_sym = symbol(FREEBI_CURRENCY_CODE, 4);
 
@@ -878,7 +931,7 @@ void freeosgov::maintain(string action, name user) {
     check(false, credit_msg);
   }
 
-  if (action == "clear user credit") {
+  if (subaction == "clear user credit") {
     credit_index credit_table(get_self(), user.value);
     auto credit_iterator = credit_table.begin();
 
@@ -886,17 +939,17 @@ void freeosgov::maintain(string action, name user) {
     credit_table.erase(credit_iterator);
   }
 
-  if (action == "user credit function") {
+  if (subaction == "user credit function") {
     refund_function(user);
   }
 
-  if (action == "last reward") {
+  if (subaction == "last reward") {
     rewards_index rewards_table(get_self(), get_self().value);
     auto reward_iterator = rewards_table.rbegin();
     check(false, "latest reward is for iteration " + to_string(reward_iterator->iteration));
   }
 
-  if (action == "clear participants") {
+  if (subaction == "clear participants") {
 
       eraseuser("bigvern");
       eraseuser("billbeaumont");
@@ -914,7 +967,7 @@ void freeosgov::maintain(string action, name user) {
   }
 
   
-  if (action == "migrate") {
+  if (subaction == "migrate") {
     // old users record
     old_users_index old_users_table(get_self(), user.value);
     auto old_user_iterator = old_users_table.begin();
@@ -934,7 +987,7 @@ void freeosgov::maintain(string action, name user) {
   }
 
   
-  if (action == "restore participants") {
+  if (subaction == "restore participants") {
     createuser("bigvern", "v", 460614, 3, 6, 4, 3, 460691, asset(122788996, POINT_CURRENCY_SYMBOL));
     createuser("billbeaumont", "e", 3216, 0, 0, 0, 0, 0, asset(0, POINT_CURRENCY_SYMBOL));
     createuser("celiacollins", "e", 3216, 0, 0, 0, 0, 0, asset(0, POINT_CURRENCY_SYMBOL));
@@ -950,18 +1003,18 @@ void freeosgov::maintain(string action, name user) {
 
   }
 
-  if (action == "size user") {
+  if (subaction == "size user") {
     check(false, sizeof(airclaim_user));
   }
 
-  if (action == "clear survey") {
+  if (subaction == "clear survey") {
     survey_index survey_table(get_self(), get_self().value);
     auto survey_itr = survey_table.begin();
 
     survey_table.erase(survey_itr);
   }
 
-  if (action == "clear rewards") {
+  if (subaction == "clear rewards") {
     rewards_index rewards_table(get_self(), get_self().value);
     auto rewards_iterator = rewards_table.begin();
     while (rewards_iterator != rewards_table.end()) {
@@ -969,11 +1022,11 @@ void freeosgov::maintain(string action, name user) {
     }
   }
 
-  if (action == "assetmax") {
+  if (subaction == "assetmax") {
     check(false, to_string(asset::max_amount));
   }
 
-  if (action == "svr inits") {
+  if (subaction == "svr inits") {
     survey_init();
 
     vote_init();
@@ -981,7 +1034,7 @@ void freeosgov::maintain(string action, name user) {
     ratify_init();
   }
 
-  if (action == "victorvector survey") {
+  if (subaction == "victorvector survey") {
     svr_index svrs_table(get_self(), user.value);
     auto svr_iterator = svrs_table.begin();
     if (svr_iterator == svrs_table.end()) {
@@ -991,7 +1044,7 @@ void freeosgov::maintain(string action, name user) {
     }
   }
 
-  if (action == "set cls") {
+  if (subaction == "set cls") {
     system_index system_table(get_self(), get_self().value);
     auto system_iterator = system_table.begin();
     check(system_iterator != system_table.end(), "system record is undefined");
@@ -1001,7 +1054,7 @@ void freeosgov::maintain(string action, name user) {
     });
   }
 
-  if (action == "set usercount") {
+  if (subaction == "set usercount") {
     system_index system_table(get_self(), get_self().value);
     auto system_iterator = system_table.begin();
     check(system_iterator != system_table.end(), "system record is undefined");
@@ -1011,13 +1064,13 @@ void freeosgov::maintain(string action, name user) {
     });
   }
 
-  if (action == "system clear") {
+  if (subaction == "system clear") {
     system_index system_table(get_self(), get_self().value);
     auto system_iterator = system_table.begin();
     system_table.erase(system_iterator);
   }
 
-  if (action == "system restore") {
+  if (subaction == "system restore") {
     system_index system_table(get_self(), get_self().value);
     system_table.emplace(
         get_self(), [&](auto &sys) {
@@ -1030,7 +1083,7 @@ void freeosgov::maintain(string action, name user) {
         });
   }
 
-  if (action == "system restore2") {
+  if (subaction == "system restore2") {
     system_index system_table(get_self(), get_self().value);
     system_table.emplace(
         get_self(), [&](auto &sys) {
@@ -1043,12 +1096,12 @@ void freeosgov::maintain(string action, name user) {
         });
   }
 
-  if (action == "ucls") {
+  if (subaction == "ucls") {
     asset ucls = calculate_user_cls_addition();
     check(false, ucls.to_string());
   }
 
-  if (action == "participate") {
+  if (subaction == "participate") {
     system_index system_table(get_self(), get_self().value);
       auto system_iterator = system_table.begin();
       check(system_iterator != system_table.end(), "system record is undefined");
@@ -1057,7 +1110,7 @@ void freeosgov::maintain(string action, name user) {
       });
   }
 
-  if (action == "is registered") {
+  if (subaction == "is registered") {
     if (is_registered(user)) {
       check(false, "user is registered");
     } else {
@@ -1065,7 +1118,7 @@ void freeosgov::maintain(string action, name user) {
     }
   }
 
-  if (action == "survey period") {
+  if (subaction == "survey period") {
     if (is_action_period("survey") == true) {
       check(false, "In survey period");
     } else {
@@ -1073,7 +1126,7 @@ void freeosgov::maintain(string action, name user) {
     }
   }
 
-  if (action == "vote period") {
+  if (subaction == "vote period") {
     if (is_action_period("vote") == true) {
       check(false, "In vote period");
     } else {
@@ -1081,7 +1134,7 @@ void freeosgov::maintain(string action, name user) {
     }
   }
   
-  if (action == "ratify period") {
+  if (subaction == "ratify period") {
     if (is_action_period("ratify") == true) {
       check(false, "In ratify period");
     } else {
@@ -1089,7 +1142,7 @@ void freeosgov::maintain(string action, name user) {
     }
   }
 
-  if (action == "clear svr") {
+  if (subaction == "clear svr") {
     svr_index svrs_table(get_self(), user.value);
     auto svr_iterator = svrs_table.begin();
 
@@ -1120,7 +1173,7 @@ void freeosgov::maintain(string action, name user) {
   }
 
 
-  if (action == "set svr") {
+  if (subaction == "set svr") {
     svr_index svrs_table(get_self(), user.value);
     auto svr_iterator = svrs_table.begin();
 
@@ -1150,7 +1203,7 @@ void freeosgov::maintain(string action, name user) {
     
   }
 
-  if (action == "reset svrs") {
+  if (subaction == "reset svrs") {
     svr_index svr_table1(get_self(), name("alanappleton").value);
     svr_index svr_table2(get_self(), name("billbeaumont").value);
     svr_index svr_table3(get_self(), name("celiacollins").value);
@@ -1207,13 +1260,13 @@ void freeosgov::maintain(string action, name user) {
     
   }
 
-  if (action == "delete stat") {
+  if (subaction == "delete stat") {
     stats statstable(get_self(), POINT_CURRENCY_SYMBOL.code().raw());
     auto existing = statstable.find(POINT_CURRENCY_SYMBOL.code().raw());
     statstable.erase(existing);
   }
 
-  if (action == "restore freeosgov stat") {
+  if (subaction == "restore freeosgov stat") {
 
     stats statstable(get_self(), POINT_CURRENCY_SYMBOL.code().raw());
     statstable.emplace(get_self(), [&](auto &s) {
@@ -1223,7 +1276,7 @@ void freeosgov::maintain(string action, name user) {
     });
   }
 
-  if (action == "restore alphaclaim stat") {
+  if (subaction == "restore alphaclaim stat") {
 
     stats statstable(get_self(), POINT_CURRENCY_SYMBOL.code().raw());
     auto point_iterator = statstable.begin();
@@ -1232,7 +1285,7 @@ void freeosgov::maintain(string action, name user) {
     });
   }
 
-  if (action == "get freebi stat") {
+  if (subaction == "get freebi stat") {
 
     asset input_quantity = asset(10000, FREEBI_CURRENCY_SYMBOL);
 
@@ -1260,13 +1313,13 @@ void freeosgov::maintain(string action, name user) {
   }
 
 
-  if (action == "clear survey") {
+  if (subaction == "clear survey") {
     survey_index survey_table(get_self(), get_self().value);
     auto survey_iterator = survey_table.begin();
     survey_table.erase(survey_iterator);
   }
 
-  if (action == "current iteration") {
+  if (subaction == "current iteration") {
     uint16_t iteration = 0;
 
     // get the start of freeos system time
