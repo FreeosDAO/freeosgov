@@ -670,6 +670,20 @@
             ]
         },
         {
+            "name": "setmff",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "amount",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
             "name": "survey",
             "base": "",
             "fields": [
@@ -1270,6 +1284,11 @@
         {
             "name": "reregister",
             "type": "reregister",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "setmff",
+            "type": "setmff",
             "ricardian_contract": ""
         },
         {

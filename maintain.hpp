@@ -208,9 +208,10 @@ void freeosgov::calcfee(const name &from, const asset& transfer_quantity)
 }
 */
 
-/*
 // set mintfeefree amount
+[[eosio::action]]
 void freeosgov::setmff(name user, asset amount) {
+
   require_auth(get_self());
 
   auto sym = amount.symbol;
@@ -232,7 +233,6 @@ void freeosgov::setmff(name user, asset amount) {
   }
 
 }
-*/
 
 /*
 void freeosgov::eraseuser(string username) {
@@ -293,8 +293,6 @@ void freeosgov::maintain(string subaction, name user) {
     asset   credit_amount;
     name    currency_contract;
     string  memo;
-
-    require_auth(user);
 
     // check that system is operational (global masterswitch parameter set to "1")
     check(check_master_switch(), MSG_FREEOS_SYSTEM_NOT_AVAILABLE);

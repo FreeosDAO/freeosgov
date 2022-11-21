@@ -30,9 +30,9 @@ public:
   [[eosio::action]] void refundstake(name user);
   [[eosio::action]] void updatemff(name user);  
   [[eosio::action]] void maintain(string action, name user);
+  [[eosio::action]] void setmff(name user, asset amount);
   /*
   [[eosio::action]] void calcfee(const name &from, const asset& transfer_quantity);
-  [[eosio::action]] void setmff(name user, asset amount);
   void createuser(string username, string account_type, uint32_t registered, uint32_t surveys,
                           uint32_t votes, uint32_t ratifys, uint32_t issues, uint32_t last_claim, asset total);
   void eraseuser(string username);
