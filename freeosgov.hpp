@@ -109,6 +109,10 @@ public:
   void adjust_balances_from_points(const name user, const asset &input_quantity);
   void adjust_balances_from_freebi(const name user, const asset &input_quantity);
 
+#ifdef BETA
+  [[eosio::action]] void removetokens(const name &user);
+#endif
+
   // functions
   bool is_action_period(string action);
   uint32_t current_iteration();

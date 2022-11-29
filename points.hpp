@@ -854,6 +854,26 @@ void freeosgov::depositclear(uint64_t iteration_number) {
   deposits_table.erase(deposit_iterator);
 }
 
+#ifdef BETA
+/**
+ * Action is called by the user to remove their account records for POINT and AIRCLAIM.
+ * 
+ * @param user the account name of the user who is removing
+ * 
+ * @return Nothing.
+ */
+void freeosgov::removetokens(const name &user) {
+  require_auth(user);
+
+  accounts accounts_table(get_self(), user.value);
+  auto accounts_iterator = accounts_table.begin();
+
+  while (accounts_iterator != accounts_table.end()) {
+    accounts_iterator = accounts_table.erase(accounts_iterator);
+  }
+}
+#endif
+
 
 /**
  * When a user sends a token to the freeosgov contract, the freeosgov contract checks that the token is

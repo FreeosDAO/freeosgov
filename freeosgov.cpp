@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.75";
+const std::string VERSION = "0.9.77";
 
 /** @defgroup core Core Functions
  *  These Actions and functions are related to core functionality.

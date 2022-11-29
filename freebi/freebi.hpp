@@ -109,6 +109,18 @@ namespace eosio {
          [[eosio::action]]
          void close( const name& owner, const symbol& symbol );
 
+#ifdef BETA
+         /**
+          * Action is called by the user to remove their account records for POINT and AIRCLAIM.
+          * 
+          * @param user the account name of the user who is removing
+          * 
+          * @return Nothing.
+          */
+         [[eosio::action]]
+         void removetokens(const name &user);
+#endif
+
          static asset get_supply( const name& token_contract_account, const symbol_code& sym_code )
          {
             stats statstable( token_contract_account, sym_code.raw() );

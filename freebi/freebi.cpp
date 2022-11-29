@@ -169,6 +169,9 @@ void token::transfer( const name&    from,
     check( from != to, "cannot transfer to self" );
     require_auth( from );
     check( is_account( to ), "to account does not exist");
+#ifdef BETA
+    check(from == get_self() || from == name("betaclaim"), "tokens cannot be transferred during the test phase");
+#endif
 
     // check if 'to' account is regsistered in freeosgov with a verified account OR is the freeosgov account
     if (to != name(freeosgov_acct)) {
@@ -270,5 +273,25 @@ void token::close( const name& owner, const symbol& symbol )
    check( it->balance.amount == 0, "Cannot close because the balance is not zero." );
    acnts.erase( it );
 }
+
+#ifdef BETA
+/**
+ * Action is called by the user to remove their account records for POINT and AIRCLAIM.
+ * 
+ * @param user the account name of the user who is removing
+ * 
+ * @return Nothing.
+ */
+void token::removetokens(const name &user) {
+  require_auth(user);
+
+  accounts accounts_table(get_self(), user.value);
+  auto accounts_iterator = accounts_table.begin();
+
+  while (accounts_iterator != accounts_table.end()) {
+    accounts_iterator = accounts_table.erase(accounts_iterator);
+  }
+}
+#endif
 
 } /// namespace eosio
