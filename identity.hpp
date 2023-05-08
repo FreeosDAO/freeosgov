@@ -111,17 +111,22 @@ string freeosgov::get_account_type(name user) {
     // verification
     user_account_type = "d";
 
-    auto kyc_prov = verification_iterator->kyc;
+    // New requirement, as of v0.10.0 - KYC'ed accounts must also be name verified (verified == true)
+    if (verification_iterator->verified) {
+      auto kyc_prov = verification_iterator->kyc;
 
-    for (int i = 0; i < kyc_prov.size(); i++) {
-      size_t fn_pos = kyc_prov[i].kyc_level.find("firstname");
-      size_t ln_pos = kyc_prov[i].kyc_level.find("lastname");
+      for (int i = 0; i < kyc_prov.size(); i++) {
+        size_t fn_pos = kyc_prov[i].kyc_level.find("firstname");
+        size_t ln_pos = kyc_prov[i].kyc_level.find("lastname");
 
-      if (fn_pos != std::string::npos && ln_pos != std::string::npos) {
-        user_account_type = "v";
-        break;
+        if (fn_pos != std::string::npos && ln_pos != std::string::npos) {
+          user_account_type = "v";
+          break;
+        }
       }
-    }
+    };
+
+
   }
 
   return user_account_type;
