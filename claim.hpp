@@ -245,7 +245,49 @@ void freeosgov::claim(name user) {
         });
     }
     
+}
 
+/**
+ * Action allows the user to burn a specified amount of FREEOS.
+ * These tokens are burned, and an entry is made in the swaps table to record the transaction.
+ * The Internet Computer side of the transaction reads the swaps table entries and mints the equivalent
+ * number of (IC-based) FREEOS.
+ * 
+ * @param from the account name of the user who is swapping
+ * @param ic_principal the internet computer identity
+ * @param quantity the amount of FREEOS to be burned
+ */
+void swap( const name& from, string& ic_principal, const asset& quantity ) {
+    require_auth( from );
+
+    accounts acnts( get_self(), from.value );
+    check( quantity.is_valid(), "Invalid quantity" );
+    check( quantity.symbol.code().to_string() === "FREEOS", "The quantity must be in FREEOS tokens, e.g. 123.0000 FREEOS" );
+    check( quantity.amount > 0, "Must swap positive quantity of " + quantity.symbol.code().to_string() );
+
+    string memo_str = "Swap " + quantity.to_string() + " from " + from.to_string() + " to IC principal " + ic_principal;
+
+    string freeos_tokens_contract = get_parameter(name("freeostokens"));
+
+    // user transfer the tokens to this contract...
+    action(
+        permission_level{from, "active"_n},
+        name(freeos_tokens_contract),
+        name("transfer"),
+        std::make_tuple(from, get_self(), quantity, memo_str);
+    ).send();
+
+    // ...then this contract burns the tokens
+    action(
+        permission_level{get_self(), "active"_n},
+        name(freeos_tokens_contract),
+        name("retire"),
+        std::make_tuple(quantity, memo_str)
+    ).send();
+
+   // record this swap - todo: define the swaps table
+
+   
 }
 
 /** @} */ // end of claim group

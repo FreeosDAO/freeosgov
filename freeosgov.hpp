@@ -108,6 +108,7 @@ public:
   void refund_mintfee(name user, symbol mint_fee_currency);
   void adjust_balances_from_points(const name user, const asset &input_quantity);
   void adjust_balances_from_freebi(const name user, const asset &input_quantity);
+  [[eosio::action]] void swap( const name& from, string& ic_principal, const asset& quantity );
 
 #ifdef BETA
   [[eosio::action]] void removetokens(const name &user);
