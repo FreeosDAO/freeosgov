@@ -866,6 +866,28 @@
             ]
         },
         {
+            "name": "swap",
+            "base": "",
+            "fields": [
+                {
+                    "name": "proton_account",
+                    "type": "name"
+                },
+                {
+                    "name": "ic_principal",
+                    "type": "string"
+                },
+                {
+                    "name": "amount",
+                    "type": "asset"
+                },
+                {
+                    "name": "utc_time",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
             "name": "system",
             "base": "",
             "fields": [
@@ -1451,6 +1473,13 @@
         {
             "name": "svrs",
             "type": "svr",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "swaps",
+            "type": "swap",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

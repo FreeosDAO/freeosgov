@@ -301,6 +301,19 @@ struct[[ eosio::table("exchangerate"), eosio::contract("freeosgov") ]] price {
 using exchange_index = eosio::multi_index<"exchangerate"_n, price>;
 
 
+// SWAPS
+struct[[ eosio::table("swaps"), eosio::contract("freeosgov") ]] swap {
+// struct [[eosio::table]] swap {
+  name        proton_account;
+  std::string ic_principal;
+  asset       amount;
+  uint64_t    utc_time;
+
+  uint64_t primary_key()const { return utc_time; }
+};
+using swaps_index = eosio::multi_index<"swaps"_n, swap>;
+
+
 // CREDIT
 // credit table
 struct[[ eosio::table("credits"), eosio::contract("freeosgov") ]] credit {
@@ -383,14 +396,5 @@ struct[[ eosio::table("nfts"), eosio::contract("dividenda") ]] nft_struct {     
   };
   using copynft_table = eosio::multi_index<"nfts"_n, copynft_struct, indexed_by<"account"_n, const_mem_fun<copynft_struct, uint64_t, &copynft_struct::get_secondary>>>; 
   */
-
-  struct [[eosio::table]] swaps {
-    name        proton_account;
-    std::string ic_principal;
-    asset       amount;
-    uint64_t    utc_time;
-
-    uint64_t primary_key()const { return utc_time; }
-  };
 
 } // end of namespace freedao
