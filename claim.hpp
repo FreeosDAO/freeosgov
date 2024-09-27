@@ -287,9 +287,31 @@ std::string trim(const std::string& str) {
         return;
     }
 
-    check(ic_principal.length() > 0, "The transfer memo must include the user's IC principal, e.g. 'IC SWAP w7x3r-cok77-xa'");
+    uint32_t icswapopen = get_iparameter(name("icswapopen"));
+    uint32_t icswapclose = get_iparameter(name("icswapclose"));
+    uint32_t currenttime = current_time_point().sec_since_epoch();
+    check(currenttime >= icswapopen && currenttime <= icswapclose, "The IC swap facility is not available at this time");
 
-    check( quantity.symbol.code().to_string() == "FREEOS", "The quantity must be in FREEOS tokens, e.g. 123.0000 FREEOS" );
+
+    check( quantity.symbol.code().to_string() == FREEOS_CURRENCY_CODE, "The quantity must be in " + FREEOS_CURRENCY_CODE + " tokens, e.g. 123.0000 " + FREEOS_CURRENCY_CODE );
+    
+    // check if user has reached their swap allowance
+    asset user_swap_total = asset(0, FREEOS_CURRENCY_SYMBOL);   // default value
+    swaptotals_index swaptotals_table(get_self(), from.value);
+    auto swaptotals_iterator = swaptotals_table.begin();
+    if (swaptotals_iterator != swaptotals_table.end()) {
+        user_swap_total = swaptotals_iterator->total;
+    }
+
+    uint32_t icswaplimit = get_iparameter(name("icswaplimit"));
+    asset swaplimit = asset(icswaplimit * FREEOS_UNIT_MULTIPLIER, FREEOS_CURRENCY_SYMBOL);
+
+    check((user_swap_total.amount + quantity.amount) <= swaplimit.amount,
+     "The swap quantity will exceed the swap allowance (" + user_swap_total.to_string() +
+     " already swapped out of an allowance of " + swaplimit.to_string() + ")"
+     );
+
+    check(ic_principal.length() > 0, "The transfer memo must include the user's IC principal, e.g. 'IC SWAP w7x3r-cok77-xa'");
 
     string retire_memo_str = "Swap " + quantity.to_string() + " from " + from.to_string() + " to IC principal " + ic_principal;
 
@@ -310,6 +332,12 @@ std::string trim(const std::string& str) {
       s.utc_time = current_time_point().sec_since_epoch();
     });
 
+    // update the user's new swap total
+    if (swaptotals_iterator == swaptotals_table.end()) {
+        swaptotals_table.emplace(get_self(), [&](auto &t) { t.total = quantity; });
+    } else {
+        swaptotals_table.modify(swaptotals_iterator, get_self(), [&](auto &t) { t.total += quantity; });
+    }
    
 }
 

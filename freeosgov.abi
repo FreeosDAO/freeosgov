@@ -888,6 +888,16 @@
             ]
         },
         {
+            "name": "swaptotal",
+            "base": "",
+            "fields": [
+                {
+                    "name": "total",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
             "name": "system",
             "base": "",
             "fields": [
@@ -1480,6 +1490,13 @@
         {
             "name": "swaps",
             "type": "swap",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "swaptotals",
+            "type": "swaptotal",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

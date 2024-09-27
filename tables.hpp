@@ -313,6 +313,14 @@ struct[[ eosio::table("swaps"), eosio::contract("freeosgov") ]] swap {
 };
 using swaps_index = eosio::multi_index<"swaps"_n, swap>;
 
+// FREEOS SWAP CUMULATIVE TOTAL
+struct[[ eosio::table("swaptotals"), eosio::contract("freeosgov") ]] swaptotal {
+  asset total;
+
+  uint64_t primary_key() const { return total.symbol.code().raw(); }
+};
+typedef eosio::multi_index<"swaptotals"_n, swaptotal> swaptotals_index;
+
 
 // CREDIT
 // credit table
