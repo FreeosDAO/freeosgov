@@ -304,6 +304,7 @@ using exchange_index = eosio::multi_index<"exchangerate"_n, price>;
 // SWAPS
 struct[[ eosio::table("swaps"), eosio::contract("freeosgov") ]] swap {
 // struct [[eosio::table]] swap {
+  // uint64_t    id; // Reserved for future use
   name        proton_account;
   std::string ic_principal;
   asset       amount;

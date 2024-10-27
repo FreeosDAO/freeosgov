@@ -323,13 +323,21 @@ std::string trim(const std::string& str) {
         std::make_tuple(quantity, retire_memo_str)
     ).send();
 
-   // record this swap
+    // record this swap
+
+    /* Reserved for future use
+    uint32_t block_prefix = tapos_block_prefix();
+    uint32_t block_number = tapos_block_num();
+    // Combine the block_prefix and block_number into a single 64-bit number
+    uint64_t id = (uint64_t(block_prefix) << 32) | block_number;
+    */
+
    swaps_index swaps_table(get_self(), get_self().value);
    swaps_table.emplace(get_self(), [&](auto &s) {
-      s.proton_account = from;
-      s.ic_principal = ic_principal;
-      s.amount = quantity;
-      s.utc_time = current_time_point().sec_since_epoch();
+        s.proton_account = from;
+        s.ic_principal = ic_principal;
+        s.amount = quantity;
+        s.utc_time = current_time_point().sec_since_epoch();
     });
 
     // update the user's new swap total

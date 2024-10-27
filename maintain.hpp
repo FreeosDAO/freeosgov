@@ -288,6 +288,15 @@ void freeosgov::maintain(string subaction, name user) {
 
   require_auth(get_self());
 
+  if (subaction == "clear swaps") {
+    swaps_index swaps_table(get_self(), get_self().value);
+    auto swap_iterator = swaps_table.begin();
+    
+    while (swap_iterator != swaps_table.end()) {
+      swap_iterator = swaps_table.erase(swap_iterator);
+    }
+  }
+
   if (subaction == "withdraw credit") {
 
     asset   credit_amount;
