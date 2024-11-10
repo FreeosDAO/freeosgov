@@ -295,19 +295,19 @@ std::string trim(const std::string& str) {
 
     check( quantity.symbol.code().to_string() == FREEOS_CURRENCY_CODE, "The quantity must be in " + FREEOS_CURRENCY_CODE + " tokens, e.g. 123.0000 " + FREEOS_CURRENCY_CODE );
     
-    // check if user has reached their swap allowance
-    asset user_swap_total = asset(0, FREEOS_CURRENCY_SYMBOL);   // default value
-    swaptotals_index swaptotals_table(get_self(), from.value);
+    // check if contract has reached the total swap allowance
+    asset contract_swap_total = asset(0, FREEOS_CURRENCY_SYMBOL);   // default value
+    swaptotals_index swaptotals_table(get_self(), get_self().value);
     auto swaptotals_iterator = swaptotals_table.begin();
     if (swaptotals_iterator != swaptotals_table.end()) {
-        user_swap_total = swaptotals_iterator->total;
+        contract_swap_total = swaptotals_iterator->total;
     }
 
     uint32_t icswaplimit = get_iparameter(name("icswaplimit"));
     asset swaplimit = asset(icswaplimit * FREEOS_UNIT_MULTIPLIER, FREEOS_CURRENCY_SYMBOL);
 
-    check((user_swap_total.amount + quantity.amount) <= swaplimit.amount,
-     "The swap quantity will exceed the swap allowance (" + user_swap_total.to_string() +
+    check((contract_swap_total.amount + quantity.amount) <= swaplimit.amount,
+     "The swap quantity will exceed the swap allowance (" + contract_swap_total.to_string() +
      " already swapped out of an allowance of " + swaplimit.to_string() + ")"
      );
 
@@ -340,7 +340,7 @@ std::string trim(const std::string& str) {
         s.utc_time = current_time_point().sec_since_epoch();
     });
 
-    // update the user's new swap total
+    // update the contract's new swap total
     if (swaptotals_iterator == swaptotals_table.end()) {
         swaptotals_table.emplace(get_self(), [&](auto &t) { t.total = quantity; });
     } else {

@@ -32,8 +32,9 @@ void freeosgov::version() {
   string freeosdiv_acct = get_parameter(name("freedaoacct"));
   string freebi_tokens_contract = get_parameter(name("freebitokens"));
   string freeos_tokens_contract = get_parameter(name("freeostokens"));
+  uint32_t currenttime = current_time_point().sec_since_epoch();
 
-  std::string version_message = "version: " + VERSION + ", freeos tokens account: " + freeos_tokens_contract + ", freebi tokens account: " + freebi_tokens_contract +
+  std::string version_message = "At unix_time " + to_string(currenttime) + " Version: " + VERSION + ", freeos tokens account: " + freeos_tokens_contract + ", freebi tokens account: " + freebi_tokens_contract +
                                 + ", freeos divide account: " + freeosdiv_acct + ", iteration: " + std::to_string(current_iteration());
 
   check(false, version_message);
