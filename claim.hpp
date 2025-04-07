@@ -273,10 +273,20 @@ std::string trim(const std::string& str) {
  * @param quantity - the asset, i.e. an amount of FREEOS which is transferred to the freeosgov account,
  * @param memo - a memo describing the transaction - must have the correct memo to initiate the swap process
  */
+#ifdef BETA
+[[eosio::on_notify("betabeta::transfer")]] void freeosgov::ic_swap(name from, name to, asset quantity, std::string memo) {
+#elif defined(PRODUCTION)
 [[eosio::on_notify("freeostokens::transfer")]] void freeosgov::ic_swap(name from, name to, asset quantity, std::string memo) {
+#endif
 
     std::string required_memo_prefix = "IC SWAP ";
     std::string ic_principal = "";
+    // std::string foo = "bar";
+
+    // check we are being notified by freeos tokens contract
+    // name tokens_acct = name(get_parameter(name("freeostokens")));
+    // check(false, "get_first_receiver=" + get_first_receiver().to_string() + ", tokens_acct=" + tokens_acct.to_string());
+    // if (get_first_receiver() != tokens_acct) return;
 
     // Check if the memo starts with the prefix "IC SWAP "
     if (memo.find(required_memo_prefix) == 0) {
@@ -313,15 +323,15 @@ std::string trim(const std::string& str) {
 
     check(ic_principal.length() > 0, "The transfer memo must include the user's IC principal, e.g. 'IC SWAP w7x3r-cok77-xa'");
 
-    string retire_memo_str = "Swap " + quantity.to_string() + " from " + from.to_string() + " to IC principal " + ic_principal;
+    // string retire_memo_str = "Swap " + quantity.to_string() + " from " + from.to_string() + " to IC principal " + ic_principal;
 
     // Burn the tokens
-    action(
-        permission_level{get_self(), "active"_n},
-        name("freeostokens"),
-        name("retire"),
-        std::make_tuple(quantity, retire_memo_str)
-    ).send();
+    // action(
+    //     permission_level{get_self(), "active"_n},
+    //     name("freeostokens"),
+    //     name("retire"),
+    //     std::make_tuple(quantity, retire_memo_str)
+    // ).send();
 
     // record this swap
 
