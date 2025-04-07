@@ -281,12 +281,6 @@ std::string trim(const std::string& str) {
 
     std::string required_memo_prefix = "IC SWAP ";
     std::string ic_principal = "";
-    // std::string foo = "bar";
-
-    // check we are being notified by freeos tokens contract
-    // name tokens_acct = name(get_parameter(name("freeostokens")));
-    // check(false, "get_first_receiver=" + get_first_receiver().to_string() + ", tokens_acct=" + tokens_acct.to_string());
-    // if (get_first_receiver() != tokens_acct) return;
 
     // Check if the memo starts with the prefix "IC SWAP "
     if (memo.find(required_memo_prefix) == 0) {
