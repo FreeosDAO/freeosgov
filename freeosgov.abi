@@ -586,6 +586,16 @@
             ]
         },
         {
+            "name": "removetokens",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "reregister",
             "base": "",
             "fields": [
@@ -1311,6 +1321,11 @@
         {
             "name": "reguser",
             "type": "reguser",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "removetokens",
+            "type": "removetokens",
             "ricardian_contract": ""
         },
         {
