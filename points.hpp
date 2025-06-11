@@ -874,8 +874,25 @@ void freeosgov::removetokens(const name &user) {
 }
 #endif
 
+std::string trim(const std::string& str) {
+    // Trim leading whitespace
+    auto start = std::find_if_not(str.begin(), str.end(), [](unsigned char ch) {
+        return std::isspace(ch);
+    });
+    
+    // Trim trailing whitespace
+    auto end = std::find_if_not(str.rbegin(), str.rend(), [](unsigned char ch) {
+        return std::isspace(ch);
+    }).base();
+    
+    // Return the trimmed string
+    return (start < end ? std::string(start, end) : std::string());
+}
 
 /**
+ * Notification function upon receipt of a currency asset
+ * 
+ * Case 1 - Freeos mint fee
  * When a user sends a token to the freeosgov contract, the freeosgov contract checks that the token is
  * from the valid token contract, and then records the amount of tokens recived as a credit record in the credit table.
  * 
@@ -884,10 +901,29 @@ void freeosgov::removetokens(const name &user) {
  * @param quantity the amount of the fee
  * @param memo "freeos mint fee"
  * 
- * @return The mintfee function is being returned.
- */
+ * Case 2 - IC SWAP
+ * Notification function enables the user to burn a specified amount of FREEOS.
+ * These tokens are burned, and an entry is made in the swaps table to record the transaction.
+ * The Internet Computer side of the transaction reads the swaps table entries and mints the equivalent
+ * number of (IC-based) FREEOS.
+ * 
+ * @param from - the account sending the tokens,
+ * @param to - the 'freeos' account receiving the tokens,
+ * @param quantity - the asset, i.e. an amount of FREEOS which is transferred to the freeosgov account,
+ * @param memo - "IC SWAP " followed by an IC principal
+ * 
+ * Keeping the following code in reserve
+#ifdef BETA
+[[eosio::on_notify("betabeta::transfer")]] void freeosgov::ic_swap(name from, name to, asset quantity, std::string memo) {
+#elif defined(PRODUCTION)
+[[eosio::on_notify("freeostokens::transfer")]] void freeosgov::ic_swap(name from, name to, asset quantity, std::string memo) {
+#endif
+ * 
+ * */
 [[eosio::on_notify("*::transfer")]]    // was "eosio.token::transfer"
 void freeosgov::mintfee(name user, name to, asset quantity, std::string memo) {
+
+  // case 1 - receipt of funds for freeos mint fee
   if (memo == "freeos mint fee" || memo == "freeos mint credit") {
 
     if (user == get_self()) {
@@ -917,36 +953,57 @@ void freeosgov::mintfee(name user, name to, asset quantity, std::string memo) {
     credit_table.emplace(get_self(), [&](auto &c) {
       c.balance = quantity;
     });
-
   }
 
-  /* DIAG - unused
-  if (memo == "mint freebi to freeos") {
-    if (user == get_self()) {
-      return;
+  // case 2 - IC SWAP
+  std::string required_ic_swap_memo_prefix = "IC SWAP ";
+  std::string ic_principal = "";
+
+  // Check if the memo starts with the prefix "IC SWAP "
+  if (memo.find(required_ic_swap_memo_prefix) == 0) {
+    // Extract the principal after "IC SWAP "
+    ic_principal = trim(memo.substr(required_ic_swap_memo_prefix.length()));
+
+    uint32_t icswapopen = get_iparameter(name("icswapopen"));
+    uint32_t icswapclose = get_iparameter(name("icswapclose"));
+    uint32_t currenttime = current_time_point().sec_since_epoch();
+    check(currenttime >= icswapopen && currenttime <= icswapclose, "The IC swap facility is not available at this time");
+
+    check( quantity.symbol.code().to_string() == FREEOS_CURRENCY_CODE, "The quantity must be in " + FREEOS_CURRENCY_CODE + " tokens, e.g. 123.0000 " + FREEOS_CURRENCY_CODE );
+    
+    // check if contract has reached the total swap allowance
+    asset contract_swap_total = asset(0, FREEOS_CURRENCY_SYMBOL);   // default value
+    swaptotals_index swaptotals_table(get_self(), get_self().value);
+    auto swaptotals_iterator = swaptotals_table.begin();
+    if (swaptotals_iterator != swaptotals_table.end()) {
+        contract_swap_total = swaptotals_iterator->total;
     }
 
-    check(to == get_self(), "recipient of mint fee is incorrect");
+    uint32_t icswaplimit = get_iparameter(name("icswaplimit"));
+    asset swaplimit = asset(icswaplimit * FREEOS_UNIT_MULTIPLIER, FREEOS_CURRENCY_SYMBOL);
 
-    // check that FREEBI is from the right contract
-    symbol freebi_symbol = symbol(FREEBI_CURRENCY_CODE, 4);
-    check(quantity.symbol == freebi_symbol, "token symbol is not valid, expected FREEBI");
-    string freebi_tokens_contract = get_parameter(name("freebitokens"));
-    check(get_first_receiver() == name(freebi_tokens_contract), "FREEBI payment is invalid");
+    check((contract_swap_total.amount + quantity.amount) <= swaplimit.amount,
+     "The swap quantity will exceed the swap allowance (" + contract_swap_total.to_string() +
+     " already swapped out of an allowance of " + swaplimit.to_string() + ")"
+     );
 
-    // record amount of freebi in the credit table
-    credit_index credit_table(get_self(), user.value);
-    auto credit_iterator = credit_table.find(quantity.symbol.code().raw());
+    check(ic_principal.length() > 0, "The transfer memo must include the user's IC principal, e.g. 'IC SWAP w7x3r-cok77-xa'");
 
-    // if there is already a credit record, proceed no further
-    check(credit_iterator == credit_table.end(), "there is already a freebi->freeos mint transaction in progress");
-
-    // add the credit record
-    credit_table.emplace(get_self(), [&](auto &c) {
-      c.balance = quantity;
+    swaps_index swaps_table(get_self(), get_self().value);
+    swaps_table.emplace(get_self(), [&](auto &s) {
+        s.proton_account = user;
+        s.ic_principal = ic_principal;
+        s.amount = quantity;
+        s.utc_time = current_time_point().sec_since_epoch();
     });
-  } */
 
+    // update the contract's new swap total
+    if (swaptotals_iterator == swaptotals_table.end()) {
+        swaptotals_table.emplace(get_self(), [&](auto &t) { t.total = quantity; });
+    } else {
+        swaptotals_table.modify(swaptotals_iterator, get_self(), [&](auto &t) { t.total += quantity; });
+    }
+  } // end of case 2
 }
 
 /** @} */ // end of points group
