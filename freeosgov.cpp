@@ -16,7 +16,7 @@ namespace freedao {
 using namespace eosio;
 using namespace std;
 
-const std::string VERSION = "0.9.79";
+const std::string VERSION = "0.10.1"; // 0.10.1 is the public version for branch version97
 
 /** @defgroup core Core Functions
  *  These Actions and functions are related to core functionality.
